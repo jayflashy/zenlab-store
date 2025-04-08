@@ -1,0 +1,16 @@
+<?php
+
+namespace [namespace];
+
+use App\Traits\LivewireToast;
+use Livewire\Component;
+
+class [class] extends Component
+{
+    use LivewireToast;
+    public function render()
+    {
+        return view('[view]')
+        ->layout('user.layouts.app');
+    }
+}
