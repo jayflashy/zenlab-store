@@ -4,9 +4,11 @@ use App\Livewire\Home;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
+Route::get('user', User::class)->name('user.index');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
