@@ -20,17 +20,18 @@
     {{-- mobile menu --}}
     @include('layouts.mobile-nav')
 
-    <main class="change-gradient">
 
-        {{-- header --}}
-        @include('layouts.header')
+    {{-- header --}}
+    @include('layouts.header')
 
-        {{-- page content --}}
+    {{-- page content --}}
+    <main class="">
+        @yield('content')
         {{ $slot }}
-
-        {{-- Footer --}}
-        @include('layouts.footer')
     </main>
+
+    {{-- Footer --}}
+    @include('layouts.footer')
     @include('layouts.partials.scripts')
 
 </body>

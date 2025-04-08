@@ -27,106 +27,30 @@
             toastr[type](message, title ?? 'Successful');
         });
     });
+    document.addEventListener('livewire:navigating', () => {
+        JDLoader.open('.loader-mask');
+    })
+    document.addEventListener('livewire:navigated', () => {
+        JDLoader.close('.loader-mask');
 
-    $(document).ready(function() {
-        $('.delete-btn').on('click', function(e) {
-            e.preventDefault();
+        const currentUrl = window.location.href.split(/[?#]/)[0];
+        const navItems = document.querySelectorAll('.nav-menu__item');
 
-            // Get the custom message from the data-message attribute
-            var message = $(this).data('message') || "Do you really want to delete this?";
+        navItems.forEach(item => {
+            const link = item.querySelector('a');
+            if (!link) return;
 
-            // Show a confirmation popup with the custom message
-            Swal.fire({
-                title: "Are you sure?",
-                text: message,
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = $(this).attr('href');
-                } else {
-                    Swal.fire(
-                        'Cancelled',
-                        'You canceled the operation!',
-                        'info'
-                    );
-                }
-            });
+            const linkPath = new URL(link.href);
+
+            if (linkPath == currentUrl) {
+                item.classList.add('activePage');
+            } else {
+                item.classList.remove('activePage');
+            }
         });
-        // Approve Contest
-        $('.approve-btn').on('click', function() {
-            const url = $(this).data('url');
-            const msg = $(this).data('message') || "You want to approve this?";
-            Swal.fire({
-                title: 'Are you sure?',
-                text: msg,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, approve it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            });
-        });
-
-        // Reject Contest
-        $('.reject-btn').on('click', function() {
-            const url = $(this).data('url');
-            const msg = $(this).data('message') || "You want to reject this ?";
-            Swal.fire({
-                title: 'Are you sure?',
-                text: msg,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, reject it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            });
-        });
-
-    });
-
-    (function($) {
-        "use strict";
-        $(document).on('click', '.confirmBtn', function() {
-            var modal = $('#confirmationModal');
-            let data = $(this).data();
-            modal.find('.question').text(`${data.question}`);
-            modal.find('form').attr('action', `${data.action}`);
-            modal.modal('show');
-        });
-    })(jQuery);
+    })
 
     function openLink(url, target = '_self') {
         window.open(url, target);
-    }
-
-    function updateSystem(el, name) {
-        if ($(el).is(':checked')) {
-            var value = 1;
-        } else {
-            var value = 0;
-        }
-        $.post('{{ route('admin.settings.sys_settings') }}', {
-            _token: '{{ csrf_token() }}',
-            name: name,
-            value: value
-        }, function(data) {
-            if (data == '1') {
-                toastr.success('Settings updated successfully', 'Success')
-            } else {
-                toastr.error('Something went wrong', 'Error')
-            }
-        });
     }
 </script>

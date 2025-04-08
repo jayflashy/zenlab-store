@@ -8,6 +8,17 @@ use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
+Route::get('/products', Home::class)->name('products');
+Route::get('/contact', Home::class)->name('contact');
+Route::get('/blogs', Home::class)->name('blogs');
+Route::get('/blogs/{slug}', Home::class)->name('blogs.view');
+Route::get('/cart', Home::class)->name('cart');
+Route::get('/', Home::class)->name('home');
+Route::get('/', Home::class)->name('home');
+
+
+
+
 Route::get('user', User::class)->name('user.index');
 
 Route::view('dashboard', 'dashboard')
