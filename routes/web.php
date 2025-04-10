@@ -18,7 +18,7 @@ Route::get('/contact', Home::class)->name('contact');
 Route::get('/blogs', Blogs::class)->name('blogs');
 Route::get('/blogs/{slug}', BlogView::class)->name('blogs.view');
 Route::get('/cart', Home::class)->name('cart');
-Route::get('/', Home::class)->name('home');
+Route::get('/shop', Home::class)->name('shop');
 Route::get('/', Home::class)->name('home');
 
 
