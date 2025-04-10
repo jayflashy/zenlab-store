@@ -3,7 +3,6 @@
 
 <head>
     @include('layouts.partials.head')
-    @yield('meta')
 </head>
 
 <body>

@@ -27,7 +27,7 @@ if (! function_exists('my_asset')) {
 }
 
 if (! function_exists('get_setting')) {
-    function get_setting($key = null)
+    function get_setting($key = null, $default = null)
     {
         $settings = Cache::get('Settings');
 
@@ -37,7 +37,7 @@ if (! function_exists('get_setting')) {
         }
 
         if ($key) {
-            return @$settings->$key;
+            return @$settings->$key == null ? $default : @$settings->$key;
         }
 
         return $settings;
