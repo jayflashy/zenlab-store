@@ -8,9 +8,10 @@ use Livewire\Component;
 class Items extends Component
 {
     use LivewireToast;
+
     public function render()
     {
         return view('livewire.cart.items')
-        ->layout('user.layouts.app');
+            ->layout('user.layouts.app');
     }
 }

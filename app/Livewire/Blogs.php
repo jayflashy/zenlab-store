@@ -8,6 +8,7 @@ use Livewire\Component;
 class Blogs extends Component
 {
     use LivewireToast;
+
     public function render()
     {
         return view('livewire.blogs');

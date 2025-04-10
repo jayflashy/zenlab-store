@@ -8,6 +8,7 @@ use Livewire\Component;
 class Success extends Component
 {
     use LivewireToast;
+
     public function render()
     {
         return view('livewire.cart.success');
