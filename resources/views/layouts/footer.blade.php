@@ -2,22 +2,22 @@
     <div class="container">
         <div class="brand-slider">
             <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+                <img src="{{ static_asset('images/thumbs/brand-img1.png') }}" alt="" />
             </div>
             <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+                <img src="{{ static_asset('images/thumbs/brand-img1.png') }}" alt="" />
             </div>
             <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+                <img src="{{ static_asset('images/thumbs/brand-img1.png') }}" alt="" />
             </div>
             <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+                <img src="{{ static_asset('images/thumbs/brand-img1.png') }}" alt="" />
             </div>
             <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+                <img src="{{ static_asset('images/thumbs/brand-img1.png') }}" alt="" />
             </div>
             <div class="brand-item d-flex align-items-center justify-content-center">
-                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+                <img src="{{ static_asset('images/thumbs/brand-img1.png') }}" alt="" />
             </div>
         </div>
     </div>
@@ -33,7 +33,8 @@
             <div class="col-xl-3 col-sm-6">
                 <div class="footer-widget">
                     <div class="footer-widget__logo">
-                        <a href="index.html"> <img src="{{ static_asset('images/logo/white-logo.png') }}" alt=""></a>
+                        <a href="{{ route('home') }}" wire:navigate> <img src="{{ static_asset('images/logo/white-logo.png') }}"
+                                alt=""></a>
                     </div>
                     <p class="footer-widget__desc">Lorem consultancy elitsed do eiusmod tempor inci didunt ut labore dolore magna aliqua sed
                         do eiusmod.</p>
@@ -67,13 +68,16 @@
                 <div class="footer-widget">
                     <h5 class="footer-widget__title text-white">Useful Link</h5>
                     <ul class="footer-lists">
-                        <li class="footer-lists__item"><a href="{{ route('products') }}" wire:navigate class="footer-lists__link">Product
-                            </a></li>
-                        <li class="footer-lists__item"><a href="{{ route('cart') }}" wire:navigate class="footer-lists__link">Shopping
-                                Cart</a></li>
+                        <li class="footer-lists__item">
+                            <a href="{{ route('products') }}" wire:navigate class="footer-lists__link">Product</a>
+                        </li>
+                        <li class="footer-lists__item">
+                            <a href="{{ route('cart') }}" wire:navigate class="footer-lists__link">Shopping Cart</a>
+                        </li>
                         @auth
-                            <li class="footer-lists__item"><a href="{{ route('user.dashboard') }}" wire:navigate
-                                    class="footer-lists__link">Dashboard</a></li>
+                            <li class="footer-lists__item">
+                                <a href="{{ route('user.dashboard') }}" wire:navigate class="footer-lists__link">Dashboard</a>
+                            </li>
                         @else
                             <li class="footer-lists__item"><a href="login.html" wire:navigate class="footer-lists__link">Login </a></li>
                             <li class="footer-lists__item"><a href="register.html" wire:navigate class="footer-lists__link">Register</a></li>
@@ -85,11 +89,25 @@
                 <div class="footer-widget">
                     <h5 class="footer-widget__title text-white">Quick Links</h5>
                     <ul class="footer-lists">
-                        <li class="footer-lists__item"><a href="about.html" wire:navigate class="footer-lists__link">About Us</a></li>
-                        <li class="footer-lists__item"><a href="{{ route('blogs') }}" wire:navigate class="footer-lists__link">Blog </a>
+                        <li class="footer-lists__item">
+                            <a href="{{ route('about') }}" wire:navigate class="footer-lists__link">About Us</a>
                         </li>
-                        <li class="footer-lists__item"><a href="terms.html" wire:navigate class="footer-lists__link">Terms and
-                                Conditions</a></li>
+                        <li class="footer-lists__item">
+                            <a href="{{ route('blogs') }}" wire:navigate class="footer-lists__link">Blog </a>
+                        </li>
+                        <li class="footer-lists__item">
+                            <a href="{{ route('terms') }}" wire:navigate class="footer-lists__link">Terms and Conditions</a>
+                        </li>
+                        {{-- show 3 custom pages --}}
+                        @php
+                            $footerPages = footerPages();
+                        @endphp
+                        @foreach ($footerPages as $ftp)
+                            <li class="footer-lists__item">
+                                <a href="{{ route('pages.view', $ftp->slug) }}" wire:navigate
+                                    class="footer-lists__link">{{ $ftp->title }}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -115,9 +133,9 @@
         <div class="bottom-footer__inner flx-between gap-3">
             <p class="bottom-footer__text font-14"> Copyright &copy; {{ Date('Y') . get_setting('name') }}, All rights reserved.</p>
             <div class="footer-links">
-                <a href="#" class="footer-link font-14">Terms of service</a>
-                <a href="#" class="footer-link font-14">Privacy Policy</a>
-                <a href="contact.html" class="footer-link font-14">cookies</a>
+                <a href="{{ route('terms') }}" class="footer-link font-14">Terms of service</a>
+                <a href="{{ route('policy') }}" class="footer-link font-14">Privacy Policy</a>
+                <a href="#" class="footer-link font-14 cookies-btn">Cookies</a>
             </div>
         </div>
     </div>

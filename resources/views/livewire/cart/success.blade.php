@@ -70,7 +70,7 @@
                                 </ul>
                                 <div class="flx-between gap-2 mt-3">
                                     <p class="text">Please don't forget to rate </p>
-                                    <a href="index.html" class="btn btn-main flx-align gap-2 pill">
+                                    <a href="{{route('home')}}" class="btn btn-main flx-align gap-2 pill">
                                         Back To Home
                                         <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
                                     </a>

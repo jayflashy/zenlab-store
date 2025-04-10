@@ -3,7 +3,7 @@
         <i class="las la-times"></i>
     </button>
     <div class="mobile-menu__inner">
-        <a href="index.html" class="mobile-menu__logo">
+        <a href="{{route('home')}}" class="mobile-menu__logo">
             <img src="assets/images/logo/logo.png" alt="Logo" />
         </a>
         <div class="mobile-menu__menu">
@@ -12,7 +12,7 @@
                     <a href="javascript:void(0)" class="nav-menu__link">Home</a>
                     <ul class="nav-submenu">
                         <li class="nav-submenu__item">
-                            <a href="index.html" class="nav-submenu__link"> Home One</a>
+                            <a href="{{route('home')}}" class="nav-submenu__link"> Home One</a>
                         </li>
                         <li class="nav-submenu__item">
                             <a href="index-two.html" class="nav-submenu__link">

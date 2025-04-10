@@ -3,10 +3,10 @@
         <nav class="header-inner flx-between">
             <!-- Logo Start -->
             <div class="logo">
-                <a href="index.html" class="link white-version">
+                <a href="{{route('home')}}" class="link white-version">
                     <img src="{{static_asset('images/logo/logo-two.png')}}" alt="Logo">
                 </a>
-                <a href="index.html" class="link dark-version">
+                <a href="{{route('home')}}" class="link dark-version">
                     <img src="{{static_asset('images/logo/white-logo.png')}}" alt="Logo">
                 </a>
             </div>

@@ -1,7 +1,7 @@
 <div class="mobile-menu d-lg-none d-block">
     <button type="button" class="close-button"> <i class="las la-times"></i> </button>
     <div class="mobile-menu__inner">
-        <a href="index.html" class="mobile-menu__logo">
+        <a href="{{route('home')}}" class="mobile-menu__logo">
             <img src="assets/images/logo/logo.png" alt="Logo">
         </a>
         <div class="mobile-menu__menu">

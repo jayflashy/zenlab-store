@@ -6,10 +6,10 @@
       <i class="las la-times"></i>
     </button>
     <div class="dashboard-sidebar__inner">
-      <a href="index.html" class="logo mb-48">
+      <a href="{{route('home')}}" class="logo mb-48">
         <img src="assets/images/logo/logo.png" alt="" />
       </a>
-      <a href="index.html" class="logo favicon mb-48">
+      <a href="{{route('home')}}" class="logo favicon mb-48">
         <img src="assets/images/logo/favicon.png" alt="" />
       </a>
 

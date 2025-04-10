@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Page;
 use App\Models\Setting;
 use App\Models\SystemSetting;
 
@@ -277,3 +278,12 @@ function queryBuild($key, $value)
 
     return request()->getRequestUri() . $delimeter . "$key=$value";
 }
+
+// footer pages
+function footerPages($count = 3)
+{
+    return \Cache::remember("footerPages_{$count}", 16000, function () use ($count) {
+        return \App\Models\Page::where('type', 'custom')->limit($count)->get();
+    });
+}
+

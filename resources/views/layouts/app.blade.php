@@ -25,7 +25,7 @@
     {{-- page content --}}
     <main class="">
         @yield('content')
-        {{ $slot }}
+        {{ $slot  ?? ''}}
     </main>
 
     {{-- Footer --}}
