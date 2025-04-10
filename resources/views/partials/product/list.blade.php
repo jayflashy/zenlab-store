@@ -1,14 +1,14 @@
 <div class="col-xl-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
-            <a href="product-details.html" class="link w-100">
+            <a href="{{route('products.view', 'product-details')}}" class="link w-100">
                 <img src="{{ static_asset('images/thumbs/product-img1.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist "><i class="far fa-heart text-red"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
+                <a href="{{route('products.view', 'product-details')}}" class="link">SaaS dashboard digital products Title here</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -34,7 +34,7 @@
                         <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
                     </div>
                 </div>
-                <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
+                <a href="{{route('products.view', 'product-details')}}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
             </div>
         </div>
     </div>
@@ -42,14 +42,14 @@
 <div class="col-xl-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
-            <a href="product-details.html" class="link w-100">
+            <a href="{{route('products.view', 'product-details')}}" class="link w-100">
                 <img src="{{ static_asset('images/thumbs/product-img2.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
+                <a href="{{route('products.view', 'product-details')}}" class="link">SaaS dashboard digital products Title here</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -75,7 +75,7 @@
                         <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
                     </div>
                 </div>
-                <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
+                <a href="{{route('products.view', 'product-details')}}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
             </div>
         </div>
     </div>
@@ -83,14 +83,14 @@
 <div class="col-xl-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
-            <a href="product-details.html" class="link w-100">
+            <a href="{{route('products.view', 'product-details')}}" class="link w-100">
                 <img src="{{ static_asset('images/thumbs/product-img3.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
+                <a href="{{route('products.view', 'product-details')}}" class="link">SaaS dashboard digital products Title here</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -116,7 +116,7 @@
                         <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
                     </div>
                 </div>
-                <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
+                <a href="{{route('products.view', 'product-details')}}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
             </div>
         </div>
     </div>
@@ -124,14 +124,14 @@
 <div class="col-xl-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
-            <a href="product-details.html" class="link w-100">
+            <a href="{{route('products.view', 'product-details')}}" class="link w-100">
                 <img src="{{ static_asset('images/thumbs/product-img2.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
+                <a href="{{route('products.view', 'product-details')}}" class="link">SaaS dashboard digital products Title here</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -157,7 +157,7 @@
                         <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
                     </div>
                 </div>
-                <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
+                <a href="{{route('products.view', 'product-details')}}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
             </div>
         </div>
     </div>
@@ -165,14 +165,14 @@
 <div class="col-xl-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
-            <a href="product-details.html" class="link w-100">
+            <a href="{{route('products.view', 'product-details')}}" class="link w-100">
                 <img src="{{ static_asset('images/thumbs/product-img1.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
+                <a href="{{route('products.view', 'product-details')}}" class="link">SaaS dashboard digital products Title here</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -198,7 +198,7 @@
                         <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
                     </div>
                 </div>
-                <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
+                <a href="{{route('products.view', 'product-details')}}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
             </div>
         </div>
     </div>
@@ -206,14 +206,14 @@
 <div class="col-xl-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
-            <a href="product-details.html" class="link w-100">
+            <a href="{{route('products.view', 'product-details')}}" class="link w-100">
                 <img src="{{ static_asset('images/thumbs/product-img2.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
+                <a href="{{route('products.view', 'product-details')}}" class="link">SaaS dashboard digital products Title here</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -239,7 +239,7 @@
                         <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
                     </div>
                 </div>
-                <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
+                <a href="{{route('products.view', 'product-details')}}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
             </div>
         </div>
     </div>
@@ -247,14 +247,14 @@
 <div class="col-xl-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
-            <a href="product-details.html" class="link w-100">
+            <a href="{{route('products.view', 'product-details')}}" class="link w-100">
                 <img src="{{ static_asset('images/thumbs/product-img2.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
+                <a href="{{route('products.view', 'product-details')}}" class="link">SaaS dashboard digital products Title here</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -280,7 +280,7 @@
                         <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
                     </div>
                 </div>
-                <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
+                <a href="{{route('products.view', 'product-details')}}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
             </div>
         </div>
     </div>
@@ -288,14 +288,14 @@
 <div class="col-xl-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
-            <a href="product-details.html" class="link w-100">
+            <a href="{{route('products.view', 'product-details')}}" class="link w-100">
                 <img src="{{ static_asset('images/thumbs/product-img7.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
+                <a href="{{route('products.view', 'product-details')}}" class="link">SaaS dashboard digital products Title here</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -321,7 +321,7 @@
                         <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
                     </div>
                 </div>
-                <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
+                <a href="{{route('products.view', 'product-details')}}" class="btn btn-outline-light btn-sm pill">Live Demo</a>
             </div>
         </div>
     </div>
