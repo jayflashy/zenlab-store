@@ -3,7 +3,6 @@
 
 <head>
     @include('layouts.partials.head')
-    @yield('meta')
 </head>
 
 <body>
@@ -20,17 +19,17 @@
     {{-- mobile menu --}}
     @include('layouts.mobile-nav')
 
-    <main class="change-gradient">
+    {{-- header --}}
+    @include('layouts.header')
 
-        {{-- header --}}
-        @include('layouts.header')
-
-        {{-- page content --}}
-        {{ $slot }}
-
-        {{-- Footer --}}
-        @include('layouts.footer')
+    {{-- page content --}}
+    <main class="">
+        @yield('content')
+        {{ $slot  ?? ''}}
     </main>
+
+    {{-- Footer --}}
+    @include('layouts.footer')
     @include('layouts.partials.scripts')
 
 </body>

@@ -7,10 +7,10 @@ if (! function_exists('static_asset')) {
     function static_asset($path, $secure = null)
     {
         if (php_sapi_name() == 'cli-server') {
-            return app('url')->asset('assets/' . $path, $secure);
+            return app('url')->asset('assets/'.$path, $secure);
         }
 
-        return app('url')->asset('public/assets/' . $path, $secure);
+        return app('url')->asset('public/assets/'.$path, $secure);
     }
 }
 
@@ -19,15 +19,15 @@ if (! function_exists('my_asset')) {
     function my_asset($path, $secure = null)
     {
         if (php_sapi_name() == 'cli-server') {
-            return app('url')->asset('uploads/' . $path, $secure);
+            return app('url')->asset('uploads/'.$path, $secure);
         }
 
-        return app('url')->asset('public/uploads/' . $path, $secure);
+        return app('url')->asset('public/uploads/'.$path, $secure);
     }
 }
 
 if (! function_exists('get_setting')) {
-    function get_setting($key = null)
+    function get_setting($key = null, $default = null)
     {
         $settings = Cache::get('Settings');
 
@@ -37,7 +37,7 @@ if (! function_exists('get_setting')) {
         }
 
         if ($key) {
-            return @$settings->$key;
+            return @$settings->$key == null ? $default : @$settings->$key;
         }
 
         return $settings;
@@ -66,7 +66,7 @@ if (! function_exists('format_price')) {
         $fomated_price = number_format($price, 2);
         $currency = get_setting('currency');
 
-        return $currency . $fomated_price;
+        return $currency.$fomated_price;
     }
 }
 
@@ -77,7 +77,7 @@ if (! function_exists('ngnformat_price')) {
         $fomated_price = number_format($price, 2);
         $currency = '₦';
 
-        return $currency . $fomated_price;
+        return $currency.$fomated_price;
     }
 }
 
@@ -86,7 +86,7 @@ function sym_price($price)
     $fomated_price = number_format($price, 2);
     $currency = get_setting('currency_code');
 
-    return $currency . ' ' . $fomated_price;
+    return $currency.' '.$fomated_price;
 }
 function format_number($price, $place = 2)
 {
@@ -141,7 +141,7 @@ function uniqueSlug($name, $model)
     // If the slug already exists, append a number to make it unique
     $i = 1;
     do {
-        $newSlug = $slug . '-' . $i;
+        $newSlug = $slug.'-'.$i;
 
         if (! $allSlugs->contains('slug', $newSlug)) {
             return $newSlug;
@@ -154,7 +154,7 @@ function uniqueSlug($name, $model)
 function checkRelatedSlugs($slug, $model)
 {
     // Use DB::table to query the model's table for slugs starting with the provided slug
-    return DB::table($model)->where('slug', 'LIKE', $slug . '%')->get();
+    return DB::table($model)->where('slug', 'LIKE', $slug.'%')->get();
 }
 
 // Generate a random alphanumeric string of a specified length
@@ -180,7 +180,7 @@ function getTrans($prefix, $len = 15)
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
 
-    return $prefix . '_' . $randomString;
+    return $prefix.'_'.$randomString;
 }
 // Round the given amount to a specified number of decimal places
 function getAmount($amount, $length = 2)
@@ -268,12 +268,20 @@ function queryBuild($key, $value)
         $match = preg_match("/$pattern/", $url);
 
         if ($match != 0) {
-            return preg_replace('~(\?|&)' . $key . '[^&]*~', "\?$key=$value", $url);
+            return preg_replace('~(\?|&)'.$key.'[^&]*~', "\?$key=$value", $url);
         }
-        $filteredURL = preg_replace('~(\?|&)' . $key . '[^&]*~', '', $url);
+        $filteredURL = preg_replace('~(\?|&)'.$key.'[^&]*~', '', $url);
 
-        return $filteredURL . $delimeter . "$key=$value";
+        return $filteredURL.$delimeter."$key=$value";
     }
 
-    return request()->getRequestUri() . $delimeter . "$key=$value";
+    return request()->getRequestUri().$delimeter."$key=$value";
+}
+
+// footer pages
+function footerPages($count = 3)
+{
+    return \Cache::remember("footerPages_{$count}", 16000, function () use ($count) {
+        return \App\Models\Page::where('type', 'custom')->limit($count)->get();
+    });
 }
