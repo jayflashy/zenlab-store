@@ -2,7 +2,7 @@
 <div class="col-lg-4 col-sm-6">
     <div class="post-item">
         <div class="post-item__thumb">
-            <a href="blog-details.html" wire:navigate class="link">
+            <a href="{{route('blogs.view', 'blog-details')}}" wire:navigate class="link">
                 <img src="{{static_asset('images/thumbs/blog1.png')}}" class="cover-img" alt="">
             </a>
         </div>
@@ -18,16 +18,16 @@
                 </div>
             </div>
             <h5 class="post-item__title">
-                <a href="blog-details.html" wire:navigate class="link">How to hire a right business executive for your company</a>
+                <a href="{{route('blogs.view', 'blog-details')}}" wire:navigate class="link">How to hire a right business executive for your company</a>
             </h5>
-            <a href="blog-details.html" wire:navigate class="btn btn-outline-light pill fw-600">Read More </a>
+            <a href="{{route('blogs.view', 'blog-details')}}" wire:navigate class="btn btn-outline-light pill fw-600">Read More </a>
         </div>
     </div>
 </div>
 <div class="col-lg-4 col-sm-6">
     <div class="post-item">
         <div class="post-item__thumb">
-            <a href="blog-details.html" class="link">
+            <a href="{{route('blogs.view', 'blog-details')}}" wire:navigate class="link">
                 <img src="{{static_asset('images/thumbs/blog2.png')}}" class="cover-img" alt="">
             </a>
         </div>
@@ -43,9 +43,9 @@
                 </div>
             </div>
             <h5 class="post-item__title">
-                <a href="blog-details.html" class="link">The Gig Economy: Adapting to a Flexible Workforce</a>
+                <a href="{{route('blogs.view', 'blog-details')}}" class="link">The Gig Economy: Adapting to a Flexible Workforce</a>
             </h5>
-            <a href="blog-details.html" class="btn btn-outline-light pill fw-600">Read More </a>
+            <a href="{{route('blogs.view', 'blog-details')}}" class="btn btn-outline-light pill fw-600">Read More </a>
         </div>
     </div>
 </div>

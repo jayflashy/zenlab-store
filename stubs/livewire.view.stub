@@ -1,3 +1,8 @@
+@section('title', 'Title')
 <div>
     {{-- [quote] --}}
 </div>
+
+@section('meta)
+
+@endsection

@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Blogs;
+use App\Livewire\BlogView;
 use App\Livewire\Home;
 use App\Livewire\Product\Index as Products;
 use App\Livewire\Product\Details as ProductsDetails;
@@ -13,8 +15,8 @@ Route::get('/', Home::class)->name('home');
 Route::get('/products', Products::class)->name('products');
 Route::get('/products/{slug}', ProductsDetails::class)->name('products.view');
 Route::get('/contact', Home::class)->name('contact');
-Route::get('/blogs', Home::class)->name('blogs');
-Route::get('/blogs/{slug}', Home::class)->name('blogs.view');
+Route::get('/blogs', Blogs::class)->name('blogs');
+Route::get('/blogs/{slug}', BlogView::class)->name('blogs.view');
 Route::get('/cart', Home::class)->name('cart');
 Route::get('/', Home::class)->name('home');
 Route::get('/', Home::class)->name('home');

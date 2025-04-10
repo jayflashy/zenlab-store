@@ -27,7 +27,7 @@
             toastr[type](message, title ?? 'Successful');
         });
     });
-    document.addEventListener('livewire:navigating', () => {
+    document.addEventListener('livewire:navigate', () => {
         JDLoader.open('.loader-mask');
     })
     document.addEventListener('livewire:navigated', () => {
