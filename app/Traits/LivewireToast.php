@@ -7,9 +7,9 @@ trait LivewireToast
     public function toast($type, $message, $title = '')
     {
         $this->dispatch('alert', [
-            'type'    => $type,
+            'type' => $type,
             'message' => $message,
-            'title'   => $title,
+            'title' => $title,
         ]);
     }
 
