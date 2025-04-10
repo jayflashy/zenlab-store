@@ -1,4 +1,4 @@
-<div class="col-xl-4 col-sm-6">
+<div class="col-xl-3 col-lg-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
             <a href="product-details.html" class="link w-100">
@@ -39,7 +39,7 @@
         </div>
     </div>
 </div>
-<div class="col-xl-4 col-sm-6">
+<div class="col-xl-3 col-lg-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
             <a href="product-details.html" class="link w-100">
@@ -80,7 +80,7 @@
         </div>
     </div>
 </div>
-<div class="col-xl-4 col-sm-6">
+<div class="col-xl-3 col-lg-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
             <a href="product-details.html" class="link w-100">
@@ -121,11 +121,11 @@
         </div>
     </div>
 </div>
-<div class="col-xl-4 col-sm-6">
+<div class="col-xl-3 col-lg-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
             <a href="product-details.html" class="link w-100">
-                <img src="{{ static_asset('images/thumbs/product-img2.png') }}" alt="" class="cover-img">
+                <img src="{{ static_asset('images/thumbs/product-img4.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
@@ -162,11 +162,11 @@
         </div>
     </div>
 </div>
-<div class="col-xl-4 col-sm-6">
+<div class="col-xl-3 col-lg-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
             <a href="product-details.html" class="link w-100">
-                <img src="{{ static_asset('images/thumbs/product-img1.png') }}" alt="" class="cover-img">
+                <img src="{{ static_asset('images/thumbs/product-img5.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
@@ -203,11 +203,11 @@
         </div>
     </div>
 </div>
-<div class="col-xl-4 col-sm-6">
+<div class="col-xl-3 col-lg-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
             <a href="product-details.html" class="link w-100">
-                <img src="{{ static_asset('images/thumbs/product-img2.png') }}" alt="" class="cover-img">
+                <img src="{{ static_asset('images/thumbs/product-img6.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
@@ -244,11 +244,11 @@
         </div>
     </div>
 </div>
-<div class="col-xl-4 col-sm-6">
+<div class="col-xl-3 col-lg-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
             <a href="product-details.html" class="link w-100">
-                <img src="{{ static_asset('images/thumbs/product-img2.png') }}" alt="" class="cover-img">
+                <img src="{{ static_asset('images/thumbs/product-img7.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>
@@ -285,11 +285,11 @@
         </div>
     </div>
 </div>
-<div class="col-xl-4 col-sm-6">
+<div class="col-xl-3 col-lg-4 col-sm-6">
     <div class="product-item ">
         <div class="product-item__thumb d-flex">
             <a href="product-details.html" class="link w-100">
-                <img src="{{ static_asset('images/thumbs/product-img7.png') }}" alt="" class="cover-img">
+                <img src="{{ static_asset('images/thumbs/product-img8.png') }}" alt="" class="cover-img">
             </a>
             <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
         </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Home;
+use App\Livewire\Product\Index as Products;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -8,7 +9,8 @@ use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
-Route::get('/products', Home::class)->name('products');
+Route::get('/products', Products::class)->name('products');
+Route::get('/products/{slug}', Home::class)->name('products.view');
 Route::get('/contact', Home::class)->name('contact');
 Route::get('/blogs', Home::class)->name('blogs');
 Route::get('/blogs/{slug}', Home::class)->name('blogs.view');
