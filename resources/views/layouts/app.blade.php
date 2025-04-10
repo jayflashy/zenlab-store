@@ -20,7 +20,6 @@
     {{-- mobile menu --}}
     @include('layouts.mobile-nav')
 
-
     {{-- header --}}
     @include('layouts.header')
 

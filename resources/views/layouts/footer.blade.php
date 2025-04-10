@@ -1,3 +1,27 @@
+<div class="brand">
+    <div class="container">
+        <div class="brand-slider">
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+            </div>
+            <div class="brand-item d-flex align-items-center justify-content-center">
+                <img src="{{static_asset('images/thumbs/brand-img1.png')}}" alt="" />
+            </div>
+        </div>
+    </div>
+</div>
 <footer class="footer-section ">
     <img src="{{ static_asset('images/shapes/pattern.png') }}" alt="" class="bg-pattern">
     <img src="{{ static_asset('images/shapes/element1.png') }}" alt="" class="element one">
@@ -43,10 +67,13 @@
                 <div class="footer-widget">
                     <h5 class="footer-widget__title text-white">Useful Link</h5>
                     <ul class="footer-lists">
-                        <li class="footer-lists__item"><a href="{{ route('products') }}" wire:navigate class="footer-lists__link">Product </a></li>
-                        <li class="footer-lists__item"><a href="{{ route('cart') }}" wire:navigate class="footer-lists__link">Shopping Cart</a></li>
+                        <li class="footer-lists__item"><a href="{{ route('products') }}" wire:navigate class="footer-lists__link">Product
+                            </a></li>
+                        <li class="footer-lists__item"><a href="{{ route('cart') }}" wire:navigate class="footer-lists__link">Shopping
+                                Cart</a></li>
                         @auth
-                            <li class="footer-lists__item"><a href="{{ route('user.dashboard') }}" wire:navigate class="footer-lists__link">Dashboard</a></li>
+                            <li class="footer-lists__item"><a href="{{ route('user.dashboard') }}" wire:navigate
+                                    class="footer-lists__link">Dashboard</a></li>
                         @else
                             <li class="footer-lists__item"><a href="login.html" wire:navigate class="footer-lists__link">Login </a></li>
                             <li class="footer-lists__item"><a href="register.html" wire:navigate class="footer-lists__link">Register</a></li>
@@ -59,8 +86,10 @@
                     <h5 class="footer-widget__title text-white">Quick Links</h5>
                     <ul class="footer-lists">
                         <li class="footer-lists__item"><a href="about.html" wire:navigate class="footer-lists__link">About Us</a></li>
-                        <li class="footer-lists__item"><a href="{{route('blogs')}}" wire:navigate class="footer-lists__link">Blog </a></li>
-                        <li class="footer-lists__item"><a href="terms.html" wire:navigate class="footer-lists__link">Terms and Conditions</a></li>
+                        <li class="footer-lists__item"><a href="{{ route('blogs') }}" wire:navigate class="footer-lists__link">Blog </a>
+                        </li>
+                        <li class="footer-lists__item"><a href="terms.html" wire:navigate class="footer-lists__link">Terms and
+                                Conditions</a></li>
                     </ul>
                 </div>
             </div>
