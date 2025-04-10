@@ -2,6 +2,9 @@
 
 use App\Livewire\Blogs;
 use App\Livewire\BlogView;
+use App\Livewire\Cart\Checkout;
+use App\Livewire\Cart\Index as Cart;
+use App\Livewire\Cart\Success as PaymentSuccess;
 use App\Livewire\Home;
 use App\Livewire\Product\Index as Products;
 use App\Livewire\Product\Details as ProductsDetails;
@@ -17,9 +20,10 @@ Route::get('/products/{slug}', ProductsDetails::class)->name('products.view');
 Route::get('/contact', Home::class)->name('contact');
 Route::get('/blogs', Blogs::class)->name('blogs');
 Route::get('/blogs/{slug}', BlogView::class)->name('blogs.view');
-Route::get('/cart', Home::class)->name('cart');
+Route::get('/cart', Cart::class)->name('cart');
+Route::get('/checkout', Checkout::class)->name('checkout');
 Route::get('/shop', Home::class)->name('shop');
-Route::get('/', Home::class)->name('home');
+Route::get('/transaction-success', PaymentSuccess::class)->name('payment.success');
 
 
 

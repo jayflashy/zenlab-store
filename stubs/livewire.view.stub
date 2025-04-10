@@ -3,6 +3,6 @@
     {{-- [quote] --}}
 </div>
 
-@section('meta)
+@section('meta')
 
 @endsection

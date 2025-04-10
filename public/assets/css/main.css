@@ -6894,6 +6894,7 @@ input[type=number] {
     top: 50%;
     transform: translateY(-50%);
     border: 1px dashed hsl(var(--black-three)/0.5);
+    display: none;
 }
 
 @media screen and (max-width: 1199px) {
