@@ -9,8 +9,8 @@
 <!-- Canonical URL -->
 <link rel="canonical" href="{{ url()->current() }}">
 
-<title>@lang(get_setting('title')) | @yield('title')</title>
-<link rel="shortcut icon" href="{{ my_asset(get_setting('favicon')) }}">
+<title>@lang($settings->title) | @yield('title')</title>
+<link rel="shortcut icon" href="{{ my_asset($settings->favicon) }}">
 
 <!-- App css -->
 <link href="{{ static_asset('css/vendors.css') }}" rel="stylesheet" type="text/css">

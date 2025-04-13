@@ -148,11 +148,11 @@
 
         // ========================== add active class to ul>li top Active current page Js Start =====================
         function dynamicActiveMenuClass(selector) {
-            let FileName = window.location.pathname.split("/").reverse()[0];
+            let currentUrl = window.location.href.split(/[?#]/)[0];
 
             selector.find("li").each(function () {
                 let anchor = $(this).find("a");
-                if ($(anchor).attr("href") == FileName) {
+                if ($(anchor).attr("href") == currentUrl) {
                     $(this).addClass("activePage");
                 }
             });
@@ -162,8 +162,7 @@
                     $(this).addClass("activePage");
                 }
             });
-            // if no file name return
-            if ("" == FileName) {
+            if ("" == currentUrl) {
                 selector.find("li").eq(0).addClass("activePage");
             }
         }

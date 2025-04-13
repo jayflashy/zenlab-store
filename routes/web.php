@@ -46,4 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+Route::prefix('admin')->as('admin.')->group(function () {
+    require __DIR__ . '/admin.php';
+});

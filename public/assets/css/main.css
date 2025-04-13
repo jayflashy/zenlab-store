@@ -3170,6 +3170,9 @@ input[type=number] {
 .logo img {
     max-width: 224px;
 }
+.main-logo{
+    max-height: 50px;
+}
 
 @media screen and (max-width: 767px) {
     .logo img {
@@ -3514,6 +3517,9 @@ input[type=number] {
     padding-right: 16px;
 }
 
+.side-hsb.activePage > .side-submenu{
+    display:block;
+}
 .side-hsb.active>a,
 .side-hsb.active>a::before {
     color: hsl(var(--main));
@@ -3521,12 +3527,6 @@ input[type=number] {
 
 .side-hsb.active>a::before {
     transform: translateY(-50%) rotate(0deg) !important;
-}
-
-.side-hsb:hover .side-submenu {
-    visibility: visible;
-    opacity: 1;
-    margin-top: 0;
 }
 
 .side-hsb>a {
@@ -3547,20 +3547,24 @@ input[type=number] {
 }
 /* Submenu Start */
 .side-submenu {
-    left: 0;
-    top: 100%;
     overflow: hidden;
     position: static;
     visibility: visible;
     opacity: 1;
-    width: 100%;
+    width: auto;
     margin-top: 0;
     padding: 0;
     margin-left: 16px;
     display: none;
     transition: 0s;
+    background-color: hsl(var(--gray-seven));
 }
-
+.side-submenu .nav-submenu__link {
+    color: hsl(var(--body-color));
+}
+[data-theme=light] .side-submenu{
+    background-color: var(--dark-black-one);
+}
 /* Header Menu and Submenu Css End */
 /* ================================= Header Css End =========================== */
 /* ============ Search box ============= */
