@@ -85,6 +85,22 @@
                 submenu.slideToggle(300);
             }
         });
+
+        // Sidebar submenu
+        $(".side-hsb").on("click", function () {
+            var thisItem = $(this);
+            if (thisItem.hasClass("active")) {
+                thisItem.removeClass("active");
+            } else {
+                $(".side-hsb").removeClass("active");
+                $(thisItem).addClass("active");
+            }
+            var submenu = thisItem.find(".side-submenu");
+
+            $(".side-submenu").not(submenu).slideUp(300);
+            submenu.slideToggle(300);
+
+        });
         // ============== Mobile Nav Menu Dropdown Js End =======================
 
         // ======================== Tooltip Js Start ====================
