@@ -93,12 +93,15 @@ class CategoryManager extends Component
         ];
 
         if ($this->image) {
-            $imagePath = $this->image->store('categories', 'public');
+            $imagePath = $this->image->store('categories', 'uploads');
             $categoryData['image'] = $imagePath;
         }
 
         if ($this->editingCategoryId) {
             $category = Category::find($this->editingCategoryId);
+            if ($category->image) {
+                \Storage::disk('uploads')->delete($category->image);
+            }
             $category->update($categoryData);
             $this->successAlert('Category updated successfully!');
         } else {

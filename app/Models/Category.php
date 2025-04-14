@@ -20,6 +20,7 @@ class Category extends Model
         'parent_id',
         'order',
         'metadata',
+        'image'
     ];
 
     protected $casts = [
