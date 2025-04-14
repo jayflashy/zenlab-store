@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Carbon\CarbonImmutable;
 use Date;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\Paginator;
 use View;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        Paginator::useBootstrap();
     }
 
     /**

@@ -32,7 +32,7 @@ class CategoryManager extends Component
 
     public $searchTerm = '';
     public $showInactive = false;
-    public $perPage = 10;
+    public $perPage = 1;
 
     protected $rules = [
         'name' => 'required|min:2|max:100',
@@ -159,6 +159,9 @@ class CategoryManager extends Component
             if ($category->hasChildren()) {
                 $this->errorAlert('Cannot delete a category with subcategories!');
             } else {
+                if ($category->image) {
+                    \Storage::disk('uploads')->delete($category->image);
+                }
                 $category->delete();
                 $this->successAlert('Category deleted successfully!');
             }
@@ -215,7 +218,6 @@ class CategoryManager extends Component
         return view('livewire.admin.category-manager', [
             'categories' => $categories,
             'parentCategories' => $parentCategories,
-        ])
-            ->layout('admin.layouts.app');
+        ])->layout('admin.layouts.app');
     }
 }
