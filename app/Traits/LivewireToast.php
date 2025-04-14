@@ -13,22 +13,22 @@ trait LivewireToast
         ]);
     }
 
-    public function success($message, $title = 'Success')
+    public function successAlert($message, $title = 'Success')
     {
         $this->toast('success', $message, $title);
     }
 
-    public function error($message, $title = 'Error')
+    public function errorAlert($message, $title = 'Error')
     {
         $this->toast('error', $message, $title);
     }
 
-    public function info($message, $title = 'Info')
+    public function infoAlert($message, $title = 'Info')
     {
         $this->toast('info', $message, $title);
     }
 
-    public function warning($message, $title = 'Warning')
+    public function warningAlert($message, $title = 'Warning')
     {
         $this->toast('warning', $message, $title);
     }

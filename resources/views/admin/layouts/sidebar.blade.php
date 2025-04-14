@@ -1,13 +1,14 @@
 <div class="dashboard-sidebar">
     <button type="button" class="dashboard-sidebar__close d-lg-none d-flex"><i class="las la-times"></i></button>
     <div class="dashboard-sidebar__inner">
-        <a href="{{route('admin.index')}}" wire:navigate class="logo mb-48">
+        <a href="{{ route('admin.index') }}" wire:navigate class="logo mb-48">
             <img src="{{ my_asset($settings->logo) }}" alt="" class="white-version main-logo">
             <img src="{{ my_asset($settings->logo) }}" alt="" class="dark-version main-logo">
         </a>
-        <a href="{{route('admin.index')}}" wire:navigate class="logo favicon mb-48">
+        <a href="{{ route('admin.index') }}" wire:navigate class="logo favicon mb-48">
             <img src="{{ my_asset($settings->favicon) }}" alt="" class=" main-logo">
         </a>
+
 
         <!-- Sidebar List Start -->
         <ul class="sidebar-list">
@@ -21,37 +22,56 @@
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="dashboard-profile.html" class="sidebar-list__link">
+                <a href="{{route('admin.categories')}}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon2.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active2.svg') }}" alt="" class="icon icon-active">
+                        <i class="fa fa-tags icon"></i>
+                        <i class="fa fa-tags icon-active"></i>
                     </span>
-                    <span class="text">Profile</span>
+                    <span class="text">Categories</span>
                 </a>
             </li>
             <li class="sidebar-list__item side-hsb">
                 <a href="javascript:void(0)" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon2.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active2.svg') }}" alt="" class="icon icon-active">
+                        <i class="fa fa-users icon-active"></i>
+                        <i class="fa fa-users icon"></i>
                     </span>
-                    <span class="text">Johnson</span>
+                    <span class="text">Products</span>
                 </a>
                 <ul class="side-submenu">
                     <li class="nav-submenu__item">
-                        <a href="#" class="nav-submenu__link">Edit Profile</a>
+                        <a href="#" class="nav-submenu__link">Add</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="{{route('admin.dashboard')}}" wire:navigate class="nav-submenu__link">Settings</a>
+                        <a href="{{ route('admin.dashboard') }}" wire:navigate class="nav-submenu__link">Listing</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="#" class="nav-submenu__link">Security</a>
+                        <a href="#" class="nav-submenu__link">others</a>
                     </li>
                 </ul>
             </li>
-            <style>
-            </style>
 
+
+            <li class="sidebar-list__item side-hsb">
+                <a href="javascript:void(0)" class="sidebar-list__link">
+                    <span class="sidebar-list__icon">
+                        <img src="{{ static_asset('images/icons/sidebar-icon10.svg') }}" alt="" class="icon">
+                        <img src="{{ static_asset('images/icons/sidebar-icon-active10.svg') }}" alt="" class="icon icon-active">
+                    </span>
+                    <span class="text">Settings</span>
+                </a>
+                <ul class="side-submenu">
+                    <li class="nav-submenu__item">
+                        <a href="#" class="nav-submenu__link">General </a>
+                    </li>
+                    <li class="nav-submenu__item">
+                        <a href="{{ route('admin.dashboard') }}" wire:navigate class="nav-submenu__link">Listing</a>
+                    </li>
+                    <li class="nav-submenu__item">
+                        <a href="#" class="nav-submenu__link">others</a>
+                    </li>
+                </ul>
+            </li>
 
             <li class="sidebar-list__item">
                 <a href="follower.html" class="sidebar-list__link">
