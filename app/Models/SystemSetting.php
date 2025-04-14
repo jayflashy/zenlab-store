@@ -10,7 +10,7 @@ class SystemSetting extends Model
     protected static function boot()
     {
         parent::boot();
-        static::saved(function () {
+        static::saved(function (): void {
             Cache::forget('SystemSettings');
         });
     }
