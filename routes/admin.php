@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Livewire\Admin\CategoryManager;
 use App\Livewire\Admin\Dashboard;
 
@@ -12,4 +13,7 @@ Route::middleware('admin')->group(function (): void {
 
     // categories
     Route::get('categories', CategoryManager::class)->name('categories');
+
+    // Blogs
+    Route::resource('blogs2', BlogController::class)->names('blogs');
 });

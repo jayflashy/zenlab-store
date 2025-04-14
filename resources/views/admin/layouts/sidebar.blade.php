@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="{{route('admin.categories')}}" wire:navigate class="sidebar-list__link">
+                <a href="{{ route('admin.categories') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="fa fa-tags icon"></i>
                         <i class="fa fa-tags icon-active"></i>
@@ -51,6 +51,24 @@
                 </ul>
             </li>
 
+            <!-- Blog -->
+            <li class="sidebar-list__item side-hsb">
+                <a href="javascript:void(0)" class="sidebar-list__link">
+                    <span class="sidebar-list__icon">
+                        <i class="fa fa-blog icon"></i>
+                        <i class="fa fa-blog icon-active"></i>
+                    </span>
+                    <span class="text">Blogs</span>
+                </a>
+                <ul class="side-submenu">
+                    <li class="nav-submenu__item">
+                        <a href="{{ route('admin.blogs.create') }}" wire:navigate class="nav-submenu__link">Add Post</a>
+                    </li>
+                    <li class="nav-submenu__item">
+                        <a href="{{ route('admin.blogs.index') }}" wire:navigate class="nav-submenu__link">All Posts</a>
+                    </li>
+                </ul>
+            </li>
 
             <li class="sidebar-list__item side-hsb">
                 <a href="javascript:void(0)" class="sidebar-list__link">
@@ -73,6 +91,7 @@
                 </ul>
             </li>
 
+            {{-- OLDD --}}
             <li class="sidebar-list__item">
                 <a href="follower.html" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
