@@ -43,16 +43,6 @@ class ExceptionHandler
                     'status'  => 'error',
                     'message' => 'Resource not found.',
                 ], 404);
-            } elseif ($exception instanceof ThrottleRequestsException) {
-                return response()->json([
-                    'status'  => 'error',
-                    'message' => 'Too Many Requests.',
-                ], 429);
-            } elseif ($exception instanceof NotFoundHttpException) {
-                return response()->json([
-                    'status'  => 'error',
-                    'message' => 'The requested resource was not found.',
-                ], 404);
             } elseif ($exception instanceof AuthenticationException) {
                 return response()->json([
                     'status'  => 'error',

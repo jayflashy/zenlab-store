@@ -55,8 +55,16 @@ class CategoryManager extends Component
     public function create()
     {
         $this->reset([
-            'name', 'slug', 'description', 'image', 'icon',
-            'isActive', 'parentId', 'sortOrder', 'metaTitle', 'metaDescription',
+            'name',
+            'slug',
+            'description',
+            'image',
+            'icon',
+            'isActive',
+            'parentId',
+            'sortOrder',
+            'metaTitle',
+            'metaDescription',
             'editingCategoryId'
         ]);
         $this->isActive = true;
@@ -99,9 +107,18 @@ class CategoryManager extends Component
         }
 
         $this->reset([
-            'name', 'slug', 'description', 'image', 'icon',
-            'isActive', 'parentId', 'sortOrder', 'metaTitle', 'metaDescription',
-            'editingCategoryId', 'isCreating'
+            'name',
+            'slug',
+            'description',
+            'image',
+            'icon',
+            'isActive',
+            'parentId',
+            'sortOrder',
+            'metaTitle',
+            'metaDescription',
+            'editingCategoryId',
+            'isCreating'
         ]);
     }
 
@@ -157,9 +174,18 @@ class CategoryManager extends Component
     public function cancelEdit()
     {
         $this->reset([
-            'name', 'slug', 'description', 'image', 'icon',
-            'isActive', 'parentId', 'sortOrder', 'metaTitle', 'metaDescription',
-            'editingCategoryId', 'isCreating'
+            'name',
+            'slug',
+            'description',
+            'image',
+            'icon',
+            'isActive',
+            'parentId',
+            'sortOrder',
+            'metaTitle',
+            'metaDescription',
+            'editingCategoryId',
+            'isCreating'
         ]);
     }
 
@@ -187,7 +213,6 @@ class CategoryManager extends Component
             'categories' => $categories,
             'parentCategories' => $parentCategories,
         ])
-        ->layout('admin.layouts.app');
+            ->layout('admin.layouts.app');
     }
 }
-
