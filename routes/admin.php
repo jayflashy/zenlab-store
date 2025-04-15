@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\BlogController;
 use App\Livewire\Admin\BlogManager;
 use App\Livewire\Admin\CategoryManager;
 use App\Livewire\Admin\Dashboard;
