@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use Throwable;
 use App\Models\Blog;
 use App\Traits\LivewireToast;
 use Illuminate\Support\Facades\Storage;
@@ -53,7 +54,7 @@ class BlogManager extends Component
 
     public $confirmingDelete = false;
 
-    public $deleteId = null;
+    public $deleteId;
 
     protected $queryString = ['search', 'sortField', 'sortDirection'];
 
@@ -68,7 +69,7 @@ class BlogManager extends Component
         'metadata' => 'nullable',
     ];
 
-    public function mount($id = null)
+    public function mount($id = null): void
     {
         $routeName = request()->route()->getName();
 
@@ -82,12 +83,12 @@ class BlogManager extends Component
         }
     }
 
-    public function updatedTitle()
+    public function updatedTitle(): void
     {
         $this->slug = Str::slug($this->title);
     }
 
-    public function updatedImage()
+    public function updatedImage(): void
     {
         $this->validate([
             'image' => 'image|max:2048',
@@ -95,14 +96,14 @@ class BlogManager extends Component
         $this->tempImage = true;
     }
 
-    public function removeImage()
+    public function removeImage(): void
     {
         $this->image = null;
         $this->tempImage = false;
         $this->existingImage = null;
     }
 
-    public function sortBy($field)
+    public function sortBy($field): void
     {
         if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
@@ -112,18 +113,18 @@ class BlogManager extends Component
         }
     }
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function showCreateForm()
+    public function showCreateForm(): void
     {
         $this->resetForm();
         $this->view = 'create';
     }
 
-    public function showEditForm($id)
+    public function showEditForm($id): void
     {
         $this->resetForm();
 
@@ -141,13 +142,13 @@ class BlogManager extends Component
         $this->view = 'edit';
     }
 
-    public function backToList()
+    public function backToList(): void
     {
         $this->view = 'list';
         $this->resetForm();
     }
 
-    public function resetForm()
+    public function resetForm(): void
     {
         $this->reset([
             'blogId',
@@ -165,19 +166,19 @@ class BlogManager extends Component
         $this->resetErrorBag();
     }
 
-    public function confirmDelete($id)
+    public function confirmDelete($id): void
     {
         $this->deleteId = $id;
         $this->confirmingDelete = true;
     }
 
-    public function cancelDelete()
+    public function cancelDelete(): void
     {
         $this->deleteId = null;
         $this->confirmingDelete = false;
     }
 
-    public function deleteBlog()
+    public function deleteBlog(): void
     {
         $blog = Blog::findOrFail($this->deleteId);
 
@@ -185,7 +186,7 @@ class BlogManager extends Component
         if ($blog->image) {
             try {
                 Storage::disk('uploads')->delete($blog->image);
-            } catch (\Throwable $th) {
+            } catch (Throwable) {
                 // Continue if file doesn't exist
             }
         }
@@ -198,7 +199,7 @@ class BlogManager extends Component
         $this->successAlert('Blog deleted successfully');
     }
 
-    public function save()
+    public function save(): void
     {
         if ($this->view === 'edit') {
             $this->update();
@@ -259,6 +260,7 @@ class BlogManager extends Component
             if ($blog->image) {
                 Storage::disk('uploads')->delete($blog->image);
             }
+
             // Save new image
             $imagePath = Storage::disk('uploads')->putFile('blogs', $this->image);
             $blog->image = $imagePath;

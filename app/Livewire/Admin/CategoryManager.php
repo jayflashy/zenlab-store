@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use Storage;
 use App\Models\Category;
 use App\Traits\LivewireToast;
 use Livewire\Component;
@@ -11,8 +12,9 @@ use Str;
 
 class CategoryManager extends Component
 {
-    use LivewireToast, WithFileUploads, WithPagination;
-
+    use LivewireToast;
+    use WithFileUploads;
+    use WithPagination;
     public $name = '';
 
     public $slug = '';
@@ -25,7 +27,7 @@ class CategoryManager extends Component
 
     public $isActive = true;
 
-    public $parentId = null;
+    public $parentId;
 
     public $sortOrder = 0;
 
@@ -33,13 +35,13 @@ class CategoryManager extends Component
 
     public $metaDescription = '';
 
-    public $editingCategoryId = null;
+    public $editingCategoryId;
 
     public $isCreating = false;
 
     public $confirmingCategoryDeletion = false;
 
-    public $categoryIdToDelete = null;
+    public $categoryIdToDelete;
 
     public $searchTerm = '';
 
@@ -60,12 +62,12 @@ class CategoryManager extends Component
         'metaDescription' => 'nullable|max:255',
     ];
 
-    public function updatedName()
+    public function updatedName(): void
     {
-        $this->slug = \Str::slug($this->name);
+        $this->slug = Str::slug($this->name);
     }
 
-    public function create()
+    public function create(): void
     {
         $this->reset([
             'name',
@@ -85,7 +87,7 @@ class CategoryManager extends Component
         $this->isCreating = true;
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
 
@@ -113,8 +115,9 @@ class CategoryManager extends Component
         if ($this->editingCategoryId) {
             $category = Category::find($this->editingCategoryId);
             if ($category->image) {
-                \Storage::disk('uploads')->delete($category->image);
+                Storage::disk('uploads')->delete($category->image);
             }
+
             $category->update($categoryData);
             $this->successAlert('Category updated successfully!');
         } else {
@@ -138,7 +141,7 @@ class CategoryManager extends Component
         ]);
     }
 
-    public function edit(Category $category)
+    public function edit(Category $category): void
     {
         $this->editingCategoryId = $category->id;
         $this->name = $category->name;
@@ -157,13 +160,13 @@ class CategoryManager extends Component
         $this->isCreating = true;
     }
 
-    public function confirmDelete($categoryId)
+    public function confirmDelete($categoryId): void
     {
         $this->confirmingCategoryDeletion = true;
         $this->categoryIdToDelete = $categoryId;
     }
 
-    public function deleteCategory()
+    public function deleteCategory(): void
     {
         $category = Category::find($this->categoryIdToDelete);
 
@@ -173,8 +176,9 @@ class CategoryManager extends Component
                 $this->errorAlert('Cannot delete a category with subcategories!');
             } else {
                 if ($category->image) {
-                    \Storage::disk('uploads')->delete($category->image);
+                    Storage::disk('uploads')->delete($category->image);
                 }
+
                 $category->delete();
                 $this->successAlert('Category deleted successfully!');
             }
@@ -184,13 +188,13 @@ class CategoryManager extends Component
         $this->categoryIdToDelete = null;
     }
 
-    public function cancelDelete()
+    public function cancelDelete(): void
     {
         $this->confirmingCategoryDeletion = false;
         $this->categoryIdToDelete = null;
     }
 
-    public function cancelEdit()
+    public function cancelEdit(): void
     {
         $this->reset([
             'name',
@@ -211,13 +215,9 @@ class CategoryManager extends Component
     public function render()
     {
         $categories = Category::query()
-            ->when($this->searchTerm, function ($q) {
-                return $q->where('name', 'like', '%'.$this->searchTerm.'%')
-                    ->orWhere('slug', 'like', '%'.$this->searchTerm.'%');
-            })
-            ->when(! $this->showInactive, function ($q) {
-                return $q->where('is_active', true);
-            })
+            ->when($this->searchTerm, fn($q) => $q->where('name', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('slug', 'like', '%'.$this->searchTerm.'%'))
+            ->when(! $this->showInactive, fn($q) => $q->where('is_active', true))
             ->with('parent')
             ->withCount('children')
             ->orderBy('order')

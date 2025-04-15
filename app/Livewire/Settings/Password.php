@@ -26,10 +26,10 @@ class Password extends Component
                 'current_password' => ['required', 'string', 'current_password'],
                 'password' => ['required', 'string', PasswordRule::defaults(), 'confirmed'],
             ]);
-        } catch (ValidationException $e) {
+        } catch (ValidationException $validationException) {
             $this->reset('current_password', 'password', 'password_confirmation');
 
-            throw $e;
+            throw $validationException;
         }
 
         Auth::user()->update([

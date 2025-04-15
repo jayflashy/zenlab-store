@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\Admin;
+use App\Http\Middleware\AdminGuest;
 use App\Exceptions\ExceptionHandler;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,12 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         //
         $middleware->alias([
-            'admin' => \App\Http\Middleware\Admin::class,
-            'admin.guest' => \App\Http\Middleware\AdminGuest::class,
+            'admin' => Admin::class,
+            'admin.guest' => AdminGuest::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (Throwable $exception, Request $request) {
-            return (new ExceptionHandler)->handle($exception, $request);
-        });
+        $exceptions->render(fn(Throwable $exception, Request $request) => (new ExceptionHandler)->handle($exception, $request));
     })->create();

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Log;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -53,7 +54,7 @@ class ExceptionHandler
                 ], 403);
             } else {
                 // Log the exception and return a generic error message
-                \Log::error($exception);
+                Log::error($exception);
                 $response = [
                     'status' => 'error',
                     'message' => app()->environment('local') ? $exception->getMessage() : $mes,

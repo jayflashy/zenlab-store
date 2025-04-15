@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasUlids, SoftDeletes;
-
+    use HasUlids;
+    use SoftDeletes;
     protected $fillable = [
         'name',
         'slug',
@@ -60,7 +60,7 @@ class Category extends Model
     }
 
     // Check if category has children
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return $this->children()->count() > 0;
     }
