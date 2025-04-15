@@ -6,12 +6,21 @@ parameters:
 
     paths:
         - app/
+        - routes
+        - tests
 
     # Level 10 is the highest level
     level: 5
 
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
-#
+    treatPhpDocTypesAsCertain: false
+
+    ignoreErrors:
+        - '#PHPDoc tag @var#'
+
+    # Add Laravel Model properties
+    universalObjectCratesClasses:
+        - Illuminate\Database\Eloquent\Model
+        - Illuminate\Http\Resources\Json\JsonResource
+
 #    excludePaths:
 #        - ./*/*/FileToBeExcluded.php
