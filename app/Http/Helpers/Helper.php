@@ -98,12 +98,9 @@ function format_number($price, $place = 2)
 // Trim text and append ellipsis if needed
 function textTrim($string, $length = null)
 {
-    // Set default length to 100 if not provided
     if (empty($length)) {
         $length = 100;
     }
-
-    // Use Str::limit to trim the string and append ellipsis if needed
     return Str::limit($string, $length, '...');
 }
 
@@ -114,7 +111,6 @@ function text_trimer($string, $length = null)
     if (empty($length)) {
         $length = 100;
     }
-
     return Str::limit($string, $length);
 }
 

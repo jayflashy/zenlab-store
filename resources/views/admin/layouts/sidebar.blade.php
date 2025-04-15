@@ -65,7 +65,7 @@
                         <a href="{{ route('admin.blogs.create') }}" wire:navigate class="nav-submenu__link">Add Post</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.blogs.index') }}" wire:navigate class="nav-submenu__link">All Posts</a>
+                        <a href="{{ route('admin.blogs') }}" wire:navigate class="nav-submenu__link">All Posts</a>
                     </li>
                 </ul>
             </li>

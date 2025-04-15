@@ -32,7 +32,7 @@ class CategoryManager extends Component
 
     public $searchTerm = '';
     public $showInactive = false;
-    public $perPage = 1;
+    public $perPage = 10;
 
     protected $rules = [
         'name' => 'required|min:2|max:100',
