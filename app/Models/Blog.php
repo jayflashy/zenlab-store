@@ -37,23 +37,31 @@ class Blog extends Model
 
     /**
      * Get the route key for the model.
-     * 
+     *
      * @return string
      */
     public function getRouteKeyName()
     {
         return 'slug';
     }
-
+    /**
+     * Scope for active blog
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
     /**
      * Get the blog's featured image URL.
-     * 
+     *
      * @return string
      */
     public function getImageUrlAttribute()
     {
         if (!$this->image) {
-            return null;
+            return  my_asset('blogs/default.png');
         }
 
         return my_asset( $this->image);
