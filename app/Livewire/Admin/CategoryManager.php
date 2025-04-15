@@ -10,28 +10,41 @@ use Livewire\WithPagination;
 use Str;
 
 class CategoryManager extends Component
-
 {
-    use LivewireToast, WithPagination, WithFileUploads;
+    use LivewireToast, WithFileUploads, WithPagination;
 
     public $name = '';
+
     public $slug = '';
+
     public $description = '';
+
     public $image;
+
     public $icon = '';
+
     public $isActive = true;
+
     public $parentId = null;
+
     public $sortOrder = 0;
+
     public $metaTitle = '';
+
     public $metaDescription = '';
 
     public $editingCategoryId = null;
+
     public $isCreating = false;
+
     public $confirmingCategoryDeletion = false;
+
     public $categoryIdToDelete = null;
 
     public $searchTerm = '';
+
     public $showInactive = false;
+
     public $perPage = 10;
 
     protected $rules = [
@@ -65,7 +78,7 @@ class CategoryManager extends Component
             'sortOrder',
             'metaTitle',
             'metaDescription',
-            'editingCategoryId'
+            'editingCategoryId',
         ]);
         $this->isActive = true;
         $this->sortOrder = 0;
@@ -121,7 +134,7 @@ class CategoryManager extends Component
             'metaTitle',
             'metaDescription',
             'editingCategoryId',
-            'isCreating'
+            'isCreating',
         ]);
     }
 
@@ -191,7 +204,7 @@ class CategoryManager extends Component
             'metaTitle',
             'metaDescription',
             'editingCategoryId',
-            'isCreating'
+            'isCreating',
         ]);
     }
 
@@ -199,10 +212,10 @@ class CategoryManager extends Component
     {
         $categories = Category::query()
             ->when($this->searchTerm, function ($q) {
-                return $q->where('name', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('slug', 'like', '%' . $this->searchTerm . '%');
+                return $q->where('name', 'like', '%'.$this->searchTerm.'%')
+                    ->orWhere('slug', 'like', '%'.$this->searchTerm.'%');
             })
-            ->when(!$this->showInactive, function ($q) {
+            ->when(! $this->showInactive, function ($q) {
                 return $q->where('is_active', true);
             })
             ->with('parent')

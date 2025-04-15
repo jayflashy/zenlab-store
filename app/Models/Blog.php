@@ -22,7 +22,7 @@ class Blog extends Model
         'about',
         'tags',
         'is_active',
-        'metadata'
+        'metadata',
     ];
 
     /**
@@ -44,6 +44,7 @@ class Blog extends Model
     {
         return 'slug';
     }
+
     /**
      * Scope for active blog
      *
@@ -53,6 +54,7 @@ class Blog extends Model
     {
         return $query->where('is_active', true);
     }
+
     /**
      * Get the blog's featured image URL.
      *
@@ -60,10 +62,10 @@ class Blog extends Model
      */
     public function getImageUrlAttribute()
     {
-        if (!$this->image) {
-            return  my_asset('blogs/default.png');
+        if (! $this->image) {
+            return my_asset('blogs/default.png');
         }
 
-        return my_asset( $this->image);
+        return my_asset($this->image);
     }
 }

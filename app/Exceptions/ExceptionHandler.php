@@ -6,12 +6,10 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class ExceptionHandler
@@ -23,7 +21,7 @@ class ExceptionHandler
             $statusCode = 500;
             $mes = 'An unexpected error occurred. Try again';
             $response = [
-                'status'  => 'error',
+                'status' => 'error',
                 'message' => $mes,
             ];
 
@@ -34,30 +32,30 @@ class ExceptionHandler
                 $response['message'] = $exception->getMessage();
             } elseif ($exception instanceof ValidationException) {
                 return new JsonResponse([
-                    'status'  => 'error',
+                    'status' => 'error',
                     'message' => $exception->getMessage(),
-                    'errors'  => $exception->errors(),
+                    'errors' => $exception->errors(),
                 ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
             } elseif ($exception instanceof ModelNotFoundException) {
                 return new JsonResponse([
-                    'status'  => 'error',
+                    'status' => 'error',
                     'message' => 'Resource not found.',
                 ], 404);
             } elseif ($exception instanceof AuthenticationException) {
                 return response()->json([
-                    'status'  => 'error',
+                    'status' => 'error',
                     'message' => 'Authentication required. Login to continue',
                 ], 401);
             } elseif ($exception instanceof AuthorizationException) {
                 return response()->json([
-                    'status'  => 'error',
+                    'status' => 'error',
                     'message' => 'This action is unauthorized.',
                 ], 403);
             } else {
                 // Log the exception and return a generic error message
                 \Log::error($exception);
                 $response = [
-                    'status'  => 'error',
+                    'status' => 'error',
                     'message' => app()->environment('local') ? $exception->getMessage() : $mes,
                 ];
 

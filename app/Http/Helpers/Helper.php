@@ -101,6 +101,7 @@ function textTrim($string, $length = null)
     if (empty($length)) {
         $length = 100;
     }
+
     return Str::limit($string, $length, '...');
 }
 
@@ -111,6 +112,7 @@ function text_trimer($string, $length = null)
     if (empty($length)) {
         $length = 100;
     }
+
     return Str::limit($string, $length);
 }
 

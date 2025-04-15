@@ -8,9 +8,10 @@ use Livewire\Component;
 class Dashboard extends Component
 {
     use LivewireToast;
+
     public function render()
     {
         return view('livewire.admin.dashboard')
-        ->layout('admin.layouts.app');
+            ->layout('admin.layouts.app');
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Blog;
 use App\Traits\LivewireToast;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use App\Models\Blog;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 class BlogManager extends Component
 {
@@ -20,25 +20,39 @@ class BlogManager extends Component
 
     // List view properties
     public $search = '';
+
     public $sortField = 'created_at';
+
     public $sortDirection = 'desc';
 
     // Form properties
     public $blogId;
+
     public $title;
+
     public $slug;
+
     public $body;
+
     public $image;
+
     public $tempImage;
+
     public $existingImage;
+
     public $about;
+
     public $tags;
+
     public $is_active = true;
+
     public $metadata = [];
 
     // UI state
     public $view = 'list'; // 'list', 'create', 'edit'
+
     public $confirmingDelete = false;
+
     public $deleteId = null;
 
     protected $queryString = ['search', 'sortField', 'sortDirection'];
@@ -67,7 +81,6 @@ class BlogManager extends Component
             $this->view = 'list';
         }
     }
-
 
     public function updatedTitle()
     {
@@ -147,7 +160,7 @@ class BlogManager extends Component
             'about',
             'tags',
             'is_active',
-            'metadata'
+            'metadata',
         ]);
         $this->resetErrorBag();
     }
@@ -200,7 +213,7 @@ class BlogManager extends Component
         $this->rules['image'] = 'required|image|max:2048';
         $this->validate();
 
-        $blog = new Blog();
+        $blog = new Blog;
         $blog->title = $this->title;
         $blog->slug = $this->generateUniqueSlug($this->title);
         $blog->body = $this->body;
@@ -288,9 +301,9 @@ class BlogManager extends Component
 
         if ($this->view === 'list') {
             $blogs = Blog::when($this->search, function ($query): void {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('tags', 'like', '%' . $this->search . '%')
-                    ->orWhere('about', 'like', '%' . $this->search . '%');
+                $query->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('tags', 'like', '%'.$this->search.'%')
+                    ->orWhere('about', 'like', '%'.$this->search.'%');
             })
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10);
