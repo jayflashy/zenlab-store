@@ -20,19 +20,19 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.4
+          php-version: 8.3
           tools: composer:v2
           coverage: xdebug
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
           cache: 'npm'
 
       - name: Install Node Dependencies
         run: npm i
-        
+
       - name: Create SQLite Database File
         run: |
           mkdir -p database
@@ -44,7 +44,11 @@ jobs:
       - name: Copy Environment File
         run: cp .env.example .env
 
-      
+      - name: Configure Database
+        run: |
+          echo "DB_CONNECTION=sqlite" >> .env
+          echo "DB_DATABASE=database/database.sqlite" >> .env
+
       - name: Generate Application Key
         run: php artisan key:generate
 
@@ -52,7 +56,7 @@ jobs:
         run: npm run build
 
       - name: Run Tests
-        run: ./vendor/bin/pest
+        run: ./vendor/bin/pest --test
 
       - name: Run PHPStan
         run: ./vendor/bin/phpstan analyse
