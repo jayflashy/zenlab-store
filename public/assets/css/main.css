@@ -10999,3 +10999,6 @@ input[type=number] {
 .dash-body {
     padding: 24px;
 }
+[data-theme=light] .image-upload-wrapper {
+    background: #fff; /* Was #171830 which is dark */
+}
