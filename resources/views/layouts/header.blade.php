@@ -28,21 +28,6 @@
                             <li class="nav-submenu__item">
                                 <a href="profile.html" class="nav-submenu__link"> Profile</a>
                             </li>
-                            <li class="nav-submenu__item">
-                                <a href="cart.html" class="nav-submenu__link"> Shopping Cart</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="cart-personal.html" class="nav-submenu__link"> Mailing Address</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="cart-payment.html" class="nav-submenu__link"> Payment Method</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="cart-thank-you.html" class="nav-submenu__link"> Preview Order</a>
-                            </li>
-                            <li class="nav-submenu__item">
-                                <a href="dashboard.html" class="nav-submenu__link"> Dashboard</a>
-                            </li>
                         </ul>
                     </li>
                     <li class="nav-menu__item">

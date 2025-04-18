@@ -3,7 +3,6 @@
 
 <head>
     @include('layouts.partials.head')
-    @yield('meta')
 </head>
 
 <body>
@@ -33,7 +32,8 @@
 
                 <div class="dashboard-body__content">
                     {{-- page content --}}
-                    {{ $slot }}
+                    {{ $slot ?? '' }}
+                    @yield('content')
                 </div>
 
                 {{-- Footer --}}

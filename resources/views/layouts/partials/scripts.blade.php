@@ -8,5 +8,6 @@
     data-update-uri="{{ url('livewire/update') }}" data-navigate-once="true"></script>
 
 @stack('scripts')
+@yield('scripts')
 
 @include('inc.scripts')

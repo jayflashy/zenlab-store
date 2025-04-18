@@ -1,0 +1,36 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+   #- phpstan-baseline.neon
+
+parameters:
+
+    paths:
+        - app/
+        - routes
+        - tests
+
+    # Level 10 is the highest level
+    level: 6
+
+    # Improved error formatting
+    reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false
+
+    # Cache analysis for better performance
+    tmpDir: storage/framework/cache/phpstan
+
+    # Enable parallel analysis for faster execution
+    parallel:
+        maximumNumberOfProcesses: 4
+
+    ignoreErrors:
+        - '#PHPDoc tag @var#'
+
+    # Add Laravel Model properties
+    universalObjectCratesClasses:
+        - Illuminate\Database\Eloquent\Model
+        - Illuminate\Http\Resources\Json\JsonResource
+
+#    excludePaths:
+#        - ./*/*/FileToBeExcluded.php

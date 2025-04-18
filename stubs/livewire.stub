@@ -11,6 +11,6 @@ class [class] extends Component
     public function render()
     {
         return view('[view]')
-        ->layout('user.layouts.app');
+        ->layout('admin.layouts.app');
     }
 }
