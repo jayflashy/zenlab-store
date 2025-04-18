@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Admin;
 
-use Storage;
 use App\Models\Category;
 use App\Traits\LivewireToast;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Storage;
 use Str;
 
 class CategoryManager extends Component
@@ -15,6 +15,7 @@ class CategoryManager extends Component
     use LivewireToast;
     use WithFileUploads;
     use WithPagination;
+
     public $name = '';
 
     public $slug = '';
@@ -215,9 +216,9 @@ class CategoryManager extends Component
     public function render()
     {
         $categories = Category::query()
-            ->when($this->searchTerm, fn($q) => $q->where('name', 'like', '%'.$this->searchTerm.'%')
+            ->when($this->searchTerm, fn ($q) => $q->where('name', 'like', '%'.$this->searchTerm.'%')
                 ->orWhere('slug', 'like', '%'.$this->searchTerm.'%'))
-            ->when(! $this->showInactive, fn($q) => $q->where('is_active', true))
+            ->when(! $this->showInactive, fn ($q) => $q->where('is_active', true))
             ->with('parent')
             ->withCount('children')
             ->orderBy('order')

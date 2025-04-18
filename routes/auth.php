@@ -1,7 +1,7 @@
 <?php
 
-use App\Livewire\Actions\Logout;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Livewire\Actions\Logout;
 use App\Livewire\Auth\ConfirmPassword;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;

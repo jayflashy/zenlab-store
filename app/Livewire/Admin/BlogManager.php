@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin;
 
-use Throwable;
 use App\Models\Blog;
 use App\Traits\LivewireToast;
 use Illuminate\Support\Facades\Storage;
@@ -10,6 +9,7 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Throwable;
 
 class BlogManager extends Component
 {

@@ -1,9 +1,9 @@
 <?php
 
-use Carbon\Carbon;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Models\SystemSetting;
+use Carbon\Carbon;
 
 if (! function_exists('static_asset')) {
     function static_asset(string $path, $secure = null)
@@ -284,5 +284,5 @@ function queryBuild(string $key, $value): ?string
 // footer pages
 function footerPages($count = 3)
 {
-    return Cache::remember("footerPages_{$count}", 16000, fn() => Page::where('type', 'custom')->limit($count)->get());
+    return Cache::remember("footerPages_{$count}", 16000, fn () => Page::where('type', 'custom')->limit($count)->get());
 }

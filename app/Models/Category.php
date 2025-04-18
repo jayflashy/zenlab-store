@@ -10,6 +10,7 @@ class Category extends Model
 {
     use HasUlids;
     use SoftDeletes;
+
     protected $fillable = [
         'name',
         'slug',
