@@ -5,7 +5,6 @@ namespace App\Providers;
 use Carbon\CarbonImmutable;
 use Date;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use View;
 
