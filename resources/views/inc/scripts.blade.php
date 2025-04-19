@@ -21,10 +21,11 @@
 
         toastr.info('Copied Successfully', "Success");
     }
-
-    window.addEventListener('alert', event => {
-        event.detail.forEach(({ type, message, title }) => {
-            toastr[type](message, title ?? 'Successful');
+    document.addEventListener("DOMContentLoaded", () => {
+        window.addEventListener('alert', event => {
+            event.detail.forEach(({ type, message, title }) => {
+                toastr[type](message, title ?? 'Successful');
+            });
         });
     });
     document.addEventListener('livewire:navigating', () => {
