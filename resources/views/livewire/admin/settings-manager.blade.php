@@ -212,8 +212,9 @@
                                 <input type="hidden" name="types[]" value="FLW_SECRET_KEY">
                                 <label class="form-label">{{ __('FLW SECRET KEY') }}</label>
                                 <input type="text" class="common-input border" name="FLW_SECRET_KEY"
-                                    value="{{ env('FLW_SECRET_KEY') }}" placeholder="FLUTTERWAVE PUBLIC KEY" required>
-                            </div>
+                                    <input type="text" class="common-input border" name="FLW_SECRET_KEY"
+                                        value="{{ env('FLW_SECRET_KEY') }}" placeholder="FLUTTERWAVE SECRET KEY" required>
+                                </div>
                             <div class="form-group mb-0 text-end">
                                 <button type="submit" class="btn btn-sm w-100 btn-main">{{ __('Save') }}</button>
                             </div>
