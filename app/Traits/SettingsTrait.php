@@ -121,7 +121,12 @@ trait SettingsTrait
         return true;
     }
 
-    public function systemSetUpdate($request): int
+    public function systemSetUpdate($request): bool
+    {
+        // ... existing implementation ...
+
+        return true;
+    }
     {
         $setting = SystemSetting::where('name', $request->name)->first();
         if ($setting != null) {
