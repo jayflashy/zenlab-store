@@ -34,15 +34,15 @@
                     <textarea name="description" id="description" rows="3" class="common-input border" placeholder="Enter website description">{{ $settings->description }}</textarea>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="meta_description" class="form-label">@lang('Website About')</label>
+                    <label for="meta_description" class="form-label">@lang('Meta Description')</label>
                     <textarea name="meta_description" id="meta_description" rows="3" class="common-input border" placeholder="Meta description">{{ $settings->meta_description }}</textarea>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="meta_keywords" class="form-label">@lang('Website Keywords')</label>
-                    <textarea name="meta_keywords" id="meta_keywords" rows="3" class="common-input border" placeholder="Enter website meta_keywords">{{ $settings->meta_keywords }}</textarea>
+                    <textarea name="meta_keywords" id="meta_keywords" rows="2" class="common-input border" placeholder="Enter website meta_keywords">{{ $settings->meta_keywords }}</textarea>
                 </div>
 
-                <button class="btn btn-primary w-100" type="submit">Save Settings</button>
+                <button class="btn btn-main w-100" type="submit">Save Settings</button>
             </form>
         </div>
     </div>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="w-100">
-                    <button class="btn btn-primary w-100" type="submit">@lang('Update Setting')</button>
+                    <button class="btn btn-main w-100" type="submit">@lang('Update Setting')</button>
                 </div>
             </form>
         </div>
@@ -109,7 +109,7 @@
                 </div>
 
                 <div class="form-group mb-0">
-                    <button class="btn btn-primary w-100" type="submit">Update Settings</button>
+                    <button class="btn btn-main w-100" type="submit">Update Settings</button>
                 </div>
             </form>
         </div>
@@ -136,7 +136,7 @@
                         placeholder="Currency rate" />
                 </div>
                 <div class="w-100">
-                    <button class="btn btn-primary w-100" type="submit">@lang('Update Setting')</button>
+                    <button class="btn btn-main w-100" type="submit">@lang('Update Setting')</button>
                 </div>
             </form>
         </div>
