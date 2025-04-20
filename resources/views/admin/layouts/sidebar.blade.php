@@ -151,8 +151,8 @@
                     <span class="text">Email</span>
                 </a>
                 <ul class="side-submenu">
-                    <li class="nav-submenu__item"><a href="#" wire:navigate class="nav-submenu__link">Templates</a></li>
-                    <li class="nav-submenu__item"><a href="#" wire:navigate class="nav-submenu__link">Settings</a></li>
+                    <li class="nav-submenu__item"><a href="{{route('admin.email.templates')}}" wire:navigate class="nav-submenu__link">Templates</a></li>
+                    <li class="nav-submenu__item"><a href="{{route('admin.email.settings')}}" wire:navigate class="nav-submenu__link">Settings</a></li>
                 </ul>
             </li>
 
