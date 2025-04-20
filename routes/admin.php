@@ -38,7 +38,7 @@ Route::middleware('admin')->group(function (): void {
     Route::get('settings/payments', SettingsManager::class)->name('settings.payments');
     Route::get('settings/{type?}', SettingsManager::class)->name('settings');
 
-    Route::controller(SettingsController::class)->as('settings.')->prefix('settings')->group(function () {
+    Route::controller(SettingsController::class)->as('settings.')->prefix('settings')->group(function (): void {
         Route::post('/update', 'update')->name('update');
         Route::post('/system', 'systemUpdate')->name('sys_settings');
         Route::post('/system/store', 'storeSettings')->name('store_settings');

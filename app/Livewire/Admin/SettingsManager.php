@@ -19,18 +19,19 @@ class SettingsManager extends Component
 
     public $sysSettings = [];
 
-    public function mount($type = 'index')
+    public function mount($type = 'index'): void
     {
         $this->view = 'index';
         if ($type == 'payments') {
             $this->showPayment();
         }
+
         if ($type == 'others') {
             $this->view = 'others';
         }
     }
 
-    public function showPayment()
+    public function showPayment(): void
     {
         $this->gateways = [
             ['name' => 'Paypal', 'key' => 'paypal_payment'],
@@ -43,10 +44,11 @@ class SettingsManager extends Component
         foreach ($this->gateways as $gateway) {
             $this->sysSettings[$gateway['key']] = (bool) sys_setting($gateway['key']);
         }
+
         $this->view = 'payments';
     }
 
-    public function updatedSysSettings($value, $key)
+    public function updatedSysSettings($value, $key): void
     {
         $this->systemSetUpdate(
             (object) [

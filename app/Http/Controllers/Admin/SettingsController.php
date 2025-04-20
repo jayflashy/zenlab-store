@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Http\Controllers\Admin;
@@ -51,7 +50,7 @@ class SettingsController extends Controller
         return back()->with('success', __('Settings Updated Successfully.'));
     }
 
-    public function systemUpdate(Request $request)
+    public function systemUpdate(Request $request): int
     {
         $this->systemSetUpdate($request);
 
@@ -99,6 +98,7 @@ class SettingsController extends Controller
             if (! in_array($type, $this->allowedEnvKeys, true)) {
                 continue;
             }
+
             $value = $request->values[$key] ?? null;
             $this->overWriteEnvFile($type, $value);
         }

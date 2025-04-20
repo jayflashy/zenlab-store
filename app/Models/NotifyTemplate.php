@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NotifyTemplate extends Model
 {
-    use HasUlids, SoftDeletes;
+    use HasUlids;
+    use SoftDeletes;
 
     protected $casts = [
         'shortcodes' => 'object',

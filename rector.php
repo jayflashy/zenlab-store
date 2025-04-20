@@ -28,6 +28,7 @@ return RectorConfig::configure()
     ->withPhpSets()
     ->withSets([
         LaravelSetList::LARAVEL_120,
+        SetList::PHP_83,
         SetList::CODING_STYLE,           // Removes unused code
         SetList::EARLY_RETURN,
         SetList::DEAD_CODE,
