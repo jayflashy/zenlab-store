@@ -27,6 +27,14 @@ return new class extends Migration
             $table->string('currency_code')->nullable();
             $table->string('currency_rate')->nullable();
             $table->string('secondary')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('telegram')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('whatsapp')->nullable();
+            $table->string('tiktok')->nullable();
+            $table->string('youtube')->nullable();
             $table->text('custom_css')->nullable();
             $table->text('custom_js')->nullable();
             $table->dateTime('last_cron')->nullable();

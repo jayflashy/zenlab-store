@@ -23,7 +23,6 @@ class Setting extends Model
         'title',
         'email',
         'admin_email',
-        'support_email',
         'name',
         'description',
         'address',
@@ -40,5 +39,15 @@ class Setting extends Model
         'currency_code',
         'currency_rate',
         'rejected_usernames',
+        'facebook',
+        'twitter',
+        'instagram',
+        'telegram',
+        'linkedin',
+        'whatsapp',
+        'meta_description',
+        'meta_keywords',
+        'tiktok',
+        'youtube',
     ];
 }

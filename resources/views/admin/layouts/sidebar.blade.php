@@ -166,13 +166,10 @@
                 </a>
                 <ul class="side-submenu">
                     <li class="nav-submenu__item">
-                        <a href="#" class="nav-submenu__link">General </a>
+                        <a href="{{route('admin.settings')}}" wire:navigate class="nav-submenu__link">General </a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.dashboard') }}" wire:navigate class="nav-submenu__link">Listing</a>
-                    </li>
-                    <li class="nav-submenu__item">
-                        <a href="#" class="nav-submenu__link">others</a>
+                        <a href="{{ route('admin.settings.payments') }}" wire:navigate class="nav-submenu__link">Payments</a>
                     </li>
                 </ul>
             </li>

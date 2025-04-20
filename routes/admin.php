@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\SettingsController;
 use App\Livewire\Admin\BlogManager;
 use App\Livewire\Admin\CategoryManager;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\EmailSetting;
 use App\Livewire\Admin\EmailTemplate;
 use App\Livewire\Admin\PageManager;
+use App\Livewire\Admin\SettingsManager;
 
 // Auth;
 
@@ -31,4 +33,15 @@ Route::middleware('admin')->group(function (): void {
     Route::get('email/settings', EmailSetting::class)->name('email.settings');
     Route::get('email/templates', EmailTemplate::class)->name('email.templates');
     Route::get('email/templates/edit/{id}', EmailTemplate::class)->name('email.templates.edit');
+
+    // general settings
+    Route::get('settings/payments', SettingsManager::class)->name('settings.payments');
+    Route::get('settings/{type?}', SettingsManager::class)->name('settings');
+
+    Route::controller(SettingsController::class)->as('settings.')->prefix('settings')->group(function () {
+        Route::post('/update', 'update')->name('update');
+        Route::post('/system', 'systemUpdate')->name('sys_settings');
+        Route::post('/system/store', 'storeSettings')->name('store_settings');
+        Route::post('env_key', 'envkeyUpdate')->name('env_key');
+    });
 });
