@@ -186,6 +186,7 @@
                 minWord: " Min:",
                 secWord: " Sec:",
             });
+            myCountdown.start();
         }
         // ================================ CountDown Js End =============================
 

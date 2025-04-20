@@ -3,6 +3,8 @@
 use App\Livewire\Admin\BlogManager;
 use App\Livewire\Admin\CategoryManager;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\EmailSetting;
+use App\Livewire\Admin\EmailTemplate;
 use App\Livewire\Admin\PageManager;
 
 // Auth;
@@ -24,4 +26,9 @@ Route::middleware('admin')->group(function (): void {
     Route::get('pages', PageManager::class)->name('pages');
     Route::get('/pages/create', PageManager::class)->name('pages.create');
     Route::get('/pages/edit/{id}', PageManager::class)->name('pages.edit');
+
+    // Email Setting
+    Route::get('email/settings', EmailSetting::class)->name('email.settings');
+    Route::get('email/templates', EmailTemplate::class)->name('email.templates');
+    Route::get('email/templates/edit/{id}', EmailTemplate::class)->name('email.templates.edit');
 });

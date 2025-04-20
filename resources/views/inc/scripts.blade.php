@@ -21,7 +21,7 @@
 
         toastr.info('Copied Successfully', "Success");
     }
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener('DOMContentLoaded', function () {
         window.addEventListener('alert', event => {
             event.detail.forEach(({ type, message, title }) => {
                 toastr[type](message, title ?? 'Successful');

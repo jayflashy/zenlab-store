@@ -19,7 +19,7 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <input type="text" class="common-input border" placeholder="Search blogs..." wire:model.debounce.300ms="search">
+                        <input type="text" class="common-input border" placeholder="Search blogs..." wire:model.live.debounce.300ms="search">
                     </div>
                 </div>
             </div>
@@ -292,38 +292,10 @@
 
 
 @section('styles')
-    <!-- Summernote CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <style>
-        .image-upload-wrapper {
-            border: 1px dashed #ddd;
-            padding: 20px;
-            border-radius: 8px;
-            background: #f9f9f9;
-            text-align: center;
-        }
-        [data-theme=light] .image-upload-wrapper {
-            background: #171830;
-        }
-
-        .image-preview img {
-            max-height: 200px;
-            width: auto;
-            margin-bottom: 10px;
-        }
-
-        .note-editor.note-frame {
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-        }
-    </style>
 @endsection
 
 @section('scripts')
     <!-- Summernote JS -->
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script>
         // document.addEventListener('livewire:load', function() {
             $('#summernote').summernote({
