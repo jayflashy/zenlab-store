@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
@@ -70,7 +70,7 @@ trait ApiResponse
     /**
      * Paginated response
      *
-     * @param LengthAwarePaginator $pagination
+     * @param  LengthAwarePaginator  $pagination
      */
     protected function paginatedResponse(string $message, $items, $pagination, int $code = 200): JsonResponse
     {

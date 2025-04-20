@@ -10,6 +10,7 @@ class NotifyTemplate extends Model
 {
     use HasUlids;
     use SoftDeletes;
+
     protected $casts = [
         'shortcodes' => 'object',
         'channels' => 'array',
