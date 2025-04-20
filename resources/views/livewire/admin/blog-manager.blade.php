@@ -295,29 +295,6 @@
     <!-- Summernote CSS -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <style>
-        .image-upload-wrapper {
-            border: 1px dashed #ddd;
-            padding: 20px;
-            border-radius: 8px;
-            background: #f9f9f9;
-            text-align: center;
-        }
-        [data-theme=light] .image-upload-wrapper {
-            background: #171830;
-        }
-
-        .image-preview img {
-            max-height: 200px;
-            width: auto;
-            margin-bottom: 10px;
-        }
-
-        .note-editor.note-frame {
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-        }
-    </style>
 @endsection
 
 @section('scripts')
