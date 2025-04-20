@@ -76,20 +76,21 @@ class SettingsController extends Controller
     {
         // Validate request payload
         $validator = Validator::make($request->all(), [
-            'types'    => 'required|array',
-            'types.*'  => 'required|string',
-            'values'   => 'required|array',
+            'types' => 'required|array',
+            'types.*' => 'required|string',
+            'values' => 'required|array',
             'values.*' => 'nullable|string|max:255',
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();
             if ($request->ajax()) {
                 return response()->json([
-                    'status'  => 'error',
+                    'status' => 'error',
                     'message' => 'Validation failed.',
-                    'errors'  => $errors,
+                    'errors' => $errors,
                 ], 422);
             }
+
             return back()->withErrors($errors)->withInput();
         }
 

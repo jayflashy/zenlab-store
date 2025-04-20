@@ -6,13 +6,11 @@ use App\Models\Setting;
 use App\Models\SystemSetting;
 use Cache;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 use Str;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
-
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
-
 
 trait SettingsTrait
 {
@@ -39,6 +37,7 @@ trait SettingsTrait
 
         return $setting;
     }
+
     /**
      * Creates a backup of the .env file before modification
      *
@@ -47,7 +46,7 @@ trait SettingsTrait
     private function backupEnvFile()
     {
         $envFile = app()->environmentFilePath();
-        $backupFile = $envFile . '.backup_' . date('Y-m-d_H-i-s');
+        $backupFile = $envFile.'.backup_'.date('Y-m-d_H-i-s');
 
         if (file_exists($envFile)) {
             return copy($envFile, $backupFile);
@@ -58,23 +57,24 @@ trait SettingsTrait
 
     /**
      * Create a timestamped backup of the .env file before modifications
-     *
-     * @return bool
      */
     private function backupEnvFile(): bool
     {
-        $path       = app()->environmentFilePath();
-        $backupPath = "{$path}.backup_" . date('Y-m-d_H-i-s');
+        $path = app()->environmentFilePath();
+        $backupPath = "{$path}.backup_".date('Y-m-d_H-i-s');
         if (file_exists($path)) {
             return copy($path, $backupPath);
         }
+
         return false;
     }
+
     public function overWriteEnvFile($key, $value)
     {
         // Ensure the key is a valid environment variable name
-        if (!preg_match('/^[A-Z][A-Z0-9_]*$/', $key)) {
+        if (! preg_match('/^[A-Z][A-Z0-9_]*$/', $key)) {
             Log::warning("Invalid environment key format attempted: {$key}");
+
             return false;
         }
 
@@ -83,22 +83,24 @@ trait SettingsTrait
 
         $envFile = app()->environmentFilePath();
         $handle = fopen($envFile, 'r+');
-        if (!$handle) {
-            Log::error("Could not open the .env file for writing");
+        if (! $handle) {
+            Log::error('Could not open the .env file for writing');
+
             return false;
         }
 
         // Acquire exclusive lock
-        if (!flock($handle, LOCK_EX)) {
+        if (! flock($handle, LOCK_EX)) {
             fclose($handle);
-            Log::error("Could not acquire an exclusive lock on the .env file");
+            Log::error('Could not acquire an exclusive lock on the .env file');
+
             return false;
         }
 
         // Read entire file under lock
         $content = '';
         rewind($handle);
-        while (!feof($handle)) {
+        while (! feof($handle)) {
             $content .= fread($handle, 8192);
         }
 
@@ -116,7 +118,7 @@ trait SettingsTrait
             }
         }
 
-        if (!$found) {
+        if (! $found) {
             $sanitized = addslashes(trim($value));
             $lines[] = "{$key}=\"{$sanitized}\"";
         }
