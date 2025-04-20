@@ -40,7 +40,7 @@ class EmailSetting extends Component
         ]);
 
         // Update to system settings (Database)
-        $this->systemSetUpdate((object)[
+        $this->systemSetUpdate((object) [
             'name' => 'email_gateway',
             'value' => $this->email_gateway,
         ]);
@@ -61,12 +61,12 @@ class EmailSetting extends Component
 
         try {
 
-
-            $this->toast('success','Test email sent successfully!', 'success');
+            $this->toast('success', 'Test email sent successfully!', 'success');
         } catch (\Exception $e) {
-            $this->toast('error','Failed to send test email: '.$e->getMessage(), 'error');
+            $this->toast('error', 'Failed to send test email: '.$e->getMessage(), 'error');
         }
     }
+
     public function render()
     {
         return view('livewire.admin.email-setting')

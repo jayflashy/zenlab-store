@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\NotifyTemplate;
 use App\Traits\LivewireToast;
 use Livewire\Component;
-use App\Models\NotifyTemplate;
 use Livewire\WithPagination;
 
 class EmailTemplate extends Component
@@ -13,19 +13,28 @@ class EmailTemplate extends Component
     use WithPagination;
 
     public $view;
+
     public $perPage = 20;
+
     public $search = '';
+
     public $sortField = 'created_at';
+
     public $sortDirection = 'desc';
 
     public $templateId;
-    public $title;
-    public $email_status;
-    public $content;
-    public $subject;
-    public $shortcodes = [];
-    public $name;
 
+    public $title;
+
+    public $email_status;
+
+    public $content;
+
+    public $subject;
+
+    public $shortcodes = [];
+
+    public $name;
 
     public function sortBy($field): void
     {
@@ -36,6 +45,7 @@ class EmailTemplate extends Component
             $this->sortDirection = 'asc';
         }
     }
+
     public function resetForm(): void
     {
         $this->reset([
@@ -45,7 +55,7 @@ class EmailTemplate extends Component
             'content',
             'email_status',
             'shortcodes',
-            'name'
+            'name',
         ]);
         $this->resetErrorBag();
     }
@@ -70,10 +80,11 @@ class EmailTemplate extends Component
         $this->name = $template->name;
         $this->shortcodes = $template->shortcodes;
         $this->view = 'edit';
-        $this->title = "Edit Template";
+        $this->title = 'Edit Template';
 
         $this->dispatch('editorReinitialize');
     }
+
     public function save()
     {
         $this->validate([
@@ -91,11 +102,13 @@ class EmailTemplate extends Component
         $this->redirect(route('admin.email.templates'), navigate: true);
         $this->successAlert('Template updated successfully');
     }
+
     public function backToList(): void
     {
         $this->view = 'list';
         $this->resetForm();
     }
+
     public function mount($id = null): void
     {
         $routeName = request()->route()->getName();
@@ -115,6 +128,7 @@ class EmailTemplate extends Component
     {
         $this->content = $content;
     }
+
     public function render()
     {
         $templates = [];
@@ -122,16 +136,17 @@ class EmailTemplate extends Component
         if ($this->view === 'list') {
             $this->title = 'Email Templates';
             $templates = NotifyTemplate::when($this->search, function ($query): void {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('type', 'like', '%' . $this->search . '%')
-                    ->orWhere('subject', 'like', '%' . $this->search . '%');
+                $query->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('type', 'like', '%'.$this->search.'%')
+                    ->orWhere('subject', 'like', '%'.$this->search.'%');
             })
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);
         }
+
         return view('livewire.admin.email-template', [
             'templates' => $templates,
-            'title' => $this->title
+            'title' => $this->title,
         ])
             ->layout('admin.layouts.app');
     }

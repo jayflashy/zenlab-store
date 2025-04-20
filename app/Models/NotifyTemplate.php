@@ -12,7 +12,7 @@ class NotifyTemplate extends Model
 
     protected $casts = [
         'shortcodes' => 'object',
-        'channels'   => 'array',
+        'channels' => 'array',
     ];
 
     protected $fillable = [

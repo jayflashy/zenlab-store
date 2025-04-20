@@ -8,27 +8,29 @@ use Cache;
 use Illuminate\Http\Request;
 use Str;
 
-trait SettingsTrait{
-
-    public function updateSettings(Request $request){
+trait SettingsTrait
+{
+    public function updateSettings(Request $request)
+    {
         $input = $request->all();
 
-        if($request->hasFile('favicon')){
+        if ($request->hasFile('favicon')) {
             $image = $request->file('favicon');
             $imageName = Str::random(5).'-favicon.png';
-            $image->move(public_path('uploads'),$imageName);
-            $input['favicon'] =$imageName;
+            $image->move(public_path('uploads'), $imageName);
+            $input['favicon'] = $imageName;
         }
-        if($request->hasFile('logo')){
+        if ($request->hasFile('logo')) {
             $image = $request->file('logo');
             $imageName = Str::random(5).'-logo.png';
-            $image->move(public_path('uploads'),$imageName);
-            $input['logo'] =$imageName;
+            $image->move(public_path('uploads'), $imageName);
+            $input['logo'] = $imageName;
         }
 
         $setting = Setting::first();
         $setting->update($input);
         Cache::put('Settings', $setting, 30);
+
         return $setting;
     }
 
@@ -37,25 +39,23 @@ trait SettingsTrait{
         $path = base_path('.env');
         if (file_exists($path)) {
             $val = '"'.trim($val).'"';
-            if(is_numeric(strpos(file_get_contents($path), $type)) && strpos(file_get_contents($path), $type) >= 0){
+            if (is_numeric(strpos(file_get_contents($path), $type)) && strpos(file_get_contents($path), $type) >= 0) {
                 file_put_contents($path, str_replace(
                     $type.'="'.env($type).'"', $type.'='.$val, file_get_contents($path)
                 ));
-            }
-            else{
+            } else {
                 file_put_contents($path, file_get_contents($path)."\r\n".$type.'='.$val);
             }
         }
     }
 
-    function systemSetUpdate($request)
+    public function systemSetUpdate($request)
     {
         $setting = SystemSetting::where('name', $request->name)->first();
-        if($setting !=null){
+        if ($setting != null) {
             $setting->value = $request->value;
             $setting->save();
-        }
-        else{
+        } else {
             $setting = new SystemSetting;
             $setting->name = $request->name;
             $setting->value = $request->value;
@@ -70,28 +70,24 @@ trait SettingsTrait{
     public function updateSystemSettings(Request $request)
     {
         foreach ($request->types as $key => $type) {
-            if($type == 'site_name'){
+            if ($type == 'site_name') {
                 $this->overWriteEnvFile('APP_NAME', $request[$type]);
-            }
-            else {
+            } else {
                 $sys_settings = SystemSetting::where('name', $type)->first();
 
-                if($sys_settings!=null){
-                    if(gettype($request[$type]) == 'array'){
+                if ($sys_settings != null) {
+                    if (gettype($request[$type]) == 'array') {
                         $sys_settings->value = json_encode($request[$type]);
-                    }
-                    else {
+                    } else {
                         $sys_settings->value = $request[$type];
                     }
                     $sys_settings->save();
-                }
-                else{
-                    $sys_settings = new SystemSetting();
+                } else {
+                    $sys_settings = new SystemSetting;
                     $sys_settings->name = $type;
-                    if(gettype($request[$type]) == 'array'){
+                    if (gettype($request[$type]) == 'array') {
                         $sys_settings->value = json_encode($request[$type]);
-                    }
-                    else {
+                    } else {
                         $sys_settings->value = $request[$type];
                     }
                     $sys_settings->save();
