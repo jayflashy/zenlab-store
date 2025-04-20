@@ -1,9 +1,11 @@
-.form-group{
+.form-group {
     margin-bottom: 10px !important;
 }
-.common-card{
+
+.common-card {
     margin-bottom: 20px !important;
 }
+
 .image-upload-wrapper {
     border: 1px dashed #ddd;
     padding: 20px;
@@ -11,6 +13,7 @@
     background: #f9f9f9;
     text-align: center;
 }
+
 [data-theme=light] .image-upload-wrapper {
     background: #171830;
 }
@@ -24,4 +27,92 @@
 .note-editor.note-frame {
     border: 1px solid #e5e7eb;
     border-radius: 8px;
+}
+
+.jdv-switch input:empty {
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+    opacity: 0;
+}
+
+.jdv-switch input:empty~span {
+    display: inline-block;
+    position: relative;
+    text-indent: 0;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 24px;
+    height: 31px;
+    width: 60px;
+    border-radius: 12px;
+}
+
+.jdv-switch input:empty~span:after,
+.jdv-switch input:empty~span:before {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    content: " ";
+    -webkit-transition: all 0.1s ease-in;
+    transition: all 0.1s ease-in;
+    width: 60px;
+    border-radius: 12px;
+}
+
+.jdv-switch input:checked~span::after {
+    left: 28px;
+}
+
+.jdv-switch input:empty~span:before {
+    background-color: #e8ebf1;
+}
+
+.jdv-switch input:empty~span:after {
+    height: 27px;
+    width: 27px;
+    line-height: 20px;
+    top: 2px;
+    bottom: 2px;
+    margin-left: 2px;
+    font-size: 0.8em;
+    text-align: center;
+    vertical-align: middle;
+    color: #89aaeb;
+    background-color: #fff;
+}
+
+.jdv-switch-success input:checked~span:after {
+    background-color: #38c172;
+}
+
+.jdv-switch-info input:checked~span:after {
+    background-color: #6cb2eb;
+}
+
+.jdv-switch-warning input:checked~span:after {
+    background-color: #ffed4a;
+}
+
+.jdv-switch-danger input:checked~span:after {
+    background-color: #e3342f;
+}
+
+.switch-label {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    font-size: 20px;
+    color: var(--jd-switch-label-color);
+}
+
+.form-label {
+    font-weight: bold;
 }

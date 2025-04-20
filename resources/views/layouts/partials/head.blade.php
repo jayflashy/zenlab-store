@@ -16,6 +16,10 @@
 <link href="{{ static_asset('css/vendors.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ static_asset('css/main.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ static_asset('css/custom.css') }}" rel="stylesheet" type="text/css">
+
+{{-- summernotes --}}
+<link rel="stylesheet" href="{{ static_asset('summernote/summernote-lite.min.css') }}">
+
 @yield('styles')
 @stack('styles')
 @livewireStyles()
