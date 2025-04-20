@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="w-100">
-                        <button class="btn btn-main w-100" type="submit">@lang('Update Setting')</button>
+                        <button class="btn btn-main w-100" type="submit">@lang('Update Settings')</button>
                     </div>
                 </form>
             </div>
