@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Admin;
 
+use Throwable;
+use Log;
 use App\Models\Page;
 use App\Traits\LivewireToast;
 use Illuminate\Support\Facades\Storage;
@@ -153,7 +155,7 @@ class PageManager extends Component
         $this->resetForm();
     }
 
-    public function applySearch()
+    public function applySearch(): void
     {
         $this->resetPage();
     }
@@ -201,9 +203,9 @@ class PageManager extends Component
         if ($page->image) {
             try {
                 Storage::disk('uploads')->delete($page->image);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 // Log the error but continue with deletion
-                \Log::error('Failed to delete image file: '.$e->getMessage());
+                Log::error('Failed to delete image file: '.$e->getMessage());
             }
         }
 
@@ -240,8 +242,8 @@ class PageManager extends Component
             try {
                 $imagePath = $this->image->store('pages', 'uploads');
                 $page->image = $imagePath;
-            } catch (\Throwable $e) {
-                \Log::error('Failed to store image: '.$e->getMessage());
+            } catch (Throwable $e) {
+                Log::error('Failed to store image: '.$e->getMessage());
                 $this->errorAlert('Failed to upload image: '.$e->getMessage());
 
                 return;
@@ -281,8 +283,8 @@ class PageManager extends Component
                 // Save new image
                 $imagePath = $this->image->store('pages', 'uploads');
                 $page->image = $imagePath;
-            } catch (\Throwable $e) {
-                \Log::error('Failed to update image: '.$e->getMessage());
+            } catch (Throwable $e) {
+                Log::error('Failed to update image: '.$e->getMessage());
                 $this->errorAlert('Failed to upload image: '.$e->getMessage());
 
                 return;
@@ -299,7 +301,7 @@ class PageManager extends Component
     {
         $slug = Str::slug($title);
         $count = Page::where('slug', $slug)
-            ->when($this->pageId, function ($query) {
+            ->when($this->pageId, function ($query): void {
                 $query->where('id', '!=', $this->pageId);
             })
             ->count();
@@ -312,7 +314,7 @@ class PageManager extends Component
         $pages = [];
 
         if ($this->view === 'list') {
-            $pages = Page::when($this->search, function ($query) {
+            $pages = Page::when($this->search, function ($query): void {
                 $query->where('title', 'like', '%'.$this->search.'%')
                     ->orWhere('type', 'like', '%'.$this->search.'%')
                     ->orWhere('content', 'like', '%'.$this->search.'%');

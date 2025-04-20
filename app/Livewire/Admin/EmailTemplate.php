@@ -60,7 +60,7 @@ class EmailTemplate extends Component
         $this->resetErrorBag();
     }
 
-    public function updated($property)
+    public function updated($property): void
     {
         if ($property === 'view' && $this->view === 'edit') {
             $this->dispatch('editorReinitialize');
@@ -85,7 +85,7 @@ class EmailTemplate extends Component
         $this->dispatch('editorReinitialize');
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate([
             'subject' => 'required',
@@ -111,7 +111,7 @@ class EmailTemplate extends Component
 
     public function mount($id = null): void
     {
-        $routeName = request()->route()->getName();
+        request()->route()->getName();
         if ($id) {
             $this->view = 'edit';
             $this->showEdit($id);
