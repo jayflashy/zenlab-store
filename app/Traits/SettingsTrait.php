@@ -17,13 +17,14 @@ trait SettingsTrait
 
         if ($request->hasFile('favicon')) {
             $image = $request->file('favicon');
-            $imageName = Str::random(5) . '-favicon.png';
+            $imageName = Str::random(5).'-favicon.png';
             $image->move(public_path('uploads'), $imageName);
             $input['favicon'] = $imageName;
         }
+
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
-            $imageName = Str::random(5) . '-logo.png';
+            $imageName = Str::random(5).'-logo.png';
             $image->move(public_path('uploads'), $imageName);
             $input['logo'] = $imageName;
         }
@@ -35,14 +36,13 @@ trait SettingsTrait
         return $setting;
     }
 
-
     /**
      * Create a timestamped backup of the .env file before modifications
      */
     private function backupEnvFile(): bool
     {
         $path = app()->environmentFilePath();
-        $backupPath = "{$path}.backup_" . date('Y-m-d_H-i-s');
+        $backupPath = "{$path}.backup_".date('Y-m-d_H-i-s');
         if (file_exists($path)) {
             return copy($path, $backupPath);
         }
@@ -50,10 +50,10 @@ trait SettingsTrait
         return false;
     }
 
-    public function overWriteEnvFile($key, $value)
+    public function overWriteEnvFile($key, $value): bool
     {
         // Ensure the key is a valid environment variable name
-        if (! preg_match('/^[A-Z][A-Z0-9_]*$/', $key)) {
+        if (! preg_match('/^[A-Z][A-Z0-9_]*$/', (string) $key)) {
             Log::warning("Invalid environment key format attempted: {$key}");
 
             return false;
@@ -92,7 +92,7 @@ trait SettingsTrait
 
         foreach ($lines as &$line) {
             if (preg_match($pattern, $line)) {
-                $sanitized = addslashes(trim($value));
+                $sanitized = addslashes(trim((string) $value));
                 $line = "{$key}=\"{$sanitized}\"";
                 $found = true;
                 break;
@@ -100,7 +100,7 @@ trait SettingsTrait
         }
 
         if (! $found) {
-            $sanitized = addslashes(trim($value));
+            $sanitized = addslashes(trim((string) $value));
             $lines[] = "{$key}=\"{$sanitized}\"";
         }
 
@@ -121,7 +121,7 @@ trait SettingsTrait
         return true;
     }
 
-    public function systemSetUpdate($request)
+    public function systemSetUpdate($request): int
     {
         $setting = SystemSetting::where('name', $request->name)->first();
         if ($setting != null) {
@@ -133,35 +133,30 @@ trait SettingsTrait
             $setting->value = $request->value;
             $setting->save();
         }
+
         $settings = SystemSetting::all();
         Cache::put('SystemSettings', $settings);
 
         return 1;
     }
 
-    public function updateSystemSettings(Request $request)
+    public function updateSystemSettings(Request $request): void
     {
-        foreach ($request->types as $key => $type) {
+        foreach ($request->types as $type) {
             if ($type == 'site_name') {
                 $this->overWriteEnvFile('APP_NAME', $request[$type]);
             } else {
                 $sys_settings = SystemSetting::where('name', $type)->first();
 
                 if ($sys_settings != null) {
-                    if (gettype($request[$type]) == 'array') {
-                        $sys_settings->value = json_encode($request[$type]);
-                    } else {
-                        $sys_settings->value = $request[$type];
-                    }
+                    $sys_settings->value = gettype($request[$type]) == 'array' ? json_encode($request[$type]) : $request[$type];
+
                     $sys_settings->save();
                 } else {
                     $sys_settings = new SystemSetting;
                     $sys_settings->name = $type;
-                    if (gettype($request[$type]) == 'array') {
-                        $sys_settings->value = json_encode($request[$type]);
-                    } else {
-                        $sys_settings->value = $request[$type];
-                    }
+                    $sys_settings->value = gettype($request[$type]) == 'array' ? json_encode($request[$type]) : $request[$type];
+
                     $sys_settings->save();
                 }
 

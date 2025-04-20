@@ -4,11 +4,13 @@ namespace App\Livewire\Admin;
 
 use App\Traits\LivewireToast;
 use App\Traits\SettingsTrait;
+use Exception;
 use Livewire\Component;
 
 class EmailSetting extends Component
 {
-    use LivewireToast, SettingsTrait;
+    use LivewireToast;
+    use SettingsTrait;
 
     public $email_gateway;
 
@@ -16,7 +18,7 @@ class EmailSetting extends Component
 
     public $test_email;
 
-    public function mount()
+    public function mount(): void
     {
         $this->email_gateway = sys_setting('email_gateway') ?? 'php';
 
@@ -33,7 +35,7 @@ class EmailSetting extends Component
         ];
     }
 
-    public function updateSettings()
+    public function updateSettings(): void
     {
         $this->validate([
             'email_gateway' => 'required|in:php,smtp',
@@ -53,7 +55,7 @@ class EmailSetting extends Component
         $this->successAlert('Email settings updated successfully.', 'Settings Saved');
     }
 
-    public function sendTestEmail()
+    public function sendTestEmail(): void
     {
         $this->validate([
             'test_email' => 'required|email',
@@ -62,8 +64,8 @@ class EmailSetting extends Component
         try {
 
             $this->toast('success', 'Test email sent successfully!', 'success');
-        } catch (\Exception $e) {
-            $this->toast('error', 'Failed to send test email: '.$e->getMessage(), 'error');
+        } catch (Exception $exception) {
+            $this->toast('error', 'Failed to send test email: '.$exception->getMessage(), 'error');
         }
     }
 
