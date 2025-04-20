@@ -319,26 +319,3 @@
         }
     </style>
 @endpush
-
-@section('scripts')
-    <script>
-        function updateSystem1(el, name) {
-            if ($(el).is(':checked')) {
-                var value = 1;
-            } else {
-                var value = 0;
-            }
-            $.post('{{ route('admin.settings.sys_settings') }}', {
-                _token: '{{ csrf_token() }}',
-                name: name,
-                value: value
-            }, function(data) {
-                if (data == '1') {
-                    toastr.success('Settings updated successfully', 'Success')
-                } else {
-                    toastr.error('Something went wrong', 'Error')
-                }
-            });
-        }
-    </script>
-@endsection

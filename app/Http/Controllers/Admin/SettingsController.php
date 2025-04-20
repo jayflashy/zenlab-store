@@ -21,7 +21,7 @@ class SettingsController extends Controller
             ], 200);
         }
 
-        return redirect()->back()->with('success', __('Settings Updated Successfully.'));
+        return back()->with('success', __('Settings Updated Successfully.'));
     }
 
     public function systemUpdate(Request $request)
@@ -42,7 +42,7 @@ class SettingsController extends Controller
             ], 200);
         }
 
-        return redirect()->back()->withSuccess(__('Settings Updated Successfully.'));
+        return back()->withSuccess(__('Settings Updated Successfully.'));
     }
 
     public function envkeyUpdate(Request $request)
