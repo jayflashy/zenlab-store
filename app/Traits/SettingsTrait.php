@@ -6,9 +6,6 @@ use App\Models\Setting;
 use App\Models\SystemSetting;
 use Cache;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Log;
 use Str;
 
@@ -20,13 +17,13 @@ trait SettingsTrait
 
         if ($request->hasFile('favicon')) {
             $image = $request->file('favicon');
-            $imageName = Str::random(5).'-favicon.png';
+            $imageName = Str::random(5) . '-favicon.png';
             $image->move(public_path('uploads'), $imageName);
             $input['favicon'] = $imageName;
         }
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
-            $imageName = Str::random(5).'-logo.png';
+            $imageName = Str::random(5) . '-logo.png';
             $image->move(public_path('uploads'), $imageName);
             $input['logo'] = $imageName;
         }
@@ -38,22 +35,6 @@ trait SettingsTrait
         return $setting;
     }
 
-    /**
-     * Creates a backup of the .env file before modification
-     *
-     * @return bool
-     */
-    private function backupEnvFile()
-    {
-        $envFile = app()->environmentFilePath();
-        $backupFile = $envFile.'.backup_'.date('Y-m-d_H-i-s');
-
-        if (file_exists($envFile)) {
-            return copy($envFile, $backupFile);
-        }
-
-        return false;
-    }
 
     /**
      * Create a timestamped backup of the .env file before modifications
@@ -61,7 +42,7 @@ trait SettingsTrait
     private function backupEnvFile(): bool
     {
         $path = app()->environmentFilePath();
-        $backupPath = "{$path}.backup_".date('Y-m-d_H-i-s');
+        $backupPath = "{$path}.backup_" . date('Y-m-d_H-i-s');
         if (file_exists($path)) {
             return copy($path, $backupPath);
         }
@@ -188,6 +169,5 @@ trait SettingsTrait
                 Cache::put('SystemSettings', $settings);
             }
         }
-
     }
 }
