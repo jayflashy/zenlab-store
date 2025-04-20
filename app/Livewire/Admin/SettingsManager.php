@@ -10,11 +10,13 @@ use Livewire\WithFileUploads;
 class SettingsManager extends Component
 {
     use LivewireToast;
-    use WithFileUploads;
     use SettingsTrait;
+    use WithFileUploads;
 
     public $view;
+
     public $gateways = [];
+
     public $sysSettings = [];
 
     public function mount($type = 'index')
@@ -28,7 +30,7 @@ class SettingsManager extends Component
         }
     }
 
-    function showPayment()
+    public function showPayment()
     {
         $this->gateways = [
             ['name' => 'Paypal', 'key' => 'paypal_payment'],
@@ -43,17 +45,17 @@ class SettingsManager extends Component
         }
         $this->view = 'payments';
     }
+
     public function updatedSysSettings($value, $key)
     {
         $this->systemSetUpdate(
-            (object)[
+            (object) [
                 'name' => $key,
-                'value' => $value
+                'value' => $value,
             ]
         );
         $this->successAlert('Settings updated successfully.', 'Settings Saved');
     }
-
 
     public function render()
     {
