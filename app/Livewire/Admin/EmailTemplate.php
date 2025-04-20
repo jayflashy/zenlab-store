@@ -111,7 +111,6 @@ class EmailTemplate extends Component
 
     public function mount($id = null): void
     {
-        request()->route()->getName();
         if ($id) {
             $this->view = 'edit';
             $this->showEdit($id);
