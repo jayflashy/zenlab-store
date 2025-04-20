@@ -154,7 +154,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <label class="form-label mb-0">Status</label>
                                 <label class="jdv-switch jdv-switch-success mb-0">
-                                    <input type="checkbox" wire:model.lazy="sysSettings.{{ $gateway['key'] }}">
+                                    <input type="checkbox" wire:model.defer="sysSettings.{{ $gateway['key'] }}">
                                     <span class="slider round"></span>
                                 </label>
                             </div>
