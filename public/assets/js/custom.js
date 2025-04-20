@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     Accept: "application/json",
                 },
                 beforeSend: function () {
-                    JDLoader.open();
+                    JDLoader.open('.loader-mask');
                 },
                 dataType: "json",
                 data: form.serialize(),
                 success: function (result) {
-                    JDLoader.close();
+                    JDLoader.close('.loader-mask');
 
                     if (result.status === "success") {
                         toastr.success(result.message || "Success", "Success");
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 },
                 error: function (xhr) {
-                    JDLoader.close();
+                    JDLoader.close('.loader-mask');
 
                     const errors = xhr.responseJSON || {};
                     toastr.error(

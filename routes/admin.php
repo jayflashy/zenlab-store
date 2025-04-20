@@ -35,7 +35,9 @@ Route::middleware('admin')->group(function (): void {
     Route::get('email/templates/edit/{id}', EmailTemplate::class)->name('email.templates.edit');
 
     // general settings
-    Route::get('settings', SettingsManager::class)->name('settings.index');
+    Route::get('settings/{type?}', SettingsManager::class)->name('settings');
+    // Payment Settings
+    Route::get('settings/payments', SettingsManager::class)->name('settings.payments');
 
     Route::controller(SettingsController::class)->as('settings.')->prefix('settings')->group(function () {
         Route::post('/update', 'update')->name('update');
