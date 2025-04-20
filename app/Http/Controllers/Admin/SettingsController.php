@@ -16,7 +16,7 @@ class SettingsController extends Controller
 
         if ($request->wantsJson()) {
             return response()->json([
-                'status'  => 'success',
+                'status' => 'success',
                 'message' => 'Settings Updated Successfully',
             ], 200);
         }
@@ -37,7 +37,7 @@ class SettingsController extends Controller
 
         if ($request->wantsJson()) {
             return response()->json([
-                'status'  => 'success',
+                'status' => 'success',
                 'message' => 'Settings Updated Successfully',
             ], 200);
         }
@@ -53,7 +53,7 @@ class SettingsController extends Controller
 
         if ($request->wantsJson()) {
             return response()->json([
-                'status'  => 'success',
+                'status' => 'success',
                 'message' => 'Settings Updated Successfully',
             ], 200);
         }

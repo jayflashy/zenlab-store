@@ -10,9 +10,10 @@ class SettingsManager extends Component
 {
     use LivewireToast;
     use WithFileUploads;
+
     public function render()
     {
         return view('livewire.admin.settings-manager')
-        ->layout('admin.layouts.app');
+            ->layout('admin.layouts.app');
     }
 }

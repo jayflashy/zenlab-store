@@ -12,7 +12,7 @@ trait SettingsTrait
 {
     public function updateSettings(Request $request)
     {
-        $input = $request->except('favicon', 'logo','_token');
+        $input = $request->except('favicon', 'logo', '_token');
 
         if ($request->hasFile('favicon')) {
             $image = $request->file('favicon');

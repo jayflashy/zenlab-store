@@ -45,9 +45,9 @@ class Setting extends Model
         'telegram',
         'linkedin',
         'whatsapp',
-        "meta_description",
-        "meta_keywords",
-        "tiktok",
-        "youtube",
+        'meta_description',
+        'meta_keywords',
+        'tiktok',
+        'youtube',
     ];
 }
