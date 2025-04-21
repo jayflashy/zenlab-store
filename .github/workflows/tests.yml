@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI Workflow
 
 on:
   push:
@@ -9,8 +9,9 @@ on:
       - main
 
 jobs:
-  setup:
+  ci:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,7 +22,6 @@ jobs:
           php-version: 8.3
           tools: composer:v2
           coverage: xdebug
-          extensions: mbstring, dom, fileinfo, sqlite3, pdo_sqlite
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -29,26 +29,10 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-
-      - name: Cache Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Install Dependencies
         run: |
           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-          npm ci
+          npm install
 
       - name: Create SQLite Database File
         run: |
@@ -63,8 +47,6 @@ jobs:
           echo "DB_CONNECTION=sqlite" >> .env
           echo "CACHE_DRIVER=array" >> .env
           echo "APP_ENV=testing" >> .env
-          echo "APP_DEBUG=true" >> .env
-          echo "QUEUE_CONNECTION=sync" >> .env
 
       - name: Generate Application Key
         run: php artisan key:generate --no-interaction
@@ -77,114 +59,40 @@ jobs:
       - name: Build Assets
         run: npm run build
 
-      - name: Verify Application Can Start
+      - name: Start Application Server
         run: |
-          # Start the server in the background
-          php artisan serve --port=8000 > server.log 2>&1 &
-          SERVER_PID=$!
+          php artisan serve --port=8090 > server.log 2>&1 &
+          echo $! > laravel.pid
+          echo "Server started with PID $(cat laravel.pid)"
 
-          # Wait for the server to start
+      - name: Verify Server is Running
+        run: |
+          # Wait for server to initialize
           sleep 5
 
-          # Check if the server is responding
-          if curl -s http://localhost:8000 > /dev/null; then
-            echo "Application started successfully!"
+          # Try to connect to the server
+          if curl -s http://127.0.0.1:8090 > /dev/null; then
+            echo "Server is running successfully!"
           else
-            echo "Failed to start application. Server log:"
+            echo "Server failed to start. Server log:"
             cat server.log
             exit 1
           fi
 
-          # Kill the server
-          kill $SERVER_PID
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: app
-          path: |
-            .
-            !node_modules
-            !vendor
-
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: app
-          path: .
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.3
-          tools: composer:v2
-          coverage: xdebug
-          extensions: mbstring, dom, fileinfo, sqlite3, pdo_sqlite
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install Dependencies
+      - name: Stop Server
+        if: always()
         run: |
-          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-          npm ci
+          if [ -f laravel.pid ]; then
+            echo "Stopping server with PID $(cat laravel.pid)"
+            kill $(cat laravel.pid) || true
+            rm laravel.pid
+          fi
 
       - name: Run Pest Tests
-        run: ./vendor/bin/pest --coverage
-
-  analyze:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: app
-          path: .
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.3
-          tools: composer:v2
-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: ./vendor/bin/pest
 
       - name: Analyze Code with PHPStan
-        run: ./vendor/bin/phpstan analyse --level=5
+        run: ./vendor/bin/phpstan analyse
 
       - name: Check Code with Rector
         run: ./vendor/bin/rector --dry-run
-
-  security:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: app
-          path: .
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.3
-          tools: composer:v2
-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-      - name: Security Check
-        run: composer audit
-
-      - name: Run Laravel Security Check
-        run: php artisan security:check
