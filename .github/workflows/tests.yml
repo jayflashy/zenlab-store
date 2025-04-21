@@ -49,7 +49,7 @@ jobs:
           echo "APP_ENV=testing" >> .env
 
       - name: Generate Application Key
-        run: php artisan key:generate
+        run: php artisan key:generate --no-interaction
 
       - name: Run Migrations
         run: |

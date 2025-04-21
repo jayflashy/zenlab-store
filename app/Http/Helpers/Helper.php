@@ -32,11 +32,6 @@ if (! function_exists('my_asset')) {
 if (! function_exists('get_setting')) {
     function get_setting($key = null, $default = null)
     {
-        // Check if we're running migrations
-        if (app()->runningInConsole() && app()->make('artisan')->getArtisan()->getCommands()['migrate:fresh']->isRunning()) {
-            return $default;
-        }
-
         // Check if the settings table exists
         if (!Schema::hasTable('settings')) {
             return $default;
@@ -62,6 +57,11 @@ if (! function_exists('get_setting')) {
 if (! function_exists('sys_setting')) {
     function sys_setting($key, $default = null)
     {
+        // Check if the system_settings table exists
+        if (!Schema::hasTable('system_settings')) {
+            return $default;
+        }
+
         $settings = Cache::get('SystemSettings');
 
         if (! $settings) {
