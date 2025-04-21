@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Traits\LivewireToast;
 use Carbon\Carbon;
-use Illuminate\Http\UploadedFile;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Purify;
