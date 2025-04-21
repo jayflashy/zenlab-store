@@ -18,33 +18,21 @@ class ProductList extends Component
 
     // filters
     public $search = '';
-
     public $statusFilter = '';
-
     public $categoryFilter = '';
-
     public $typeFilter = '';
-
     public $featuredFilter = '';
-
     public $sortField = 'created_at';
-
     public $sortDirection = 'desc';
-
     public $perPage = 25;
 
     // Bulk Actions
     public $selectedProducts = [];
-
     public $selectAll = false;
-
-    public $products;
 
     // Modals
     public $showDeleteModal = false;
-
     public $deleteId;
-
     public $productToDelete;
 
     protected $queryString = [
@@ -222,17 +210,27 @@ class ProductList extends Component
 
     public function updatedSelectAll()
     {
-        $this->selectedProducts = $this->selectAll ? $this->products->pluck('id')->map(fn ($id): string => (string) $id)->toArray() : [];
-    }
-
-    public function getProductsProperty()
-    {
-        return $this->queryProducts()->get();
+        if ($this->selectAll) {
+            // Get IDs from the current query, not from a cached property
+            $this->selectedProducts = $this->queryProducts()
+                ->pluck('id')
+                ->map(fn ($id): string => (string) $id)
+                ->toArray();
+        } else {
+            $this->selectedProducts = [];
+        }
     }
 
     public function render()
     {
         $products = $this->queryProducts()->paginate($this->perPage);
+
+        // Update the selectedProducts when the page changes if selectAll is true
+        if ($this->selectAll && count($this->selectedProducts) === 0) {
+            $this->selectedProducts = $products->pluck('id')
+                ->map(fn ($id): string => (string) $id)
+                ->toArray();
+        }
 
         $categories = Category::orderBy('name')->get();
 
