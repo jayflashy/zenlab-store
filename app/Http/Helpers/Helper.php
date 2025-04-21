@@ -58,7 +58,7 @@ if (! function_exists('sys_setting')) {
     function sys_setting($key, $default = null)
     {
         // Check if the system_settings table exists
-        if (!Schema::hasTable('system_settings')) {
+        if (! Schema::hasTable('system_settings')) {
             return $default;
         }
 
