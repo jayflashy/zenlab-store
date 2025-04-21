@@ -145,7 +145,6 @@
                         editor: null,
                         content: @this.get('short_description'),
                         init() {
-                            // Initialize Quill
                             this.editor = new Quill('#short_description_container', {
                                 theme: 'snow',
                                 modules: {
@@ -158,16 +157,11 @@
                                     ]
                                 }
                             });
-                            console.log('Initial content from entangle:', this.content);
-
-                            // Set initial content if it exists
                             if (this.content) {
                                 setTimeout(() => {
                                     this.editor.root.innerHTML = this.content;
                                 }, 10);
                             }
-
-                            // Update Livewire property when content changes
                             this.editor.on('text-change', () => {
                                 this.content = this.editor.root.innerHTML;
                                 @this.set('short_description', this.content);

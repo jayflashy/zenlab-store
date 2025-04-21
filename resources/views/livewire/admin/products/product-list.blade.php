@@ -187,7 +187,7 @@
                             <td>
                                 <div class="d-flex flex-column">
                                     <strong>{{ $product->name }}</strong>
-                                     @if ($product->featured)
+                                    @if ($product->featured)
                                         <span class="badge bg-warning text-dark mt-1 d-inline-block"
                                             style="width: fit-content;">Featured</span>
                                     @endif
@@ -231,11 +231,11 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-outline-primary">
+                                <div class=" ">
+                                    <a href="{{ route('admin.products.edit', $product) }}" wire:navigate class="btn btn-outline-primary">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('products.view', $product->slug) }}" class="btn btn-outline-info" target="_blank">
+                                    <a href="{{ route('products.view', $product->slug) }}" wire:navigate class="btn btn-outline-info" target="_blank">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <button type="button" class="btn btn-outline-danger"
