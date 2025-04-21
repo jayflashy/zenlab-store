@@ -143,7 +143,7 @@
                     <label for="short_description_container" class="form-label">Short Description</label>
                     <div x-data="{
                         editor: null,
-                        content: @entangle('short_description').defer,
+                        content: @this.get('short_description'),
                         init() {
                             // Initialize Quill
                             this.editor = new Quill('#short_description_container', {
@@ -158,26 +158,19 @@
                                     ]
                                 }
                             });
+                            console.log('Initial content from entangle:', this.content);
 
                             // Set initial content if it exists
                             if (this.content) {
-                                this.editor.root.innerHTML = this.content;
+                                setTimeout(() => {
+                                    this.editor.root.innerHTML = this.content;
+                                }, 10);
                             }
 
                             // Update Livewire property when content changes
                             this.editor.on('text-change', () => {
                                 this.content = this.editor.root.innerHTML;
-                            });
-
-                            // Handle tab changes with an event listener
-                            Livewire.on('activeTabChanged', () => {
-                                // Allow time for DOM to update
-                                setTimeout(() => {
-                                    // Refresh editor only if we're on the basic tab
-                                    if (@entangle('activeTab').value === 'basic') {
-                                        this.editor.focus();
-                                    }
-                                }, 100);
+                                @this.set('short_description', this.content);
                             });
                         }
                     }">
@@ -629,11 +622,5 @@
     </form>
 
 </div>
-
-@section('scripts')
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-
-@endsection
 
 @include('layouts.meta')

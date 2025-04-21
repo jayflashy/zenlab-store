@@ -79,7 +79,6 @@ class ProductForm extends Component
     ];
 
 
-
     public function mount($id = null)
     {
         $product = Product::find($id);
