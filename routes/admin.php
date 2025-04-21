@@ -20,6 +20,7 @@ Route::middleware('admin')->group(function (): void {
 
     // categories
     Route::get('categories', CategoryManager::class)->name('categories');
+
     // Products
     Route::get('products', ProductList::class)->name('products.index');
     Route::get('products/create', ProductForm::class)->name('products.create');

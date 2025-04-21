@@ -24,7 +24,7 @@ class ProductList extends Component
     public $featuredFilter = '';
     public $sortField = 'created_at';
     public $sortDirection = 'desc';
-    public $perPage = 1;
+    public $perPage = 25;
 
     // Bulk Actions
     public $selectedProducts = [];
@@ -155,7 +155,7 @@ class ProductList extends Component
                 $product->delete();
             }
 
-            $this->successAlert(count($this->selectedProducts) . 'Products deleted successfully');
+            $this->successAlert(count($this->selectedProducts) . ' Products deleted successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
@@ -169,12 +169,24 @@ class ProductList extends Component
                 'publish_date' => now()
             ]);
 
-            $this->successAlert(count($this->selectedProducts) . 'Products published successfully');
+            $this->successAlert(count($this->selectedProducts) . ' Products published successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
     }
 
+    public function bulkFeature()
+    {
+        if (count($this->selectedProducts) > 0) {
+            Product::whereIn('id', $this->selectedProducts)->update([
+                'featured' => 1
+            ]);
+
+            $this->successAlert(count($this->selectedProducts) . ' Products featured successfully');
+            $this->selectedProducts = [];
+            $this->selectAll = false;
+        }
+    }
     public function bulkArchive()
     {
         if (count($this->selectedProducts) > 0) {
@@ -182,7 +194,7 @@ class ProductList extends Component
                 'status' => 'archived'
             ]);
 
-            $this->successAlert(count($this->selectedProducts) . 'Products archived successfully');
+            $this->successAlert(count($this->selectedProducts) . ' Products archived successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }

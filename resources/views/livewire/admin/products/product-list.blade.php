@@ -87,7 +87,7 @@
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
                     <span class="me-2">{{ count($selectedProducts) }} products selected</span>
-                    <div class="btn-group btn-group-sm">
+                    <div class="d-flex gap-2">
                         <button type="button" class="btn btn-outline-success" wire:click="bulkPublish"
                             wire:confirm="Are you sure you want to publish {{ count($selectedProducts) }} products?">
                             <i class="fas fa-check-circle me-1"></i> Publish
@@ -95,6 +95,10 @@
                         <button type="button" class="btn btn-outline-secondary" wire:click="bulkArchive"
                             wire:confirm="Are you sure you want to archive {{ count($selectedProducts) }} products?">
                             <i class="fas fa-archive me-1"></i> Archive
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" wire:click="bulkFeature"
+                            wire:confirm="Are you sure you want to Feature {{ count($selectedProducts) }} products?">
+                            <i class="fas fa-check-circle text-success me-1"></i> Featured
                         </button>
                         <button type="button" class="btn btn-outline-danger" wire:click="bulkDelete"
                             wire:confirm="Are you sure you want to delete {{ count($selectedProducts) }} products? This cannot be undone.">
@@ -112,15 +116,15 @@
     <!-- Products Table -->
     <div class="common-card card mb-4">
         <div class="table-responsive">
-            <table class="table style-two table-hover mb-0">
+            <table class="table style-two ">
                 <thead>
                     <tr>
-                        <th width="30">
+                        <th class="col-auto">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" wire:model.live="selectAll" id="selectAll">
                             </div>
                         </th>
-                        <th width="80">Image</th>
+                        <th>Image</th>
                         <th>
                             <a href="#" wire:click.prevent="sortBy('name')" class="d-flex align-items-center">
                                 Product
@@ -129,7 +133,8 @@
                                 @endif
                             </a>
                         </th>
-                        <th width="120">
+                        <th class="col-auto">Category</th>
+                        <th class="col-auto">
                             <a href="#" wire:click.prevent="sortBy('regular_price')" class="d-flex align-items-center">
                                 Price
                                 @if ($sortField === 'regular_price')
@@ -137,7 +142,7 @@
                                 @endif
                             </a>
                         </th>
-                        <th width="100">
+                        <th class="col-auto">
                             <a href="#" wire:click.prevent="sortBy('sales_count')" class="d-flex align-items-center">
                                 Sales
                                 @if ($sortField === 'sales_count')
@@ -145,8 +150,7 @@
                                 @endif
                             </a>
                         </th>
-                        <th width="120">Category</th>
-                        <th width="100">
+                        <th class="col-auto">
                             <a href="#" wire:click.prevent="sortBy('status')" class="d-flex align-items-center">
                                 Status
                                 @if ($sortField === 'status')
@@ -154,7 +158,7 @@
                                 @endif
                             </a>
                         </th>
-                        <th width="150">
+                        <th class="col-auto">
                             <a href="#" wire:click.prevent="sortBy('created_at')" class="d-flex align-items-center">
                                 Date
                                 @if ($sortField === 'created_at')
@@ -162,7 +166,7 @@
                                 @endif
                             </a>
                         </th>
-                        <th width="120">Actions</th>
+                        <th class="">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -179,40 +183,33 @@
                                     <img src="{{ my_asset($product->thumbnail) }}" class="img-thumbnail"
                                         style="width: 60px; height: 60px; object-fit: cover;" alt="{{ $product->name }}">
                                 @else
-                                    <div class="bg-light d-flex align-items-center justify-content-center"
+                                    <div class="bg-light d-flex align-items-center justify-content-center mx-auto"
                                         style="width: 60px; height: 60px;">
                                         <i class="fas fa-image text-muted"></i>
                                     </div>
                                 @endif
                             </td>
                             <td>
-                                <div class="d-flex flex-column">
-                                    <strong>{{ $product->name }}</strong>
-                                    @if ($product->featured)
-                                        <span class="badge bg-warning text-dark mt-1 d-inline-block"
-                                            style="width: fit-content;">Featured</span>
-                                    @endif
-                                </div>
+                                <strong>{{ $product->name }}</strong>
+                                @if ($product->featured)
+                                    <i class="fa fa-check-circle text-success"></i>
+                                @endif
+                            </td>
+                            <td>{{ $product->category->name ?? 'Nil' }}
                             </td>
                             <td>
                                 @if ($product->is_free)
                                     <span class="badge bg-success">Free</span>
                                 @else
-                                    ${{ number_format($product->regular_price, 2) }}
+                                    {{ format_price($product->regular_price) }}
                                     @if ($product->discount > 0)
+                                        <br>
                                         <span class="badge bg-danger ms-1">-{{ $product->discount }}%</span>
                                     @endif
                                 @endif
                             </td>
                             <td>
                                 <span class="badge rounded-pill bg-primary">{{ $product->sales_count }}</span>
-                            </td>
-                            <td>
-                                @if ($product->category)
-                                    <span class="badge bg-info">{{ $product->category->name }}</span>
-                                @else
-                                    <span class="badge bg-secondary">No Category</span>
-                                @endif
                             </td>
                             <td>
                                 @if ($product->status === 'published')
@@ -225,19 +222,20 @@
                             </td>
                             <td>
                                 <div class="small">
-                                    <div>Created: {{ $product->created_at->format('M d, Y') }}</div>
+                                    <div>{{ show_date($product->created_at, 'M d, Y') }}</div>
                                     @if ($product->publish_date)
-                                        <div>Published: {{ Carbon\Carbon::parse($product->publish_date)->format('M d, Y') }}</div>
+                                        <div> {{show_date($product->publish_date) }}</div>
                                     @endif
                                 </div>
                             </td>
-                            <td>
-                                <div class="d-flex gap-1">
-                                    <a href="{{ route('admin.products.edit', $product) }}" wire:navigate class="btn btn-outline-primary btn-sm">
+                            <td class="text-end">
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <a href="{{ route('admin.products.edit', $product) }}" wire:navigate
+                                        class="btn btn-outline-primary btn-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('products.view', $product->slug) }}" wire:navigate class="btn btn-outline-info btn-sm"
-                                        target="_blank">
+                                    <a href="{{ route('products.view', $product->slug) }}" wire:navigate
+                                        class="btn btn-outline-info btn-sm" target="_blank">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <button type="button" class="btn btn-outline-danger btn-sm"

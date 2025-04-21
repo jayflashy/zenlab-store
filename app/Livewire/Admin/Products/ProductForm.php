@@ -72,7 +72,7 @@ class ProductForm extends Component
         'discount' => 'integer|min:0|max:100',
         'image' => 'nullable|image|max:5048',
         'thumbnail' => 'nullable|image|max:2024',
-        'file_path' => 'nullable|file|max:61200', // 50MB max
+        'file_path' => 'nullable', // 50MB max
         'demo_url' => 'nullable|url',
         'version' => 'nullable|max:20',
         'status' => 'required|in:draft,published,archived',
@@ -113,6 +113,7 @@ class ProductForm extends Component
         $this->existing_image = $product->image;
         $this->existing_thumbnail = $product->thumbnail;
         $this->existing_file = $product->file_path;
+        $this->file_path = $product->file_path;
         $this->download_type = $product->download_type;
         $this->demo_url = $product->demo_url;
 
