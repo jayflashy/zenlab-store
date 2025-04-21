@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -12,9 +13,7 @@ class Product extends Model
     //
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * The attributes that are mass assignable.     *
      */
     protected $fillable = [
         'name',
@@ -60,7 +59,7 @@ class Product extends Model
         'publish_date' => 'date',
     ];
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }

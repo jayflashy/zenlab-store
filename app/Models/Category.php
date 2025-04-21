@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
@@ -31,22 +33,22 @@ class Category extends Model
         'order' => 'integer',
     ];
 
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
     // Children categories relationship
-    public function children()
+    public function children(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
 
     // Products relationship
-    // public function products()
-    // {
-    //     return $this->hasMany(Product::class);
-    // }
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 
     // Scope for active categories
     public function scopeActive($query)
@@ -67,9 +69,9 @@ class Category extends Model
     }
 
     // Method to update products count
-    // public function updateProductsCount()
-    // {
-    //     $this->products_count = $this->products()->count();
-    //     $this->save();
-    // }
+    public function updateProductsCount(): void
+    {
+        $this->products_count = $this->products()->count();
+        $this->save();
+    }
 }

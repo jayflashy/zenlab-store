@@ -37,7 +37,8 @@ class ProductList extends Component
     public $selectedProducts = [];
 
     public $selectAll = false;
-    // public $products = [];
+
+    public $products;
 
     // Modals
     public $showDeleteModal = false;
