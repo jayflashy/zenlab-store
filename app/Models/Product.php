@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasUlids, SoftDeletes;
+    use HasUlids;
+    use SoftDeletes;
     //
 
     /**
@@ -78,6 +79,7 @@ class Product extends Model
 
         return round($price, 2);
     }
+
     public function getFinalExtendedPriceAttribute()
     {
         $price = $this->is_free ? 0 : $this->extended_price;
@@ -87,6 +89,7 @@ class Product extends Model
 
         return round($price, 2);
     }
+
     public function getDownloadLinkAttribute()
     {
         if ($this->download_type === 'link') {

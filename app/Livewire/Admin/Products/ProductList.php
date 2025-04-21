@@ -43,9 +43,9 @@ class ProductList extends Component
     // Modals
     public $showDeleteModal = false;
 
-    public $deleteId = null;
+    public $deleteId;
 
-    public $productToDelete = null;
+    public $productToDelete;
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -110,16 +110,18 @@ class ProductList extends Component
                 if ($product->image && Storage::disk('uploads')->exists($product->image)) {
                     Storage::disk('uploads')->delete($product->image);
                 }
+
                 if ($product->thumbnail && Storage::disk('uploads')->exists($product->thumbnail)) {
                     Storage::disk('uploads')->delete($product->thumbnail);
                 }
+
                 if ($product->download_type === 'file' && $product->file_path && Storage::disk('uploads')->exists($product->file_path)) {
                     Storage::disk('uploads')->delete($product->file_path);
                 }
 
                 // Delete screenshots
                 if ($product->screenshots) {
-                    $screenshots = json_decode($product->screenshots, true);
+                    $screenshots = json_decode((string) $product->screenshots, true);
                     foreach ($screenshots as $screenshot) {
                         if (Storage::disk('uploads')->exists($screenshot)) {
                             Storage::disk('uploads')->delete($screenshot);
@@ -149,16 +151,18 @@ class ProductList extends Component
                 if ($product->image && Storage::disk('uploads')->exists($product->image)) {
                     Storage::disk('uploads')->delete($product->image);
                 }
+
                 if ($product->thumbnail && Storage::disk('uploads')->exists($product->thumbnail)) {
                     Storage::disk('uploads')->delete($product->thumbnail);
                 }
+
                 if ($product->download_type === 'file' && $product->file_path && Storage::disk('uploads')->exists($product->file_path)) {
                     Storage::disk('uploads')->delete($product->file_path);
                 }
 
                 // Delete screenshots
                 if ($product->screenshots) {
-                    $screenshots = json_decode($product->screenshots, true);
+                    $screenshots = json_decode((string) $product->screenshots, true);
                     foreach ($screenshots as $screenshot) {
                         if (Storage::disk('uploads')->exists($screenshot)) {
                             Storage::disk('uploads')->delete($screenshot);
@@ -218,11 +222,7 @@ class ProductList extends Component
 
     public function updatedSelectAll()
     {
-        if ($this->selectAll) {
-            $this->selectedProducts = $this->products->pluck('id')->map(fn ($id) => (string) $id)->toArray();
-        } else {
-            $this->selectedProducts = [];
-        }
+        $this->selectedProducts = $this->selectAll ? $this->products->pluck('id')->map(fn ($id): string => (string) $id)->toArray() : [];
     }
 
     public function getProductsProperty()
@@ -251,29 +251,27 @@ class ProductList extends Component
 
     private function queryProducts()
     {
-        $query = Product::query()
+        return Product::query()
             ->with('category')
-            ->when($this->search, function ($query) {
-                $query->where(function ($query) {
+            ->when($this->search, function ($query): void {
+                $query->where(function ($query): void {
                     $query->where('name', 'like', '%'.$this->search.'%')
                         ->orWhere('slug', 'like', '%'.$this->search.'%')
                         ->orWhere('short_description', 'like', '%'.$this->search.'%');
                 });
             })
-            ->when($this->statusFilter, function ($query) {
+            ->when($this->statusFilter, function ($query): void {
                 $query->where('status', $this->statusFilter);
             })
-            ->when($this->categoryFilter, function ($query) {
+            ->when($this->categoryFilter, function ($query): void {
                 $query->where('category_id', $this->categoryFilter);
             })
-            ->when($this->typeFilter, function ($query) {
+            ->when($this->typeFilter, function ($query): void {
                 $query->where('type', $this->typeFilter);
             })
-            ->when($this->featuredFilter !== '', function ($query) {
+            ->when($this->featuredFilter !== '', function ($query): void {
                 $query->where('featured', $this->featuredFilter === '1');
             })
             ->orderBy($this->sortField, $this->sortDirection);
-
-        return $query;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use Illuminate\Http\Request;
 use App\Traits\LivewireToast;
 use App\Traits\SettingsTrait;
 use Exception;
@@ -35,7 +36,7 @@ class EmailSetting extends Component
         ];
     }
 
-    public function updateSettings(\Illuminate\Http\Request $request): void
+    public function updateSettings(Request $request): void
     {
         $this->validate([
             'email_gateway' => 'required|in:php,smtp',

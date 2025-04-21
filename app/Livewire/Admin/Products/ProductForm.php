@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Products;
 
+use Illuminate\Http\UploadedFile;
 use App\Models\Category;
 use App\Models\Product;
 use App\Traits\LivewireToast;
@@ -17,7 +18,7 @@ class ProductForm extends Component
     use LivewireToast;
     use WithFileUploads;
 
-    public $product = null;
+    public $product;
 
     public $pageTitle = 'Create Product';
 
@@ -159,10 +160,11 @@ class ProductForm extends Component
 
     public function addTag()
     {
-        $tag = trim($this->tag);
+        $tag = trim((string) $this->tag);
         if (! empty($tag) && ! in_array($tag, $this->tags)) {
             $this->tags[] = $tag;
         }
+
         $this->tag = '';
     }
 
@@ -183,7 +185,7 @@ class ProductForm extends Component
                     $value = (bool) $value;
                     break;
                 case 'array':
-                    $value = explode(',', $value);
+                    $value = explode(',', (string) $value);
                     break;
                 case 'number':
                     $value = (float) $value;
@@ -267,11 +269,7 @@ class ProductForm extends Component
     {
         $this->validate();
 
-        if ($this->formMode === 'edit') {
-            $product = Product::findOrFail($this->productId);
-        } else {
-            $product = new Product;
-        }
+        $product = $this->formMode === 'edit' ? Product::findOrFail($this->productId) : new Product;
 
         // Basic info
         $product->name = $this->name;
@@ -297,7 +295,7 @@ class ProductForm extends Component
             $product->thumbnail = $thumbnailPath;
         }
 
-        if ($this->file_path instanceof \Illuminate\Http\UploadedFile && $this->download_type === 'file') {
+        if ($this->file_path instanceof UploadedFile && $this->download_type === 'file') {
             $filePath = $this->file_path->store('products/files', 'uploads');
             $product->file_path = $filePath;
         } elseif ($this->download_type === 'link') {
