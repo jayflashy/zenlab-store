@@ -7,6 +7,8 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\EmailSetting;
 use App\Livewire\Admin\EmailTemplate;
 use App\Livewire\Admin\PageManager;
+use App\Livewire\Admin\Products\ProductForm;
+use App\Livewire\Admin\Products\ProductList;
 use App\Livewire\Admin\SettingsManager;
 
 // Auth;
@@ -19,6 +21,9 @@ Route::middleware('admin')->group(function (): void {
     // categories
     Route::get('categories', CategoryManager::class)->name('categories');
     // Products
+    Route::get('products', ProductList::class)->name('products.index');
+    Route::get('products/create', ProductForm::class)->name('products.create');
+    Route::get('products/edit/{id}', ProductForm::class)->name('products.edit');
 
 
     // Blogs

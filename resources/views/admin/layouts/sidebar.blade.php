@@ -40,13 +40,13 @@
                 </a>
                 <ul class="side-submenu">
                     <li class="nav-submenu__item">
-                        <a href="#" class="nav-submenu__link">Add</a>
+                        <a href="{{route('admin.products.create')}}" wire:navigate class="nav-submenu__link">Add</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.dashboard') }}" wire:navigate class="nav-submenu__link">Listing</a>
+                        <a href="{{ route('admin.products.index') }}" wire:navigate class="nav-submenu__link">Listing</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="#" class="nav-submenu__link">others</a>
+                        <a href="#" wire:navigate class="nav-submenu__link">others</a>
                     </li>
                 </ul>
             </li>
