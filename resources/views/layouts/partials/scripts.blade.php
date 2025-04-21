@@ -1,4 +1,3 @@
-
 <script src="{{ static_asset('js/vendors.js') }}"></script>
 <script src="{{ static_asset('js/custom.js') }}"></script>
 <script src="{{ static_asset('js/marquee.min.js') }}"></script>
@@ -7,7 +6,9 @@
 <script src="{{ asset('public/vendor/livewire/livewire.js') }}" data-csrf="{{ csrf_token() }}"
     data-update-uri="{{ url('livewire/update') }}" data-navigate-once="true"></script>
 
-    <script src="{{static_asset('summernote/summernote-lite.min.js')}}"></script>
+<script src="{{ static_asset('summernote/summernote-lite.min.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 @stack('scripts')
 @yield('scripts')
 

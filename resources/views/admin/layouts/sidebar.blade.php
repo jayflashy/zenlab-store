@@ -40,13 +40,13 @@
                 </a>
                 <ul class="side-submenu">
                     <li class="nav-submenu__item">
-                        <a href="#" class="nav-submenu__link">Add</a>
+                        <a href="{{route('admin.products.create')}}" wire:navigate class="nav-submenu__link">Add</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.dashboard') }}" wire:navigate class="nav-submenu__link">Listing</a>
+                        <a href="{{ route('admin.products.index') }}" wire:navigate class="nav-submenu__link">Listing</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="#" class="nav-submenu__link">others</a>
+                        <a href="#" wire:navigate class="nav-submenu__link">Settings</a>
                     </li>
                 </ul>
             </li>
@@ -173,83 +173,8 @@
                     </li>
                 </ul>
             </li>
-
-            {{-- OLDD --}}
             <li class="sidebar-list__item">
-                <a href="follower.html" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon4.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active4.svg') }}" alt="" class="icon icon-active">
-                    </span>
-                    <span class="text">Followers</span>
-                </a>
-            </li>
-            <li class="sidebar-list__item">
-                <a href="following.html" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon5.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active5.svg') }}" alt="" class="icon icon-active">
-                    </span>
-                    <span class="text">Followings</span>
-                </a>
-            </li>
-            <li class="sidebar-list__item">
-                <a href="setting.html" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon10.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active10.svg') }}" alt="" class="icon icon-active">
-                    </span>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
-            <li class="sidebar-list__item">
-                <a href="statement.html" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon12.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active12.svg') }}" alt="" class="icon icon-active">
-                    </span>
-                    <span class="text">Statements</span>
-                </a>
-            </li>
-            <li class="sidebar-list__item">
-                <a href="earning.html" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon11.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active11.svg') }}" alt="" class="icon icon-active">
-                    </span>
-                    <span class="text">Earnings</span>
-                </a>
-            </li>
-            <li class="sidebar-list__item">
-                <a href="review.html" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon7.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active7.svg') }}" alt="" class="icon icon-active">
-                    </span>
-                    <span class="text">Reviews</span>
-                </a>
-            </li>
-
-            <li class="sidebar-list__item">
-                <a href="download.html" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon6.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active6.svg') }}" alt="" class="icon icon-active">
-                    </span>
-                    <span class="text">Downloads</span>
-                </a>
-            </li>
-            <li class="sidebar-list__item">
-                <a href="refund.html" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon8.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active8.svg') }}" alt="" class="icon icon-active">
-                    </span>
-                    <span class="text">Refunds</span>
-                </a>
-            </li>
-            <li class="sidebar-list__item">
-                <a href="login.html" class="sidebar-list__link">
+                <a href="login.html" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon13.svg') }}" alt="" class="icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon-active13.svg') }}" alt="" class="icon icon-active">
