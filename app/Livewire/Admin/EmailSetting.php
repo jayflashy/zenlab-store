@@ -35,7 +35,7 @@ class EmailSetting extends Component
         ];
     }
 
-    public function updateSettings(): void
+    public function updateSettings(\Illuminate\Http\Request $request): void
     {
         $this->validate([
             'email_gateway' => 'required|in:php,smtp',
