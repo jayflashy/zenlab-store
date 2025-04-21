@@ -152,7 +152,7 @@
                         <div class="form-group mb-3">
                             <label for="regular_price" class="form-label">Regular License Price</label>
                             <div class="input-group">
-                                <span class="input-group-text">$</span>
+                                <span class="input-group-text">{{ $settings->currency_symbol }}</span>
                                 <input type="number" step="0.01"
                                     class="common-input form-control @error('regular_price') is-invalid @enderror"
                                     wire:model="regular_price" id="regular_price" placeholder="0.00"
@@ -167,7 +167,7 @@
                         <div class="form-group mb-3">
                             <label for="extended_price" class="form-label">Extended License Price</label>
                             <div class="input-group">
-                                <span class="input-group-text">$</span>
+                                <span class="input-group-text">{{ $settings->currency_symbol }}</span>
                                 <input type="number" step="0.01"
                                     class="common-input form-control @error('extended_price') is-invalid @enderror"
                                     wire:model="extended_price" id="extended_price" placeholder="0.00"
@@ -199,11 +199,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <strong>Regular License Final Price:</strong>
-                                ${{ number_format($regular_price - ($regular_price * $discount) / 100, 2) }}
+                                {{ format_price($final_price) }}
                             </div>
                             <div class="col-md-6">
                                 <strong>Extended License Final Price:</strong>
-                                ${{ number_format($extended_price - ($extended_price * $discount) / 100, 2) }}
+                                {{ format_price($final_extended_price) }}
                             </div>
                         </div>
                     </div>
@@ -427,7 +427,9 @@
                                     <td>{{ $key }}</td>
                                     <td>
                                         @if (is_array($value))
-                                            {{ implode(', ', $value) }}
+                                            @foreach ((array) $value as $idx => $item)
+                                                {{ is_array($item) ? json_encode($item) : $item }}{{ !$loop->last ? ', ' : '' }}
+                                            @endforeach
                                         @elseif(is_bool($value))
                                             <span class="badge {{ $value ? 'bg-success' : 'bg-danger' }}">
                                                 {{ $value ? 'Yes' : 'No' }}
@@ -522,12 +524,14 @@
                 @if ($download_type === 'file')
                     <div class="form-group mb-4">
                         <label for="file_path" class="form-label">Product File</label>
-                        <input type="file" class="common-input border form-control @error('file_path') is-invalid @enderror" wire:model="file_path"
-                            id="file_path">
-                        <div wire:loading wire:target="file_path" class="text-sm text-gray-500 mt-1">
+                        <input type="file" class="common-input border form-control @error('file_path') is-invalid @enderror"
+                            wire:model="file_path" id="file_path">
+                        <div wire:loading wire:target="file_path" class="text-sm text-gray-500 mt-1 d-flex align-items-center">
+                            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
                             Uploading...
                         </div>
-                        <small class="text-muted">Upload the file customers will download after purchase (ZIP, PDF, etc.)</small>
+                        <small class="text-muted">Upload the file customers will download after purchase (ZIP, PDF, etc.). Max file size:
+                            {{ ini_get('upload_max_filesize') }}</small>
                         @error('file_path')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

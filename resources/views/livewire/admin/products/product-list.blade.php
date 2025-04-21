@@ -23,7 +23,7 @@
                         <span class="input-group-text bg-light">
                             <i class="fas fa-search"></i>
                         </span>
-                        <input type="text" class="common-input border form-control" wire:model.live.debounce.300ms="search"
+                        <input type="text" class="common-input border form-control" wire:model.debounce.300ms.live="search"
                             placeholder="Search products...">
                     </div>
                 </div>

@@ -57,6 +57,11 @@ class Product extends Model
         'attributes' => 'array',
         'metadata' => 'array',
         'publish_date' => 'date',
+        'regular_price' => 'decimal:2',
+        'extended_price' => 'decimal:2',
+        'discount' => 'integer',
+        'downloads_count' => 'integer',
+        'sales_count' => 'integer',
     ];
 
     public function category(): BelongsTo
@@ -73,9 +78,22 @@ class Product extends Model
 
         return round($price, 2);
     }
+    public function getFinalExtendedPriceAttribute()
+    {
+        $price = $this->is_free ? 0 : $this->extended_price;
+        if ($this->discount > 0 && ! $this->is_free) {
+            $price = $price - ($price * $this->discount / 100);
+        }
 
+        return round($price, 2);
+    }
     public function getDownloadLinkAttribute()
     {
-        return $this->download_type === 'link' ? $this->file_path : my_asset($this->file_path);
+        if ($this->download_type === 'link') {
+            // Return the URL only if it's valid, otherwise return a placeholder or null
+            return filter_var($this->file_path, FILTER_VALIDATE_URL) ? $this->file_path : null;
+        }
+
+        return $this->file_path ? my_asset($this->file_path) : null;
     }
 }

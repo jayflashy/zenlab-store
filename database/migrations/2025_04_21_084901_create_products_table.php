@@ -32,9 +32,9 @@ return new class extends Migration
             $table->json('screenshots')->nullable();
             $table->string('demo_url')->nullable();
 
-            $table->integer('downloads_count')->default(0);
-            $table->integer('sales_count')->default(0);
-            $table->integer('sales_boost')->default(5);
+            $table->unsignedInteger('downloads_count')->default(0);
+            $table->unsignedInteger('sales_count')->default(0);
+            $table->unsignedInteger('sales_boost')->default(5);
 
             $table->boolean('featured')->default(false);
             $table->json('tags')->nullable();

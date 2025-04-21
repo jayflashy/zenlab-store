@@ -55,7 +55,7 @@ class ProductList extends Component
         'featuredFilter' => ['except' => ''],
         'sortField' => ['except' => 'created_at'],
         'sortDirection' => ['except' => 'desc'],
-        'perPage' => ['except' => 10],
+        'perPage' => ['except' => 25],
     ];
 
     public function updatingStatusFilter()
@@ -107,22 +107,22 @@ class ProductList extends Component
 
             if ($product) {
                 // Delete associated files
-                if ($product->image && Storage::exists($product->image)) {
-                    Storage::delete($product->image);
+                if ($product->image && Storage::disk('uploads')->exists($product->image)) {
+                    Storage::disk('uploads')->delete($product->image);
                 }
-                if ($product->thumbnail && Storage::exists($product->thumbnail)) {
-                    Storage::delete($product->thumbnail);
+                if ($product->thumbnail && Storage::disk('uploads')->exists($product->thumbnail)) {
+                    Storage::disk('uploads')->delete($product->thumbnail);
                 }
-                if ($product->download_type === 'file' && $product->file_path && Storage::exists($product->file_path)) {
-                    Storage::delete($product->file_path);
+                if ($product->download_type === 'file' && $product->file_path && Storage::disk('uploads')->exists($product->file_path)) {
+                    Storage::disk('uploads')->delete($product->file_path);
                 }
 
                 // Delete screenshots
                 if ($product->screenshots) {
                     $screenshots = json_decode($product->screenshots, true);
                     foreach ($screenshots as $screenshot) {
-                        if (Storage::exists($screenshot)) {
-                            Storage::delete($screenshot);
+                        if (Storage::disk('uploads')->exists($screenshot)) {
+                            Storage::disk('uploads')->delete($screenshot);
                         }
                     }
                 }
@@ -130,7 +130,7 @@ class ProductList extends Component
                 // Delete the product
                 $product->delete();
 
-                session()->flash('success', 'Product deleted successfully.');
+                $this->successAlert('Product deleted successfully');
             }
         }
 
@@ -216,7 +216,7 @@ class ProductList extends Component
         }
     }
 
-    public function toggleSelectAll()
+    public function updatedSelectAll()
     {
         if ($this->selectAll) {
             $this->selectedProducts = $this->products->pluck('id')->map(fn ($id) => (string) $id)->toArray();
@@ -245,7 +245,7 @@ class ProductList extends Component
             'products' => $products,
             'categories' => $categories,
             'productTypes' => $productTypes,
-            'pageTitle' => 'Manage Poducts',
+            'pageTitle' => 'Manage Products',
         ])->layout('admin.layouts.app');
     }
 

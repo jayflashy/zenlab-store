@@ -297,7 +297,7 @@ class ProductForm extends Component
             $product->thumbnail = $thumbnailPath;
         }
 
-        if ($this->file_path && $this->download_type === 'file') {
+        if ($this->file_path instanceof \Illuminate\Http\UploadedFile && $this->download_type === 'file') {
             $filePath = $this->file_path->store('products/files', 'uploads');
             $product->file_path = $filePath;
         } elseif ($this->download_type === 'link') {
