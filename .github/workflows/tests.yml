@@ -88,7 +88,7 @@ jobs:
       - name: Check Code with Rector
         run: ./vendor/bin/rector process
 
-        - name: Commit Changes
+      - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: fix code with rector
