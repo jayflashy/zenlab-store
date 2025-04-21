@@ -93,9 +93,9 @@ jobs:
         with:
           commit_message: fix code with rector
           commit_options: '--no-verify'
-          file_pattern: |
-            **/*
-            !.github/workflows/*
+          file_pattern: '**/*'
+          skip_fetch: true
+          skip_dirty_check: true
 
       - name: Stop Server
         if: always()
