@@ -2,8 +2,6 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Setting;
-use Database\Seeders\SettingsSeeder;
 
 /*
 |--------------------------------------------------------------------------
