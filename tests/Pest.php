@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Setting;
 use Database\Seeders\SettingsSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +61,7 @@ function something(): void
 
 beforeEach(function () {
     // Ensure settings exist for all tests
-    if (!Setting::first()) {
-        (new SettingsSeeder())->run();
+    if (! Setting::first()) {
+        (new SettingsSeeder)->run();
     }
 });
