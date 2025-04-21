@@ -8,6 +8,7 @@ use App\Traits\LivewireToast;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Purify;
 use Storage;
 use Str;
 
@@ -63,19 +64,21 @@ class ProductForm extends Component
     public $attributeType = 'text';
 
     protected $rules = [
-        'name' => 'required|min:3|max:255',
+        'name' => 'required|min:10|max:255',
         'slug' => 'required|max:255',
         'category_id' => 'nullable|exists:categories,id',
         'regular_price' => 'nullable|numeric|min:0',
         'extended_price' => 'nullable|numeric|min:0',
         'discount' => 'integer|min:0|max:100',
-        'image' => 'nullable|image|max:2048',
-        'thumbnail' => 'nullable|image|max:1024',
-        'file_path' => 'nullable|file|max:51200', // 50MB max
+        'image' => 'nullable|image|max:5048',
+        'thumbnail' => 'nullable|image|max:2024',
+        'file_path' => 'nullable|file|max:61200', // 50MB max
         'demo_url' => 'nullable|url',
-        'version' => 'nullable|max:50',
+        'version' => 'nullable|max:20',
         'status' => 'required|in:draft,published,archived',
         'publish_date' => 'nullable|date',
+        'short_description' => 'nullable|string',
+        'description' => 'required|string|min:10',
     ];
 
 
@@ -247,7 +250,7 @@ class ProductForm extends Component
         $product->name = $this->name;
         $product->slug = $this->slug;
         $product->short_description = $this->short_description;
-        $product->description = $this->description;
+        $product->description = Purify::clean($this->description) ?? $this->description;
         $product->category_id = $this->category_id;
 
         // Pricing

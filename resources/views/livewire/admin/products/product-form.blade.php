@@ -238,7 +238,7 @@
                                 </div>
                             @elseif($existing_image)
                                 <div class="mt-2">
-                                    <img src="{{ Storage::url($existing_image) }}" class="img-thumbnail" style="max-height: 200px">
+                                    <img src="{{ my_asset($existing_image) }}" class="img-thumbnail" style="max-height: 200px">
                                 </div>
                             @endif
                         </div>
@@ -264,7 +264,7 @@
                                 </div>
                             @elseif($existing_thumbnail)
                                 <div class="mt-2">
-                                    <img src="{{ Storage::url($existing_thumbnail) }}" class="img-thumbnail" style="max-height: 200px">
+                                    <img src="{{ my_asset($existing_thumbnail) }}" class="img-thumbnail" style="max-height: 200px">
                                 </div>
                             @endif
                         </div>
@@ -320,7 +320,7 @@
                         @foreach ($existing_screenshots as $index => $screenshot)
                             <div class="col-md-3 mb-3">
                                 <div class="position-relative">
-                                    <img src="{{ Storage::url($screenshot) }}" class="img-thumbnail"
+                                    <img src="{{ my_asset($screenshot) }}" class="img-thumbnail"
                                         style="height: 150px; width: 100%; object-fit: cover;">
                                     <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0"
                                         wire:click="removeExistingScreenshot({{ $index }})">
@@ -364,7 +364,7 @@
 
                     <div class="mt-2">
                         @foreach ($tags as $index => $tag)
-                            <span class="badge bg-primary me-1 mb-1">
+                            <span class="badge bg-main me-1 mb-1">
                                 {{ $tag }}
                                 <i class="fas fa-times ms-1 cursor-pointer" wire:click="removeTag({{ $index }})"></i>
                             </span>
@@ -404,7 +404,7 @@
                             </select>
                         </div>
                         <div class="col-md-1">
-                            <button type="button" class="btn btn-primary w-100" wire:click="addAttribute">
+                            <button type="button" class="btn btn-main w-100" wire:click="addAttribute">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -412,7 +412,7 @@
                 </div>
 
                 <div class="table-responsive mt-4">
-                    <table class="table style-two table-bordered">
+                    <table class="table style-two">
                         <thead>
                             <tr>
                                 <th>Attribute</th>
@@ -442,7 +442,7 @@
                                         @elseif(is_bool($value))
                                             <span class="badge bg-warning">Boolean</span>
                                         @elseif(is_numeric($value))
-                                            <span class="badge bg-primary">Number</span>
+                                            <span class="badge bg-main">Number</span>
                                         @else
                                             <span class="badge bg-secondary">Text</span>
                                         @endif
@@ -471,19 +471,19 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4 mb-2">
-                                    <button type="button" class="btn btn-outline-primary w-100"
+                                    <button type="button" class="btn btn-outline-main w-100"
                                         wire:click="loadAttributeTemplate('theme')">
                                         <i class="fas fa-paint-brush me-1"></i> Theme Template
                                     </button>
                                 </div>
                                 <div class="col-md-4 mb-2">
-                                    <button type="button" class="btn btn-outline-primary w-100"
+                                    <button type="button" class="btn btn-outline-main w-100"
                                         wire:click="loadAttributeTemplate('plugin')">
                                         <i class="fas fa-puzzle-piece me-1"></i> Plugin Template
                                     </button>
                                 </div>
                                 <div class="col-md-4 mb-2">
-                                    <button type="button" class="btn btn-outline-primary w-100"
+                                    <button type="button" class="btn btn-outline-main w-100"
                                         wire:click="loadAttributeTemplate('graphic')">
                                         <i class="fas fa-images me-1"></i> Graphic Template
                                     </button>
@@ -562,7 +562,7 @@
                     <i class="fas fa-arrow-left me-1"></i> Back to Basic
                 </button>
                 <div>
-                    <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
+                    <button type="submit" class="btn btn-main" wire:loading.attr="disabled">
                         <i class="fas fa-save me-1"></i> {{ $formMode === 'edit' ? 'Update' : 'Create' }} Product
                         <span wire:loading wire:target="save" class="spinner-border spinner-border-sm ms-1" role="status"></span>
                     </button>
