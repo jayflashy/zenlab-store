@@ -27,7 +27,10 @@ class RichText extends Component
      */
         public string $label = 'Description')
     {
+        $this->model = $model;
         $this->id = $id ?? 'editor_'.uniqid();
+        $this->height = $height;
+        $this->label = $label;
     }
 
     /**
