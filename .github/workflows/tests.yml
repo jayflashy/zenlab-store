@@ -47,13 +47,13 @@ jobs:
           echo "DB_CONNECTION=sqlite" >> .env
           echo "CACHE_DRIVER=array" >> .env
 
-      - name: Generate Application Key
-        run: php artisan key:generate
-
       - name: Run Migrations
         run: |
           php artisan migrate:fresh --force
           php artisan db:seed --force
+
+      - name: Generate Application Key
+        run: php artisan key:generate
 
       - name: Build Assets
         run: npm run build
