@@ -17,28 +17,18 @@
     <div class="common-card card mb-4">
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-md-3">
+                <div class="col-md-4 col-lg-3">
                     <label for="search" class="form-label">Search</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light">
                             <i class="fas fa-search"></i>
                         </span>
-                        <input type="text" class="common-input form-control" wire:model.live.debounce.300ms="search"
+                        <input type="text" class="common-input border form-control" wire:model.live.debounce.300ms="search"
                             placeholder="Search products...">
                     </div>
                 </div>
 
-                <div class="col-md-2">
-                    <label for="statusFilter" class="form-label">Status</label>
-                    <select class="common-input form-select" wire:model.live="statusFilter" id="statusFilter">
-                        <option value="">All Statuses</option>
-                        <option value="draft">Draft</option>
-                        <option value="published">Published</option>
-                        <option value="archived">Archived</option>
-                    </select>
-                </div>
-
-                <div class="col-md-2">
+                <div class="col-md-4 col-lg-2">
                     <label for="categoryFilter" class="form-label">Category</label>
                     <select class="common-input form-select" wire:model.live="categoryFilter" id="categoryFilter">
                         <option value="">All Categories</option>
@@ -48,7 +38,18 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-6 col-md-4 col-lg-2">
+                    <label for="statusFilter" class="form-label">Status</label>
+                    <select class="common-input form-select" wire:model.live="statusFilter" id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                </div>
+
+
+                <div class="col-6 col-md-4 col-lg-2">
                     <label for="typeFilter" class="form-label">Type</label>
                     <select class="common-input form-select" wire:model.live="typeFilter" id="typeFilter">
                         <option value="">All Types</option>
@@ -58,7 +59,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-2">
                     <label for="featuredFilter" class="form-label">Featured</label>
                     <select class="common-input form-select" wire:model.live="featuredFilter" id="featuredFilter">
                         <option value="">All Products</option>
@@ -67,7 +68,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-1">
                     <label for="perPage" class="form-label">Show</label>
                     <select class="common-input form-select" wire:model.live="perPage" id="perPage">
                         <option value="10">10</option>
@@ -231,14 +232,15 @@
                                 </div>
                             </td>
                             <td>
-                                <div class=" ">
-                                    <a href="{{ route('admin.products.edit', $product) }}" wire:navigate class="btn btn-outline-primary">
+                                <div class="d-flex gap-1">
+                                    <a href="{{ route('admin.products.edit', $product) }}" wire:navigate class="btn btn-outline-primary btn-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('products.view', $product->slug) }}" wire:navigate class="btn btn-outline-info" target="_blank">
+                                    <a href="{{ route('products.view', $product->slug) }}" wire:navigate class="btn btn-outline-info btn-sm"
+                                        target="_blank">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <button type="button" class="btn btn-outline-danger"
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
                                         wire:click="confirmDelete('{{ $product->id }}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
@@ -270,44 +272,32 @@
     </div>
 
     <!-- Delete Modal -->
-    <div class="modal fade" tabindex="-1" wire:ignore.self id="deleteModal" aria-hidden="true" x-data x-show="$wire.showDeleteModal"
-        x-on:click.away="$wire.showDeleteModal = false" style="display: {{ $showDeleteModal ? 'block' : 'none' }}">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm Delete</h5>
-                    <button type="button" class="btn-close" wire:click="$set('showDeleteModal', false)"></button>
-                </div>
-                <div class="modal-body">
-                    @if ($productToDelete)
-                        <p>Are you sure you want to delete <strong>{{ $productToDelete->name }}</strong>?</p>
-                        <p class="text-danger">This action cannot be undone and will permanently remove the product from your store.</p>
-                    @endif
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Cancel</button>
-                    <button type="button" class="btn btn-danger" wire:click="deleteProduct">
-                        <i class="fas fa-trash me-1"></i> Delete Product
-                    </button>
+    @if ($showDeleteModal)
+        <div class="common-modal modal fade show" tabindex="-1" id="deleteModal" aria-hidden="true"
+            style="display:block;background-color: rgba(0, 0, 0, 0.5);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Delete</h5>
+                        <button type="button" class="btn-close" wire:click="$set('showDeleteModal', false)"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if ($productToDelete)
+                            <p>Are you sure you want to delete <strong>{{ $productToDelete->name }}</strong>?</p>
+                            <p class="text-danger">This action cannot be undone and will permanently remove the product from your store.
+                            </p>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Cancel</button>
+                        <button type="button" class="btn btn-danger" wire:click="deleteProduct">
+                            <i class="fas fa-trash me-1"></i> Delete Product
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 </div>
-
-@section('scripts')
-    <script>
-        document.addEventListener('livewire:initialized', function() {
-            Livewire.on('showDeleteModal', () => {
-                $('#deleteModal').modal('show');
-            });
-
-            Livewire.on('hideDeleteModal', () => {
-                $('#deleteModal').modal('hide');
-            });
-        });
-    </script>
-@endsection
-
 
 @include('layouts.meta')

@@ -24,12 +24,12 @@ class ProductList extends Component
     public $featuredFilter = '';
     public $sortField = 'created_at';
     public $sortDirection = 'desc';
-    public $perPage = 30;
-
+    public $perPage = 1;
 
     // Bulk Actions
     public $selectedProducts = [];
     public $selectAll = false;
+    // public $products = [];
 
     // Modals
     public $showDeleteModal = false;
@@ -131,22 +131,22 @@ class ProductList extends Component
 
             foreach ($products as $product) {
                 // Delete associated files
-                if ($product->image && Storage::exists($product->image)) {
-                    Storage::delete($product->image);
+                if ($product->image && Storage::disk('uploads')->exists($product->image)) {
+                    Storage::disk('uploads')->delete($product->image);
                 }
-                if ($product->thumbnail && Storage::exists($product->thumbnail)) {
-                    Storage::delete($product->thumbnail);
+                if ($product->thumbnail && Storage::disk('uploads')->exists($product->thumbnail)) {
+                    Storage::disk('uploads')->delete($product->thumbnail);
                 }
-                if ($product->download_type === 'file' && $product->file_path && Storage::exists($product->file_path)) {
-                    Storage::delete($product->file_path);
+                if ($product->download_type === 'file' && $product->file_path && Storage::disk('uploads')->exists($product->file_path)) {
+                    Storage::disk('uploads')->delete($product->file_path);
                 }
 
                 // Delete screenshots
                 if ($product->screenshots) {
                     $screenshots = json_decode($product->screenshots, true);
                     foreach ($screenshots as $screenshot) {
-                        if (Storage::exists($screenshot)) {
-                            Storage::delete($screenshot);
+                        if (Storage::disk('uploads')->exists($screenshot)) {
+                            Storage::disk('uploads')->delete($screenshot);
                         }
                     }
                 }
@@ -155,7 +155,7 @@ class ProductList extends Component
                 $product->delete();
             }
 
-            session()->flash('success', count($this->selectedProducts) . ' products deleted successfully.');
+            $this->successAlert(count($this->selectedProducts) . 'Products deleted successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
@@ -169,7 +169,7 @@ class ProductList extends Component
                 'publish_date' => now()
             ]);
 
-            session()->flash('success', count($this->selectedProducts) . ' products published successfully.');
+            $this->successAlert(count($this->selectedProducts) . 'Products published successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
@@ -182,7 +182,7 @@ class ProductList extends Component
                 'status' => 'archived'
             ]);
 
-            session()->flash('success', count($this->selectedProducts) . ' products archived successfully.');
+            $this->successAlert(count($this->selectedProducts) . 'Products archived successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
