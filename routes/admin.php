@@ -18,6 +18,8 @@ Route::middleware('admin')->group(function (): void {
 
     // categories
     Route::get('categories', CategoryManager::class)->name('categories');
+    // Products
+
 
     // Blogs
     Route::get('blogs', BlogManager::class)->name('blogs');
