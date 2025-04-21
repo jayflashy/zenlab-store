@@ -118,7 +118,7 @@ class ProductForm extends Component
         $this->version = $product->version;
         $this->customattributes = $product->attributes ?? [];
         $this->status = $product->status;
-        $this->publish_date = $product->publish_date ? Carbon::parse($product->publish_date)->format('Y-m-d H:i:s') : null;
+        $this->publish_date = $product->publish_date ? Carbon::parse($product->publish_date)->format('Y-m-d') : null;
 
         $this->existing_screenshots = $product->screenshots ?? [];
     }

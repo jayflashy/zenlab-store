@@ -57,7 +57,7 @@ class Product extends Model
         'tags' => 'array',
         'attributes' => 'array',
         'metadata' => 'array',
-        'publish_date' => 'datetime',
+        'publish_date' => 'date',
     ];
 
     public function category()

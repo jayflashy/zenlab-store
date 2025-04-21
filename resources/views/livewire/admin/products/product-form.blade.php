@@ -122,7 +122,7 @@
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label for="publish_date" class="form-label">Publish Date</label>
-                            <input type="datetime" class="common-input form-control @error('publish_date') is-invalid @enderror"
+                            <input type="text" class="common-input form-control @error('publish_date') is-invalid @enderror"
                                 wire:model="publish_date" id="publish_date">
                             @error('publish_date')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -130,50 +130,11 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group mb-3 d-flex align-items-center" style="margin-top: 2rem;">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" wire:model="featured" id="featured">
-                                <label class="form-check-label" for="featured">Featured Product</label>
-                            </div>
-                        </div>
+                        <x-jdv-switch label="Featured Product" model="featured" />
                     </div>
                 </div>
 
-                <div class="form-group mb-3" wire:ignore>
-                    <label for="short_description_container" class="form-label">Short Description</label>
-                    <div x-data="{
-                        editor: null,
-                        content: @this.get('short_description'),
-                        init() {
-                            this.editor = new Quill('#short_description_container', {
-                                theme: 'snow',
-                                modules: {
-                                    toolbar: [
-                                        [{ header: [1, 2, 3, false] }],
-                                        ['bold', 'italic', 'underline'],
-                                        ['link', 'blockquote', 'code-block'],
-                                        [{ list: 'ordered' }, { list: 'bullet' }],
-                                        ['clean']
-                                    ]
-                                }
-                            });
-                            if (this.content) {
-                                setTimeout(() => {
-                                    this.editor.root.innerHTML = this.content;
-                                }, 10);
-                            }
-                            this.editor.on('text-change', () => {
-                                this.content = this.editor.root.innerHTML;
-                                @this.set('short_description', this.content);
-                            });
-                        }
-                    }">
-                        <div id="short_description_container" style="min-height: 150px;"></div>
-                    </div>
-                    @error('short_description')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
+                <x-rich-text model="short_description" height="100px" />
             </div>
         </div>
 
@@ -183,12 +144,8 @@
                 <h5 class="mb-0">Pricing Information</h5>
             </div>
             <div class="card-body">
-                <div class="form-group mb-3 d-flex align-items-center">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" wire:model="is_free" id="is_free">
-                        <label class="form-check-label" for="is_free">Free Product</label>
-                    </div>
-                </div>
+
+                <x-jdv-switch label="Free Product" model="is_free" live='true' />
 
                 <div class="row" @if ($is_free) style="opacity: 0.5;" @endif>
                     <div class="col-md-4">
@@ -385,7 +342,6 @@
             <div class="card-body">
                 <x-rich-text model="description" />
 
-
                 <div class="form-group mb-4">
                     <label for="version" class="form-label">Version</label>
                     <input type="text" class="common-input form-control @error('version') is-invalid @enderror" wire:model="version"
@@ -548,14 +504,14 @@
                 <div class="form-group mb-4">
                     <label class="form-label">Download Type</label>
                     <div class="form-check mb-2">
-                        <input class="form-check-input" type="radio" wire:model="download_type" id="download_type_file"
+                        <input class="form-check-input" type="radio" wire:model.live="download_type" id="download_type_file"
                             value="file">
                         <label class="form-check-label" for="download_type_file">
                             File Upload (Store file on server)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" wire:model="download_type" id="download_type_link"
+                        <input class="form-check-input" type="radio" wire:model.live="download_type" id="download_type_link"
                             value="link">
                         <label class="form-check-label" for="download_type_link">
                             External Link (URL to file)
@@ -566,7 +522,7 @@
                 @if ($download_type === 'file')
                     <div class="form-group mb-4">
                         <label for="file_path" class="form-label">Product File</label>
-                        <input type="file" class="form-control @error('file_path') is-invalid @enderror" wire:model="file_path"
+                        <input type="file" class="common-input border form-control @error('file_path') is-invalid @enderror" wire:model="file_path"
                             id="file_path">
                         <div wire:loading wire:target="file_path" class="text-sm text-gray-500 mt-1">
                             Uploading...
@@ -603,7 +559,7 @@
         <div class="card mb-4">
             <div class="card-body d-flex justify-content-between">
                 <button type="button" class="btn btn-outline-secondary" wire:click="setActiveTab('basic')">
-                    <i class="fas fa-arrow-left me-1"></i> Back to Basic Info
+                    <i class="fas fa-arrow-left me-1"></i> Back to Basic
                 </button>
                 <div>
                     <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
