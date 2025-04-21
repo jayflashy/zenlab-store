@@ -59,8 +59,11 @@ jobs:
       - name: Build Assets
         run: npm run build
 
+      - name: Serve Application
+        run: php artisan serve --port 8090
+
       - name: Run Pest Tests
-        run: ./vendor/bin/pest --test
+        run: ./vendor/bin/pest
 
       - name: Analyze Code with PHPStan
         run: ./vendor/bin/phpstan analyse
