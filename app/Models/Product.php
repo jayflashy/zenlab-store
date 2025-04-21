@@ -68,9 +68,10 @@ class Product extends Model
     public function getFinalPriceAttribute()
     {
         $price = $this->is_free ? 0 : $this->regular_price;
-        if ($this->discount > 0 && !$this->is_free) {
+        if ($this->discount > 0 && ! $this->is_free) {
             $price = $price - ($price * $this->discount / 100);
         }
+
         return round($price, 2);
     }
 

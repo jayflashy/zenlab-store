@@ -26,7 +26,6 @@ Route::middleware('admin')->group(function (): void {
     Route::get('products/create', ProductForm::class)->name('products.create');
     Route::get('products/edit/{id}', ProductForm::class)->name('products.edit');
 
-
     // Blogs
     Route::get('blogs', BlogManager::class)->name('blogs');
     Route::get('/blogs/create', BlogManager::class)->name('blogs.create');

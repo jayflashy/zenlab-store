@@ -5,9 +5,9 @@ namespace App\Livewire\Admin\Products;
 use App\Models\Category;
 use App\Models\Product;
 use App\Traits\LivewireToast;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Storage;
 
 class ProductList extends Component
 {
@@ -16,24 +16,34 @@ class ProductList extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    //filters
+    // filters
     public $search = '';
+
     public $statusFilter = '';
+
     public $categoryFilter = '';
+
     public $typeFilter = '';
+
     public $featuredFilter = '';
+
     public $sortField = 'created_at';
+
     public $sortDirection = 'desc';
+
     public $perPage = 25;
 
     // Bulk Actions
     public $selectedProducts = [];
+
     public $selectAll = false;
     // public $products = [];
 
     // Modals
     public $showDeleteModal = false;
+
     public $deleteId = null;
+
     public $productToDelete = null;
 
     protected $queryString = [
@@ -66,10 +76,12 @@ class ProductList extends Component
     {
         $this->resetPage();
     }
+
     public function updatingSearch(): void
     {
         $this->resetPage();
     }
+
     public function sortBy($field)
     {
         if ($this->sortField === $field) {
@@ -86,6 +98,7 @@ class ProductList extends Component
         $this->productToDelete = Product::find($id);
         $this->showDeleteModal = true;
     }
+
     public function deleteProduct()
     {
         if ($this->deleteId) {
@@ -124,6 +137,7 @@ class ProductList extends Component
         $this->deleteId = null;
         $this->productToDelete = null;
     }
+
     public function bulkDelete()
     {
         if (count($this->selectedProducts) > 0) {
@@ -155,7 +169,7 @@ class ProductList extends Component
                 $product->delete();
             }
 
-            $this->successAlert(count($this->selectedProducts) . ' Products deleted successfully');
+            $this->successAlert(count($this->selectedProducts).' Products deleted successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
@@ -166,10 +180,10 @@ class ProductList extends Component
         if (count($this->selectedProducts) > 0) {
             Product::whereIn('id', $this->selectedProducts)->update([
                 'status' => 'published',
-                'publish_date' => now()
+                'publish_date' => now(),
             ]);
 
-            $this->successAlert(count($this->selectedProducts) . ' Products published successfully');
+            $this->successAlert(count($this->selectedProducts).' Products published successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
@@ -179,22 +193,23 @@ class ProductList extends Component
     {
         if (count($this->selectedProducts) > 0) {
             Product::whereIn('id', $this->selectedProducts)->update([
-                'featured' => 1
+                'featured' => 1,
             ]);
 
-            $this->successAlert(count($this->selectedProducts) . ' Products featured successfully');
+            $this->successAlert(count($this->selectedProducts).' Products featured successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
     }
+
     public function bulkArchive()
     {
         if (count($this->selectedProducts) > 0) {
             Product::whereIn('id', $this->selectedProducts)->update([
-                'status' => 'archived'
+                'status' => 'archived',
             ]);
 
-            $this->successAlert(count($this->selectedProducts) . ' Products archived successfully');
+            $this->successAlert(count($this->selectedProducts).' Products archived successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
         }
@@ -203,7 +218,7 @@ class ProductList extends Component
     public function toggleSelectAll()
     {
         if ($this->selectAll) {
-            $this->selectedProducts = $this->products->pluck('id')->map(fn($id) => (string) $id)->toArray();
+            $this->selectedProducts = $this->products->pluck('id')->map(fn ($id) => (string) $id)->toArray();
         } else {
             $this->selectedProducts = [];
         }
@@ -213,6 +228,7 @@ class ProductList extends Component
     {
         return $this->queryProducts()->get();
     }
+
     public function render()
     {
         $products = $this->queryProducts()->paginate($this->perPage);
@@ -224,23 +240,23 @@ class ProductList extends Component
             ->pluck('type')
             ->toArray();
 
-
         return view('livewire.admin.products.product-list', [
             'products' => $products,
             'categories' => $categories,
             'productTypes' => $productTypes,
-            'pageTitle' => 'Manage Poducts'
+            'pageTitle' => 'Manage Poducts',
         ])->layout('admin.layouts.app');
     }
+
     private function queryProducts()
     {
         $query = Product::query()
             ->with('category')
             ->when($this->search, function ($query) {
                 $query->where(function ($query) {
-                    $query->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('slug', 'like', '%' . $this->search . '%')
-                        ->orWhere('short_description', 'like', '%' . $this->search . '%');
+                    $query->where('name', 'like', '%'.$this->search.'%')
+                        ->orWhere('slug', 'like', '%'.$this->search.'%')
+                        ->orWhere('short_description', 'like', '%'.$this->search.'%');
                 });
             })
             ->when($this->statusFilter, function ($query) {

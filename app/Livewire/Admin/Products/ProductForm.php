@@ -17,50 +17,75 @@ class ProductForm extends Component
     use LivewireToast;
     use WithFileUploads;
 
-
     public $product = null;
+
     public $pageTitle = 'Create Product';
 
     public $productId;
+
     public $name;
+
     public $slug;
+
     public $short_description;
+
     public $description;
+
     public $category_id;
 
     public $regular_price;
+
     public $extended_price;
+
     public $discount = 0;
+
     public $is_free = false;
 
     public $image;
+
     public $thumbnail;
+
     public $file_path;
+
     public $existing_image;
+
     public $existing_thumbnail;
+
     public $existing_file;
+
     public $download_type = 'file';
+
     public $demo_url;
 
     public $featured = false;
+
     public $tags = [];
+
     public $tag = '';
+
     public $version;
+
     public $customattributes = [];
+
     public $status = 'draft';
+
     public $publish_date;
 
     // Screenshots array
     public $screenshots = [];
+
     public $existing_screenshots = [];
 
     // UI state
     public $activeTab = 'basic';
+
     public $formMode = 'create';
 
     // Attribute handling
     public $attributeKey = '';
+
     public $attributeValue = '';
+
     public $attributeType = 'text';
 
     protected $rules = [
@@ -81,7 +106,6 @@ class ProductForm extends Component
         'description' => 'required|string|min:10',
     ];
 
-
     public function mount($id = null)
     {
         $product = Product::find($id);
@@ -95,6 +119,7 @@ class ProductForm extends Component
             $this->publish_date = now()->format('Y-m-d H:i:s');
         }
     }
+
     public function loadProduct()
     {
         $product = Product::findOrFail($this->productId);
@@ -131,10 +156,11 @@ class ProductForm extends Component
     {
         $this->slug = Str::slug($this->name);
     }
+
     public function addTag()
     {
         $tag = trim($this->tag);
-        if (!empty($tag) && !in_array($tag, $this->tags)) {
+        if (! empty($tag) && ! in_array($tag, $this->tags)) {
             $this->tags[] = $tag;
         }
         $this->tag = '';
@@ -148,7 +174,7 @@ class ProductForm extends Component
 
     public function addAttribute()
     {
-        if (!empty($this->attributeKey)) {
+        if (! empty($this->attributeKey)) {
             // Handle different attribute types
             $value = $this->attributeValue;
 
@@ -191,7 +217,6 @@ class ProductForm extends Component
         }
     }
 
-
     public function loadAttributeTemplate($templateType)
     {
         switch ($templateType) {
@@ -203,23 +228,23 @@ class ProductForm extends Component
                     'frameworks' => ['Bootstrap 5'],
                     'browsers' => ['Chrome', 'Firefox', 'Safari', 'Edge'],
                     'includes_documentation' => true,
-                    'support_period' => '6 months'
+                    'support_period' => '6 months',
                 ];
                 break;
             case 'plugin':
                 $this->customattributes = [
                     'requirements' => [
                         'php' => '8.0+',
-                        'wordpress' => '6.0+'
+                        'wordpress' => '6.0+',
                     ],
                     'features' => [
                         'Easy installation',
                         'User-friendly interface',
-                        'Regular updates'
+                        'Regular updates',
                     ],
                     'license_type' => 'GPL-3.0',
                     'updates' => 'Lifetime',
-                    'installation_method' => 'One-click install'
+                    'installation_method' => 'One-click install',
                 ];
                 break;
             case 'graphic':
@@ -230,13 +255,14 @@ class ProductForm extends Component
                     'layered' => true,
                     'vector' => true,
                     'fonts' => [
-                        'included' => true
+                        'included' => true,
                     ],
-                    'editable_text' => true
+                    'editable_text' => true,
                 ];
                 break;
         }
     }
+
     public function save()
     {
         $this->validate();
@@ -244,7 +270,7 @@ class ProductForm extends Component
         if ($this->formMode === 'edit') {
             $product = Product::findOrFail($this->productId);
         } else {
-            $product = new Product();
+            $product = new Product;
         }
 
         // Basic info
@@ -317,9 +343,10 @@ class ProductForm extends Component
     public function render()
     {
         $categories = Category::all();
+
         return view('livewire.admin.products.product-form', [
             'categories' => $categories,
-            'pageTitle' => $this->pageTitle
+            'pageTitle' => $this->pageTitle,
         ])->layout('admin.layouts.app');
     }
 }
