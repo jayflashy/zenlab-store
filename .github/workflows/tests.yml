@@ -45,12 +45,15 @@ jobs:
       - name: Configure Database
         run: |
           echo "DB_CONNECTION=sqlite" >> .env
-
-      - name: Run Migrations
-        run: php artisan migrate --force
+          echo "CACHE_DRIVER=array" >> .env
 
       - name: Generate Application Key
         run: php artisan key:generate
+
+      - name: Run Migrations
+        run: |
+          php artisan migrate:fresh --force
+          php artisan db:seed --force
 
       - name: Build Assets
         run: npm run build
