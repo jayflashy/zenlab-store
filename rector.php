@@ -32,7 +32,7 @@ return RectorConfig::configure()
         SetList::CODING_STYLE,           // Removes unused code
         SetList::EARLY_RETURN,
         SetList::DEAD_CODE,
-        SetList::TYPE_DECLARATION,
+        // SetList::TYPE_DECLARATION,
         SetList::PRIVATIZATION,
 
     ])
@@ -41,5 +41,6 @@ return RectorConfig::configure()
         \Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector::class,
     ])
     ->withImportNames()
+    ->withTypeCoverageLevel(10)
     // Parallel processing for faster execution
     ->withParallel();

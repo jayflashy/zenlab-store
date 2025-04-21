@@ -1620,15 +1620,11 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * Finds an entry of the container by its identifier and returns it.
+         * {@inheritdoc}
          *
          * @template TClass of object
          * @param string|class-string<TClass> $id
          * @return ($id is class-string<TClass> ? TClass : mixed)
-         * @param string $id Identifier of the entry to look for.
-         * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
-         * @throws ContainerExceptionInterface Error while retrieving the entry.
-         * @return mixed Entry.
          * @static 
          */
         public static function get($id)
@@ -24593,6 +24589,60 @@ namespace App\Livewire {
      * 
      *
      */
+    class Contact {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Contact::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class Blogs {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Blogs::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class BlogView {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\BlogView::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
     class User {
         /**
          * 
@@ -24604,6 +24654,102 @@ namespace App\Livewire {
         public static function modal($name)
         {
             return \App\Livewire\User::modal($name);
+        }
+
+            }
+    }
+
+namespace App\Livewire\Product {
+    /**
+     * 
+     *
+     */
+    class Index {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Product\Index::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class Details {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Product\Details::modal($name);
+        }
+
+            }
+    }
+
+namespace App\Livewire\Cart {
+    /**
+     * 
+     *
+     */
+    class Index {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Cart\Index::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class Checkout {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Cart\Checkout::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class Success {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Cart\Success::modal($name);
         }
 
             }
@@ -24772,6 +24918,135 @@ namespace App\Livewire\Auth {
         public static function modal($name)
         {
             return \App\Livewire\Auth\ConfirmPassword::modal($name);
+        }
+
+            }
+    }
+
+namespace App\Livewire\Admin {
+    /**
+     * 
+     *
+     */
+    class Dashboard {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Admin\Dashboard::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class CategoryManager {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Admin\CategoryManager::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class BlogManager {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Admin\BlogManager::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class PageManager {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Admin\PageManager::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class EmailSetting {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Admin\EmailSetting::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class EmailTemplate {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Admin\EmailTemplate::modal($name);
+        }
+
+            }
+    /**
+     * 
+     *
+     */
+    class SettingsManager {
+        /**
+         * 
+         *
+         * @see \Flux\FluxManager::bootModal()
+         * @param mixed $name
+         * @static 
+         */
+        public static function modal($name)
+        {
+            return \App\Livewire\Admin\SettingsManager::modal($name);
         }
 
             }

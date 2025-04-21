@@ -4,6 +4,7 @@ use App\Models\Page;
 use App\Models\Setting;
 use App\Models\SystemSetting;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
 
 if (! function_exists('static_asset')) {
     function static_asset(string $path, $secure = null)
@@ -31,11 +32,18 @@ if (! function_exists('my_asset')) {
 if (! function_exists('get_setting')) {
     function get_setting($key = null, $default = null)
     {
+        // Check if the settings table exists
+        if (! Schema::hasTable('settings')) {
+            return $default;
+        }
+
         $settings = Cache::get('Settings');
 
         if (! $settings) {
             $settings = Setting::first();
-            Cache::put('Settings', $settings, 30000);
+            if ($settings) {
+                Cache::put('Settings', $settings, 30000);
+            }
         }
 
         if ($key) {
@@ -49,6 +57,11 @@ if (! function_exists('get_setting')) {
 if (! function_exists('sys_setting')) {
     function sys_setting($key, $default = null)
     {
+        // Check if the system_settings table exists
+        if (! Schema::hasTable('system_settings')) {
+            return $default;
+        }
+
         $settings = Cache::get('SystemSettings');
 
         if (! $settings) {
