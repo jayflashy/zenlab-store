@@ -33,7 +33,7 @@ if (! function_exists('get_setting')) {
     function get_setting($key = null, $default = null)
     {
         // Check if the settings table exists
-        if (!Schema::hasTable('settings')) {
+        if (! Schema::hasTable('settings')) {
             return $default;
         }
 
