@@ -78,6 +78,7 @@ class Product extends Model
 
         return round($price, 2);
     }
+
     public function getFinalExtendedPriceAttribute()
     {
         $price = $this->is_free ? 0 : $this->extended_price;
@@ -87,6 +88,7 @@ class Product extends Model
 
         return round($price, 2);
     }
+
     public function getDownloadLinkAttribute()
     {
         if ($this->download_type === 'link') {
