@@ -86,7 +86,16 @@ jobs:
         run: ./vendor/bin/phpstan analyse
 
       - name: Check Code with Rector
-        run: ./vendor/bin/rector --dry-run
+        run: ./vendor/bin/rector process
+
+        - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: fix code with rector
+          commit_options: '--no-verify'
+          file_pattern: |
+            **/*
+            !.github/workflows/*
 
       - name: Stop Server
         if: always()
