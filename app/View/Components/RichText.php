@@ -19,15 +19,15 @@ class RichText extends Component
     public function __construct(/**
      * The Livewire model binding for the editor content.
      */
-    public string $model, $id = null, /**
+        public string $model, $id = null, /**
      * Height of the editor in CSS units.
      */
-    public string $height = '350px', /**
+        public string $height = '350px', /**
      * Label text displayed above the editor.
      */
-    public string $label = 'Description')
+        public string $label = 'Description')
     {
-        $this->id = $id ?? 'editor_' . uniqid();
+        $this->id = $id ?? 'editor_'.uniqid();
     }
 
     /**

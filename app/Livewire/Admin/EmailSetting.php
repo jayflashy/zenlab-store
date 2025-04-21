@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Admin;
 
-use Illuminate\Http\Request;
 use App\Traits\LivewireToast;
 use App\Traits\SettingsTrait;
 use Exception;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class EmailSetting extends Component
