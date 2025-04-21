@@ -79,15 +79,6 @@ jobs:
             exit 1
           fi
 
-      - name: Stop Server
-        if: always()
-        run: |
-          if [ -f laravel.pid ]; then
-            echo "Stopping server with PID $(cat laravel.pid)"
-            kill $(cat laravel.pid) || true
-            rm laravel.pid
-          fi
-
       - name: Run Pest Tests
         run: ./vendor/bin/pest
 
@@ -96,3 +87,12 @@ jobs:
 
       - name: Check Code with Rector
         run: ./vendor/bin/rector --dry-run
+
+      - name: Stop Server
+        if: always()
+        run: |
+          if [ -f laravel.pid ]; then
+            echo "Stopping server with PID $(cat laravel.pid)"
+            kill $(cat laravel.pid) || true
+            rm laravel.pid
+          fi
