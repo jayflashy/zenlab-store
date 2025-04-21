@@ -11,7 +11,6 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    environment: Testing
 
     steps:
       - name: Checkout
@@ -30,8 +29,10 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install Node Dependencies
-        run: npm i
+      - name: Install Dependencies
+        run: |
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          npm install
 
       - name: Create SQLite Database File
         run: |
@@ -44,23 +45,54 @@ jobs:
       - name: Configure Database
         run: |
           echo "DB_CONNECTION=sqlite" >> .env
-          echo "DB_DATABASE=database/database.sqlite" >> .env
-          echo "CACHE_DRIVER=database" >> .env
-
-      - name: Install Dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+          echo "CACHE_DRIVER=array" >> .env
+          echo "APP_ENV=testing" >> .env
 
       - name: Generate Application Key
-        run: php artisan key:generate
+        run: php artisan key:generate --no-interaction
 
       - name: Run Migrations
-        run: php artisan migrate --force
+        run: |
+          php artisan migrate:fresh --force
+          php artisan db:seed --force
 
       - name: Build Assets
         run: npm run build
 
-      - name: Run Tests
-        run: ./vendor/bin/pest --test
+      - name: Start Application Server
+        run: |
+          php artisan serve --port=8090 > server.log 2>&1 &
+          echo $! > laravel.pid
+          echo "Server started with PID $(cat laravel.pid)"
 
-      - name: Run PHPStan
+      - name: Verify Server is Running
+        run: |
+          # Wait for server to initialize
+          sleep 5
+
+          # Try to connect to the server
+          if curl -s http://127.0.0.1:8090 > /dev/null; then
+            echo "Server is running successfully!"
+          else
+            echo "Server failed to start. Server log:"
+            cat server.log
+            exit 1
+          fi
+
+      - name: Run Pest Tests
+        run: ./vendor/bin/pest
+
+      - name: Analyze Code with PHPStan
         run: ./vendor/bin/phpstan analyse
+
+      - name: Check Code with Rector
+        run: ./vendor/bin/rector
+
+      - name: Stop Server
+        if: always()
+        run: |
+          if [ -f laravel.pid ]; then
+            echo "Stopping server with PID $(cat laravel.pid)"
+            kill $(cat laravel.pid) || true
+            rm laravel.pid
+          fi
