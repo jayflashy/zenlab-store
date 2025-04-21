@@ -286,20 +286,30 @@ class ProductForm extends Component
 
         // Media and files
         if ($this->image) {
+            // Delete old image if it exists
+            if ($this->existing_image) {
+                Storage::disk('uploads')->delete($this->existing_image);
+            }
             $imagePath = Storage::disk('uploads')->putFile('products/images', $this->image);
             $product->image = $imagePath;
         }
 
         if ($this->thumbnail) {
+            // Delete old thumbnail if it exists
+            if ($this->existing_thumbnail) {
+                Storage::disk('uploads')->delete($this->existing_thumbnail);
+            }
             $thumbnailPath = Storage::disk('uploads')->putFile('products/thumbnails', $this->thumbnail);
             $product->thumbnail = $thumbnailPath;
         }
 
-        if ($this->file_path instanceof UploadedFile && $this->download_type === 'file') {
+        if ($this->file_path && $this->download_type === 'file') {
+            // Delete old file if it exists
+            if ($this->existing_file && $this->download_type === 'file') {
+                Storage::disk('uploads')->delete($this->existing_file);
+            }
             $filePath = $this->file_path->store('products/files', 'uploads');
             $product->file_path = $filePath;
-        } elseif ($this->download_type === 'link') {
-            $product->file_path = $this->file_path;
         }
 
         $product->download_type = $this->download_type;

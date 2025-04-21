@@ -63,6 +63,7 @@ class Product extends Model
         'discount' => 'integer',
         'downloads_count' => 'integer',
         'sales_count' => 'integer',
+        'sales_boost' => 'integer',
     ];
 
     public function category(): BelongsTo
