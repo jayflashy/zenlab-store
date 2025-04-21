@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\Setting;
-use Database\Seeders\SettingsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\Setting;
+use Database\Seeders\SettingsSeeder;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,20 +48,3 @@ function something(): void
 {
     // ..
 }
-
-/*
-|--------------------------------------------------------------------------
-| Before Each Hook
-|--------------------------------------------------------------------------
-|
-| This hook runs before each test and ensures that the settings table has data.
-| This prevents the "Trying to get property 'title' of non-object" error.
-|
-*/
-
-beforeEach(function () {
-    // Ensure settings exist for all tests
-    if (! Setting::first()) {
-        (new SettingsSeeder)->run();
-    }
-});
