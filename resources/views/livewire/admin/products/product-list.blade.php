@@ -82,26 +82,24 @@
     </div>
 
     <!-- Bulk Actions -->
+
+    <!-- Bulk Actions -->
     @if (count($selectedProducts) > 0)
         <div class="common-card card mb-4 bg-light">
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
                     <span class="me-2">{{ count($selectedProducts) }} products selected</span>
-                    <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-outline-success" wire:click="bulkPublish"
-                            wire:confirm="Are you sure you want to publish {{ count($selectedProducts) }} products?">
+                    <div class="d-sm-flex gap-2 gy-2">
+                        <button type="button" class="btn btn-outline-success mb-2" wire:click="$set('showBulkActionModal', 'publish')">
                             <i class="fas fa-check-circle me-1"></i> Publish
                         </button>
-                        <button type="button" class="btn btn-outline-secondary" wire:click="bulkArchive"
-                            wire:confirm="Are you sure you want to archive {{ count($selectedProducts) }} products?">
+                        <button type="button" class="btn btn-outline-secondary mb-2" wire:click="$set('showBulkActionModal', 'archive')">
                             <i class="fas fa-archive me-1"></i> Archive
                         </button>
-                        <button type="button" class="btn btn-outline-secondary" wire:click="bulkFeature"
-                            wire:confirm="Are you sure you want to Feature {{ count($selectedProducts) }} products?">
-                            <i class="fas fa-check-circle text-success me-1"></i> Featured
+                        <button type="button" class="btn btn-outline-main mb-2" wire:click="$set('showBulkActionModal', 'feature')">
+                            <i class="fas fa-check-circle text-main me-1"></i> Featured
                         </button>
-                        <button type="button" class="btn btn-outline-danger" wire:click="bulkDelete"
-                            wire:confirm="Are you sure you want to delete {{ count($selectedProducts) }} products? This cannot be undone.">
+                        <button type="button" class="btn btn-outline-danger mb-2" wire:click="$set('showBulkActionModal', 'delete')">
                             <i class="fas fa-trash me-1"></i> Delete
                         </button>
                     </div>
@@ -113,6 +111,68 @@
         </div>
     @endif
 
+    <!-- Bulk Action Confirmation Modal -->
+    @if($showBulkActionModal)
+    <div class="common-modal modal fade show" id="bulkActionModal" tabindex="-1" role="dialog" aria-labelledby="bulkActionModalLabel"
+        aria-hidden="true" style="display:block;background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bulkActionModalLabel">
+                        @if ($showBulkActionModal === 'publish')
+                            Publish Products
+                        @elseif($showBulkActionModal === 'archive')
+                            Archive Products
+                        @elseif($showBulkActionModal === 'feature')
+                            Feature Products
+                        @elseif($showBulkActionModal === 'delete')
+                            Delete Products
+                        @endif
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        wire:click="$set('showBulkActionModal', '')"></button>
+                </div>
+                <div class="modal-body">
+                    @if ($showBulkActionModal === 'publish')
+                        Are you sure you want to publish {{ count($selectedProducts) }} products?
+                    @elseif($showBulkActionModal === 'archive')
+                        Are you sure you want to archive {{ count($selectedProducts) }} products?
+                    @elseif($showBulkActionModal === 'feature')
+                        Are you sure you want to feature {{ count($selectedProducts) }} products?
+                    @elseif($showBulkActionModal === 'delete')
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Are you sure you want to delete {{ count($selectedProducts) }} products? This action cannot be undone.
+                        </div>
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        wire:click="$set('showBulkActionModal', '')">
+                        Cancel
+                    </button>
+                    @if ($showBulkActionModal === 'publish')
+                        <button type="button" class="btn btn-success" wire:click="bulkPublish" data-bs-dismiss="modal">
+                            <i class="fas fa-check-circle me-1"></i> Publish
+                        </button>
+                    @elseif($showBulkActionModal === 'archive')
+                        <button type="button" class="btn btn-secondary" wire:click="bulkArchive" data-bs-dismiss="modal">
+                            <i class="fas fa-archive me-1"></i> Archive
+                        </button>
+                    @elseif($showBulkActionModal === 'feature')
+                        <button type="button" class="btn btn-primary" wire:click="bulkFeature" data-bs-dismiss="modal">
+                            <i class="fas fa-check-circle me-1"></i> Feature
+                        </button>
+                    @elseif($showBulkActionModal === 'delete')
+                        <button type="button" class="btn btn-danger" wire:click="bulkDelete" data-bs-dismiss="modal">
+                            <i class="fas fa-trash me-1"></i> Delete
+                        </button>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <!-- Products Table -->
     <div class="common-card card mb-4">
@@ -225,7 +285,7 @@
                                 <div class="small">
                                     <div>{{ show_date($product->created_at, 'M d, Y') }}</div>
                                     @if ($product->publish_date)
-                                        <div> {{show_date($product->publish_date) }}</div>
+                                        <div> {{ show_date($product->publish_date) }}</div>
                                     @endif
                                 </div>
                             </td>
@@ -298,5 +358,6 @@
         </div>
     @endif
 </div>
+
 
 @include('layouts.meta')
