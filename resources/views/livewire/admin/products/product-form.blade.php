@@ -152,7 +152,7 @@
                         <div class="form-group mb-3">
                             <label for="regular_price" class="form-label">Regular License Price</label>
                             <div class="input-group">
-                                <span class="input-group-text">{{ $settings->currency_symbol }}</span>
+                                <span class="input-group-text">{{ $settings->currency }}</span>
                                 <input type="number" step="0.01"
                                     class="common-input form-control @error('regular_price') is-invalid @enderror"
                                     wire:model="regular_price" id="regular_price" placeholder="0.00"
@@ -167,7 +167,7 @@
                         <div class="form-group mb-3">
                             <label for="extended_price" class="form-label">Extended License Price</label>
                             <div class="input-group">
-                                <span class="input-group-text">{{ $settings->currency_symbol }}</span>
+                                <span class="input-group-text">{{ $settings->currency }}</span>
                                 <input type="number" step="0.01"
                                     class="common-input form-control @error('extended_price') is-invalid @enderror"
                                     wire:model="extended_price" id="extended_price" placeholder="0.00"
@@ -199,11 +199,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <strong>Regular License Final Price:</strong>
-                                {{ format_price($final_price) }}
+                                {{ format_price($product->final_price) }}
                             </div>
                             <div class="col-md-6">
                                 <strong>Extended License Final Price:</strong>
-                                {{ format_price($final_extended_price) }}
+                                {{ format_price($product->final_extended_price) }}
                             </div>
                         </div>
                     </div>

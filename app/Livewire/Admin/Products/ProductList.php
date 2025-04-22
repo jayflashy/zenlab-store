@@ -38,14 +38,14 @@ class ProductList extends Component
 
     public $selectAll = false;
 
-    public $products;
-
     // Modals
     public $showDeleteModal = false;
 
     public $deleteId;
 
     public $productToDelete;
+
+    public $showBulkActionModal = '';
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -141,6 +141,13 @@ class ProductList extends Component
         $this->productToDelete = null;
     }
 
+    public function updatedShowBulkActionModal($value)
+    {
+        if (! empty($value)) {
+            $this->dispatch('open-modal', ['modal' => 'bulkActionModal']);
+        }
+    }
+
     public function bulkDelete()
     {
         if (count($this->selectedProducts) > 0) {
@@ -177,6 +184,7 @@ class ProductList extends Component
             $this->successAlert(count($this->selectedProducts).' Products deleted successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
+            $this->showBulkActionModal = null;
         }
     }
 
@@ -191,6 +199,7 @@ class ProductList extends Component
             $this->successAlert(count($this->selectedProducts).' Products published successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
+            $this->showBulkActionModal = null;
         }
     }
 
@@ -204,6 +213,7 @@ class ProductList extends Component
             $this->successAlert(count($this->selectedProducts).' Products featured successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
+            $this->showBulkActionModal = null;
         }
     }
 
@@ -217,22 +227,33 @@ class ProductList extends Component
             $this->successAlert(count($this->selectedProducts).' Products archived successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
+            $this->showBulkActionModal = null;
         }
     }
 
     public function updatedSelectAll()
     {
-        $this->selectedProducts = $this->selectAll ? $this->products->pluck('id')->map(fn ($id): string => (string) $id)->toArray() : [];
-    }
-
-    public function getProductsProperty()
-    {
-        return $this->queryProducts()->get();
+        if ($this->selectAll) {
+            // Get IDs from the current query, not from a cached property
+            $this->selectedProducts = $this->queryProducts()
+                ->pluck('id')
+                ->map(fn ($id): string => (string) $id)
+                ->toArray();
+        } else {
+            $this->selectedProducts = [];
+        }
     }
 
     public function render()
     {
         $products = $this->queryProducts()->paginate($this->perPage);
+
+        // Update the selectedProducts when the page changes if selectAll is true
+        if ($this->selectAll && count($this->selectedProducts) === 0) {
+            $this->selectedProducts = $products->pluck('id')
+                ->map(fn ($id): string => (string) $id)
+                ->toArray();
+        }
 
         $categories = Category::orderBy('name')->get();
 
