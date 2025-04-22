@@ -162,10 +162,24 @@
                                         <h5 class="more-item__title">Related Products</h5>
                                     </div>
 
-                                    <div class="selling-product-slider more-item__content flx-align">
+                                    <div class="related-product-slider more-item__content flx-align">
                                         @foreach ($relatedProducts as $relatedProduct)
                                             @include('partials.product.related')
                                         @endforeach
+
+                                        @if (count($relatedProducts) < 5)
+                                            {{-- Add the same products again if we have fewer than 5 --}}
+                                            @foreach ($relatedProducts as $relatedProduct)
+                                                @include('partials.product.related')
+                                            @endforeach
+                                        @endif
+
+                                        @if (count($relatedProducts) < 3)
+                                            {{-- Add them a third time if we have fewer than 3 --}}
+                                            @foreach ($relatedProducts as $relatedProduct)
+                                                @include('partials.product.related')
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
 

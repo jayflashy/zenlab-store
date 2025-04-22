@@ -99,7 +99,6 @@
 
             $(".side-submenu").not(submenu).slideUp(300);
             submenu.slideToggle(300);
-
         });
         // ============== Mobile Nav Menu Dropdown Js End =======================
 
@@ -281,6 +280,49 @@
             ],
         });
         // ========================= Selling Product Js End ===================
+        // Related product slider
+        $(".related-product-slider").slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            speed: 1500,
+            dots: true,
+            pauseOnHover: true,
+            arrows: true,
+            draggable: true,
+            infinite: true,
+            prevArrow:
+                '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+            nextArrow:
+                '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 2,
+                    },
+                },
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 2,
+                    },
+                },
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 2,
+                    },
+                },
+                {
+                    breakpoint: 575,
+                    settings: {
+                        slidesToShow: 1,
+                    },
+                },
+            ],
+        });
 
         // ========================= Testimonial Slider Js Start ==============
         $(".testimonial-slider").slick({

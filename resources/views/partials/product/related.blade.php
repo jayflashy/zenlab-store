@@ -1,7 +1,7 @@
 <div class="product-item shadow-sm overlay-none">
     <div class="product-item__thumb d-flex max-h-unset">
         <a href="{{ route('products.view', $relatedProduct->slug) }}" wire:navigate class="link w-100">
-            <img src="{{ my_asset($relatedProduct->image ?? 'products/default.jpg') }}" alt="" class="cover-img">
+            <img src="{{ my_asset($relatedProduct->image ?? 'products/default.jpg') }}" alt="" class="cover-img" style="min-height: 130px">
         </a>
     </div>
     <div class="product-item__content">
