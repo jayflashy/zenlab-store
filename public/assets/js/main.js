@@ -99,7 +99,6 @@
 
             $(".side-submenu").not(submenu).slideUp(300);
             submenu.slideToggle(300);
-
         });
         // ============== Mobile Nav Menu Dropdown Js End =======================
 
@@ -241,10 +240,7 @@
             $(this).toggleClass("active");
         });
         // ========================= Wishlist Js End ===================
-
-        // ========================= Selling Product Js Start ==============
-        $(".selling-product-slider").slick({
-            slidesToShow: 3,
+        const baseSliderConfig = {
             slidesToScroll: 1,
             autoplay: true,
             autoplaySpeed: 2000,
@@ -253,12 +249,16 @@
             pauseOnHover: true,
             arrows: true,
             draggable: true,
-            speed: 900,
             infinite: true,
             prevArrow:
                 '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
             nextArrow:
                 '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+        };
+        // ========================= Selling Product Js Start ==============
+        $(".selling-product-slider").slick({
+            slidesToShow: 3,
+            ...baseSliderConfig,
             responsive: [
                 {
                     breakpoint: 991,
@@ -282,23 +282,42 @@
         });
         // ========================= Selling Product Js End ===================
 
+        // Related product slider
+        $(".related-product-slider").slick({
+            ...baseSliderConfig,
+            slidesToShow: 3,
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 2,
+                    },
+                },
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 2,
+                    },
+                },
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 2,
+                    },
+                },
+                {
+                    breakpoint: 575,
+                    settings: {
+                        slidesToShow: 1,
+                    },
+                },
+            ],
+        });
+
         // ========================= Testimonial Slider Js Start ==============
         $(".testimonial-slider").slick({
+            ...baseSliderConfig,
             slidesToShow: 2,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            speed: 1500,
-            dots: true,
-            pauseOnHover: true,
-            arrows: true,
-            draggable: true,
-            speed: 900,
-            infinite: true,
-            prevArrow:
-                '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
-            nextArrow:
-                '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
             responsive: [
                 {
                     breakpoint: 991,
@@ -313,20 +332,7 @@
         // ========================= Selling Product Js Start ==============
         $(".resource-slider").slick({
             slidesToShow: 4,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            speed: 1500,
-            dots: true,
-            pauseOnHover: true,
-            arrows: true,
-            draggable: true,
-            speed: 900,
-            infinite: true,
-            prevArrow:
-                '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
-            nextArrow:
-                '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+            ...baseSliderConfig,
             responsive: [
                 {
                     breakpoint: 1199,
@@ -353,20 +359,7 @@
         // ========================= Brand Slider Js Start ==============
         $(".brand-slider").slick({
             slidesToShow: 5,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            speed: 1500,
-            dots: false,
-            pauseOnHover: true,
-            arrows: false,
-            draggable: true,
-            speed: 900,
-            infinite: true,
-            prevArrow:
-                '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
-            nextArrow:
-                '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+            ...baseSliderConfig,
             responsive: [
                 {
                     breakpoint: 1199,
@@ -399,20 +392,7 @@
         // ========================= Brand Three Slider Js Start ==============
         $(".brand-three-slider").slick({
             slidesToShow: 7,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            speed: 1500,
-            dots: false,
-            pauseOnHover: true,
-            arrows: false,
-            draggable: true,
-            speed: 900,
-            infinite: true,
-            prevArrow:
-                '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
-            nextArrow:
-                '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+            ...baseSliderConfig,
             responsive: [
                 {
                     breakpoint: 1199,
@@ -464,20 +444,7 @@
         // ========================= Latest Project Slider Into Tab Js Start ==============
         $(".latest-project-slider").slick({
             slidesToShow: 3,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            speed: 1500,
-            dots: false,
-            pauseOnHover: true,
-            arrows: true,
-            draggable: true,
-            speed: 900,
-            infinite: true,
-            prevArrow:
-                '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
-            nextArrow:
-                '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+            ...baseSliderConfig,
             responsive: [
                 {
                     breakpoint: 1199,
@@ -498,20 +465,7 @@
         // ========================= Selling Product Js Start ==============
         $(".team-item-slider").slick({
             slidesToShow: 4,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            speed: 1500,
-            dots: true,
-            pauseOnHover: true,
-            arrows: true,
-            draggable: true,
-            speed: 900,
-            infinite: true,
-            prevArrow:
-                '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
-            nextArrow:
-                '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+            ...baseSliderConfig,
             responsive: [
                 {
                     breakpoint: 1199,
@@ -585,20 +539,7 @@
         // ========================= Payment Method Slider Js Start ==============
         $(".payment-method__slider").slick({
             slidesToShow: 10,
-            slidesToScroll: 1,
-            autoplay: false,
-            autoplaySpeed: 2000,
-            speed: 1500,
-            dots: false,
-            pauseOnHover: true,
-            arrows: true,
-            draggable: true,
-            speed: 900,
-            infinite: true,
-            prevArrow:
-                '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
-            nextArrow:
-                '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+            ...baseSliderConfig,
             responsive: [
                 {
                     breakpoint: 1299,

@@ -23,11 +23,11 @@
                                     <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
                                 </li>
                                 <li class="breadcrumb-list__item font-14 text-body">
-                                    <span class="breadcrumb-list__text">SaaS</span>
+                                    <span class="breadcrumb-list__text">{{ $product->category->name ?? 'Scripts' }}</span>
                                 </li>
                             </ul>
 
-                            <h3 class="breadcrumb-two-content__title mb-3 text-capitalize">Quantum: SaaS Landing Page WordPress Theme</h3>
+                            <h3 class="breadcrumb-two-content__title mb-3 text-capitalize">{{ $product->name }}</h3>
 
                             <div class="breadcrumb-content flx-align gap-3">
                                 <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
@@ -36,7 +36,7 @@
                                         <img src="{{ static_asset('images/icons/cart-white.svg') }}" alt=""
                                             class="dark-version w-20">
                                     </span>
-                                    <span class="text">158 sales</span>
+                                    <span class="text">{{ $product->total_sales }} sales</span>
                                 </div>
                                 <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
                                     <span class="icon">
@@ -44,7 +44,9 @@
                                         <img src="{{ static_asset('images/icons/check-icon-white.svg') }}" alt=""
                                             class="dark-version">
                                     </span>
-                                    <span class="text">Recently Updated</span>
+                                    @if ($product->publish_date >= now()->subMonths(2))
+                                        <span class="text">Recently Updated</span>
+                                    @endif
                                 </div>
                                 <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
                                     <span class="icon">
@@ -128,69 +130,31 @@
                             <!-- Product Details Content Start -->
                             <div class="product-details">
                                 <div class="product-details__thumb">
-                                    <img src="{{ static_asset('images/thumbs/product-details.png') }}" alt="">
+                                    <img src="{{ my_asset($product->image) }}" alt="{{ $product->name }}">
                                 </div>
                                 <div class="product-details__buttons flx-align justify-content-center gap-3">
-                                    <a href="#"
-                                        class="btn btn-main d-inline-flex align-items-center gap-2 pill px-sm-5 justify-content-center">Live
-                                        Preview
-                                        <img src="{{ static_asset('images/icons/eye-outline.svg') }}" alt="">
+                                    <a href="{{ $product->demo_url }}" target="_blank"
+                                        class="btn btn-main d-inline-flex align-items-center gap-2 pill px-sm-5 justify-content-center">
+                                        Live Preview
+                                        <img src="{{ static_asset('images/icons/eye-outline.svg') }}" alt="Preview">
                                     </a>
 
-                                    <a href="#" class="screenshot-btn btn btn-white pill px-sm-5"
-                                        data-images='["{{ static_asset('images/thumbs/product-details.png') }}", "{{ static_asset('images/thumbs/product-details.png') }}"]'>Screenshot</a>
+                                    <a href="javascript:void(0)" class="screenshot-btn btn btn-white pill px-sm-5"
+                                        data-images='[
+                                        @foreach ($product->screenshots as $screenshot)
+                                            "{{ my_asset($screenshot) }}"@if (!$loop->last), @endif @endforeach
+                                        ]'>
+                                        Screenshot
+                                    </a>
 
 
                                 </div>
 
-                                <p class="product-details__desc">System management saas products, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                    cupidatat non proident.</p>
 
                                 <div class="product-details__item">
-                                    <h5 class="product-details__title mb-3">Template Features</h5>
-                                    <ul class="product-list">
-                                        <li class="product-list__item">Modern and Professional design</li>
-                                        <li class="product-list__item">Built with Elementor Pro</li>
-                                        <li class="product-list__item">100% Responsive & mobile-friendly</li>
-                                        <li class="product-list__item">12+ pre-built templates</li>
-                                        <li class="product-list__item">Easy to customize</li>
-                                        <li class="product-list__item">Fully responsive website</li>
-                                    </ul>
-                                </div>
-                                <div class="product-details__item">
-                                    <h5 class="product-details__title mb-3">Layout Features</h5>
-                                    <ul class="product-list">
-                                        <li class="product-list__item">One-Click demo import</li>
-                                        <li class="product-list__item">Unlimited color style</li>
-                                        <li class="product-list__item">850+ google fonts</li>
-                                        <li class="product-list__item">Powered by dpmarket</li>
-                                        <li class="product-list__item">Hight resolution images</li>
-                                        <li class="product-list__item">Easy to customize</li>
-                                    </ul>
-                                </div>
-                                <div class="product-details__item">
-                                    <h5 class="product-details__title mb-3">Font Family</h5>
-                                    <ul class="product-list">
-                                        <li class="product-list__item text-heading">
-                                            <a href="https://fonts.google.com/specimen/Fira+Sans?query=fira"
-                                                class="link text-body hover-text-main hover-text-decoration-underline">Fira Sans</a>
-                                        </li>
-                                        <li class="product-list__item text-heading">
-                                            <a href="https://fonts.google.com/specimen/Inter?query=inter"
-                                                class="link text-body hover-text-main hover-text-decoration-underline">Inter</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-details__item">
-                                    <h5 class="product-details__title mb-3">Support</h5>
-                                    <p class="product-details__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                        occaecat cupidatat non proident.</p>
+                                    <p class="product-details__desc">
+                                        {!! $product->description !!}
+                                    </p>
                                 </div>
 
                                 <div class="more-item">
@@ -198,16 +162,31 @@
                                         <h5 class="more-item__title">Related Products</h5>
                                     </div>
 
-                                    <div class="selling-product-slider more-item__content flx-align">
-                                        @for ($i = 0; $i < 10; $i++)
+                                    <div class="related-product-slider more-item__content flx-align">
+                                        @foreach ($relatedProducts as $relatedProduct)
                                             @include('partials.product.related')
-                                        @endfor
+                                        @endforeach
+
+                                        @if (count($relatedProducts) < 5)
+                                            {{-- Add the same products again if we have fewer than 5 --}}
+                                            @foreach ($relatedProducts as $relatedProduct)
+                                                @include('partials.product.related')
+                                            @endforeach
+                                        @endif
+
+                                        @if (count($relatedProducts) < 3)
+                                            {{-- Add them a third time if we have fewer than 3 --}}
+                                            @foreach ($relatedProducts as $relatedProduct)
+                                                @include('partials.product.related')
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
 
                             </div>
                             <!-- Product Details Content End -->
                         </div>
+                        {{-- Rating --}}
                         <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab" tabindex="0">
                             <div class="product-review-wrapper">
                                 <div class="product-review">
@@ -270,6 +249,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- Comments --}}
                         <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab"
                             tabindex="0">
 
@@ -394,77 +374,45 @@
                         <ul class="meta-attribute">
                             <li class="meta-attribute__item">
                                 <span class="name">Last Update</span>
-                                <span class="details">Feb 21, 2024</span>
+                                <span class="details">{{ show_date($product->publish_date, 'M d, Y') }}</span>
                             </li>
                             <li class="meta-attribute__item">
                                 <span class="name">Published</span>
-                                <span class="details">Feb 15, 2024</span>
+                                <span class="details">{{ show_date($product->created_at, 'M d, Y') }}</span>
                             </li>
                             <li class="meta-attribute__item">
                                 <span class="name">Category</span>
-                                <span class="details">Themes</span>
+                                <span class="details">{{ $product->category->name ?? '' }}</span>
                             </li>
-                            <li class="meta-attribute__item">
-                                <span class="name">Widget Ready</span>
-                                <span class="details">Yes</span>
-                            </li>
+                            {{-- attributes --}}
+                            @foreach ($product->attributes as $key => $attribute)
+                                <li class="meta-attribute__item">
+                                    <span class="name">{{ custom_text($key) }}</span>
+                                    <span class="details">
+                                        @if (is_array($attribute))
+                                            @foreach ((array) $attribute as $idx => $item)
+                                                {{ is_array($item) ? json_encode($item) : $item }}{{ !$loop->last ? ', ' : '' }}
+                                            @endforeach
+                                        @elseif(is_bool($attribute))
+                                            {{ $attribute ? 'Yes' : 'No' }}
+                                        @else
+                                            {{ $attribute }}
+                                        @endif
+                                    </span>
+                                </li>
+                            @endforeach
                             <li class="meta-attribute__item">
                                 <span class="name">High Resolution</span>
                                 <span class="details">Yes</span>
                             </li>
                             <li class="meta-attribute__item">
-                                <span class="name">Copatible with</span>
-                                <span class="details">
-                                    <a href="#" class="hover-text-decoration-underline">Contact Form 7,</a>
-                                    <a href="#" class="hover-text-decoration-underline"> Calendar,</a>
-                                    <a href="#" class="hover-text-decoration-underline"> Elementor,</a>
-                                    <a href="#" class="hover-text-decoration-underline"> Elementor Pro,</a>
-                                    <a href="#" class="hover-text-decoration-underline"> WooCommerce 8.x.x</a>
-                                </span>
-                            </li>
-                            <li class="meta-attribute__item">
-                                <span class="name">File size</span>
-                                <span class="details">85 MB</span>
-                            </li>
-                            <li class="meta-attribute__item">
-                                <span class="name">Framework</span>
-                                <span class="details">Underscores</span>
-                            </li>
-                            <li class="meta-attribute__item">
-                                <span class="name">Software Version</span>
-                                <span class="details">
-                                    <a href="#" class="hover-text-decoration-underline">WordPress 6.3.x,</a>
-                                    <a href="#" class="hover-text-decoration-underline">WordPress 6.2.x,</a>
-                                    <a href="#" class="hover-text-decoration-underline">WordPress 6.1.x,</a>
-                                    <a href="#" class="hover-text-decoration-underline">WordPress 6.0.x,</a>
-                                    <a href="#" class="hover-text-decoration-underline">WordPress 5.9.x,</a>
-                                </span>
-                            </li>
-                            <li class="meta-attribute__item">
-                                <span class="name">Marketplace Files
-                                    Included</span>
-                                <span class="details">
-                                    <a href="#" class="hover-text-decoration-underline">PHP Files,</a>
-                                    <a href="#" class="hover-text-decoration-underline">CSS Files,</a>
-                                    <a href="#" class="hover-text-decoration-underline">SCSS Files,</a>
-                                    <a href="#" class="hover-text-decoration-underline">JS Files,</a>
-                                </span>
-                            </li>
-                            <li class="meta-attribute__item">
-                                <span class="name">Layout</span>
-                                <span class="details">Responsive</span>
-                            </li>
-                            <li class="meta-attribute__item">
                                 <span class="name">Tags</span>
                                 <span class="details">
-                                    <a href="#" class="hover-text-decoration-underline">theme,</a>
-                                    <a href="#" class="hover-text-decoration-underline">web design,</a>
-                                    <a href="#" class="hover-text-decoration-underline">minimal design,</a>
-                                    <a href="#" class="hover-text-decoration-underline">trendy,</a>
-                                    <a href="#" class="hover-text-decoration-underline">responsive,</a>
-                                    <a href="#" class="hover-text-decoration-underline">wordpress,</a>
-                                    <a href="#" class="hover-text-decoration-underline">saas,</a>
-                                    <a href="#" class="hover-text-decoration-underline">dashboard,</a>
+                                    @foreach ($product->tags as $tag)
+                                        <a href="#" class="hover-text-decoration-underline">
+                                            {{ $tag }}{{ !$loop->last ? ',' : '' }}
+                                        </a>
+                                    @endforeach
                                 </span>
                             </li>
                         </ul>
@@ -476,8 +424,8 @@
         </div>
     </div>
 </div>
-@section('meta')
-@endsection
+@include('layouts.meta')
+@section('title', $pageTitle)
 
 @section('styles')
     <style>

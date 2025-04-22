@@ -53,6 +53,8 @@ class ProductForm extends Component
 
     public $existing_file;
 
+    public $download_link;
+
     public $download_type = 'file';
 
     public $demo_url;
@@ -97,8 +99,9 @@ class ProductForm extends Component
         'discount' => 'integer|min:0|max:100',
         'image' => 'nullable|image|max:5048',
         'thumbnail' => 'nullable|image|max:2024',
-        'file_path' => 'nullable', // 50MB max
+        'file_path' => 'nullable|file|max:51200', // 50MB max
         'demo_url' => 'nullable|url',
+        'download_link' => 'nullable|url',
         'version' => 'nullable|max:20',
         'status' => 'required|in:draft,published,archived',
         'publish_date' => 'nullable|date',
@@ -138,7 +141,7 @@ class ProductForm extends Component
         $this->existing_image = $product->image;
         $this->existing_thumbnail = $product->thumbnail;
         $this->existing_file = $product->file_path;
-        $this->file_path = $product->file_path;
+        $this->download_link = $product->download_link;
         $this->download_type = $product->download_type;
         $this->demo_url = $product->demo_url;
 
@@ -303,16 +306,13 @@ class ProductForm extends Component
         }
 
         if ($this->file_path && $this->download_type === 'file') {
-            // Delete old file if it exists
-            if ($this->existing_file) {
-                Storage::disk('uploads')->delete($this->existing_file);
-            }
             $filePath = $this->file_path->store('products/files', 'uploads');
             $product->file_path = $filePath;
         }
 
         $product->download_type = $this->download_type;
         $product->demo_url = $this->demo_url;
+        $product->download_link = $this->download_link;
 
         // Screenshots
         $screenshotPaths = $this->existing_screenshots ?? [];
