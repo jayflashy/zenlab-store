@@ -43,7 +43,7 @@ class Product extends Model
         'metadata',
         'status',
         'publish_date',
-        'download_link'
+        'download_link',
     ];
 
     /**

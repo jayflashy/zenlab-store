@@ -10,7 +10,9 @@ use Livewire\Component;
 class Details extends Component
 {
     use LivewireToast;
+
     public $product;
+
     public $pageTitle;
 
     public function mount($slug)
@@ -19,9 +21,10 @@ class Details extends Component
         $this->product = $product;
         $this->pageTitle = $product->name;
     }
+
     public function getRelatedProducts()
     {
-        $cacheKey = 'related_products_' . $this->product->id;
+        $cacheKey = 'related_products_'.$this->product->id;
 
         return Cache::remember($cacheKey, now()->addHours(1), function () {
             return Product::where('category_id', $this->product->category_id)
@@ -35,7 +38,7 @@ class Details extends Component
     public function render()
     {
         return view('livewire.product.details', [
-            'relatedProducts' => $this->getRelatedProducts()
+            'relatedProducts' => $this->getRelatedProducts(),
         ]);
     }
 }
