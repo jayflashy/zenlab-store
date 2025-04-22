@@ -82,8 +82,6 @@
     </div>
 
     <!-- Bulk Actions -->
-
-    <!-- Bulk Actions -->
     @if (count($selectedProducts) > 0)
         <div class="common-card card mb-4 bg-light">
             <div class="card-body d-flex justify-content-between align-items-center">
@@ -295,7 +293,7 @@
                                         class="btn btn-outline-primary btn-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('products.view', $product->slug) }}" wire:navigate
+                                    <a href="{{ route('products.view', $product->slug) }}"
                                         class="btn btn-outline-info btn-sm" target="_blank">
                                         <i class="fas fa-eye"></i>
                                     </a>

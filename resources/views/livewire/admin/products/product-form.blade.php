@@ -526,12 +526,15 @@
                         <label for="file_path" class="form-label">Product File</label>
                         <input type="file" class="common-input border form-control @error('file_path') is-invalid @enderror"
                             wire:model="file_path" id="file_path">
+
                         <div wire:loading wire:target="file_path" class="text-sm text-gray-500 mt-1 d-flex align-items-center">
                             <div class="spinner-border spinner-border-sm me-2" role="status"></div>
                             Uploading...
                         </div>
+
                         <small class="text-muted">Upload the file customers will download after purchase (ZIP, PDF, etc.). Max file size:
                             {{ ini_get('upload_max_filesize') }}</small>
+
                         @error('file_path')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -544,16 +547,21 @@
                     </div>
                 @else
                     <div class="form-group mb-4">
-                        <label for="file_path" class="form-label">Download URL</label>
+                        <label for="download_link" class="form-label">Download URL</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-link"></i></span>
-                            <input type="url" class="common-input form-control @error('file_path') is-invalid @enderror"
-                                wire:model="file_path" id="file_path" placeholder="https://example.com/file.zip">
+                            <input type="url" class="common-input form-control @error('download_link') is-invalid @enderror"
+                                wire:model="download_link" id="download_link" placeholder="https://example.com/file.zip">
                         </div>
                         <small class="text-muted">Enter the URL where customers can download the file after purchase</small>
-                        @error('file_path')
+                        @error('download_link')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                        @if ($download_link && $formMode === 'edit')
+                            <div class="mt-2 alert alert-info">
+                                <i class="fas fa-file me-1"></i> Current Link: {{ $download_link }}
+                            </div>
+                        @endif
                     </div>
                 @endif
             </div>

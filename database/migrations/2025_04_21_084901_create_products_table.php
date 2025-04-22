@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('file_path')->nullable();
+            $table->string('download_link')->nullable();
             $table->enum('download_type', ['file', 'link'])->default('file');
             $table->json('screenshots')->nullable();
             $table->string('demo_url')->nullable();

@@ -43,6 +43,7 @@ class Product extends Model
         'metadata',
         'status',
         'publish_date',
+        'download_link'
     ];
 
     /**
@@ -91,13 +92,18 @@ class Product extends Model
         return round($price, 2);
     }
 
-    public function getDownloadLinkAttribute()
+    public function getDownloadUrlAttribute()
     {
         if ($this->download_type === 'link') {
             // Return the URL only if it's valid, otherwise return a placeholder or null
-            return filter_var($this->file_path, FILTER_VALIDATE_URL) ? $this->file_path : null;
+            return filter_var($this->download_link, FILTER_VALIDATE_URL) ? $this->download_link : null;
         }
 
         return $this->file_path ? my_asset($this->file_path) : null;
+    }
+
+    public function getTotalSalesAttribute()
+    {
+        return $this->sales_count + $this->sales_boost;
     }
 }
