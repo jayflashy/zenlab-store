@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Products;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Traits\FileUploader;
 use App\Traits\LivewireToast;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -16,6 +17,7 @@ class ProductForm extends Component
 {
     use LivewireToast;
     use WithFileUploads;
+    use FileUploader;
 
     public $product;
 
@@ -37,7 +39,7 @@ class ProductForm extends Component
 
     public $extended_price;
 
-    public $discount = 0;
+    public $discount = 10;
 
     public $is_free = false;
 
@@ -288,24 +290,32 @@ class ProductForm extends Component
 
         // Media and files
         if ($this->image) {
-            // Delete old image if it exists
-            if ($this->existing_image) {
-                Storage::disk('uploads')->delete($this->existing_image);
-            }
-            $imagePath = Storage::disk('uploads')->putFile('products/images', $this->image);
+            $imagePath = $this->handleImage(
+                $this->image,
+                'products/images',
+                $this->existing_image,
+                856,
+                550
+            );
             $product->image = $imagePath;
         }
-
+        // handles thumbnail upload
         if ($this->thumbnail) {
-            // Delete old thumbnail if it exists
-            if ($this->existing_thumbnail) {
-                Storage::disk('uploads')->delete($this->existing_thumbnail);
-            }
-            $thumbnailPath = Storage::disk('uploads')->putFile('products/thumbnails', $this->thumbnail);
+            $thumbnailPath = $this->handleImage(
+                $this->thumbnail,
+                'products/thumbnails',
+                $this->existing_thumbnail,
+                590,
+                300
+            );
             $product->thumbnail = $thumbnailPath;
         }
 
         if ($this->file_path && $this->download_type === 'file') {
+            // Delete old file if it exists
+            if ($this->existing_file) {
+                Storage::disk('uploads')->delete($this->existing_file);
+            }
             $filePath = $this->file_path->store('products/files', 'uploads');
             $product->file_path = $filePath;
         }
