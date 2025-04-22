@@ -15,9 +15,9 @@ use Str;
 
 class ProductForm extends Component
 {
+    use FileUploader;
     use LivewireToast;
     use WithFileUploads;
-    use FileUploader;
 
     public $product;
 

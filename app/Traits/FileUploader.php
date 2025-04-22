@@ -2,11 +2,10 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Laravel\Facades\Image;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Interfaces\EncodedImageInterface;
+use Intervention\Image\Laravel\Facades\Image;
 
 trait FileUploader
 {
@@ -23,7 +22,7 @@ trait FileUploader
         ?string $format = null,
         string $disk = 'uploads'
     ): ?string {
-        if (!$file) {
+        if (! $file) {
             return null;
         }
 
@@ -36,8 +35,8 @@ trait FileUploader
         $extension = $format ? strtolower($format) : $file->getClientOriginalExtension();
 
         // Create a unique filename
-        $filename = Str::random(35) . '-' . time() . '.' . $extension;
-        $fullPath = $path . '/' . $filename;
+        $filename = Str::random(35).'-'.time().'.'.$extension;
+        $fullPath = $path.'/'.$filename;
 
         // Read the image using Intervention
         $image = Image::read($file);
@@ -72,10 +71,10 @@ trait FileUploader
     /**
      * Store a regular file (non-image) and optionally delete the old one.
      *
-     * @param UploadedFile|null $file The uploaded file
-     * @param string $path Storage path
-     * @param string|null $oldFile Old file path to delete
-     * @param string $disk Filesystem disk (default: 'uploads')
+     * @param  UploadedFile|null  $file  The uploaded file
+     * @param  string  $path  Storage path
+     * @param  string|null  $oldFile  Old file path to delete
+     * @param  string  $disk  Filesystem disk (default: 'uploads')
      * @return string|null Path to the stored file
      */
     public function handleFile(
@@ -84,7 +83,7 @@ trait FileUploader
         ?string $oldFile = null,
         string $disk = 'uploads'
     ): ?string {
-        if (!$file) {
+        if (! $file) {
             return null;
         }
 
