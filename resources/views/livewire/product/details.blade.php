@@ -130,13 +130,13 @@
                             <!-- Product Details Content Start -->
                             <div class="product-details">
                                 <div class="product-details__thumb">
-                                    <img src="{{ my_asset($product->image) }}" alt="">
+                                    <img src="{{ my_asset($product->image) }}" alt="{{ $product->name }}">
                                 </div>
                                 <div class="product-details__buttons flx-align justify-content-center gap-3">
                                     <a href="{{ $product->demo_url }}" target="_blank"
                                         class="btn btn-main d-inline-flex align-items-center gap-2 pill px-sm-5 justify-content-center">
                                         Live Preview
-                                        <img src="{{ static_asset('images/icons/eye-outline.svg') }}" alt="">
+                                        <img src="{{ static_asset('images/icons/eye-outline.svg') }}" alt="Preview">
                                     </a>
 
                                     <a href="javascript:void(0)" class="screenshot-btn btn btn-white pill px-sm-5"
@@ -374,11 +374,11 @@
                         <ul class="meta-attribute">
                             <li class="meta-attribute__item">
                                 <span class="name">Last Update</span>
-                                <span class="details">{{ $product->publish_date }}Feb 21, 2024</span>
+                                <span class="details">{{ show_date($product->publish_date, 'M d, Y') }}</span>
                             </li>
                             <li class="meta-attribute__item">
                                 <span class="name">Published</span>
-                                <span class="details">{{ $product->created_at }}</span>
+                                <span class="details">{{ show_date($product->created_at, 'M d, Y') }}</span>
                             </li>
                             <li class="meta-attribute__item">
                                 <span class="name">Category</span>
@@ -409,7 +409,9 @@
                                 <span class="name">Tags</span>
                                 <span class="details">
                                     @foreach ($product->tags as $tag)
-                                        <a href="#" class="hover-text-decoration-underline">{{ $tag }}{{ !$loop->last ? ',' : '' }}</a>
+                                        <a href="#" class="hover-text-decoration-underline">
+                                            {{ $tag }}{{ !$loop->last ? ',' : '' }}
+                                        </a>
                                     @endforeach
                                 </span>
                             </li>
