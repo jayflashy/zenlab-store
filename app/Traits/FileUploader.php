@@ -63,7 +63,14 @@ trait FileUploader
         };
 
         // Store the file
-        Storage::disk($disk)->put($fullPath, $encodedImage);
+        try {
+            Storage::disk($disk)->put($fullPath, $encodedImage);
+        } catch (\Exception $e) {
+            // Log the error or handle it appropriately
+            \Log::error("Failed to store image: {$e->getMessage()}");
+
+            return null;
+        }
 
         return $fullPath;
     }

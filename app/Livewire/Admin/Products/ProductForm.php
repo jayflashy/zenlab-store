@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Purify;
-use Storage;
 use Str;
 
 class ProductForm extends Component
@@ -312,11 +311,11 @@ class ProductForm extends Component
         }
 
         if ($this->file_path && $this->download_type === 'file') {
-            // Delete old file if it exists
-            if ($this->existing_file) {
-                Storage::disk('uploads')->delete($this->existing_file);
-            }
-            $filePath = $this->file_path->store('products/files', 'uploads');
+            $filePath = $this->handleFile(
+                $this->file_path,
+                'products/files',
+                $this->existing_file
+            );
             $product->file_path = $filePath;
         }
 
