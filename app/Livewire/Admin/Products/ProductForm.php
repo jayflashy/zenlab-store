@@ -305,8 +305,8 @@ class ProductForm extends Component
                 $this->thumbnail,
                 'products/thumbnails',
                 $this->existing_thumbnail,
-                590,
-                300
+                290,
+                160
             );
             $product->thumbnail = $thumbnailPath;
         }

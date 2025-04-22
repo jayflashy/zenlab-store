@@ -44,7 +44,7 @@ trait FileUploader
 
         // Resize logic
         if ($width && $height) {
-            $image->scale($width, $height);
+            $image->resize($width, $height);
         } elseif ($width) {
             $image->scaleDown(width: $width);
         } elseif ($height) {
@@ -54,7 +54,7 @@ trait FileUploader
         // Format-specific encoding
         $encodedImage = match ($extension) {
             'jpg', 'jpeg' => $image->toJpeg(quality: $quality),
-            'png' => $image->toPng(compression: $quality),
+            'png' => $image->toPng(),
             'webp' => $image->toWebp(quality: $quality),
             'avif' => $image->toAvif(quality: $quality),
             'heic' => $image->toHeic(quality: $quality),
