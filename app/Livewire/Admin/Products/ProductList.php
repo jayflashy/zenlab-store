@@ -18,22 +18,33 @@ class ProductList extends Component
 
     // filters
     public $search = '';
+
     public $statusFilter = '';
+
     public $categoryFilter = '';
+
     public $typeFilter = '';
+
     public $featuredFilter = '';
+
     public $sortField = 'created_at';
+
     public $sortDirection = 'desc';
+
     public $perPage = 25;
 
     // Bulk Actions
     public $selectedProducts = [];
+
     public $selectAll = false;
 
     // Modals
     public $showDeleteModal = false;
+
     public $deleteId;
+
     public $productToDelete;
+
     public $showBulkActionModal = '';
 
     protected $queryString = [
@@ -132,10 +143,11 @@ class ProductList extends Component
 
     public function updatedShowBulkActionModal($value)
     {
-        if (!empty($value)) {
+        if (! empty($value)) {
             $this->dispatch('open-modal', ['modal' => 'bulkActionModal']);
         }
     }
+
     public function bulkDelete()
     {
         if (count($this->selectedProducts) > 0) {
@@ -169,7 +181,7 @@ class ProductList extends Component
                 $product->delete();
             }
 
-            $this->successAlert(count($this->selectedProducts) . ' Products deleted successfully');
+            $this->successAlert(count($this->selectedProducts).' Products deleted successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
             $this->showBulkActionModal = null;
@@ -184,7 +196,7 @@ class ProductList extends Component
                 'publish_date' => now(),
             ]);
 
-            $this->successAlert(count($this->selectedProducts) . ' Products published successfully');
+            $this->successAlert(count($this->selectedProducts).' Products published successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
             $this->showBulkActionModal = null;
@@ -198,7 +210,7 @@ class ProductList extends Component
                 'featured' => 1,
             ]);
 
-            $this->successAlert(count($this->selectedProducts) . ' Products featured successfully');
+            $this->successAlert(count($this->selectedProducts).' Products featured successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
             $this->showBulkActionModal = null;
@@ -212,7 +224,7 @@ class ProductList extends Component
                 'status' => 'archived',
             ]);
 
-            $this->successAlert(count($this->selectedProducts) . ' Products archived successfully');
+            $this->successAlert(count($this->selectedProducts).' Products archived successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
             $this->showBulkActionModal = null;
@@ -225,7 +237,7 @@ class ProductList extends Component
             // Get IDs from the current query, not from a cached property
             $this->selectedProducts = $this->queryProducts()
                 ->pluck('id')
-                ->map(fn($id): string => (string) $id)
+                ->map(fn ($id): string => (string) $id)
                 ->toArray();
         } else {
             $this->selectedProducts = [];
@@ -239,7 +251,7 @@ class ProductList extends Component
         // Update the selectedProducts when the page changes if selectAll is true
         if ($this->selectAll && count($this->selectedProducts) === 0) {
             $this->selectedProducts = $products->pluck('id')
-                ->map(fn($id): string => (string) $id)
+                ->map(fn ($id): string => (string) $id)
                 ->toArray();
         }
 
@@ -264,9 +276,9 @@ class ProductList extends Component
             ->with('category')
             ->when($this->search, function ($query): void {
                 $query->where(function ($query): void {
-                    $query->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('slug', 'like', '%' . $this->search . '%')
-                        ->orWhere('short_description', 'like', '%' . $this->search . '%');
+                    $query->where('name', 'like', '%'.$this->search.'%')
+                        ->orWhere('slug', 'like', '%'.$this->search.'%')
+                        ->orWhere('short_description', 'like', '%'.$this->search.'%');
                 });
             })
             ->when($this->statusFilter, function ($query): void {
