@@ -141,10 +141,10 @@
 
                                     <a href="javascript:void(0)" class="screenshot-btn btn btn-white pill px-sm-5"
                                         data-images='[
-                                        @foreach ($product->screenshots as $screenshot)
+                                        @foreach ($product->screenshot_images as $screenshot)
                                             "{{ my_asset($screenshot) }}"@if (!$loop->last), @endif @endforeach
                                         ]'>
-                                        Screenshot
+                                        Screenshots
                                     </a>
 
 

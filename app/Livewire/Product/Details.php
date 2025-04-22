@@ -26,7 +26,7 @@ class Details extends Component
     {
         $cacheKey = 'related_products_'.$this->product->id;
 
-        return Cache::remember($cacheKey, now()->addHours(1), function () {
+        return Cache::remember($cacheKey, now()->addMinutes(30), function () {
             return Product::where('category_id', $this->product->category_id)
                 ->where('id', '!=', $this->product->id)
                 ->inRandomOrder()

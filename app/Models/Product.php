@@ -106,4 +106,10 @@ class Product extends Model
     {
         return $this->sales_count + $this->sales_boost;
     }
+
+    public function getScreenshotImagesAttribute()
+    {
+        // add the image to the screenshot array and return
+        return array_merge([$this->image], $this->screenshots);
+    }
 }
