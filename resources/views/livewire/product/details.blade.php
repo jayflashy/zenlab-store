@@ -409,7 +409,7 @@
                                 <span class="name">Tags</span>
                                 <span class="details">
                                     @foreach ($product->tags as $tag)
-                                        <a href="#" class="hover-text-decoration-underline">{{ $tag }},</a>
+                                        <a href="#" class="hover-text-decoration-underline">{{ $tag }}{{ !$loop->last ? ',' : '' }}</a>
                                     @endforeach
                                 </span>
                             </li>
