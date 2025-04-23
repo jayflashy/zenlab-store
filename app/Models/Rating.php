@@ -1,16 +1,16 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Models;
 
-{{ factoryImport }}
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class {{ class }} extends Model
+class Rating extends Model
 {
     use HasUlids, SoftDeletes;
-    {{ factory }}
+    //
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +18,11 @@ class {{ class }} extends Model
      * @var array
      */
     protected $fillable = [
-        //
+        'product_id',
+        'user_id',
+        'stars',
+        'review',
+        'type',
     ];
 
     /**
@@ -27,6 +31,15 @@ class {{ class }} extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        //
+        'stars' => 'integer',
     ];
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

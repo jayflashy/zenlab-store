@@ -46,6 +46,12 @@
                         <a href="{{ route('admin.products.index') }}" wire:navigate class="nav-submenu__link">Listing</a>
                     </li>
                     <li class="nav-submenu__item">
+                        <a href="#" wire:navigate class="nav-submenu__link">Comments</a>
+                    </li>
+                    <li class="nav-submenu__item">
+                        <a href="#" wire:navigate class="nav-submenu__link">Ratings</a>
+                    </li>
+                    <li class="nav-submenu__item">
                         <a href="#" wire:navigate class="nav-submenu__link">Settings</a>
                     </li>
                 </ul>
