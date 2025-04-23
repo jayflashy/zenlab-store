@@ -94,26 +94,8 @@
                             (50)</button>
                     </li>
                 </ul>
-                <div class="social-share">
-                    <button type="button" class="social-share__button">
-                        <img src="{{ static_asset('images/icons/share-icon.svg') }}" alt="">
-                    </button>
-                    <div class="social-share__icons left">
-                        <ul class="social-icon-list colorful-style">
-                            <li class="social-icon-list__item">
-                                <a href="https://www.facebook.com" class="social-icon-list__link text-body flex-center"><i
-                                        class="fab fa-facebook-f"></i></a>
-                            </li>
-                            <li class="social-icon-list__item">
-                                <a href="https://www.twitter.com" class="social-icon-list__link text-body flex-center"> <i
-                                        class="fab fa-linkedin-in"></i></a>
-                            </li>
-                            <li class="social-icon-list__item">
-                                <a href="https://www.google.com" class="social-icon-list__link text-body flex-center"> <i
-                                        class="fab fa-twitter"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="social-share pb-3">
+                    <x-share-buttons url="{{ url()->current() }}" title="{{ $product->name }}" />
                 </div>
             </div>
         </div>

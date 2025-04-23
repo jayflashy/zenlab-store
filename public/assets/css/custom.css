@@ -116,3 +116,66 @@
 .form-label {
     font-weight: bold;
 }
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
+    transition: background 0.3s;
+    text-decoration: none;
+}
+
+.share-btn.copy {
+    background: #6c757d;
+}
+
+/* Gray */
+.share-btn.facebook {
+    background: #3b5998;
+}
+
+.share-btn.whatsapp {
+    background: #25D366;
+}
+
+.share-btn.telegram {
+    background: #0088cc;
+}
+
+.share-btn.linkedin {
+    background: #0077b5;
+}
+
+.share-btn.reddit {
+    background: #ff4500;
+}
+
+.share-btn.pinterest {
+    background: #bd081c;
+}
+
+.share-btn.x-twitter {
+    background: #111315;
+}
+.share-btn.email {
+    background: #6c757d;
+}
+
+.share-btn.twitter {
+    background: #1DA1F2;
+}
+
+.share-btn:hover {
+    opacity: 0.8;
+    color: white;
+}
