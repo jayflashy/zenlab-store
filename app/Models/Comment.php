@@ -37,6 +37,10 @@ class Comment extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    public function scopeApproved()
+    {
+        return $this->whereStatus('approved');
+    }
 
     // Define the relationship to parent comment (for replies)
     public function parent(): BelongsTo

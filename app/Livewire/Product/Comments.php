@@ -4,6 +4,7 @@ namespace App\Livewire\Product;
 
 use App\Models\Product;
 use App\Traits\LivewireToast;
+use Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -28,8 +29,10 @@ class Comments extends Component
         $this->product->comments()->create([
             'content' => $this->newComment,
             'parent_id' => $this->parentId,
-            'user_id' => null,
+            'user_id' => Auth::id(),
+            'status' => 'approved'
         ]);
+        // TODO: product settings auto approve comments?
 
         $this->reset('newComment', 'parentId', 'replyingTo');
     }
@@ -45,7 +48,7 @@ class Comments extends Component
     }
     public function render()
     {
-        $comments = $this->product->comments()
+        $comments = $this->product->comments()->approved()
             ->whereNull('parent_id')
             ->with('replies.user', 'user') // eager load
             ->latest()

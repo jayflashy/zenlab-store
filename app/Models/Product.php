@@ -132,6 +132,6 @@ class Product extends Model
     }
      public function commentCount()
     {
-        return $this->comments()->count();
+        return $this->comments()->approved()->count();
     }
 }
