@@ -17,7 +17,7 @@ class Details extends Component
 
     public function mount($slug)
     {
-        $product = Product::where('slug', $slug)->firstorFail();
+        $product = Product::where('slug', $slug)->with('ratings.user')->firstorFail();
         $this->product = $product;
         $this->pageTitle = $product->name;
     }

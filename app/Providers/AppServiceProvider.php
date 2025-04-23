@@ -25,8 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-        Model::shouldBeStrict();
+        Model::shouldBeStrict(true);
         Date::use(CarbonImmutable::class);
         View::share('settings', get_setting());
     }
