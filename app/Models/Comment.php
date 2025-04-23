@@ -21,9 +21,13 @@ class Comment extends Model
         'product_id',
         'parent_id',
         'user_id',
-        'content'
+        'content',
+        'status',
     ];
 
+    protected $attributes = [
+        'status' => 'pending' // Default status
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

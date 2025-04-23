@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->ulid('parent_id')->nullable();
             $table->text('content');
+            $table->string('status')->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });
