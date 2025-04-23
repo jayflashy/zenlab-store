@@ -7,9 +7,9 @@
                 <h6 class="comment-list__name font-18 mb-sm-2 mb-1">{{ $comment->user->name ?? 'User' }}</h6>
                 <span class="comment-list__date font-14">{{ show_datetime($comment->created_at, 'M d, Y \a\t h:i a') }}</span>
             </div>
-            @if ($canReply)
+            @if ($canReply && auth()->check())
                 <a class="comment-list__reply fw-500 flx-align gap-2 hover-text-decoration-underline"
-                    wire:click="replyTo('{{ $comment->id }}')" href="#comment-box">
+                    wire:click="replyTo('{{ $comment->id }}')" href="javascript:void(0);">
                     Reply
                     <span class="icon"><img src="{{ static_asset('images/icons/reply-icon.svg') }}" alt=""></span>
                 </a>
