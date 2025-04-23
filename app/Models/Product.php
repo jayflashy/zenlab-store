@@ -125,4 +125,13 @@ class Product extends Model
     {
         return $this->ratings()->count();
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+     public function commentCount()
+    {
+        return $this->comments()->count();
+    }
 }
