@@ -74,6 +74,10 @@ class ProductForm extends Component
 
     public $publish_date;
 
+    public $sales_count;
+
+    public $sales_boost;
+
     // Screenshots array
     public $screenshots = [];
 
@@ -108,6 +112,8 @@ class ProductForm extends Component
         'publish_date' => 'nullable|date',
         'short_description' => 'nullable|string',
         'description' => 'required|string|min:10',
+        'sales_count' => 'nullable|integer',
+        'sales_boost' => 'nullable|integer',
     ];
 
     public function mount($id = null)
@@ -145,6 +151,8 @@ class ProductForm extends Component
         $this->download_link = $product->download_link;
         $this->download_type = $product->download_type;
         $this->demo_url = $product->demo_url;
+        $this->sales_count = $product->sales_count;
+        $this->sales_boost = $product->sales_boost;
 
         $this->featured = $product->featured;
         $this->tags = $product->tags ?? [];
@@ -286,6 +294,8 @@ class ProductForm extends Component
         $product->extended_price = $this->extended_price;
         $product->discount = $this->discount;
         $product->is_free = $this->is_free;
+        $product->sales_boost = $this->sales_boost;
+        $product->sales_count = $this->sales_count;
 
         // Media and files
         if ($this->image) {

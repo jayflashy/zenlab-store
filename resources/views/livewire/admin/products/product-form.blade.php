@@ -208,6 +208,29 @@
                         </div>
                     </div>
                 @endif
+                {{-- sales --}}
+                <div class="row">
+                    <div class=" col-sm-6">
+                        <div class="form-group mb-3">
+                            <label for="sales_count" class="form-label">Sales Count</label>
+                            <input type="number" class="common-input form-control @error('sales_count') is-invalid @enderror"
+                                wire:model="sales_count" id="sales_count">
+                            @error('sales_count')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label for="sales_boost" class="form-label">Sales Boost</label>
+                            <input type="number" class="common-input form-control @error('sales_boost') is-invalid @enderror"
+                                wire:model="sales_boost" id="sales_boost">
+                            @error('sales_boost')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
