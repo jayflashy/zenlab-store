@@ -162,31 +162,38 @@
                         {{-- Rating --}}
                         <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab" tabindex="0">
                             <div class="product-review-wrapper">
-                                @foreach ($product->ratings as $rating)
-                                <div class="product-review">
-                                    <div class="product-review__top flx-between">
-                                        <div class="product-review__rating flx-align">
-                                            <x-star-rating :rating="$rating->stars" />
-                                            <span class="product-review__reason">For <span class="product-review__subject">{{$rating->type}}</span> </span>
+                                <h5 class="mb-32">Product Ratings</h5>
+                                @forelse ($product->ratings as $rating)
+                                    <div class="product-review">
+                                        <div class="product-review__top flx-between">
+                                            <div class="product-review__rating flx-align">
+                                                <x-star-rating :rating="$rating->stars" />
+                                                <span class="product-review__reason">For <span
+                                                        class="product-review__subject">{{ $rating->type }}</span> </span>
+                                            </div>
+                                            <div class="product-review__date">
+                                                by <a href="#"
+                                                    class="product-review__user text--base">{{ $rating->user->name ?? 'User' }} </a>
+                                                {{ $rating->created_at->diffForHumans() }}
+                                            </div>
                                         </div>
-                                        <div class="product-review__date">
-                                            by <a href="#" class="product-review__user text--base">{{$rating->user->name ?? "User"}} </a> {{$rating->created_at->diffForHumans()}}
+                                        <div class="product-review__body">
+                                            <p class="product-review__desc">{!! nl2br($rating->review) !!}</p>
                                         </div>
                                     </div>
-                                    <div class="product-review__body">
-                                        <p class="product-review__desc">{!! nl2br($rating->review)!!}</p>
+                                @empty
+                                    <div class="product-review text-center">
+                                        <p class="">No ratings found</p>
                                     </div>
-                                </div>
-                                @endforeach
+                                @endforelse
                             </div>
                         </div>
                         {{-- Comments --}}
                         <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab"
                             tabindex="0">
-
                             <!-- Comment Start -->
-                            <div class="comment mt-64 mb-64">
-                                <h5 class="mb-32">2 Comments</h5>
+                            <div class="comment mb-64">
+                                <h5 class="mb-32">Product Comments</h5>
                                 <ul class="comment-list">
                                     <li class="comment-list__item d-flex align-items-start gap-sm-4 gap-3">
                                         <div class="comment-list__thumb flex-shrink-0">
