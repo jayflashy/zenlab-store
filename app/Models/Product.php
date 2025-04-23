@@ -118,7 +118,7 @@ class Product extends Model
 
     public function averageRating()
     {
-        return $this->ratings()->avg('stars');
+        return round($this->ratings()->avg('stars'),1);
     }
 
     public function ratingCount()

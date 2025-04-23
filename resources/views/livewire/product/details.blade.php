@@ -75,17 +75,8 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-rating-tab" data-bs-toggle="pill" data-bs-target="#pills-rating" type="button"
                             role="tab" aria-controls="pills-rating" aria-selected="false" tabindex="-1">
-                            <span class="d-flex align-items-center gap-1">
-                                <span class="star-rating">
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                </span>
-                                <span class="star-rating__text text-body"> 5.0</span>
-                                <span class="star-rating__text text-body"> (180)</span>
-                            </span>
+                            <x-star-rating :rating="$product->averageRating()" :count="$product->ratingCount()" />
+
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
