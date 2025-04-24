@@ -28,7 +28,7 @@ class Register extends Component
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|lowercase|max:105|unique:users',
         'username' => 'required|string|max:255|unique:users|alpha_dash',
-        'password' => 'required|string|min:6|regex:/[A-Z]/'  ,
+        'password' => 'required|string|min:6|regex:/[A-Z]/',
         'terms' => 'accepted',
     ];
 
