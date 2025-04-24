@@ -112,8 +112,8 @@ class ProductForm extends Component
         'publish_date' => 'nullable|date',
         'short_description' => 'nullable|string',
         'description' => 'required|string|min:10',
-        'sales_count' => 'nullable|integer',
-        'sales_boost' => 'nullable|integer',
+        'sales_count' => 'nullable|integer|min:0',
+        'sales_boost' => 'nullable|integer|min:0',
     ];
 
     public function mount($id = null)
