@@ -9,7 +9,9 @@ use Illuminate\View\Component;
 class StarRating extends Component
 {
     public float $rating;
+
     public int $count;
+
     /**
      * Create a new component instance.
      */
@@ -18,6 +20,7 @@ class StarRating extends Component
         $this->rating = $rating;
         $this->count = $count;
     }
+
     /**
      * Get the view / contents that represent the component.
      */

@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin\Products;
 
-use App\Models\Product;
 use App\Models\Rating;
 use App\Traits\LivewireToast;
 use Livewire\Component;
@@ -16,15 +15,25 @@ class Ratings extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $status = '';
+
     public $type = '';
+
     public $stars = '';
+
     public $editingRating = null;
+
     public $editStars = 3;
+
     public $editReview = '';
+
     public $editType = 'Quality';
+
     public $isEditing = false;
+
     public $deleteId;
+
     public $showDeleteModal = false;
 
     protected $queryString = [
@@ -76,7 +85,7 @@ class Ratings extends Component
         $this->editingRating->update([
             'stars' => $this->editStars,
             'review' => $this->editReview,
-            'type' => $this->editType
+            'type' => $this->editType,
         ]);
 
         $this->isEditing = false;
@@ -106,11 +115,13 @@ class Ratings extends Component
         $rating->update(['status' => 'rejected']);
         $this->successAlert('Rating rejected!', 'Ratings Rejected');
     }
+
     public function confirmDelete($id)
     {
         $this->deleteId = $id;
         $this->showDeleteModal = true;
     }
+
     public function deleteRating($ratingId)
     {
         $rating = Rating::findOrFail($ratingId);
@@ -125,13 +136,13 @@ class Ratings extends Component
         $ratings = Rating::with(['user', 'product'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->where('review', 'like', '%' . $this->search . '%')
+                    $q->where('review', 'like', '%'.$this->search.'%')
                         // ->orWhereHas('user', function ($u) {
                         //     $u->where('name', 'like', '%' . $this->search . '%')
                         //         ->orWhere('email', 'like', '%' . $this->search . '%');
                         // })
                         ->orWhereHas('product', function ($p) {
-                            $p->where('name', 'like', '%' . $this->search . '%');
+                            $p->where('name', 'like', '%'.$this->search.'%');
                         });
                 });
             })
@@ -149,7 +160,7 @@ class Ratings extends Component
 
         return view('livewire.admin.products.ratings', [
             'ratings' => $ratings,
-            'ratingTypes' => $ratingTypes
+            'ratingTypes' => $ratingTypes,
         ])->layout('admin.layouts.app');
     }
 }

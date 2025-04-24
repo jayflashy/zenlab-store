@@ -15,13 +15,21 @@ class Comments extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $status = '';
+
     public $editingComment = null;
+
     public $editContent = '';
+
     public $isEditing = false;
+
     public $isPreviewingComment = false;
+
     public $previewComment = null;
+
     public $deleteId;
+
     public $showDeleteModal = false;
 
     protected $queryString = [
@@ -56,7 +64,7 @@ class Comments extends Component
         $this->validate();
 
         $this->editingComment->update([
-            'content' => $this->editContent
+            'content' => $this->editContent,
         ]);
 
         $this->isEditing = false;
@@ -107,6 +115,7 @@ class Comments extends Component
         $this->deleteId = $id;
         $this->showDeleteModal = true;
     }
+
     public function deleteComment($commentId)
     {
         $comment = Comment::findOrFail($commentId);
@@ -115,6 +124,7 @@ class Comments extends Component
 
         if ($hasReplies) {
             $this->errorAlert('Cannot delete a comment with replies. Consider rejecting it instead.', 'error');
+
             return;
         }
 
@@ -124,18 +134,19 @@ class Comments extends Component
         $this->isPreviewingComment = false;
         $this->successAlert('Comment deleted successfully!');
     }
+
     public function render()
     {
         $comments = Comment::with(['user', 'product', 'parent'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->where('content', 'like', '%' . $this->search . '%')
+                    $q->where('content', 'like', '%'.$this->search.'%')
                         // ->orWhereHas('user', function ($u) {
                         //     $u->where('name', 'like', '%' . $this->search . '%')
                         //         ->orWhere('email', 'like', '%' . $this->search . '%');
                         // })
                         ->orWhereHas('product', function ($p) {
-                            $p->where('name', 'like', '%' . $this->search . '%');
+                            $p->where('name', 'like', '%'.$this->search.'%');
                         });
                 });
             })
@@ -144,6 +155,7 @@ class Comments extends Component
             })
             ->latest()
             ->paginate(30);
+
         return view('livewire.admin.products.comments', compact('comments'))
             ->layout('admin.layouts.app');
     }

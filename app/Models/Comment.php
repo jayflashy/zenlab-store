@@ -26,8 +26,9 @@ class Comment extends Model
     ];
 
     protected $attributes = [
-        'status' => 'pending' // Default status
+        'status' => 'pending', // Default status
     ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -37,6 +38,7 @@ class Comment extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
     public function scopeApproved()
     {
         return $this->whereStatus('approved');

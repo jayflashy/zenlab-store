@@ -111,17 +111,20 @@ class Product extends Model
     {
         return array_merge([$this->image], $this->screenshots);
     }
+
     public function ratings()
     {
         return $this->hasMany(Rating::class)->where('status', 'approved');
     }
-    public function allRatings(){
+
+    public function allRatings()
+    {
         return $this->hasMany(Rating::class);
     }
 
     public function averageRating()
     {
-        return round($this->ratings()->avg('stars'),1);
+        return round($this->ratings()->avg('stars'), 1);
     }
 
     public function ratingCount()
@@ -133,7 +136,8 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class);
     }
-     public function commentCount()
+
+    public function commentCount()
     {
         return $this->comments()->approved()->count();
     }

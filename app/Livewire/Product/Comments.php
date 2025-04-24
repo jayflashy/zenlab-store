@@ -14,8 +14,11 @@ class Comments extends Component
     use WithPagination;
 
     public Product $product;
+
     public string $newComment = '';
+
     public ?string $parentId = null;
+
     public ?string $replyingTo = null;
 
     protected $rules = [
@@ -30,7 +33,7 @@ class Comments extends Component
             'content' => $this->newComment,
             'parent_id' => $this->parentId,
             'user_id' => Auth::id(),
-            'status' => 'approved'
+            'status' => 'approved',
         ]);
         // TODO: product settings auto approve comments?
 
@@ -42,10 +45,12 @@ class Comments extends Component
         $this->parentId = $commentId;
         $this->replyingTo = $commentId;
     }
+
     public function cancelReply()
     {
         $this->reset('parentId', 'replyingTo');
     }
+
     public function render()
     {
         $comments = $this->product->comments()->approved()
@@ -53,6 +58,7 @@ class Comments extends Component
             ->with('replies.user', 'user') // eager load
             ->latest()
             ->paginate(15);
+
         return view('livewire.product.comments', compact('comments'));
     }
 }

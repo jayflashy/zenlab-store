@@ -23,7 +23,7 @@ class Rating extends Model
         'stars',
         'review',
         'type',
-        'status'
+        'status',
     ];
 
     /**
@@ -34,14 +34,17 @@ class Rating extends Model
     protected $casts = [
         'stars' => 'integer',
     ];
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
+
     public function scopeApproved()
     {
         return $this->whereStatus('approved');
     }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

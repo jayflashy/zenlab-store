@@ -7,9 +7,9 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\EmailSetting;
 use App\Livewire\Admin\EmailTemplate;
 use App\Livewire\Admin\PageManager;
+use App\Livewire\Admin\Products\Comments as ProductComments;
 use App\Livewire\Admin\Products\ProductForm;
 use App\Livewire\Admin\Products\ProductList;
-use App\Livewire\Admin\Products\Comments as ProductComments;
 use App\Livewire\Admin\Products\Ratings;
 use App\Livewire\Admin\SettingsManager;
 
