@@ -15,6 +15,7 @@ class Blogs extends Component
     public function render()
     {
         $blogs = Blog::whereIsActive(1)->latest()->paginate(15);
+
         return view('livewire.blogs', compact('blogs'));
     }
 }
