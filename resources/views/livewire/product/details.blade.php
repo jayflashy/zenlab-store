@@ -82,7 +82,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments"
                             type="button" role="tab" aria-controls="pills-comments" aria-selected="false" tabindex="-1">Comments
-                            ({{$product->commentCount()}})</button>
+                            ({{ $product->commentCount() }})</button>
                     </li>
                 </ul>
                 <div class="social-share pb-3">
@@ -199,27 +199,30 @@
                     <!-- ======================= Product Sidebar Start ========================= -->
                     <div class="product-sidebar section-bg">
                         <div class="product-sidebar__top position-relative flx-between gap-1">
-                            <button type="button" class="btn-has-dropdown font-heading font-18">Extended License</button>
+                            <button type="button" class="btn-has-dropdown font-heading font-18">
+                                {{ $selectedLicenseType === 'extended' ? 'Extended License' : 'Regular License' }}
+                            </button>
                             <div class="license-dropdown">
-                                <div class="license-dropdown__item mb-3">
+                                <div class="license-dropdown__item mb-3" wire:click="toggleLicenseType">
                                     <h6 class="license-dropdown__title font-body mb-1 font-16">Regular License</h6>
                                     <p class="license-dropdown__desc font-13">Use, by you or one client, in a solitary finished result
                                         which end clients are not charged for. The complete cost incorporates the thing cost and a purchaser
-                                        expense..</p>
+                                        fee..</p>
                                 </div>
-                                <div class="license-dropdown__item">
+                                <div class="license-dropdown__item" wire:click="toggleLicenseType">
                                     <h6 class="license-dropdown__title font-body mb-1 font-16">Extended License</h6>
                                     <p class="license-dropdown__desc font-13">Use, by you or one client, in a solitary final result which
                                         end clients can be charged for. The all out cost incorporates the thing cost and a purchaser
-                                        expense.</p>
+                                        fee.</p>
                                 </div>
                                 <div class="mt-3 pt-2 border-top text-center ">
                                     <a href="#" class="link hover-text-decoration-underline font-14 text-main fw-500">View License
                                         Details</a>
                                 </div>
                             </div>
-                            <h6 class="product-sidebar__title">$1580.00</h6>
+                            <h6 class="product-sidebar__title">{{ format_price($currentPrice) }}</h6>
                         </div>
+
                         <ul class="sidebar-list">
                             <li class="sidebar-list__item flx-align gap-2 font-14 fw-300 mb-2">
                                 <span class="icon"><img src="{{ static_asset('images/icons/check-cirlce.svg') }}"
@@ -232,20 +235,30 @@
                             </li>
                             <li class="sidebar-list__item flx-align gap-2 font-14 fw-300">
                                 <span class="icon"><img src="{{ static_asset('images/icons/check-cirlce.svg') }}"alt=""></span>
-                                <span class="text">Non-paying users only</span>
+                                <span
+                                    class="text">{{ $selectedLicenseType === 'extended' ? 'Can be used for other clients' : 'Non-paying users only' }}</span>
                             </li>
                         </ul>
 
                         <div class="flx-between mt-3">
                             <div class="common-check mb-0">
                                 <input class="form-check-input" type="checkbox" name="checkbox" id="extended">
-                                <label class="form-check-label mb-0 fw-300 text-body" for="extended">Extended support 12 month</label>
+                                <label class="form-check-label mb-0 fw-300 text-body" for="extended">Extended support
+                                    {{ $selectedLicenseType === 'extended' ? '12' : '6' }} months</label>
                             </div>
                             <div class="flx-align gap-2">
-                                <span class="product-card__prevPrice text-decoration-line-through">$12</span>
-                                <h6 class="product-card__price mb-0 font-14 fw-500">$7.25</h6>
+                                <span
+                                    class="product-card__prevPrice text-decoration-line-through">{{ format_price($supportOriginalPrice) }}</span>
+                                <h6 class="product-card__price mb-0 font-14 fw-500">{{ format_price($supportPrice) }}</h6>
                             </div>
                         </div>
+                        <button type="button" wire:click="addToCart"
+                            class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32"
+                            wire:loading.attr="disabled">
+                            <img src="{{ static_asset('images/icons/add-to-cart.svg') }}" alt="">
+                            <span wire:loading.remove wire:target="addToCart">Add To Cart</span>
+                            <span wire:loading wire:target="addToCart">Adding...</span>
+                        </button>
                         <button type="button"
                             class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
                             <img src="{{ static_asset('images/icons/add-to-cart.svg') }}" alt="">
