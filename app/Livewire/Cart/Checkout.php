@@ -22,7 +22,6 @@ class Checkout extends Component
     public $paymentMethod = '';
     public $couponCode = '';
     public $discount = 0;
-    public $handlingFee = 00;
     public $subtotal = 0;
     public $total = 0;
     public $processingPayment = false;
@@ -53,7 +52,7 @@ class Checkout extends Component
                 return ($item->price * $item->quantity);
             });
 
-            $this->total = $this->subtotal + $this->handlingFee - $this->discount;
+            $this->total = $this->subtotal - $this->discount;
         }
     }
 
@@ -75,16 +74,14 @@ class Checkout extends Component
 
         if (strtoupper($this->couponCode) === 'DISCOUNT10') {
             $this->discount = round($this->subtotal * 0.1, 2); // 10% discount
-            $this->total = $this->subtotal + $this->handlingFee - $this->discount;
+            $this->total = $this->subtotal - $this->discount;
             $this->toast('success', 'Coupon applied successfully!');
         } elseif (strtoupper($this->couponCode) === 'FREESHIPPING') {
-            $this->handlingFee = 0;
-            $this->total = $this->subtotal + $this->handlingFee - $this->discount;
+            $this->total = $this->subtotal - $this->discount;
             $this->toast('success', 'Free shipping coupon applied!');
         } else {
             $this->discount = 0;
-            $this->handlingFee = 15.00;
-            $this->total = $this->subtotal + $this->handlingFee;
+            $this->total = $this->subtotal;
             $this->toast('error', 'Invalid coupon code');
         }
     }
@@ -103,7 +100,6 @@ class Checkout extends Component
                 'code' => getTrx(8), // Generate a unique order ode,
                 'subtotal' => $this->subtotal,
                 'discount' => $this->discount,
-                'handling_fee' => $this->handlingFee,
                 'total' => $this->total,
                 'payment_method' => $this->paymentMethod,
                 'payment_status' => 'pending',
@@ -147,6 +143,7 @@ class Checkout extends Component
             DB::commit();
 
             // Redirect to success page
+            $this->redirect(route('payment.success',  $order->code), navigate: true);
             return redirect()->route('payment.success', ['order_id' => $order->id]);
         } catch (\Exception $e) {
             DB::rollback();
@@ -154,8 +151,6 @@ class Checkout extends Component
             $this->toast('error', 'Error processing payment: ' . $e->getMessage());
         }
 
-        // Redirect to success page
-        $this->redirect(route('payment.success', ['order_id' => $order->code]), navigate: true);
     }
     public function render()
     {

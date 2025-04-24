@@ -150,10 +150,6 @@
                                 <span class="amount text-body">{{ format_price($discount) }}</span>
                             </li>
                             <li class="billing-list__item flx-between">
-                                <span class="text text-heading fw-500">Handling Fee</span>
-                                <span class="amount text-body">{{ format_price($handlingFee) }}</span>
-                            </li>
-                            <li class="billing-list__item flx-between">
                                 <span class="text text-heading fw-500">Subtotal</span>
                                 <span class="amount text-body">{{ format_price($subtotal) }}</span>
                             </li>
