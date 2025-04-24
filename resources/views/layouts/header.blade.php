@@ -63,7 +63,7 @@
 
                 <div class="header-right__inner gap-3 flx-align d-lg-flex d-none">
                     @guest
-                    <a href="register.html" wire:navigate class="btn btn-main pill">
+                    <a href="{{route('register')}}" wire:navigate class="btn btn-main pill">
                         <span class="icon-left icon">
                             <img src="{{static_asset('images/icons/user.svg')}}" alt="">
                         </span>Create Account

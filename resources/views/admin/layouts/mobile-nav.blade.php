@@ -82,7 +82,7 @@
                 </li>
             </ul>
             <div class="header-right__inner d-lg-none my-3 gap-1 d-flex flx-align">
-                <a href="register.html" class="btn btn-main pill">
+                <a href="{{route('register')}}" class="btn btn-main pill">
                     <span class="icon-left icon">
                         <img src="assets/images/icons/user.svg" alt="" /> </span>Create Account
                 </a>
