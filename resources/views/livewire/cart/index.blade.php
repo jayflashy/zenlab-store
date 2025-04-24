@@ -2,10 +2,10 @@
 <div>
     <section class="breadcrumb breadcrumb-four padding-static-y-60 section-bg position-relative z-index-1 overflow-hidden">
 
-        <img src="{{static_asset('images/gradients/breadcrumb-gradient-bg.png')}}" alt="" class="bg--gradient">
+        <img src="{{ static_asset('images/gradients/breadcrumb-gradient-bg.png') }}" alt="" class="bg--gradient">
 
-        <img src="{{static_asset('images/shapes/element-moon3.png')}}" alt="" class="element one">
-        <img src="{{static_asset('images/shapes/element-moon1.png')}}" alt="" class="element three">
+        <img src="{{ static_asset('images/shapes/element-moon3.png') }}" alt="" class="element one">
+        <img src="{{ static_asset('images/shapes/element-moon1.png') }}" alt="" class="element three">
 
         <div class="container container-two">
             <div class="row justify-content-center">
@@ -14,7 +14,7 @@
                         <h3 class="breadcrumb-four-content__title text-center mb-3 text-capitalize">Shopping Cart</h3>
                         <ul class="breadcrumb-list flx-align justify-content-center gap-2 mb-2">
                             <li class="breadcrumb-list__item font-14 text-body">
-                                <a href="{{route('home')}}" wire:navigate class="breadcrumb-list__link text-body hover-text-main">Home</a>
+                                <a href="{{ route('home') }}" wire:navigate class="breadcrumb-list__link text-body hover-text-main">Home</a>
                             </li>
                             <li class="breadcrumb-list__item font-14 text-body">
                                 <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
@@ -26,18 +26,21 @@
 
                         <ul class="process-list">
                             <li class="process-list__item activePage">
-                                <a href="{{route('cart')}}" wire:navigate class="process-list__link">
+                                <a href="javascript:void(0)" wire:navigate class="process-list__link">
                                     <div class="icons">
-                                        <span class="icon white"><img src="{{static_asset('images/icons/process-white1.svg')}}" alt=""></span>
+                                        <span class="icon white"><img src="{{ static_asset('images/icons/process-white1.svg') }}"
+                                                alt=""></span>
                                     </div>
                                     <span class="text">Your Cart</span>
                                 </a>
                             </li>
                             <li class="process-list__item ">
-                                <a href="{{route('checkout')}}" wire:navigate class="process-list__link">
+                                <a href="javascript:void(0)" wire:navigate class="process-list__link">
                                     <div class="icons">
-                                        <span class="icon white"><img src="{{static_asset('images/icons/process-white3.svg')}}" alt=""></span>
-                                        <span class="icon colored"><img src="{{static_asset('images/icons/process3.svg')}}" alt=""></span>
+                                        <span class="icon white"><img src="{{ static_asset('images/icons/process-white3.svg') }}"
+                                                alt=""></span>
+                                        <span class="icon colored"><img src="{{ static_asset('images/icons/process3.svg') }}"
+                                                alt=""></span>
                                     </div>
                                     <span class="text">Checkout</span>
                                 </a>
@@ -45,8 +48,10 @@
                             <li class="process-list__item">
                                 <a href="cart-thank-you.html" wire:navigate class="process-list__link">
                                     <div class="icons">
-                                        <span class="icon white"><img src="{{static_asset('images/icons/process-white4.svg')}}" alt=""></span>
-                                        <span class="icon colored"><img src="{{static_asset('images/icons/process4.svg')}}" alt=""></span>
+                                        <span class="icon white"><img src="{{ static_asset('images/icons/process-white4.svg') }}"
+                                                alt=""></span>
+                                        <span class="icon colored"><img src="{{ static_asset('images/icons/process4.svg') }}"
+                                                alt=""></span>
                                     </div>
                                     <span class="text">Complete</span>
                                 </a>
@@ -63,156 +68,135 @@
     <div class="cart padding-y-120">
         <div class="container">
             <div class="cart-content">
-                <div class="table-responsive">
-                    <table class="table style-two">
-                        <thead>
-                            <tr>
-                                <th>Product Details</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="cart-item">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <a href="product-details.html" class="link">
-                                                    <img src="{{static_asset('images/thumbs/product-img2.png')}}" alt="" class="cover-img">
-                                                </a>
+                @if (count($cartItems) > 0)
+                    <div class="table-responsive">
+                        <table class="table style-two">
+                            <thead>
+                                <tr>
+                                    <th>Product Details</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cartItems as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="cart-item">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="cart-item__thumb">
+                                                        <a href="{{ route('products.view', $item['product']['slug']) }}" wire:navigate
+                                                            class="link">
+                                                            <img src="{{ my_asset($item['product']['thumbnail']) }}"
+                                                                alt="{{ $item['product']['name'] }}" class="cover-img">
+                                                        </a>
+                                                    </div>
+                                                    <div class="cart-item__content">
+                                                        <h6 class="cart-item__title font-heading fw-700 text-capitalize font-18 mb-2">
+                                                            <a href="{{ route('products.view', $item['product']['slug']) }}" wire:navigate
+                                                                class="link">{{ $item['product']['name'] }}</a>
+                                                        </h6>
+                                                        <div class="mb-2">
+                                                            <span class="badge bg-light text-dark">
+                                                                {{ ucfirst($item['license_type']) }} License
+                                                                @if ($item['extended_support'])
+                                                                    + Extended Support
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                        <span class="cart-item__price font-18 text-heading fw-500">Category:
+                                                            <span
+                                                                class="text-body font-14">{{ $item['product']['category']['name'] ?? 'N/A' }}</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flx-align gap-4 mt-3 mt-lg-4">
+                                                    <div class="flx-align gap-2">
+                                                        @auth
+                                                            <button type="button" class="product-card__wishlist style-two"
+                                                                wire:click="addToWishlist('{{ $item['product_id'] }}')">
+                                                                <i class="fas fa-heart text-danger"></i>
+                                                            </button>
+                                                            <span class="text-body">Add to wishlist</span>
+                                                        @endauth
+                                                    </div>
+                                                    <button type="button" wire:click="removeItem('{{ $item['id'] }}')"
+                                                        class="rounded-btn delete-btn btn btn-sm btn-outline-danger text-danger hover-text-decoration-underline">
+                                                        <i class="las la-times"></i>
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title font-heading fw-700 text-capitalize font-18 mb-4"> <a
-                                                        href="product-details.html" class="link">Digital product name here</a></h6>
-                                                <span class="cart-item__price font-18 text-heading fw-500">Category: <span
-                                                        class="text-body font-14">WordPress</span></span>
+                                        </td>
+                                        <td>
+                                            <div class="cart-item__count">
+                                                <button wire:click="updateQuantity('{{ $item['id'] }}', -1)">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input type="number" value="{{ $item['quantity'] }}" readonly>
+                                                <button wire:click="updateQuantity('{{ $item['id'] }}', 1)">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
                                             </div>
-                                        </div>
-                                        <div class="flx-align gap-4 mt-3 mt-lg-4">
-                                            <div class="flx-align gap-2">
-                                                <button type="button" class="product-card__wishlist style-two"><i class="fas fa-heart"></i></button>
-                                                <span class="text-body">Add to wishlist</span>
-                                            </div>
-                                            <button type="button"
-                                                class="rounded-btn delete-btn text-danger hover-text-decoration-underline">Remove</button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="cart-item__count">
-                                        <button data-decrease="data-decrease"> <i class="fas fa-minus"></i></button>
-                                        <input data-value="data-value" type="number" value="2">
-                                        <button data-increase="data-increase"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$28.00</span>
-                                </td>
-                                <td>
-                                    <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$56.00</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="cart-item">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <a href="product-details.html" class="link">
-                                                    <img src="{{static_asset('images/thumbs/product-img3.png')}}" alt="" class="cover-img">
-                                                </a>
-                                            </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title font-heading fw-700 text-capitalize font-18 mb-4"> <a
-                                                        href="product-details.html" class="link">Digital product name here</a></h6>
-                                                <span class="cart-item__price font-18 text-heading fw-500">Category: <span
-                                                        class="text-body font-14">WordPress</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="flx-align gap-4 mt-3 mt-lg-4">
-                                            <div class="flx-align gap-2">
-                                                <button type="button" class="product-card__wishlist style-two"><i class="fas fa-heart"></i></button>
-                                                <span class="text-body">Add to wishlist</span>
-                                            </div>
-                                            <button type="button"
-                                                class="rounded-btn delete-btn text-danger hover-text-decoration-underline">Remove</button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="cart-item__count">
-                                        <button data-decrease="data-decrease"> <i class="fas fa-minus"></i></button>
-                                        <input data-value="data-value" type="number" value="2">
-                                        <button data-increase="data-increase"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$28.00</span>
-                                </td>
-                                <td>
-                                    <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$56.00</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="cart-item">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="cart-item__thumb">
-                                                <a href="product-details.html" class="link">
-                                                    <img src="{{static_asset('images/thumbs/product-img1.png')}}" alt="" class="cover-img">
-                                                </a>
-                                            </div>
-                                            <div class="cart-item__content">
-                                                <h6 class="cart-item__title font-heading fw-700 text-capitalize font-18 mb-4"> <a
-                                                        href="product-details.html" class="link">Digital product name here</a></h6>
-                                                <span class="cart-item__price font-18 text-heading fw-500">Category: <span
-                                                        class="text-body font-14">WordPress</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="flx-align gap-4 mt-3 mt-lg-4">
-                                            <div class="flx-align gap-2">
-                                                <button type="button" class="product-card__wishlist style-two"><i class="fas fa-heart"></i></button>
-                                                <span class="text-body">Add to wishlist</span>
-                                            </div>
-                                            <button type="button"
-                                                class="rounded-btn delete-btn text-danger hover-text-decoration-underline">Remove</button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="cart-item__count">
-                                        <button data-decrease="data-decrease"> <i class="fas fa-minus"></i></button>
-                                        <input data-value="data-value" type="number" value="3">
-                                        <button data-increase="data-increase"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$28.00</span>
-                                </td>
-                                <td>
-                                    <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$96.00</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                        </td>
+                                        <td>
+                                            <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">
+                                                {{ format_price($item['price']) }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">
+                                                {{ format_price($item['price'] * $item['quantity']) }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
-                <div class="cart-content__bottom flx-between gap-2">
-                    <a href="{{route('products')}}" wire:navigate class="btn btn-outline-light flx-align gap-2 pill btn-lg">
-                        <span class="icon line-height-1 font-20"><i class="las la-arrow-left"></i></span>
-                        Continue Shopping
-                    </a>
-                    <a href="{{route('checkout')}}" wire:navigate class="btn btn-main flx-align gap-2 pill btn-lg">
-                        Next
-                        <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
-                    </a>
-                </div>
+                    <div class="row mt-4">
+                        <div class="col-lg-6 offset-lg-6">
+                            <div class="cart-summary bg-light p-4 rounded">
+                                <h5 class="mb-3">Order Summary</h5>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Subtotal</span>
+                                    <span>{{ format_price($cartTotal) }}</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-0">
+                                    <strong>Total</strong>
+                                    <strong>{{ format_price($cartTotal) }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cart-content__bottom flx-between gap-2 mt-4">
+                        <a href="{{ route('products') }}" wire:navigate class="btn btn-outline-light flx-align gap-2 pill btn-lg">
+                            <span class="icon line-height-1 font-20"><i class="las la-arrow-left"></i></span>
+                            Buy More
+                        </a>
+                        <a href="{{ route('checkout') }}" wire:navigate class="btn btn-main flx-align gap-2 pill btn-lg">
+                            Checkout
+                            <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
+                        </a>
+                    </div>
+                @else
+                    <div class="text-center py-5">
+                        <div class="mb-4">
+                            <img src="{{ static_asset('images/icons/cart.svg') }}" alt="Empty Cart" style="width: 100px;">
+                        </div>
+                        <h3 class="mb-3">Your cart is empty</h3>
+                        <p class="mb-4">Looks like you haven't added anything to your cart yet.</p>
+                        <a href="{{ route('products') }}" wire:navigate class="btn btn-main pill">
+                            Browse Products
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
 </div>
 
-@section('meta')
-
-@endsection
+@include('layouts.meta')

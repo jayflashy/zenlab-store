@@ -62,9 +62,10 @@ class Cart extends Model
         $userCart = self::firstOrCreate(['user_id' => $userId, 'status' => 'active']);
         $guestCart = self::where('session_id', $sessionId)->where('user_id', null)->first();
 
-        if ($guestCart) {
+        if ($guestCart && $userCart) {
+            // Move items from guest cart to user cart
             foreach ($guestCart->items as $item) {
-                // Check if same product with same license already exists in user cart
+                // Check if same product with same license exists in user cart
                 $existingItem = CartItem::where('cart_id', $userCart->id)
                     ->where('product_id', $item->product_id)
                     ->where('license_type', $item->license_type)
@@ -72,7 +73,7 @@ class Cart extends Model
                     ->first();
 
                 if ($existingItem) {
-                    // update quantity
+                    // Update quantity if item exists
                     $existingItem->quantity += $item->quantity;
                     $existingItem->save();
                 } else {
@@ -82,10 +83,13 @@ class Cart extends Model
                 }
             }
 
-            // Delete empty guest cart
-            if ($guestCart->items()->count() === 0) {
-                $guestCart->delete();
-            }
+            // Delete guest cart
+            $guestCart->delete();
+        } elseif ($guestCart) {
+            // Just assign user ID to the guest cart
+            $guestCart->user_id = $userId;
+            $guestCart->session_id = null;
+            $guestCart->save();
         }
 
         return $userCart;

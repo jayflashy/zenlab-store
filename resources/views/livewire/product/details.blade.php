@@ -242,7 +242,7 @@
 
                         <div class="flx-between mt-3">
                             <div class="common-check mb-0">
-                                <input class="form-check-input" type="checkbox" name="checkbox" id="extended">
+                                <input class="form-check-input" type="checkbox" wire:model.live="extendedSupport" name="checkbox" id="extended">
                                 <label class="form-check-label mb-0 fw-300 text-body" for="extended">Extended support
                                     {{ $selectedLicenseType === 'extended' ? '12' : '6' }} months</label>
                             </div>

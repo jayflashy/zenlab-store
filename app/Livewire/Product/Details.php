@@ -64,8 +64,8 @@ class Details extends Component
     public function getCurrentPriceProperty()
     {
         $basePrice = $this->selectedLicenseType === 'regular'
-            ? $this->product->regular_price
-            : $this->product->extended_price;
+            ? $this->product->final_price
+            : $this->product->final_extended_price;
 
         if ($this->extendedSupport) {
             $basePrice += $this->supportPrice;
@@ -97,7 +97,8 @@ class Details extends Component
                 'extended_support' => $this->extendedSupport,
                 'price' => $this->currentPrice,
                 'quantity' => 1,
-                'total'=> $this->currentPrice
+                'support_price' => $this->extendedSupport ? $this->supportPrice : 0,
+                'total' => $this->currentPrice,
             ]);
 
             // Emit event to update cart count in header if needed

@@ -34,4 +34,16 @@ class CartItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function getSubtotalAttribute()
+    {
+        return $this->price * $this->quantity;
+    }
+
+    // Get license display name
+    public function getLicenseNameAttribute()
+    {
+        return ucfirst($this->license_type) . ' License' .
+            ($this->extended_support ? ' + Extended Support' : '');
+    }
 }
