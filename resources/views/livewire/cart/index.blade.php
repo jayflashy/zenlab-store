@@ -59,8 +59,8 @@
                                                         @endauth
                                                     </div>
                                                     <button type="button" wire:click="removeItem('{{ $item['id'] }}')"
-                                                        class="rounded-btn delete-btn border border-danger px-1 text-danger hover-text-decoration-underline">
-                                                        Remove
+                                                        class="rounded-btn delete-btn px-1 text-danger hover-text-decoration-underline">
+                                                        <i class="las la-times"></i> Remove
                                                     </button>
                                                 </div>
                                             </div>

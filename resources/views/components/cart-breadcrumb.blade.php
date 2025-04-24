@@ -42,7 +42,7 @@
                             </a>
                         </li>
                         <li class="process-list__item {{ $step === 3 ? 'activePage' : '' }}">
-                            <a href="cart-thank-you.html" wire:navigate class="process-list__link">
+                            <a href="javascript:void(0)" class="process-list__link">
                                 <div class="icons">
                                     <span class="icon white"><img src="{{ static_asset('images/icons/process-white4.svg') }}"
                                             alt=""></span>
