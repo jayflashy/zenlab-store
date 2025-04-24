@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cart;
 
+use App\Http\Controllers\PaymentController;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -135,6 +136,18 @@ class Checkout extends Component
                 ]);
             }
 
+            DB::commit();
+
+            $paymentController = app(PaymentController::class);
+            return match ($this->paymentMethod) {
+                'paystack_payment' => $paymentController->initPaystack($order),
+                'flutterwave_payment' => $paymentController->initFlutter($order),
+                'paypal_payment' => $paymentController->initPaypal($order),
+                'cryptomus_payment' => $paymentController->initCryptomus($order),
+                'manual_payment' => $this->showManual($order),
+                default => throw new \Exception('Invalid payment method selected'),
+            };
+
             // redirect to payment provider.
             // For this simulation, we're just adding a delay
             sleep(1);
@@ -155,11 +168,8 @@ class Checkout extends Component
             $this->cart->status = 'completed';
             $this->cart->delete();
 
-            DB::commit();
-
             // Redirect to success page
             $this->redirect(route('payment.success',  $order->code), navigate: true);
-            return redirect()->route('payment.success', ['order_id' => $order->id]);
         } catch (\Exception $e) {
             DB::rollback();
             $this->processingPayment = false;
