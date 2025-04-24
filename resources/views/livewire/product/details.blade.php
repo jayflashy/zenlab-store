@@ -75,23 +75,14 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-rating-tab" data-bs-toggle="pill" data-bs-target="#pills-rating" type="button"
                             role="tab" aria-controls="pills-rating" aria-selected="false" tabindex="-1">
-                            <span class="d-flex align-items-center gap-1">
-                                <span class="star-rating">
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                    <span class="star-rating__item font-11"><i class="fas fa-star"></i></span>
-                                </span>
-                                <span class="star-rating__text text-body"> 5.0</span>
-                                <span class="star-rating__text text-body"> (180)</span>
-                            </span>
+                            <x-star-rating :rating="$product->averageRating()" :count="$product->ratingCount()" />
+
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments"
                             type="button" role="tab" aria-controls="pills-comments" aria-selected="false" tabindex="-1">Comments
-                            (50)</button>
+                            ({{$product->commentCount()}})</button>
                     </li>
                 </ul>
                 <div class="social-share pb-3">
@@ -171,127 +162,36 @@
                         {{-- Rating --}}
                         <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab" tabindex="0">
                             <div class="product-review-wrapper">
-                                <div class="product-review">
-                                    <div class="product-review__top flx-between">
-                                        <div class="product-review__rating flx-align">
-                                            <div class="d-flex align-items-center gap-1">
-                                                <ul class="star-rating">
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                </ul>
-                                                <span class="star-rating__text text-body"> 5.0</span>
+                                <h5 class="mb-32">Product Ratings</h5>
+                                @forelse ($product->ratings as $rating)
+                                    <div class="product-review">
+                                        <div class="product-review__top flx-between">
+                                            <div class="product-review__rating flx-align">
+                                                <x-star-rating :rating="$rating->stars" />
+                                                <span class="product-review__reason">For <span
+                                                        class="product-review__subject">{{ $rating->type }}</span> </span>
                                             </div>
-                                            <span class="product-review__reason">For <span class="product-review__subject">Customer
-                                                    Support</span> </span>
-                                        </div>
-                                        <div class="product-review__date">
-                                            by <a href="#" class="product-review__user text--base">John Doe </a> 2 month ago
-                                        </div>
-                                    </div>
-                                    <div class="product-review__body">
-                                        <p class="product-review__desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam
-                                            itaque vitae ex possimus delectus? Voluptas expedita accusantium aperiam quo quod dolore
-                                            dignissimos rerum praesentium deserunt libero recusandae quisquam est accusamus eos dolorum sit
-                                            explicabo, sapiente pariatur voluptates veniam aut veritatis, magnam velit similique! Ex
-                                            similique magni labore aperiam, eius quas molestiae accusantium porro eaque esse minus amet
-                                            doloribus quo odit illo doloremque.</p>
-                                    </div>
-                                </div>
-                                <div class="product-review">
-                                    <div class="product-review__top flx-between">
-                                        <div class="product-review__rating flx-align">
-                                            <div class="d-flex align-items-center gap-1">
-                                                <ul class="star-rating">
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                                </ul>
-                                                <span class="star-rating__text text-body"> 5.0</span>
+                                            <div class="product-review__date">
+                                                by <a href="#"
+                                                    class="product-review__user text--base">{{ $rating->user->name ?? 'User' }} </a>
+                                                {{ $rating->created_at->diffForHumans() }}
                                             </div>
-                                            <span class="product-review__reason">For <span class="product-review__subject">Customer
-                                                    Support</span> </span>
                                         </div>
-                                        <div class="product-review__date">
-                                            by <a href="#" class="product-review__user text--base">John Doe </a> 2 month ago
+                                        <div class="product-review__body">
+                                            <p class="product-review__desc">{!! nl2br($rating->review) !!}</p>
                                         </div>
                                     </div>
-                                    <div class="product-review__body">
-                                        <p class="product-review__desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam
-                                            itaque vitae ex possimus delectus? Voluptas expedita accusantium aperiam quo quod dolore
-                                            dignissimos rerum praesentium deserunt libero recusandae quisquam est accusamus eos dolorum sit
-                                            explicabo, sapiente pariatur voluptates veniam aut veritatis, magnam velit similique! Ex
-                                            similique magni labore aperiam, eius quas molestiae accusantium porro eaque esse minus amet
-                                            doloribus quo odit illo doloremque.</p>
+                                @empty
+                                    <div class="product-review text-center">
+                                        <p class="">No ratings found</p>
                                     </div>
-                                </div>
+                                @endforelse
                             </div>
                         </div>
                         {{-- Comments --}}
                         <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab"
                             tabindex="0">
-
-                            <!-- Comment Start -->
-                            <div class="comment mt-64 mb-64">
-                                <h5 class="mb-32">2 Comments</h5>
-                                <ul class="comment-list">
-                                    <li class="comment-list__item d-flex align-items-start gap-sm-4 gap-3">
-                                        <div class="comment-list__thumb flex-shrink-0">
-                                            <img src="{{ static_asset('images/thumbs/comment1.png') }}" class="cover-img"
-                                                alt="">
-                                        </div>
-                                        <div class="comment-list__content">
-                                            <div class="flx-between gap-2 align-items-start">
-                                                <div>
-                                                    <h6 class="comment-list__name font-18 mb-sm-2 mb-1">Jenny Wilson</h6>
-                                                    <span class="comment-list__date font-14">Jan 21, 2024 at 11:25 pm</span>
-                                                </div>
-                                                <a class="comment-list__reply fw-500 flx-align gap-2 hover-text-decoration-underline"
-                                                    href="#comment-box">
-                                                    Reply
-                                                    <span class="icon"><img src="{{ static_asset('images/icons/reply-icon.svg') }}"
-                                                            alt=""></span>
-                                                </a>
-                                            </div>
-                                            <p class="comment-list__desc mt-3">Lorem ipsum dolor sit amet consectetur. Nec nunc
-                                                pellentesque massa pretium. Quam sapien nec venenatis vivamus sed cras faucibus mi viverra.
-                                                Quam faucibus morbi cras vitae neque. Necnunc pellentesque massa pretium.</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <ul class="comment-list comment-list--two">
-                                            <li class="comment-list__item d-flex align-items-start gap-sm-4 gap-3">
-                                                <div class="comment-list__thumb flex-shrink-0">
-                                                    <img src="{{ static_asset('images/thumbs/comment2.png') }}" class="cover-img"
-                                                        alt="">
-                                                </div>
-                                                <div class="comment-list__content">
-                                                    <div class="flx-between gap-2 align-items-start">
-                                                        <div>
-                                                            <h6 class="comment-list__name font-18 mb-sm-2 mb-1">Courtney Henry</h6>
-                                                            <span class="comment-list__date font-14">Jan 21, 2024 at 11:25 pm</span>
-                                                        </div>
-                                                        <a class="comment-list__reply fw-500 flx-align gap-2 hover-text-decoration-underline"
-                                                            href="#comment-box">
-                                                            Reply
-                                                            <span class="icon"><img
-                                                                    src="{{ static_asset('images/icons/reply-icon.svg') }}"
-                                                                    alt=""></span>
-                                                        </a>
-                                                    </div>
-                                                    <p class="comment-list__desc mt-3">Lorem ipsum dolor sit amet consectetur. Nec nunc
-                                                        pellentesque massa pretium. Quam sapien nec venenatis vivamus sed cras faucibus.</p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- Comment End -->
+                            @livewire('product.comments', ['product' => $product])
                         </div>
                     </div>
                 </div>

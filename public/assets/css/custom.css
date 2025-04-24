@@ -179,3 +179,6 @@
     opacity: 0.8;
     color: white;
 }
+.product-review__rating .star-rating__item {
+    color: #FFA944 !important;
+}

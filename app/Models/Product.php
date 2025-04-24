@@ -109,7 +109,36 @@ class Product extends Model
 
     public function getScreenshotImagesAttribute()
     {
-        // add the image to the screenshot array and return
         return array_merge([$this->image], $this->screenshots);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class)->where('status', 'approved');
+    }
+
+    public function allRatings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function averageRating()
+    {
+        return round($this->ratings()->avg('stars'), 1);
+    }
+
+    public function ratingCount()
+    {
+        return $this->ratings()->count();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function commentCount()
+    {
+        return $this->comments()->approved()->count();
     }
 }

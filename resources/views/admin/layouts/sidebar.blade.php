@@ -40,10 +40,20 @@
                 </a>
                 <ul class="side-submenu">
                     <li class="nav-submenu__item">
-                        <a href="{{route('admin.products.create')}}" wire:navigate class="nav-submenu__link">Add</a>
+                        <a href="{{ route('admin.products.create') }}" wire:navigate class="nav-submenu__link">Add</a>
                     </li>
                     <li class="nav-submenu__item">
                         <a href="{{ route('admin.products.index') }}" wire:navigate class="nav-submenu__link">Listing</a>
+                    </li>
+                    <li class="nav-submenu__item">
+                        <a href="{{ route('admin.products.comments') }}" wire:navigate class="nav-submenu__link">Comments
+                            {{-- <span class="badge bg-warning">2</span> cache pending  comments--}}
+                        </a>
+                    </li>
+                    <li class="nav-submenu__item">
+                        <a href="{{ route('admin.products.ratings') }}" wire:navigate class="nav-submenu__link">Ratings
+                            {{-- <span class="badge bg-warning">2</span> cache pending  ratings--}}
+                        </a>
                     </li>
                     <li class="nav-submenu__item">
                         <a href="#" wire:navigate class="nav-submenu__link">Settings</a>
@@ -151,8 +161,10 @@
                     <span class="text">Email</span>
                 </a>
                 <ul class="side-submenu">
-                    <li class="nav-submenu__item"><a href="{{route('admin.email.templates')}}" wire:navigate class="nav-submenu__link">Templates</a></li>
-                    <li class="nav-submenu__item"><a href="{{route('admin.email.settings')}}" wire:navigate class="nav-submenu__link">Settings</a></li>
+                    <li class="nav-submenu__item"><a href="{{ route('admin.email.templates') }}" wire:navigate
+                            class="nav-submenu__link">Templates</a></li>
+                    <li class="nav-submenu__item"><a href="{{ route('admin.email.settings') }}" wire:navigate
+                            class="nav-submenu__link">Settings</a></li>
                 </ul>
             </li>
 
@@ -166,7 +178,7 @@
                 </a>
                 <ul class="side-submenu">
                     <li class="nav-submenu__item">
-                        <a href="{{route('admin.settings')}}" wire:navigate class="nav-submenu__link">General </a>
+                        <a href="{{ route('admin.settings') }}" wire:navigate class="nav-submenu__link">General </a>
                     </li>
                     <li class="nav-submenu__item">
                         <a href="{{ route('admin.settings.payments') }}" wire:navigate class="nav-submenu__link">Payments</a>
