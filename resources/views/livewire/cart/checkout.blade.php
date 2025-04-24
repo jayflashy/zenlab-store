@@ -123,8 +123,15 @@
                                     <span class="icon line-height-1 font-20"><i class="las la-arrow-left"></i></span>
                                     Back to Cart
                                 </a>
-                                <button type="submit" class="btn btn-main flx-align gap-2 pill btn-lg">
-                                    Complete Payment
+                                <button type="submit" class="btn btn-main flx-align gap-2 pill btn-lg" wire:loading.attr="disabled"
+                                    wire:loading.class="disabled">
+                                    <span wire:loading wire:target="processPayment">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Processing...
+                                    </span>
+                                    <span wire:loading.remove wire:target="processPayment">
+                                        Complete Payment
+                                    </span>
                                 </button>
                             </div>
                         </form>
@@ -136,23 +143,23 @@
                         <ul class="billing-list">
                             <li class="billing-list__item flx-between">
                                 <span class="text text-heading fw-500">You have {{ count($cartItems) }} item(s)</span>
-                                <span class="amount text-heading fw-500">${{ number_format($subtotal, 2) }}</span>
+                                <span class="amount text-heading fw-500">{{ format_price($subtotal) }}</span>
                             </li>
                             <li class="billing-list__item flx-between">
                                 <span class="text text-heading fw-500">Discount</span>
-                                <span class="amount text-body">${{ number_format($discount, 2) }}</span>
+                                <span class="amount text-body">{{ format_price($discount) }}</span>
                             </li>
                             <li class="billing-list__item flx-between">
                                 <span class="text text-heading fw-500">Handling Fee</span>
-                                <span class="amount text-body">${{ number_format($handlingFee, 2) }}</span>
+                                <span class="amount text-body">{{ format_price($handlingFee) }}</span>
                             </li>
                             <li class="billing-list__item flx-between">
                                 <span class="text text-heading fw-500">Subtotal</span>
-                                <span class="amount text-body">${{ number_format($subtotal, 2) }}</span>
+                                <span class="amount text-body">{{ format_price($subtotal) }}</span>
                             </li>
                             <li class="billing-list__item flx-between">
                                 <span class="text text-heading font-20 fw-500 font-heading">Total</span>
-                                <span class="amount text-heading font-20 fw-500 font-heading">${{ number_format($total, 2) }}</span>
+                                <span class="amount text-heading font-20 fw-500 font-heading">{{ format_price($total) }}</span>
                             </li>
                         </ul>
                     </div>
@@ -161,11 +168,40 @@
                         <div class="apply-coupon flx-align gap-3">
                             <input type="text" wire:model="couponCode" class="common-input common-input--md w-auto pill"
                                 placeholder="Coupon code">
-                            <button type="button" wire:click="applyCoupon"
+                            <button type="button" wire:click="applyCoupon" wire:loading.attr="disabled"
                                 class="btn btn-main btn-md w-auto py-3 px-4 flx-align gap-2 pill fw-300">
-                                Apply</button>
+                                <span wire:loading wire:target="applyCoupon">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </span>
+                                <span wire:loading.remove wire:target="applyCoupon">Apply</span>
+                            </button>
                         </div>
                     </div>
+
+                    @if (count($cartItems) > 0)
+                        <div class="order-summary mt-3">
+                            <h5 class="order-summary_title mb-3">Your Items</h5>
+                            <div class="cart-items-summary">
+                                @foreach ($cartItems as $item)
+                                    <div class="cart-item-mini mb-2 p-2 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="mb-0">{{ $item['product']['name'] }}</h6>
+                                                <small>{{ ucfirst($item['license_type']) }} License</small>
+                                                @if ($item['extended_support'])
+                                                    <br><small>Extended Support</small>
+                                                @endif
+                                            </div>
+                                            <div class="text-end">
+                                                <div>{{ format_price($item['price']) }}</div>
+                                                <small>Qty: {{ $item['quantity'] }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
