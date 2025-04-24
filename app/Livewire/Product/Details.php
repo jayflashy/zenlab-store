@@ -15,11 +15,25 @@ class Details extends Component
 
     public $pageTitle;
 
+    // meta
+    public string $metaTitle;
+
+    public string $metaDescription;
+
+    public string $metaKeywords;
+
+    public string $metaImage;
+
     public function mount($slug)
     {
         $product = Product::where('slug', $slug)->with('ratings.user')->firstorFail();
         $this->product = $product;
         $this->pageTitle = $product->name;
+        // set meta
+        $this->metaTitle = $this->product->name;
+        $this->metaDescription = str()->limit(strip_tags($this->product->short_description), 150);
+        $this->metaKeywords = implode(',', $product->tags);
+        $this->metaImage = $this->product->image ? my_asset($this->product->image) : my_asset(get_setting('logo'));
     }
 
     public function getRelatedProducts()
