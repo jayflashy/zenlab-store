@@ -1,51 +1,58 @@
-<div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
+<div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+    <h4 class="account-content__title mb-48 text-capitalize">Login to {{$settings->name}}</h4>
 
-    <form wire:submit="login" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Email address')"
-            type="email"
-            required
-            autofocus
-            autocomplete="email"
-            placeholder="email@example.com"
-        />
-
-        <!-- Password -->
-        <div class="relative">
-            <flux:input
-                wire:model="password"
-                :label="__('Password')"
-                type="password"
-                required
-                autocomplete="current-password"
-                :placeholder="__('Password')"
-            />
-
-            @if (Route::has('password.request'))
-                <flux:link class="absolute end-0 top-0 text-sm" :href="route('password.request')" wire:navigate>
-                    {{ __('Forgot your password?') }}
-                </flux:link>
-            @endif
-        </div>
-
-        <!-- Remember Me -->
-        <flux:checkbox wire:model="remember" :label="__('Remember me')" />
-
-        <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Log in') }}</flux:button>
+    <form wire:submit.prevent="login">
+        <div class="row gy-4">
+            <div class="col-12">
+                <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Email</label>
+                <div class="position-relative">
+                    <input type="email" class="common-input common-input--bg common-input--withIcon" id="email"
+                        placeholder="infoname@mail.com" wire:model.lazy="email">
+                    <span class="input-icon"><img src="{{ static_asset('images/icons/envelope-icon.svg') }}" alt=""></span>
+                    @error('email')
+                        <span class="text-danger mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="your-password" class="form-label mb-2 font-18 font-heading fw-600">Password</label>
+                <div class="position-relative">
+                    <input type="password" class="common-input common-input--bg common-input--withIcon" id="password"
+                        placeholder="6+ characters, 1 Capital letter" wire:model.lazy="password">
+                    <span class="input-icon cursor-pointer password-toggle" data-target="password">
+                        <img src="{{ static_asset('images/icons/lock-icon.svg') }}" alt="">
+                    </span>
+                    @error('password')
+                        <span class="text-danger mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="flx-between gap-1">
+                    <div class="common-check my-2">
+                        <input class="form-check-input" type="checkbox" wire:model="remember" name="checkbox" id="keepMe">
+                        <label class="form-check-label mb-0 fw-400 font-14 text-body" for="keepMe">Keep me signed in</label>
+                    </div>
+                    <a href="{{ route('password.request') }}"
+                        class="forgot-password text-decoration-underline text-main text-poppins font-14">Forgot password?</a>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-main btn-lg w-100 pill" wire:loading.attr="disabled">
+                    <span wire:loading.remove>Login Account</span>
+                    <span wire:loading>Processing...</span>
+                </button>
+            </div>
+            <div class="col-sm-12 mb-0">
+                <div class="have-account">
+                    <p class="text font-14">New User? <a class="link text-main text-decoration-underline fw-500"
+                            href="{{ route('register') }}">Sign Up</a></p>
+                </div>
+            </div>
         </div>
     </form>
-
-    @if (Route::has('register'))
-        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
-            {{ __('Don\'t have an account?') }}
-            <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
-        </div>
-    @endif
 </div>
+
+@section('title', 'Login')
+@include('layouts.meta')

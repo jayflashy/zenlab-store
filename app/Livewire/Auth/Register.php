@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Models\User;
+use App\Traits\LivewireToast;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,8 @@ use Livewire\Component;
 #[Layout('layouts.auth')]
 class Register extends Component
 {
+    use LivewireToast;
+
     public string $name = '';
     public string $email = '';
     public string $username;
@@ -63,6 +66,7 @@ class Register extends Component
         // welcome email??
 
         Auth::login($user);
+        $this->successAlert('Registration Successful');
 
         $this->redirect(route('user.index'), navigate: true);
     }
