@@ -155,7 +155,7 @@ class Checkout extends Component
         }
 
         // Redirect to success page
-        return redirect()->route('payment.success', ['order_id' => $order->id]);
+        $this->redirect(route('payment.success', ['order_id' => $order->code]), navigate: true);
     }
     public function render()
     {

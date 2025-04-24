@@ -18,7 +18,7 @@ class Success extends Component
     {
         // If order_id is provided, load the specific order
         if ($order_id) {
-            $this->order = Order::with('items.product')->findOrFail($order_id);
+            $this->order = Order::with('items.product')->whereCode($order_id)->firstOrFail();
             $this->orderItems = $this->order->items;
             $this->orderTotal = $this->order->total;
         } else {
