@@ -259,11 +259,6 @@
                             <span wire:loading.remove wire:target="addToCart">Add To Cart</span>
                             <span wire:loading wire:target="addToCart">Adding...</span>
                         </button>
-                        <button type="button"
-                            class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
-                            <img src="{{ static_asset('images/icons/add-to-cart.svg') }}" alt="">
-                            Add To Cart
-                        </button>
                         <hr>
                         <!-- Meta Attribute List Start -->
                         <ul class="meta-attribute">

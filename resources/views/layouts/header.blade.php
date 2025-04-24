@@ -45,7 +45,7 @@
                 <a href="{{route('cart')}}" wire:navigate class="header-right__button cart-btn position-relative">
                     <img src="{{static_asset('images/icons/cart.svg')}}" alt="" class="white-version">
                     <img src="{{static_asset('images/icons/cart-white.svg')}}" alt="" class="dark-version">
-                    <span class="qty-badge font-12">0</span>
+                    @livewire('cart.cart-count')
                 </a>
 
                 <!-- Light Dark Mode -->

@@ -13,3 +13,5 @@
 - Ratings and comments
 - add to cart and license 
 - share buttons
+
+<!-- Change related post from slider in product details -->
