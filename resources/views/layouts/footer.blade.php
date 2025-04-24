@@ -76,10 +76,10 @@
                                     <i class="fab fa-whatsapp"></i>
                                 </a>
                             </li>
-                            <li class="social-icon-list__item">
+                            {{-- <li class="social-icon-list__item">
                                 <a href="https://www.pinterest.com" class="social-icon-list__link flx-center"> <i
                                         class="fab fa-youtube"></i></a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </div>
@@ -96,11 +96,11 @@
                         </li>
                         @auth
                             <li class="footer-lists__item">
-                                <a href="{{ route('user.dashboard') }}" wire:navigate class="footer-lists__link">Dashboard</a>
+                                <a href="{{ route('user.index') }}" wire:navigate class="footer-lists__link">Dashboard</a>
                             </li>
                         @else
-                            <li class="footer-lists__item"><a href="login.html" wire:navigate class="footer-lists__link">Login </a></li>
-                            <li class="footer-lists__item"><a href="register.html" wire:navigate class="footer-lists__link">Register</a></li>
+                            <li class="footer-lists__item"><a href="{{route('login')}}" wire:navigate class="footer-lists__link">Login </a></li>
+                            <li class="footer-lists__item"><a href="{{route('register')}}" wire:navigate class="footer-lists__link">Register</a></li>
                         @endauth
                     </ul>
                 </div>
@@ -136,8 +136,8 @@
                     <h5 class="footer-widget__title text-white">Categories</h5>
                     <ul class="footer-lists">
                         <li class="footer-lists__item"><a href="dashboard.html" class="footer-lists__link">Dashboard </a></li>
-                        <li class="footer-lists__item"><a href="login.html" class="footer-lists__link">Login </a></li>
-                        <li class="footer-lists__item"><a href="register.html" class="footer-lists__link">Register</a></li>
+                        <li class="footer-lists__item"><a href="{{route('login')}}" class="footer-lists__link">Login </a></li>
+                        <li class="footer-lists__item"><a href="{{route('register')}}" class="footer-lists__link">Register</a></li>
                         <li class="footer-lists__item"><a href="blog.html" class="footer-lists__link">Blog </a></li>
                         <li class="footer-lists__item"><a href="blog-details.html" class="footer-lists__link">Blog Details</a></li>
                     </ul>

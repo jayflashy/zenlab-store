@@ -186,7 +186,7 @@
                 </ul>
             </li>
             <li class="sidebar-list__item">
-                <a href="login.html" wire:navigate class="sidebar-list__link">
+                <a href="{{route('login')}}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon13.svg') }}" alt="" class="icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon-active13.svg') }}" alt="" class="icon icon-active">

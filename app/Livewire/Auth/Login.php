@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Traits\LivewireToast;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -9,19 +10,23 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-#[Layout('components.layouts.auth')]
+#[Layout('layouts.auth')]
 class Login extends Component
 {
-    #[Validate('required|string|email')]
+    use LivewireToast;
+
     public string $email = '';
 
-    #[Validate('required|string')]
     public string $password = '';
 
     public bool $remember = false;
+
+    protected $rules = [
+        'email' => 'required|string|email|lowercase',
+        'password' => 'required|string',
+    ];
 
     /**
      * Handle an incoming authentication request.
@@ -42,8 +47,9 @@ class Login extends Component
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
+        $this->successAlert('Login Successful');
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('dashboard'), navigate: true);
     }
 
     /**
