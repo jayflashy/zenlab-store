@@ -300,7 +300,9 @@
                 <a href="{{route('blogs')}}" wire:navigate class="btn btn-main btn-lg pill">Read All </a>
             </div>
             <div class="row gy-4">
+                @foreach ($blogs as $blog)
                 @include('partials.blog.list')
+                @endforeach
             </div>
         </div>
     </section>
