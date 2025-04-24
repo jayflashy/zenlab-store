@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use DB;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -60,12 +61,14 @@ class Cart extends Model
     public static function mergeGuestCart($userId, $sessionId)
     {
         $userCart = self::firstOrCreate(['user_id' => $userId, 'status' => 'active']);
-        $guestCart = self::where('session_id', $sessionId)->where('user_id', null)->first();
+        $guestCart = self::with('items')->where('session_id', $sessionId)->whereNull('user_id')->first();
 
-        if ($guestCart && $userCart) {
-            // Move items from guest cart to user cart
+        if (! $guestCart) {
+            return $userCart;
+        }
+
+        DB::transaction(function () use ($guestCart, $userCart, $userId) {
             foreach ($guestCart->items as $item) {
-                // Check if same product with same license exists in user cart
                 $existingItem = CartItem::where('cart_id', $userCart->id)
                     ->where('product_id', $item->product_id)
                     ->where('license_type', $item->license_type)
@@ -73,24 +76,18 @@ class Cart extends Model
                     ->first();
 
                 if ($existingItem) {
-                    // Update quantity if item exists
                     $existingItem->quantity += $item->quantity;
                     $existingItem->save();
                 } else {
-                    // Move item to user cart
+                    // Clone item to new cart
                     $item->cart_id = $userCart->id;
                     $item->save();
                 }
             }
 
-            // Delete guest cart
+            // Delete the guest cart after merging
             $guestCart->delete();
-        } elseif ($guestCart) {
-            // Just assign user ID to the guest cart
-            $guestCart->user_id = $userId;
-            $guestCart->session_id = null;
-            $guestCart->save();
-        }
+        });
 
         return $userCart;
     }
