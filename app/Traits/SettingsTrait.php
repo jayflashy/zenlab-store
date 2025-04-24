@@ -134,9 +134,6 @@ trait SettingsTrait
             $setting->save();
         }
 
-        $settings = SystemSetting::all();
-        Cache::put('SystemSettings', $settings);
-
         return true;
     }
 
