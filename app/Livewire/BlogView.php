@@ -29,7 +29,7 @@ class BlogView extends Component
 
         $this->tags = array_filter(
             array_map('trim', explode(',', $this->blog->tags)),
-            fn($tag) => !empty($tag)
+            fn ($tag) => ! empty($tag)
         );
         // set meta
         $this->metaTitle = $this->blog->title;
