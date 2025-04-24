@@ -4,10 +4,10 @@
             <!-- Logo Start -->
             <div class="logo">
                 <a href="{{route('home')}}" class="link white-version">
-                    <img src="{{static_asset('images/logo/logo-two.png')}}" alt="Logo">
+                    <img src="{{my_asset($settings->logo)}}" alt="Logo" style="height: 50px;">
                 </a>
                 <a href="{{route('home')}}" class="link dark-version">
-                    <img src="{{static_asset('images/logo/white-logo.png')}}" alt="Logo">
+                    <img src="{{my_asset($settings->logo)}}" alt="Logo" style="height: 50px;">
                 </a>
             </div>
             <!-- Logo End  -->
