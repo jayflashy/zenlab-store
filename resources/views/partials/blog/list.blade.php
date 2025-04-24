@@ -7,7 +7,7 @@
         </div>
         <div class="post-item__content">
             <div class="post-item__top flx-align">
-                {{-- <a href="{{route('blogs.view', $blog->slug)}}" wire:navigate class="post-item__tag pill font-14 text-heading fw-500 hover-text-main">Hiring</a> --}}
+               {{-- TODO: Implement blog tag filtering in a future update --}}
                 <div class="post-item__date font-14 flx-align gap-2 font-14 text-heading fw-500">
                     <span class="icon">
                         <img src="{{ static_asset('images/icons/calendar.svg') }}" alt="" class="white-version">

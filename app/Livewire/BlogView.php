@@ -23,7 +23,10 @@ class BlogView extends Component
     {
         $this->blog = Blog::whereSlug($slug)->where('is_active', 1)->firstOrFail();
 
-        $this->tags = array_filter(array_map('trim', explode(',', $this->blog->tags)));
+        $this->tags = array_filter(
+            array_map('trim', explode(',', $this->blog->tags)),
+            fn($tag) => !empty($tag)
+        );
         // set meta
         $this->metaTitle = $this->blog->title;
         $this->metaDescription = str()->limit(strip_tags($this->blog->about), 150);
