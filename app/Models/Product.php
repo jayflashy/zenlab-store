@@ -113,6 +113,9 @@ class Product extends Model
     }
     public function ratings()
     {
+        return $this->hasMany(Rating::class)->where('status', 'approved');
+    }
+    public function allRatings(){
         return $this->hasMany(Rating::class);
     }
 

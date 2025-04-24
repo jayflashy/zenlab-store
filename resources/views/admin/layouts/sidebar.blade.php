@@ -51,7 +51,9 @@
                         </a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="#" wire:navigate class="nav-submenu__link">Ratings</a>
+                        <a href="{{ route('admin.products.ratings') }}" wire:navigate class="nav-submenu__link">Ratings
+                            {{-- <span class="badge bg-warning">2</span> cache pending  ratings--}}
+                        </a>
                     </li>
                     <li class="nav-submenu__item">
                         <a href="#" wire:navigate class="nav-submenu__link">Settings</a>

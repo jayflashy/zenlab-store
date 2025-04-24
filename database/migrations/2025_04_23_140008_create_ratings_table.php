@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('stars')->unsigned()->default(3);
             $table->string('type')->default('Quality');
             $table->text('review')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });

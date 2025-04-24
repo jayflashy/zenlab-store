@@ -23,6 +23,7 @@ class Rating extends Model
         'stars',
         'review',
         'type',
+        'status'
     ];
 
     /**
@@ -37,7 +38,10 @@ class Rating extends Model
     {
         return $this->belongsTo(Product::class);
     }
-
+    public function scopeApproved()
+    {
+        return $this->whereStatus('approved');
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

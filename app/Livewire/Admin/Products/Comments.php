@@ -143,7 +143,7 @@ class Comments extends Component
                 $query->where('status', $this->status);
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(30);
         return view('livewire.admin.products.comments', compact('comments'))
             ->layout('admin.layouts.app');
     }

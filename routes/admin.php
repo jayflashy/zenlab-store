@@ -10,6 +10,7 @@ use App\Livewire\Admin\PageManager;
 use App\Livewire\Admin\Products\ProductForm;
 use App\Livewire\Admin\Products\ProductList;
 use App\Livewire\Admin\Products\Comments as ProductComments;
+use App\Livewire\Admin\Products\Ratings;
 use App\Livewire\Admin\SettingsManager;
 
 // Auth;
@@ -27,6 +28,7 @@ Route::middleware('admin')->group(function (): void {
     Route::get('products/create', ProductForm::class)->name('products.create');
     Route::get('products/edit/{id}', ProductForm::class)->name('products.edit');
     Route::get('products/comments', ProductComments::class)->name('products.comments');
+    Route::get('products/ratings', Ratings::class)->name('products.ratings');
 
     // Blogs
     Route::get('blogs', BlogManager::class)->name('blogs');
