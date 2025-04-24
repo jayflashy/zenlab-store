@@ -45,8 +45,6 @@ class Index extends Component
             return;
         }
 
-        // For digital products, we usually don't need more than 1 quantity
-        // But providing this functionality in case you want to allow multiple licenses
         $newQuantity = $cartItem->quantity + $change;
 
         if ($newQuantity > 0) {

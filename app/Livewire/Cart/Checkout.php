@@ -36,6 +36,9 @@ class Checkout extends Component
     {
         $this->loadCart();
         $this->fillUserInfo();
+        if ($this->cart->items->isEmpty()) {
+            $this->redirect(route('cart'), navigate: true);
+        }
     }
     public function loadCart()
     {
@@ -89,15 +92,19 @@ class Checkout extends Component
     {
         $this->validate();
         $this->processingPayment = true;
+        if ($this->cart->items->isEmpty()) {
+            $this->processingPayment = false;
+            $this->errorAlert('Cart is empty');
+            return;
+        }
         try {
             DB::beginTransaction();
-
             // Create order
             $order = Order::create([
                 'user_id' => Auth::check() ? Auth::id() : null,
                 'email' => $this->email,
                 'name' => $this->name,
-                'code' => getTrx(8), // Generate a unique order ode,
+                'code' => getTrx(8),
                 'subtotal' => $this->subtotal,
                 'discount' => $this->discount,
                 'total' => $this->total,
@@ -130,15 +137,14 @@ class Checkout extends Component
                 $order->order_status = 'pending';
                 $order->notes = 'Awaiting bank transfer confirmation';
             } else {
-                // Other payment methods (credit_card, paypal, stripe) are auto-approved in this simulation
+
                 $order->payment_status = 'paid';
                 $order->order_status = 'processing';
             }
             $order->save();
 
-            // Clear the cart
             $this->cart->status = 'completed';
-            $this->cart->save();
+            $this->cart->delete();
 
             DB::commit();
 
@@ -150,7 +156,6 @@ class Checkout extends Component
             $this->processingPayment = false;
             $this->toast('error', 'Error processing payment: ' . $e->getMessage());
         }
-
     }
     public function render()
     {
