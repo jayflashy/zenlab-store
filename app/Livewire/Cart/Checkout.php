@@ -25,6 +25,7 @@ class Checkout extends Component
     public $subtotal = 0;
     public $total = 0;
     public $processingPayment = false;
+    public $paymentGateways = [];
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -39,6 +40,13 @@ class Checkout extends Component
         if ($this->cart->items->isEmpty()) {
             $this->redirect(route('cart'), navigate: true);
         }
+        $this->paymentGateways = [
+            ['name' => 'Paypal', 'key' => 'paypal_payment', 'image' => 'paypal.png'],
+            ['name' => 'Paystack', 'key' => 'paystack_payment', 'image' => 'card.png'],
+            ['name' => 'Flutterwave', 'key' => 'flutterwave_payment', 'image' => 'card.png'],
+            ['name' => 'Cryptomus', 'key' => 'cryptomus_payment', 'image' => 'cryptomus.png'],
+            ['name' => 'Bank Transfer', 'key' => 'manual_payment', 'image' => 'bank.png'],
+        ];
     }
     public function loadCart()
     {
@@ -127,6 +135,7 @@ class Checkout extends Component
                 ]);
             }
 
+            // redirect to payment provider.
             // For this simulation, we're just adding a delay
             sleep(1);
 

@@ -34,83 +34,31 @@
                                 </div>
                                 <div class="card-body p-4">
                                     <div class="payment-select-card-wrapper row">
-                                        <div class="col-sm-6">
-                                            <div class="payment-select-card mb-4">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="d-flex align-items-center gap-3">
-                                                        <div class="common-check common-radio mb-0">
-                                                            <input class="form-check-input" type="radio" wire:model="paymentMethod"
-                                                                value="paypal" id="paypal" required>
-                                                            <label class="form-check-label" for="paypal"> </label>
+                                        @foreach ($paymentGateways as $method)
+                                            @if (sys_setting($method['key']) == 1)
+                                                <div class="col-sm-6">
+                                                    <div class="payment-select-card mb-4">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <div class="d-flex align-items-center gap-3">
+                                                                <div class="common-check common-radio mb-0">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        wire:model="paymentMethod" value="{{ $method['key'] }}"
+                                                                        id="{{ $method['key'] }}" required>
+                                                                    <label class="form-check-label" for="{{ $method['key'] }}"> </label>
+                                                                </div>
+                                                                <div>
+                                                                    <h6 class="font-16 mb-0">{{ $method['name'] }}</h6>
+                                                                </div>
+                                                            </div>
+                                                            <div class="payment-select-card__logo">
+                                                                <img src="{{ static_asset('payments/' . $method['image']) }}"
+                                                                    alt="{{ $method['name'] }}">
+                                                            </div>
                                                         </div>
-                                                        <div class="">
-                                                            <h6 class="font-16 mb-0">PayPal</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="payment-select-card__logo">
-                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/800px-PayPal.svg.png"
-                                                            alt="PayPal">
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="payment-select-card mb-4">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="d-flex align-items-center gap-3">
-                                                        <div class="common-check common-radio mb-0">
-                                                            <input class="form-check-input" type="radio" wire:model="paymentMethod"
-                                                                value="credit_card" id="credit_card">
-                                                            <label class="form-check-label" for="credit_card"> </label>
-                                                        </div>
-                                                        <div class="">
-                                                            <h6 class="font-16 mb-0">Credit Card</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="payment-select-card__logo">
-                                                        <img src="/images/credit-card.png" alt="Credit Card">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="payment-select-card mb-4">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="d-flex align-items-center gap-3">
-                                                        <div class="common-check common-radio mb-0">
-                                                            <input class="form-check-input" type="radio" wire:model="paymentMethod"
-                                                                value="stripe" id="stripe">
-                                                            <label class="form-check-label" for="stripe"> </label>
-                                                        </div>
-                                                        <div class="">
-                                                            <h6 class="font-16 mb-0">Stripe</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="payment-select-card__logo">
-                                                        <img src="/images/stripe.png" alt="Stripe">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="payment-select-card mb-4">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="d-flex align-items-center gap-3">
-                                                        <div class="common-check common-radio mb-0">
-                                                            <input class="form-check-input" type="radio" wire:model="paymentMethod"
-                                                                value="bank_transfer" id="bank_transfer">
-                                                            <label class="form-check-label" for="bank_transfer"> </label>
-                                                        </div>
-                                                        <div class="">
-                                                            <h6 class="font-16 mb-0">Bank Transfer</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="payment-select-card__logo">
-                                                        <img src="/images/bank.png" alt="Bank Transfer">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            @endif
+                                        @endforeach
                                     </div>
                                     @error('paymentMethod')
                                         <span class="text-danger">{{ $message }}</span>
