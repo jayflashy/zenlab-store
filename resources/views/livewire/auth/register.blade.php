@@ -40,9 +40,9 @@
             <div class="col-12">
                 <label for="your-password" class="form-label mb-2 font-18 font-heading fw-600">Password</label>
                 <div class="position-relative">
-                    <input type="password" class="common-input common-input--bg common-input--withIcon" id="your-password"
+                    <input type="password" class="common-input common-input--bg common-input--withIcon" id="password"
                         placeholder="6+ characters, 1 Capital letter" wire:model.lazy="password">
-                    <span class="input-icon toggle-password cursor-pointer" id="#your-password">
+                    <span class="input-icon cursor-pointer password-toggle" data-target="password">
                         <img src="{{ static_asset('images/icons/lock-icon.svg') }}" alt="">
                     </span>
                     @error('password')

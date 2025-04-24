@@ -76,4 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
             this.value = this.value.replace(/[^0-9]/g, "");
         });
     });
+
+    document.querySelectorAll(".password-toggle").forEach((toggle) => {
+        toggle.addEventListener("click", function () {
+            const targetId = this.getAttribute("data-target");
+            const input = document.getElementById(targetId);
+            if (input) {
+                input.type = input.type === "password" ? "text" : "password";
+            }
+        });
+    });
 });
