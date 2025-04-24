@@ -13,8 +13,8 @@ use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     use HasFactory;
-    use Notifiable;
     use HasUlids;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +28,7 @@ class User extends Authenticatable
         'country_id',
         'address',
         'email_verify',
-        'status'
+        'status',
     ];
 
     /**
@@ -61,7 +61,7 @@ class User extends Authenticatable
     {
         return Str::of($this->name)
             ->explode(' ')
-            ->map(fn(string $name) => Str::of($name)->substr(0, 1))
+            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
 }

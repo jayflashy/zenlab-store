@@ -1,6 +1,6 @@
 <div>
 
-    <h4 class="account-content__title mb-48 text-capitalize">Login to {{$settings->name}}</h4>
+    <h4 class="account-content__title mb-48 text-capitalize">Login to {{ $settings->name }}</h4>
 
     <form wire:submit.prevent="login">
         <div class="row gy-4">

@@ -4,10 +4,8 @@ namespace App\Livewire\Auth;
 
 use App\Models\User;
 use App\Traits\LivewireToast;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -17,9 +15,13 @@ class Register extends Component
     use LivewireToast;
 
     public string $name = '';
+
     public string $email = '';
+
     public string $username;
+
     public string $password = '';
+
     public $terms = false;
 
     protected $rules = [
@@ -27,7 +29,7 @@ class Register extends Component
         'email' => 'required|string|email|lowercase|max:105|unique:users',
         'username' => 'required|string|max:255|unique:users|alpha_dash',
         'password' => 'required|string|min:6',
-        'terms' => 'accepted'
+        'terms' => 'accepted',
     ];
 
     protected $messages = [
@@ -39,7 +41,7 @@ class Register extends Component
         'username.unique' => 'This username is already taken.',
         'password.required' => 'Please enter a password.',
         'password.min' => 'Password must be at least 6 characters.',
-        'terms.accepted' => 'You must agree to the terms and conditions.'
+        'terms.accepted' => 'You must agree to the terms and conditions.',
     ];
 
     public function updated($propertyName)
