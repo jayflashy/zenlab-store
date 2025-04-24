@@ -1,69 +1,6 @@
 @section('title', 'Shopping Cart')
 <div>
-    <section class="breadcrumb breadcrumb-four padding-static-y-60 section-bg position-relative z-index-1 overflow-hidden">
-
-        <img src="{{ static_asset('images/gradients/breadcrumb-gradient-bg.png') }}" alt="" class="bg--gradient">
-
-        <img src="{{ static_asset('images/shapes/element-moon3.png') }}" alt="" class="element one">
-        <img src="{{ static_asset('images/shapes/element-moon1.png') }}" alt="" class="element three">
-
-        <div class="container container-two">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-four-content">
-                        <h3 class="breadcrumb-four-content__title text-center mb-3 text-capitalize">Shopping Cart</h3>
-                        <ul class="breadcrumb-list flx-align justify-content-center gap-2 mb-2">
-                            <li class="breadcrumb-list__item font-14 text-body">
-                                <a href="{{ route('home') }}" wire:navigate class="breadcrumb-list__link text-body hover-text-main">Home</a>
-                            </li>
-                            <li class="breadcrumb-list__item font-14 text-body">
-                                <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
-                            </li>
-                            <li class="breadcrumb-list__item font-14 text-body">
-                                <span class="breadcrumb-list__text">Cart</span>
-                            </li>
-                        </ul>
-
-                        <ul class="process-list">
-                            <li class="process-list__item activePage">
-                                <a href="javascript:void(0)" wire:navigate class="process-list__link">
-                                    <div class="icons">
-                                        <span class="icon white"><img src="{{ static_asset('images/icons/process-white1.svg') }}"
-                                                alt=""></span>
-                                    </div>
-                                    <span class="text">Your Cart</span>
-                                </a>
-                            </li>
-                            <li class="process-list__item ">
-                                <a href="javascript:void(0)" wire:navigate class="process-list__link">
-                                    <div class="icons">
-                                        <span class="icon white"><img src="{{ static_asset('images/icons/process-white3.svg') }}"
-                                                alt=""></span>
-                                        <span class="icon colored"><img src="{{ static_asset('images/icons/process3.svg') }}"
-                                                alt=""></span>
-                                    </div>
-                                    <span class="text">Checkout</span>
-                                </a>
-                            </li>
-                            <li class="process-list__item">
-                                <a href="cart-thank-you.html" wire:navigate class="process-list__link">
-                                    <div class="icons">
-                                        <span class="icon white"><img src="{{ static_asset('images/icons/process-white4.svg') }}"
-                                                alt=""></span>
-                                        <span class="icon colored"><img src="{{ static_asset('images/icons/process4.svg') }}"
-                                                alt=""></span>
-                                    </div>
-                                    <span class="text">Complete</span>
-                                </a>
-                            </li>
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <x-cart-breadcrumb :step="1" step-title="Cart" />
 
     <div class="cart padding-y-120">
         <div class="container">
@@ -122,8 +59,8 @@
                                                         @endauth
                                                     </div>
                                                     <button type="button" wire:click="removeItem('{{ $item['id'] }}')"
-                                                        class="rounded-btn delete-btn btn btn-sm btn-outline-danger text-danger hover-text-decoration-underline">
-                                                        <i class="las la-times"></i>
+                                                        class="rounded-btn delete-btn border border-danger px-1 text-danger hover-text-decoration-underline">
+                                                        Remove
                                                     </button>
                                                 </div>
                                             </div>

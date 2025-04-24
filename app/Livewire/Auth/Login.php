@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Models\Cart;
 use App\Traits\LivewireToast;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,8 @@ class Login extends Component
                 'email' => __('auth.failed'),
             ]);
         }
+        // merge guest cart with user cart
+        Cart::mergeGuestCart(Auth::user()->id, session()->getId());
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
