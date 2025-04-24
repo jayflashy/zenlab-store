@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaymentController;
 use App\Livewire\Blogs;
 use App\Livewire\BlogView;
 use App\Livewire\Cart\Checkout;
@@ -52,4 +53,11 @@ require __DIR__ . '/auth.php';
 
 Route::prefix('admin')->as('admin.')->group(function (): void {
     require __DIR__ . '/admin.php';
+});
+
+// Payment Callback
+Route::controller(PaymentController::class)->group(function () {
+    Route::any('/paystack/success/', 'paystackSuccess')->name('paystack.success');
+    Route::any('/flutter/success/', 'flutterSuccess')->name('flutter.success');
+    Route::any('/monnify/success/', 'monnifySuccess')->name('monnify.success');
 });

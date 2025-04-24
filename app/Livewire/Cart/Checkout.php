@@ -137,13 +137,23 @@ class Checkout extends Component
             }
 
             DB::commit();
+            $paymentData = [
+                'email' => $this->email,
+                'name' => $this->name,
+                // 'order' => $order,
+                'amount' => $this->total,
+                'ngn_amount' => $this->total * get_setting('currency_rate'),
+                'order_id' => $order->id,
+                'currency' => get_setting('currency_code'),
+                'reference' => $order->code
+            ];
 
             $paymentController = app(PaymentController::class);
             return match ($this->paymentMethod) {
-                'paystack_payment' => $paymentController->initPaystack($order),
-                'flutterwave_payment' => $paymentController->initFlutter($order),
-                'paypal_payment' => $paymentController->initPaypal($order),
-                'cryptomus_payment' => $paymentController->initCryptomus($order),
+                'paystack_payment' => $paymentController->initPaystack($paymentData),
+                'flutterwave_payment' => $paymentController->initFlutter($paymentData),
+                'paypal_payment' => $paymentController->initPaypal($paymentData),
+                'cryptomus_payment' => $paymentController->initCryptomus($paymentData),
                 'manual_payment' => $this->showManual($order),
                 default => throw new \Exception('Invalid payment method selected'),
             };
