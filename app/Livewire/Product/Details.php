@@ -17,8 +17,11 @@ class Details extends Component
 
     // meta
     public string $metaTitle;
+
     public string $metaDescription;
+
     public string $metaKeywords;
+
     public string $metaImage;
 
     public function mount($slug)
@@ -35,7 +38,7 @@ class Details extends Component
 
     public function getRelatedProducts()
     {
-        $cacheKey = 'related_products_' . $this->product->id;
+        $cacheKey = 'related_products_'.$this->product->id;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () {
             return Product::where('category_id', $this->product->category_id)
