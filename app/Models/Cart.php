@@ -64,28 +64,31 @@ class Cart extends Model
         if (! $guestCart) {
             return $userCart;
         }
+        try {
+            DB::transaction(function () use ($guestCart, $userCart) {
+                foreach ($guestCart->items as $item) {
+                    $existingItem = CartItem::where('cart_id', $userCart->id)
+                        ->where('product_id', $item->product_id)
+                        ->where('license_type', $item->license_type)
+                        ->where('extended_support', $item->extended_support)
+                        ->first();
 
-        DB::transaction(function () use ($guestCart, $userCart) {
-            foreach ($guestCart->items as $item) {
-                $existingItem = CartItem::where('cart_id', $userCart->id)
-                    ->where('product_id', $item->product_id)
-                    ->where('license_type', $item->license_type)
-                    ->where('extended_support', $item->extended_support)
-                    ->first();
-
-                if ($existingItem) {
-                    $existingItem->quantity += $item->quantity;
-                    $existingItem->save();
-                } else {
-                    // Clone item to new cart
-                    $item->cart_id = $userCart->id;
-                    $item->save();
+                    if ($existingItem) {
+                        $existingItem->quantity = min($existingItem->quantity + $item->quantity, 10);
+                        $existingItem->save();
+                    } else {
+                        // Clone item to new cart
+                        $item->cart_id = $userCart->id;
+                        $item->save();
+                    }
                 }
-            }
 
-            // Delete the guest cart after merging
-            $guestCart->delete();
-        });
+                // Delete the guest cart after merging
+                $guestCart->delete();
+            });
+        } catch (\Exception $e) {
+            \Log::error('Failed to merge guest cart: ' . $e->getMessage());
+        }
 
         return $userCart;
     }

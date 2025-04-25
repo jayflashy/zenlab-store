@@ -21,7 +21,7 @@ class CartCount extends Component
         $cart = Cart::getCurrentCart();
 
         if ($cart) {
-            $this->cartCount = $cart->items()->sum('quantity');
+            $this->cartCount = $cart->items->sum('quantity');
         } else {
             $this->cartCount = 0;
         }

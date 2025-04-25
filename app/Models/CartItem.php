@@ -23,6 +23,18 @@ class CartItem extends Model
         'support_price',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'extended_support' => 'boolean',
+        'price' => 'float',
+        'quantity' => 'integer',
+        'total' => 'float',
+        'support_price' => 'float',
+    ];
     public function cart()
     {
         return $this->belongsTo(Cart::class);
@@ -41,7 +53,12 @@ class CartItem extends Model
     // Get license display name
     public function getLicenseNameAttribute()
     {
-        return ucfirst($this->license_type).' License'.
-            ($this->extended_support ? ' + Extended Support' : '');
+        $licenseName = ucfirst($this->license_type) . ' License';
+
+        if ($this->extended_support) {
+            $licenseName .= ' + Extended Support';
+        }
+
+        return $licenseName;
     }
 }

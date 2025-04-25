@@ -46,7 +46,11 @@ class Login extends Component
             ]);
         }
         // merge guest cart with user cart
-        Cart::mergeGuestCart(Auth::user()->id, session()->getId());
+        try {
+            Cart::mergeGuestCart(Auth::user()->id, session()->getId());
+        } catch (\Exception $e) {
+            \Log::error('Failed to merge guest cart: ' . $e->getMessage());
+        }
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
@@ -81,6 +85,6 @@ class Login extends Component
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
     }
 }

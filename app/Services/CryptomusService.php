@@ -38,28 +38,20 @@ class CryptomusService
             'Content-Type' => 'application/json',
         ])->post("{$this->baseUrl}/payment", $data);
 
-        if ($response->successful()) {
-            return $response->json();
-        }
-
         return $response->json();
-        // failed:
-
     }
 
     // Check the status of a payment
     public function getPaymentStatus($orderId)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->apiKey,
+            'Authorization' => 'Bearer ' . $this->apiKey,
         ])->get("{$this->baseUrl}/payment/{$orderId}");
 
         if ($response->successful()) {
             return $response->json();
         }
-
-        return $response->json();
-        // throw new \Exception('Unable to retrieve payment status.');
+        throw new \Exception('Unable to retrieve payment status.');
     }
 
     /**
@@ -70,7 +62,7 @@ class CryptomusService
         // ksort($payload);
         $jsonData = json_encode($payload, JSON_UNESCAPED_UNICODE);
 
-        return $sign = md5(base64_encode($jsonData).$this->apiKey);
+        return $sign = md5(base64_encode($jsonData) . $this->apiKey);
         // return hash_hmac('sha512', $jsonData, $this->apiKey);
     }
 

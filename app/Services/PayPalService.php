@@ -61,7 +61,7 @@ class PayPalService
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            throw new Exception('Failed to retrieve PayPal access token: '.$e->getMessage());
+            throw new Exception('Failed to retrieve PayPal access token: ' . $e->getMessage());
         }
     }
 
@@ -98,7 +98,7 @@ class PayPalService
                 'application_context' => [
                     'return_url' => route('paypal.success'),
                     'cancel_url' => route('checkout'),
-                    'brand_name' => get_setting('title'),
+                    'brand_name' => get_setting('title') ?? 'ZenLab',
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'PAY_NOW',
                 ],
@@ -111,20 +111,14 @@ class PayPalService
                 return $response->json();
             }
 
-            throw new Exception("PayPal API Error: {$response->body()}");
+            throw new Exception("PayPal API Error: {$response->getMessage()}");
         } catch (Exception $e) {
             Log::error('PayPal createPayment failed', [
                 'error' => $e->getMessage(),
-                'amount' => $amount,
-                'currency' => $currency,
-                'details' => $details,
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            return [
-                'status' => 'ERROR',
-                'message' => 'Failed to create PayPal payment: '.$e->getMessage(),
-            ];
+            throw new Exception("PayPal API Error: {$response->getMessage()}");
         }
     }
 
@@ -152,11 +146,7 @@ class PayPalService
                 'orderId' => $orderId,
                 'trace' => $e->getTraceAsString(),
             ]);
-
-            return [
-                'status' => 'ERROR',
-                'message' => 'Failed to get PayPal order details: '.$e->getMessage(),
-            ];
+            throw new Exception("PayPal Order Details Error: {$response->getMessage()}");
         }
     }
 }

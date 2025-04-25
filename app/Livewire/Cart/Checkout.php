@@ -22,8 +22,6 @@ class Checkout extends Component
 
     public $cartItems = [];
 
-    public $cartTotal = 0;
-
     public $name;
 
     public $email;

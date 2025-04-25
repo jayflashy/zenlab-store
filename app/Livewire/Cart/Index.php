@@ -36,9 +36,9 @@ class Index extends Component
                 ->toArray();
 
             // Calculate total
-            $this->cartTotal = $this->cart->items->sum(function ($item) {
-                return $item->price * $item->quantity;
-            });
+            $this->cart->load('items.product.category');
+            $this->cartItems = $this->cart->items->toArray();
+            $this->cartTotal = $this->cart->items->sum(fn($item) => $item->price * $item->quantity);
         }
     }
 
@@ -53,8 +53,10 @@ class Index extends Component
         $newQuantity = $cartItem->quantity + $change;
 
         if ($newQuantity > 0) {
-            $cartItem->quantity = $newQuantity;
-            $cartItem->save();
+            $cartItem->update([
+                'quantity' => $newQuantity,
+                'total'    => $cartItem->price * $newQuantity,
+            ]);
             $this->toast('success', 'Cart updated successfully');
         } else {
             $this->removeItem($itemId);

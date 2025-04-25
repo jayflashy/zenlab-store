@@ -49,7 +49,7 @@ class Details extends Component
 
     public function getRelatedProducts()
     {
-        $cacheKey = 'related_products_'.$this->product->id;
+        $cacheKey = 'related_products_' . $this->product->id;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () {
             return Product::where('category_id', $this->product->category_id)
@@ -84,29 +84,23 @@ class Details extends Component
         $cart = Cart::getCurrentCart();
 
         // Check if product with same license is already in cart
-        $existingItem = CartItem::where('cart_id', $cart->id)
-            ->where('product_id', $this->product->id)
-            ->where('license_type', $this->selectedLicenseType)
-            ->where('extended_support', $this->extendedSupport)
-            ->first();
+        $existingItem = CartItem::firstOrCreate([
+            'cart_id'         => $cart->id,
+            'product_id'      => $this->product->id,
+            'license_type'    => $this->selectedLicenseType,
+            'extended_support' => $this->extendedSupport,
+        ], [
+            'price'           => $this->currentPrice,
+            'quantity'        => 1,
+            'support_price'   => $this->extendedSupport ? $this->supportPrice : 0,
+            'total'           => $this->currentPrice,
+        ]);
 
-        if ($existingItem) {
+        if ($existingItem->wasRecentlyCreated === false) {
             // Product already in cart
             $this->infoAlert('This product is already in your cart');
         } else {
-            // Add to cart
-            CartItem::create([
-                'cart_id' => $cart->id,
-                'product_id' => $this->product->id,
-                'license_type' => $this->selectedLicenseType,
-                'extended_support' => $this->extendedSupport,
-                'price' => $this->currentPrice,
-                'quantity' => 1,
-                'support_price' => $this->extendedSupport ? $this->supportPrice : 0,
-                'total' => $this->currentPrice,
-            ]);
-
-            // Emit event to update cart count in header if needed
+            // Emit event to update header cart count
             $this->dispatch('cartUpdated');
 
             $this->successAlert('Product added to cart successfully');

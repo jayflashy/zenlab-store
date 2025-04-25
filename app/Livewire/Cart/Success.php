@@ -10,11 +10,11 @@ class Success extends Component
 {
     use LivewireToast;
 
-    public $order;
+    public ?Order $order = null;
 
-    public $orderItems = [];
+    public array $orderItems = [];
 
-    public $orderTotal = 0;
+    public float $orderTotal = 0;
 
     public function mount($order_id = null)
     {

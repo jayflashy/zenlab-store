@@ -16,7 +16,7 @@ class PaystackService
     {
         $this->publicKey = config('payment.paystack.public');
         $this->secretKey = config('payment.paystack.secret');
-        $this->baseUrl = config('payment.paystack.url');
+        $this->baseUrl = 'https://api.paystack.co';
     }
 
     // Generate a payment link
@@ -53,7 +53,7 @@ class PaystackService
     /**
      * Validate webhook signature
      *
-     * @param  string  $signature
+     * @param  string  $payload
      */
     public function validateWebhookHash(array $payload): bool
     {
