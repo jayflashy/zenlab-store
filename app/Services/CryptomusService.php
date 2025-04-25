@@ -45,7 +45,7 @@ class CryptomusService
     public function getPaymentStatus($orderId)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Authorization' => 'Bearer '.$this->apiKey,
         ])->get("{$this->baseUrl}/payment/{$orderId}");
 
         if ($response->successful()) {
@@ -62,7 +62,7 @@ class CryptomusService
         // ksort($payload);
         $jsonData = json_encode($payload, JSON_UNESCAPED_UNICODE);
 
-        return $sign = md5(base64_encode($jsonData) . $this->apiKey);
+        return $sign = md5(base64_encode($jsonData).$this->apiKey);
         // return hash_hmac('sha512', $jsonData, $this->apiKey);
     }
 

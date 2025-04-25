@@ -75,6 +75,7 @@ class PaymentController extends Controller
             $res = $this->paypal->createPayment($data['amount'], $data);
             if (isset($res['status']) && $res['status'] === 'ERROR') {
                 \Log::error('PayPal init failed', $res);
+
                 return $this->errorResponse($res['message'] ?? 'Unable to initialize payment');
             }
             foreach ($res['links'] as $link) {

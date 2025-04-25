@@ -49,7 +49,7 @@ class Details extends Component
 
     public function getRelatedProducts()
     {
-        $cacheKey = 'related_products_' . $this->product->id;
+        $cacheKey = 'related_products_'.$this->product->id;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () {
             return Product::where('category_id', $this->product->category_id)
@@ -85,15 +85,15 @@ class Details extends Component
 
         // Check if product with same license is already in cart
         $existingItem = CartItem::firstOrCreate([
-            'cart_id'         => $cart->id,
-            'product_id'      => $this->product->id,
-            'license_type'    => $this->selectedLicenseType,
+            'cart_id' => $cart->id,
+            'product_id' => $this->product->id,
+            'license_type' => $this->selectedLicenseType,
             'extended_support' => $this->extendedSupport,
         ], [
-            'price'           => $this->currentPrice,
-            'quantity'        => 1,
-            'support_price'   => $this->extendedSupport ? $this->supportPrice : 0,
-            'total'           => $this->currentPrice,
+            'price' => $this->currentPrice,
+            'quantity' => 1,
+            'support_price' => $this->extendedSupport ? $this->supportPrice : 0,
+            'total' => $this->currentPrice,
         ]);
 
         if ($existingItem->wasRecentlyCreated === false) {
