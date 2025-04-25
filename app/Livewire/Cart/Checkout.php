@@ -197,7 +197,7 @@ class Checkout extends Component
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
-                'description' => 'Order #' . $order->code,
+                'description' => 'Order #'.$order->code,
             ];
 
             if ($this->paymentMethod === 'manual_payment') {
@@ -205,6 +205,7 @@ class Checkout extends Component
                 $this->showBankTransfer = true;
                 $this->processingPayment = false;
                 $this->totalNgn = $this->totalToNgn();
+
                 return;
             }
 
@@ -223,14 +224,16 @@ class Checkout extends Component
         } catch (\Exception $e) {
             DB::rollback();
             $this->processingPayment = false;
-            $this->toast('error', 'Error processing payment: ' . $e->getMessage());
+            $this->toast('error', 'Error processing payment: '.$e->getMessage());
         }
     }
-    function totalToNgn()
+
+    public function totalToNgn()
     {
         if (get_setting('currency_code') === 'NGN') {
             return $this->total;
         }
+
         return $this->total * get_setting('currency_rate');
     }
 
@@ -245,7 +248,7 @@ class Checkout extends Component
             // Update order with receipt information
             $this->currentOrder->payment_receipt = $receiptPath;
             $this->currentOrder->bank_reference = $this->bankReference;
-            $this->currentOrder->notes = 'Manual payment receipt uploaded. Reference: ' . $this->bankReference;
+            $this->currentOrder->notes = 'Manual payment receipt uploaded. Reference: '.$this->bankReference;
             $this->currentOrder->save();
 
             // Empty cart
@@ -259,7 +262,7 @@ class Checkout extends Component
             $this->successAlert('Payment receipt uploaded successfully. We will verify your payment shortly.');
             $this->redirect(route('payment.success', $this->currentOrder->code), navigate: true);
         } catch (\Exception $e) {
-            $this->toast('error', 'Error uploading receipt: ' . $e->getMessage());
+            $this->toast('error', 'Error uploading receipt: '.$e->getMessage());
         }
     }
 
@@ -269,6 +272,7 @@ class Checkout extends Component
         $this->paymentReceipt = null;
         $this->bankReference = null;
     }
+
     public function render()
     {
         return view('livewire.cart.checkout');
