@@ -20,7 +20,6 @@ class CartCount extends Component
     public function updateCartCount()
     {
         $cart = Cart::getCurrentCart();
-    }
 
         if ($cart) {
             $this->cartCount = $cart->items()->sum('quantity');
