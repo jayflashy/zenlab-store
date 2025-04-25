@@ -44,6 +44,7 @@ class PaymentController extends Controller
             throw new \Exception('Unable to initialize payment');
         }
     }
+
     public function initFlutter($data)
     {
         try {
@@ -62,10 +63,12 @@ class PaymentController extends Controller
             throw new \Exception('Unable to initialize payment');
         }
     }
+
     public function initPaypal($order) {}
+
     public function initCryptomus($order) {}
 
-    function paystackSuccess(Request $request)
+    public function paystackSuccess(Request $request)
     {
         return $payment = $this->paystack->getTransactionStatus($request->reference);
     }
@@ -76,6 +79,7 @@ class PaymentController extends Controller
             return $this->errorResponse('Payment Was Cancelled');
         }
         $transactionID = request()->transaction_id;
+
         return $response = $this->flutterwave->getTransactionStatus($transactionID);
     }
 }

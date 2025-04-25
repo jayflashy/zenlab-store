@@ -3,7 +3,6 @@
 namespace App\Livewire\Cart;
 
 use App\Models\Cart;
-use App\Traits\LivewireToast;
 use Auth;
 use Livewire\Component;
 
@@ -39,6 +38,7 @@ class CartCount extends Component
             $this->cartCount = 0;
         }
     }
+
     public function render()
     {
         return view('livewire.cart.cart-count');

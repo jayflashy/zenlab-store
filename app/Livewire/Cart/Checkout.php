@@ -16,16 +16,27 @@ class Checkout extends Component
     use LivewireToast;
 
     public $cart;
+
     public $cartItems = [];
+
     public $cartTotal = 0;
+
     public $name;
+
     public $email;
+
     public $paymentMethod = '';
+
     public $couponCode = '';
+
     public $discount = 0;
+
     public $subtotal = 0;
+
     public $total = 0;
+
     public $processingPayment = false;
+
     public $paymentGateways = [];
 
     protected $rules = [
@@ -49,6 +60,7 @@ class Checkout extends Component
             ['name' => 'Bank Transfer', 'key' => 'manual_payment', 'image' => 'bank.png'],
         ];
     }
+
     public function loadCart()
     {
         $this->cart = Cart::getCurrentCart();
@@ -61,7 +73,7 @@ class Checkout extends Component
 
             // Calculate totals
             $this->subtotal = $this->cart->items->sum(function ($item) {
-                return ($item->price * $item->quantity);
+                return $item->price * $item->quantity;
             });
 
             $this->total = $this->subtotal - $this->discount;
@@ -81,6 +93,7 @@ class Checkout extends Component
     {
         if ($this->couponCode === '') {
             $this->toast('error', 'Please enter a coupon code');
+
             return;
         }
 
@@ -97,6 +110,7 @@ class Checkout extends Component
             $this->toast('error', 'Invalid coupon code');
         }
     }
+
     public function processPayment()
     {
         $this->validate();
@@ -104,6 +118,7 @@ class Checkout extends Component
         if ($this->cart->items->isEmpty()) {
             $this->processingPayment = false;
             $this->errorAlert('Cart is empty');
+
             return;
         }
         try {
@@ -145,10 +160,11 @@ class Checkout extends Component
                 'ngn_amount' => $this->total * get_setting('currency_rate'),
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
-                'reference' => $order->code
+                'reference' => $order->code,
             ];
 
             $paymentController = app(PaymentController::class);
+
             return match ($this->paymentMethod) {
                 'paystack_payment' => $paymentController->initPaystack($paymentData),
                 'flutterwave_payment' => $paymentController->initFlutter($paymentData),
@@ -179,13 +195,14 @@ class Checkout extends Component
             $this->cart->delete();
 
             // Redirect to success page
-            $this->redirect(route('payment.success',  $order->code), navigate: true);
+            $this->redirect(route('payment.success', $order->code), navigate: true);
         } catch (\Exception $e) {
             DB::rollback();
             $this->processingPayment = false;
-            $this->toast('error', 'Error processing payment: ' . $e->getMessage());
+            $this->toast('error', 'Error processing payment: '.$e->getMessage());
         }
     }
+
     public function render()
     {
         return view('livewire.cart.checkout');

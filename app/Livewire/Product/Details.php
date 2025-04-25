@@ -16,10 +16,14 @@ class Details extends Component
     public $product;
 
     public $pageTitle;
+
     // license
     public $selectedLicenseType = 'regular';
+
     public $extendedSupport = false;
+
     public $supportPrice = 7.25;
+
     public $supportOriginalPrice = 12.00;
 
     // meta
@@ -45,7 +49,7 @@ class Details extends Component
 
     public function getRelatedProducts()
     {
-        $cacheKey = 'related_products_' . $this->product->id;
+        $cacheKey = 'related_products_'.$this->product->id;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () {
             return Product::where('category_id', $this->product->category_id)
@@ -73,6 +77,7 @@ class Details extends Component
 
         return $basePrice;
     }
+
     public function addToCart()
     {
         // Get or create cart
@@ -107,6 +112,7 @@ class Details extends Component
             $this->successAlert('Product added to cart successfully');
         }
     }
+
     public function render()
     {
         return view('livewire.product.details', [

@@ -11,7 +11,9 @@ class Success extends Component
     use LivewireToast;
 
     public $order;
+
     public $orderItems = [];
+
     public $orderTotal = 0;
 
     public function mount($order_id = null)
@@ -30,6 +32,7 @@ class Success extends Component
             }
         }
     }
+
     public function render()
     {
         return view('livewire.cart.success');

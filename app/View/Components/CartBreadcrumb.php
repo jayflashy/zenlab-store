@@ -9,7 +9,9 @@ use Illuminate\View\Component;
 class CartBreadcrumb extends Component
 {
     public $step;
+
     public $stepTitle;
+
     /**
      * Create a new component instance.
      */

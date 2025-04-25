@@ -10,15 +10,20 @@ use Livewire\Component;
 class Index extends Component
 {
     use LivewireToast;
+
     public $cart;
+
     public $cartItems = [];
+
     public $cartTotal = 0;
 
     protected $listeners = ['cartUpdated' => 'loadCart'];
+
     public function mount()
     {
         $this->loadCart();
     }
+
     public function loadCart()
     {
         $this->cart = Cart::getCurrentCart();
@@ -32,7 +37,7 @@ class Index extends Component
 
             // Calculate total
             $this->cartTotal = $this->cart->items->sum(function ($item) {
-                return ($item->price * $item->quantity);
+                return $item->price * $item->quantity;
             });
         }
     }
@@ -41,7 +46,7 @@ class Index extends Component
     {
         $cartItem = CartItem::find($itemId);
 
-        if (!$cartItem) {
+        if (! $cartItem) {
             return;
         }
 
@@ -76,6 +81,7 @@ class Index extends Component
         // Implement wishlist functionality if needed
         $this->toast('success', 'Added to wishlist');
     }
+
     public function render()
     {
         return view('livewire.cart.index');

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CartItem extends Model
 {
@@ -12,7 +11,6 @@ class CartItem extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
      */
     protected $fillable = [
         'cart_id',
@@ -22,7 +20,7 @@ class CartItem extends Model
         'price',
         'quantity',
         'total',
-        'support_price'
+        'support_price',
     ];
 
     public function cart()
@@ -43,7 +41,7 @@ class CartItem extends Model
     // Get license display name
     public function getLicenseNameAttribute()
     {
-        return ucfirst($this->license_type) . ' License' .
+        return ucfirst($this->license_type).' License'.
             ($this->extended_support ? ' + Extended Support' : '');
     }
 }

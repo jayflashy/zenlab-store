@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use HasUlids, SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
-     *
      */
     protected $fillable = [
         'user_id',

@@ -6,7 +6,6 @@ use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cart extends Model
 {
@@ -15,12 +14,11 @@ class Cart extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
      */
     protected $fillable = [
         'user_id',
         'session_id',
-        'status'
+        'status',
     ];
 
     public function items()
@@ -67,7 +65,7 @@ class Cart extends Model
             return $userCart;
         }
 
-        DB::transaction(function () use ($guestCart, $userCart, $userId) {
+        DB::transaction(function () use ($guestCart, $userCart) {
             foreach ($guestCart->items as $item) {
                 $existingItem = CartItem::where('cart_id', $userCart->id)
                     ->where('product_id', $item->product_id)

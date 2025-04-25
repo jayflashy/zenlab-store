@@ -42,7 +42,7 @@ class FlutterwaveService
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->secretKey,
+            'Authorization' => 'Bearer '.$this->secretKey,
             'Content-Type' => 'application/json',
         ])->post("{$this->baseUrl}/payments", $data);
 
@@ -53,7 +53,7 @@ class FlutterwaveService
     public function getTransactionStatus($reference)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->secretKey,
+            'Authorization' => 'Bearer '.$this->secretKey,
         ])->get("{$this->baseUrl}/transactions/{$reference}/verify");
 
         return $response->json();

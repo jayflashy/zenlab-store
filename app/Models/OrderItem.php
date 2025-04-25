@@ -12,7 +12,6 @@ class OrderItem extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
      */
     protected $fillable = [
         'order_id',
