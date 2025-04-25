@@ -131,6 +131,7 @@ class PayPalService
                 'message' => "PayPal API Error: {$response->body()}",
             ];
 
+            return response()->json($res, 400);
             throw new Exception('Failed to create PayPal payment: '.$e->getMessage());
         }
     }
