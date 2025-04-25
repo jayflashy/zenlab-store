@@ -210,8 +210,8 @@
                             <div class="form-group">
                                 <input type="hidden" name="types[]" value="FLW_SECRET_KEY">
                                 <label class="form-label">{{ __('FLW SECRET KEY') }}</label>
-                                <input type="text" class="common-input border" name="FLW_SECRET_KEY" <input type="text"
-                                    class="common-input border" name="FLW_SECRET_KEY" value="{{ env('FLW_SECRET_KEY') }}"
+                                <input type="text" class="common-input border" name="FLW_SECRET_KEY"
+                                    value="{{ env('FLW_SECRET_KEY') }}"
                                     placeholder="FLUTTERWAVE SECRET KEY" required>
                             </div>
                             <div class="form-group mb-0 text-end">
