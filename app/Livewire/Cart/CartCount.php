@@ -3,7 +3,6 @@
 namespace App\Livewire\Cart;
 
 use App\Models\Cart;
-use Auth;
 use Livewire\Component;
 
 class CartCount extends Component

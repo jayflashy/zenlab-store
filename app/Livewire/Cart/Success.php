@@ -24,8 +24,9 @@ class Success extends Component
         } else {
             // Fallback to most recent order (optional)
             $this->order = Order::with('items.product')->latest()->first();
-            if (!$this->order) {
+            if (! $this->order) {
                 session()->flash('error', 'No orders found');
+
                 return redirect()->route('home');
             }
         }
