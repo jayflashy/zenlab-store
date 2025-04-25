@@ -116,6 +116,7 @@ class PayPalService
                 'message' => "PayPal API Error: {$response->body()}",
             ];
 
+            return response()->json($res, 400);
             throw new Exception("PayPal API Error: {$response->body()}");
         } catch (Exception $e) {
             Log::error('PayPal createPayment failed', [
