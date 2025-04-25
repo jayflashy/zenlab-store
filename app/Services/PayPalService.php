@@ -61,7 +61,7 @@ class PayPalService
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            throw new Exception('Failed to retrieve PayPal access token: '.$e->getMessage());
+            throw new Exception('Failed to retrieve PayPal access token: ' . $e->getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ class PayPalService
      *
      * @throws Exception
      */
-    public function createPayment(float $amount, string $currency, array $details): array
+    public function createPayment(float $amount, array $details, string $currency = 'USD'): array
     {
         try {
             $accessToken = $this->getAccessToken();
@@ -96,8 +96,8 @@ class PayPalService
                     ],
                 ],
                 'application_context' => [
-                    'return_url' => $details['returnUrl'],
-                    'cancel_url' => $details['cancelUrl'],
+                    'return_url' => route('paypal.success'),
+                    'cancel_url' => route('checkout'),
                     'brand_name' => get_setting('title'),
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'PAY_NOW',
@@ -111,12 +111,6 @@ class PayPalService
                 return $response->json();
             }
 
-            $res = [
-                'status' => 'ERROR',
-                'message' => "PayPal API Error: {$response->body()}",
-            ];
-
-            return response()->json($res, 400);
             throw new Exception("PayPal API Error: {$response->body()}");
         } catch (Exception $e) {
             Log::error('PayPal createPayment failed', [
@@ -126,13 +120,11 @@ class PayPalService
                 'details' => $details,
                 'trace' => $e->getTraceAsString(),
             ]);
-            $res = [
-                'status' => 'ERROR',
-                'message' => "PayPal API Error: {$response->body()}",
-            ];
 
-            return response()->json($res, 400);
-            throw new Exception('Failed to create PayPal payment: '.$e->getMessage());
+            return [
+                'status' => 'ERROR',
+                'message' => 'Failed to create PayPal payment: ' . $e->getMessage(),
+            ];
         }
     }
 
@@ -152,12 +144,6 @@ class PayPalService
             if ($response->successful()) {
                 return $response->json();
             }
-            $res = [
-                'status' => 'ERROR',
-                'message' => "PayPal API Error: {$response->body()}",
-            ];
-
-            return response()->json($res, 400);
 
             throw new Exception("PayPal API Error: {$response->body()}");
         } catch (Exception $e) {
@@ -166,14 +152,11 @@ class PayPalService
                 'orderId' => $orderId,
                 'trace' => $e->getTraceAsString(),
             ]);
-            $res = [
+
+            return [
                 'status' => 'ERROR',
-                'message' => "PayPal API Error: {$response->body()}",
+                'message' => 'Failed to get PayPal order details: ' . $e->getMessage(),
             ];
-
-            return response()->json($res, 400);
-
-            throw new Exception('Failed to get PayPal order details: '.$e->getMessage());
         }
     }
 }

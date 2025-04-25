@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('code');
             $table->decimal('subtotal', 10, 2);
             $table->decimal('discount', 10, 2)->default(0);
-            $table->decimal('handling_fee', 10, 2)->default(0);
             $table->decimal('total', 10, 2);
+            $table->string('bank_reference')->nullable();
+            $table->string('payment_receipt')->nullable();
             $table->string('payment_method');
             $table->string('payment_status')->default('pending');
             $table->string('order_status')->default('pending');

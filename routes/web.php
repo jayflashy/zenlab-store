@@ -56,8 +56,10 @@ Route::prefix('admin')->as('admin.')->group(function (): void {
 });
 
 // Payment Callback
-Route::controller(PaymentController::class)->group(function () {
-    Route::any('/paystack/success/', 'paystackSuccess')->name('paystack.success');
-    Route::any('/flutter/success/', 'flutterSuccess')->name('flutter.success');
-    Route::any('/monnify/success/', 'monnifySuccess')->name('monnify.success');
+Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+    Route::any('/paystack', 'paystackSuccess')->name('paystack.success');
+    Route::any('/flutter', 'flutterSuccess')->name('flutter.success');
+    Route::post('/cryptomus', 'cryptomusSuccess')->name('cryptomus.success');
+    Route::get('/paypal', 'paypalSuccess')->name('paypal.success');
+    Route::get('/paypal-cancel', 'paypalError')->name('paypal.cancel');
 });

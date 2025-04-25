@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CryptomusService;
 use App\Services\FlutterwaveService;
+use App\Services\PayPalService;
 use App\Services\PaystackService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -22,9 +24,12 @@ class PaymentController extends Controller
     public function __construct(
         PaystackService $paystack,
         FlutterwaveService $flutterwave,
+        PayPalService $paypal,
+        CryptomusService $cryptomus
     ) {
         $this->paystack = $paystack;
         $this->flutterwave = $flutterwave;
+        $this->paypal = $paypal;
     }
 
     public function initPaystack($data)
@@ -64,7 +69,20 @@ class PaymentController extends Controller
         }
     }
 
-    public function initPaypal($order) {}
+    public function initPaypal($data)
+    {
+        try {
+            $res = $this->paypal->createPayment($data['amount'], $data);
+            foreach ($res['links'] as $link) {
+                if ($link['rel'] === 'approve') {
+                    return redirect($link['href']);
+                }
+            }
+            throw new \Exception('Unable to initialize payment');
+        } catch (\Exception $e) {
+            throw new \Exception('Unable to initialize payment');
+        }
+    }
 
     public function initCryptomus($order) {}
 
@@ -81,5 +99,10 @@ class PaymentController extends Controller
         $transactionID = request()->transaction_id;
 
         return $response = $this->flutterwave->getTransactionStatus($transactionID);
+    }
+
+    public function paypalSuccess(Request $request)
+    {
+        return $request;
     }
 }

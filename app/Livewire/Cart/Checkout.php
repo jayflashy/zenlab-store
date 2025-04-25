@@ -6,14 +6,17 @@ use App\Http\Controllers\PaymentController;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
 use App\Traits\LivewireToast;
 use Auth;
 use DB;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Checkout extends Component
 {
     use LivewireToast;
+    use WithFileUploads;
 
     public $cart;
 
@@ -35,7 +38,17 @@ class Checkout extends Component
 
     public $total = 0;
 
+    public $totalNgn = 0;
+
     public $processingPayment = false;
+
+    public $showBankTransfer = false;
+
+    public $paymentReceipt;
+
+    public $bankReference;
+
+    public $currentOrder;
 
     public $paymentGateways = [];
 
@@ -43,6 +56,11 @@ class Checkout extends Component
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'paymentMethod' => 'required|string',
+    ];
+
+    protected $bankTransferRules = [
+        'paymentReceipt' => 'required|image|max:2048',
+        'bankReference' => 'required|string|max:255',
     ];
 
     public function mount()
@@ -77,6 +95,7 @@ class Checkout extends Component
             });
 
             $this->total = $this->subtotal - $this->discount;
+            $this->totalNgn = $this->totalToNgn();
         }
     }
 
@@ -123,6 +142,23 @@ class Checkout extends Component
         }
         try {
             DB::beginTransaction();
+            // create a new account if a guest user based on their email.
+            if (! Auth::check()) {
+                $user = User::firstOrCreate([
+                    'email' => $this->email,
+                ], [
+                    'name' => $this->name,
+                    'password' => bcrypt(getTrx(18)),
+                    'status' => 'active',
+                    'username' => text_trimer($this->name, 12),
+                ]);
+                // Merge carts
+                Cart::mergeGuestCart($user->id, session()->getId());
+
+                Auth::login($user);
+                // TODO: send welcome email?
+            }
+
             // Create order
             $order = Order::create([
                 'user_id' => Auth::check() ? Auth::id() : null,
@@ -161,7 +197,16 @@ class Checkout extends Component
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
+                'description' => 'Order #' . $order->code,
             ];
+
+            if ($this->paymentMethod === 'manual_payment') {
+                $this->currentOrder = $order;
+                $this->showBankTransfer = true;
+                $this->processingPayment = false;
+                $this->totalNgn = $this->totalToNgn();
+                return;
+            }
 
             $paymentController = app(PaymentController::class);
 
@@ -170,39 +215,60 @@ class Checkout extends Component
                 'flutterwave_payment' => $paymentController->initFlutter($paymentData),
                 'paypal_payment' => $paymentController->initPaypal($paymentData),
                 'cryptomus_payment' => $paymentController->initCryptomus($paymentData),
-                'manual_payment' => $this->showManual($order),
                 default => throw new \Exception('Invalid payment method selected'),
             };
-
-            // redirect to payment provider.
-            // For this simulation, we're just adding a delay
-            sleep(1);
-
-            // Update payment status based on selected method
-            if ($this->paymentMethod === 'bank_transfer') {
-                // Bank transfer stays pending until manually approved
-                $order->payment_status = 'pending';
-                $order->order_status = 'pending';
-                $order->notes = 'Awaiting bank transfer confirmation';
-            } else {
-
-                $order->payment_status = 'paid';
-                $order->order_status = 'processing';
-            }
-            $order->save();
-
-            $this->cart->status = 'completed';
-            $this->cart->delete();
 
             // Redirect to success page
             $this->redirect(route('payment.success', $order->code), navigate: true);
         } catch (\Exception $e) {
             DB::rollback();
             $this->processingPayment = false;
-            $this->toast('error', 'Error processing payment: '.$e->getMessage());
+            $this->toast('error', 'Error processing payment: ' . $e->getMessage());
+        }
+    }
+    function totalToNgn()
+    {
+        if (get_setting('currency_code') === 'NGN') {
+            return $this->total;
+        }
+        return $this->total * get_setting('currency_rate');
+    }
+
+    public function uploadBankTransferReceipt()
+    {
+        $this->validate($this->bankTransferRules);
+
+        try {
+            // Upload receipt file
+            $receiptPath = $this->paymentReceipt->store('payment_receipts', 'uploads');
+
+            // Update order with receipt information
+            $this->currentOrder->payment_receipt = $receiptPath;
+            $this->currentOrder->bank_reference = $this->bankReference;
+            $this->currentOrder->notes = 'Manual payment receipt uploaded. Reference: ' . $this->bankReference;
+            $this->currentOrder->save();
+
+            // Empty cart
+            $this->cart->delete();
+
+            // Reset form
+            $this->showBankTransfer = false;
+            $this->paymentReceipt = null;
+            $this->bankReference = null;
+
+            $this->successAlert('Payment receipt uploaded successfully. We will verify your payment shortly.');
+            $this->redirect(route('payment.success', $this->currentOrder->code), navigate: true);
+        } catch (\Exception $e) {
+            $this->toast('error', 'Error uploading receipt: ' . $e->getMessage());
         }
     }
 
+    public function closeBankTransferModal()
+    {
+        $this->showBankTransfer = false;
+        $this->paymentReceipt = null;
+        $this->bankReference = null;
+    }
     public function render()
     {
         return view('livewire.cart.checkout');

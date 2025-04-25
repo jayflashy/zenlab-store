@@ -76,12 +76,6 @@
                                         <span class="text">-{{format_price($order->discount) }}</span>
                                     </li>
                                 @endif
-                                @if ($order->handling_fee > 0)
-                                    <li class="list-text__item flx-align flex-nowrap">
-                                        <span class="text text-heading fw-500">Handling Fee</span>
-                                        <span class="text">{{format_price($order->handling_fee) }}</span>
-                                    </li>
-                                @endif
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500">Total</span>
                                     <span class="text">{{format_price($order->total) }}</span>

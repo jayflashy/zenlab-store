@@ -150,6 +150,87 @@
             </div>
         </div>
     </div>
+    <!-- Bank Transfer Modal -->
+    @if ($showBankTransfer)
+        <div class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Bank Transfer Payment</h5>
+                        <button type="button" class="btn-close" wire:click="closeBankTransferModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bank-details mb-4">
+                            <h6 class="font-18 fw-500 mb-3">Bank Account Details</h6>
+                            <div class="card p-3">
+                                <div class="mb-2">
+                                    <strong>Bank Name:</strong> {{ sys_setting('bank_name') }}
+                                </div>
+                                <div class="mb-2">
+                                    <strong>Account Name:</strong> {{ sys_setting('account_name') }}
+                                </div>
+                                <div class="mb-2">
+                                    <strong>Account Number:</strong> {{ sys_setting('account_number') }}
+                                </div>
+                                <div class="mt-3">
+                                    <strong>Order Reference:</strong> {{ $currentOrder ? $currentOrder->code : '' }}
+                                    <br>
+                                    <small class="text-muted">Please include this reference in your bank transfer</small>
+                                </div>
+                                <div class="mt-3">
+                                    <strong>Amount to Pay:</strong> {{ format_price($total) }} <br>
+                                    <strong>Amount NGN:</strong> {{ ngnformat_price($totalNgn) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <form wire:submit.prevent="uploadBankTransferReceipt">
+                            <div class="mb-3">
+                                <label for="bankReference" class="form-label">Bank Reference/Transaction ID <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="bankReference" placeholder="Enter bank reference" wire:model="bankReference" required>
+                                @error('bankReference')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="paymentReceipt" class="form-label">Payment Receipt <span class="text-danger">*</span></label>
+                                <input type="file" accept="image/*" class="form-control" id="paymentReceipt"
+                                    wire:model="paymentReceipt" required>
+                                {{-- show file preview --}}
+                                @if ($paymentReceipt)
+                                    <div class="mt-2">
+                                        <p>Uploaded: {{ $paymentReceipt->getClientOriginalName() }}</p>
+                                        <img src="{{ $paymentReceipt->temporaryUrl() }}"
+                                            class="img-thumbnail mt-2"style="max-width: 200px;">
+                                    </div>
+                                @else
+                                    <small class="text-muted">Upload screenshot or photo of your payment receipt. (Max size: 2MB)</small>
+                                @endif
+
+                                @error('paymentReceipt')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-secondary"
+                                    wire:click="closeBankTransferModal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
+                                    <span wire:loading wire:target="uploadBankTransferReceipt">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Uploading...
+                                    </span>
+                                    <span wire:loading.remove wire:target="uploadBankTransferReceipt">
+                                        Submit Payment
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
 
 @include('layouts.meta')
