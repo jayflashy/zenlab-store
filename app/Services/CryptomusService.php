@@ -23,18 +23,18 @@ class CryptomusService
     public function createPayment($amount, $details, $currency = 'USD')
     {
         $data = [
-            'amount'       => $amount,
-            'currency'     => $currency,
-            'order_id'     => $details['reference'],
-            'url_success'  => route('cryptomus.success'),
+            'amount' => $amount,
+            'currency' => $currency,
+            'order_id' => $details['reference'],
+            'url_success' => route('cryptomus.success'),
             'url_callback' => route('cryptomus.success'),
-            'url_return'   => $details['cancelUrl'],
-            'description'  => $details['description'],
+            'url_return' => $details['cancelUrl'],
+            'description' => $details['description'],
         ];
         $signature = $this->generateSignature($data);
         $response = Http::withHeaders([
-            'merchant'     => $this->merchantId,
-            'sign'         => $signature,
+            'merchant' => $this->merchantId,
+            'sign' => $signature,
             'Content-Type' => 'application/json',
         ])->post("{$this->baseUrl}/payment", $data);
 
@@ -51,7 +51,7 @@ class CryptomusService
     public function getPaymentStatus($orderId)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Authorization' => 'Bearer '.$this->apiKey,
         ])->get("{$this->baseUrl}/payment/{$orderId}");
 
         if ($response->successful()) {
@@ -70,7 +70,7 @@ class CryptomusService
         // ksort($payload);
         $jsonData = json_encode($payload, JSON_UNESCAPED_UNICODE);
 
-        return $sign = md5(base64_encode($jsonData) . $this->apiKey);
+        return $sign = md5(base64_encode($jsonData).$this->apiKey);
         // return hash_hmac('sha512', $jsonData, $this->apiKey);
     }
 

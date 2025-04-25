@@ -23,6 +23,6 @@ return [
     ],
     'cryptomus' => [
         'api_key' => env('CRYPTOMUS_API_KEY'),
-        'merchant_id' => env('CRYPTOMUS_MERCHANT_ID')
-    ]
+        'merchant_id' => env('CRYPTOMUS_MERCHANT_ID'),
+    ],
 ];

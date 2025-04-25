@@ -61,7 +61,7 @@ class PayPalService
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            throw new Exception('Failed to retrieve PayPal access token: ' . $e->getMessage());
+            throw new Exception('Failed to retrieve PayPal access token: '.$e->getMessage());
         }
     }
 
@@ -78,29 +78,29 @@ class PayPalService
             $formattedAmount = number_format($amount, 2, '.', '');
 
             $payload = [
-                'intent'         => 'CAPTURE',
+                'intent' => 'CAPTURE',
                 'purchase_units' => [
                     [
                         'amount' => [
                             'currency_code' => $currency,
-                            'value'         => $formattedAmount,
-                            'breakdown'     => [
+                            'value' => $formattedAmount,
+                            'breakdown' => [
                                 'item_total' => [
                                     'currency_code' => $currency,
-                                    'value'         => $formattedAmount,
+                                    'value' => $formattedAmount,
                                 ],
                             ],
                         ],
                         'description' => $details['description'] ?? '',
-                        'custom_id'   => $details['reference'] ?? '',
+                        'custom_id' => $details['reference'] ?? '',
                     ],
                 ],
                 'application_context' => [
-                    'return_url'          => $details['returnUrl'],
-                    'cancel_url'          => $details['cancelUrl'],
-                    'brand_name'          => get_setting('title'),
+                    'return_url' => $details['returnUrl'],
+                    'cancel_url' => $details['cancelUrl'],
+                    'brand_name' => get_setting('title'),
                     'shipping_preference' => 'NO_SHIPPING',
-                    'user_action'         => 'PAY_NOW',
+                    'user_action' => 'PAY_NOW',
                 ],
             ];
 
@@ -112,27 +112,25 @@ class PayPalService
             }
 
             $res = [
-                'status'  => 'ERROR',
+                'status' => 'ERROR',
                 'message' => "PayPal API Error: {$response->body()}",
             ];
-
 
             throw new Exception("PayPal API Error: {$response->body()}");
         } catch (Exception $e) {
             Log::error('PayPal createPayment failed', [
-                'error'    => $e->getMessage(),
-                'amount'   => $amount,
+                'error' => $e->getMessage(),
+                'amount' => $amount,
                 'currency' => $currency,
-                'details'  => $details,
-                'trace'    => $e->getTraceAsString(),
+                'details' => $details,
+                'trace' => $e->getTraceAsString(),
             ]);
             $res = [
-                'status'  => 'ERROR',
+                'status' => 'ERROR',
                 'message' => "PayPal API Error: {$response->body()}",
             ];
 
-
-            throw new Exception('Failed to create PayPal payment: ' . $e->getMessage());
+            throw new Exception('Failed to create PayPal payment: '.$e->getMessage());
         }
     }
 
@@ -153,7 +151,7 @@ class PayPalService
                 return $response->json();
             }
             $res = [
-                'status'  => 'ERROR',
+                'status' => 'ERROR',
                 'message' => "PayPal API Error: {$response->body()}",
             ];
 
@@ -162,18 +160,18 @@ class PayPalService
             throw new Exception("PayPal API Error: {$response->body()}");
         } catch (Exception $e) {
             Log::error('PayPal getOrderDetails failed', [
-                'error'   => $e->getMessage(),
+                'error' => $e->getMessage(),
                 'orderId' => $orderId,
-                'trace'   => $e->getTraceAsString(),
+                'trace' => $e->getTraceAsString(),
             ]);
             $res = [
-                'status'  => 'ERROR',
+                'status' => 'ERROR',
                 'message' => "PayPal API Error: {$response->body()}",
             ];
 
             return response()->json($res, 400);
 
-            throw new Exception('Failed to get PayPal order details: ' . $e->getMessage());
+            throw new Exception('Failed to get PayPal order details: '.$e->getMessage());
         }
     }
 }
