@@ -1,7 +1,7 @@
 <section class="breadcrumb breadcrumb-four padding-static-y-60 section-bg position-relative z-index-1 overflow-hidden">
-    <img src="{{ static_asset('images/gradients/breadcrumb-gradient-bg.png') }}" alt="" class="bg--gradient">
-    <img src="{{ static_asset('images/shapes/element-moon3.png') }}" alt="" class="element one">
-    <img src="{{ static_asset('images/shapes/element-moon1.png') }}" alt="" class="element three">
+    <img src="{{ static_asset('images/gradients/breadcrumb-gradient-bg.png') }}" alt="Gradient background" class="bg--gradient">
+    <img src="{{ static_asset('images/shapes/element-moon3.png') }}" alt="Decorative moon element" class="element one">
+    <img src="{{ static_asset('images/shapes/element-moon1.png') }}" alt="Decorative moon element" class="element three">
 
     <div class="container container-two">
         <div class="row justify-content-center">
@@ -24,8 +24,9 @@
                         <li class="process-list__item {{ $step >= 1 ? 'activePage' : '' }}">
                             <a href="{{ route('cart') }}" wire:navigate class="process-list__link">
                                 <div class="icons">
-                                    <span class="icon white"><img src="{{ static_asset('images/icons/process-white1.svg') }}"
-                                            alt=""></span>
+                                    <span class="icon white">
+                                        <img src="{{ static_asset('images/icons/process-white1.svg') }}" alt="Cart icon">
+                                    </span>
                                 </div>
                                 <span class="text">Your Cart</span>
                             </a>
@@ -33,10 +34,8 @@
                         <li class="process-list__item {{ $step >= 2 ? 'activePage' : '' }}">
                             <a href="javascript:void(0)" class="process-list__link">
                                 <div class="icons">
-                                    <span class="icon white"><img src="{{ static_asset('images/icons/process-white3.svg') }}"
-                                            alt=""></span>
-                                    <span class="icon colored"><img src="{{ static_asset('images/icons/process3.svg') }}"
-                                            alt=""></span>
+                                    <span class="icon white"><img src="{{ static_asset('images/icons/process-white3.svg') }}" alt=""></span>
+                                    <span class="icon colored"><img src="{{ static_asset('images/icons/process3.svg') }}" alt=""></span>
                                 </div>
                                 <span class="text">Checkout</span>
                             </a>
@@ -44,10 +43,8 @@
                         <li class="process-list__item {{ $step === 3 ? 'activePage' : '' }}">
                             <a href="javascript:void(0)" class="process-list__link">
                                 <div class="icons">
-                                    <span class="icon white"><img src="{{ static_asset('images/icons/process-white4.svg') }}"
-                                            alt=""></span>
-                                    <span class="icon colored"><img src="{{ static_asset('images/icons/process4.svg') }}"
-                                            alt=""></span>
+                                    <span class="icon white"><img src="{{ static_asset('images/icons/process-white4.svg') }}" alt=""></span>
+                                    <span class="icon colored"><img src="{{ static_asset('images/icons/process4.svg') }}" alt=""></span>
                                 </div>
                                 <span class="text">Complete</span>
                             </a>

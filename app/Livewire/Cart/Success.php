@@ -21,16 +21,19 @@ class Success extends Component
         // If order_id is provided, load the specific order
         if ($order_id) {
             $this->order = Order::with('items.product')->whereCode($order_id)->firstOrFail();
-            $this->orderItems = $this->order->items;
-            $this->orderTotal = $this->order->total;
         } else {
             // Fallback to most recent order (optional)
             $this->order = Order::with('items.product')->latest()->first();
-            if ($this->order) {
-                $this->orderItems = $this->order->items;
-                $this->orderTotal = $this->order->total;
+            if (! $this->order) {
+                session()->flash('error', 'No orders found');
+
+                return redirect()->route('home');
             }
         }
+
+        // Set order items and total
+        $this->orderItems = $this->order->items;
+        $this->orderTotal = $this->order->total;
     }
 
     public function render()

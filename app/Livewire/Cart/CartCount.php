@@ -3,7 +3,6 @@
 namespace App\Livewire\Cart;
 
 use App\Models\Cart;
-use Auth;
 use Livewire\Component;
 
 class CartCount extends Component
@@ -19,18 +18,7 @@ class CartCount extends Component
 
     public function updateCartCount()
     {
-        if (Auth::check()) {
-            // For logged-in users
-            $cart = Cart::where('user_id', Auth::id())
-                ->where('status', 'active')
-                ->first();
-        } else {
-            // For guest users
-            $sessionId = session()->getId();
-            $cart = Cart::where('session_id', $sessionId)
-                ->where('status', 'active')
-                ->first();
-        }
+        $cart = Cart::getCurrentCart();
 
         if ($cart) {
             $this->cartCount = $cart->items()->sum('quantity');
