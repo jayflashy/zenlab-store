@@ -61,7 +61,7 @@ class PayPalService
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            throw new Exception('Failed to retrieve PayPal access token: ' . $e->getMessage());
+            throw new Exception('Failed to retrieve PayPal access token: '.$e->getMessage());
         }
     }
 
@@ -123,7 +123,7 @@ class PayPalService
 
             return [
                 'status' => 'ERROR',
-                'message' => 'Failed to create PayPal payment: ' . $e->getMessage(),
+                'message' => 'Failed to create PayPal payment: '.$e->getMessage(),
             ];
         }
     }
@@ -155,7 +155,7 @@ class PayPalService
 
             return [
                 'status' => 'ERROR',
-                'message' => 'Failed to get PayPal order details: ' . $e->getMessage(),
+                'message' => 'Failed to get PayPal order details: '.$e->getMessage(),
             ];
         }
     }
