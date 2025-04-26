@@ -172,7 +172,7 @@
                                 <div class="mb-2">
                                     <strong>Account Number:</strong> {{ sys_setting('account_number') }}
                                 </div>
-                                <div class="mt-3">
+                                <div class="mt-2 ">
                                     <strong>Order Reference:</strong> {{ $currentOrder ? $currentOrder->code : '' }}
                                     <br>
                                     <small class="text-muted">Please include this reference in your bank transfer</small>
@@ -215,7 +215,7 @@
                             <div class="d-flex justify-content-end gap-2">
                                 <button type="button" class="btn btn-outline-secondary"
                                     wire:click="closeBankTransferModal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
+                                <button type="submit" class="btn btn-main" wire:loading.attr="disabled">
                                     <span wire:loading wire:target="uploadBankTransferReceipt">
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                         Uploading...

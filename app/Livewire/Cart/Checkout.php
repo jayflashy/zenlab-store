@@ -163,7 +163,7 @@ class Checkout extends Component
                 'email' => $this->email,
                 'name' => $this->name,
                 'amount' => $this->total,
-                'ngn_amount' => round($this->total * get_setting('currency_rate')),
+                'ngn_amount' => round($this->totalToNgn()),
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
@@ -187,11 +187,14 @@ class Checkout extends Component
         }
     }
 
-    public function totalToNgn(): int
+    public function totalToNgn()
     {
+        if(get_setting('currency_code') === 'NGN') {
+            return $this->total;
+        }
         $rate = (float) get_setting('currency_rate', 1);
 
-        return (int) round($this->total * $rate);
+        return ($this->total * $rate);
     }
 
     public function uploadBankTransferReceipt()
