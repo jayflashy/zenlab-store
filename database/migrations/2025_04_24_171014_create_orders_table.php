@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->ulid('cart_id')->nullable();
             $table->string('email');
             $table->string('name');
             $table->string('code');

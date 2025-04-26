@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
+use App\Services\OrderService;
 use App\Traits\LivewireToast;
 use Auth;
 use DB;
@@ -19,36 +20,23 @@ class Checkout extends Component
     use WithFileUploads;
 
     public $cart;
-
     public $cartItems = [];
-
     public $name;
-
     public $email;
-
     public $paymentMethod = '';
-
     public $couponCode = '';
-
     public $discount = 0;
-
     public $subtotal = 0;
-
     public $total = 0;
-
     public $totalNgn = 0;
-
     public $processingPayment = false;
-
     public $showBankTransfer = false;
-
     public $paymentReceipt;
-
     public $bankReference;
-
     public $currentOrder;
-
     public $paymentGateways = [];
+
+    protected $orderService;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -61,6 +49,10 @@ class Checkout extends Component
         'bankReference' => 'required|string|max:255',
     ];
 
+    public function boot(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
     public function mount()
     {
         $this->loadCart();
@@ -136,72 +128,36 @@ class Checkout extends Component
             return;
         }
         try {
-            DB::beginTransaction();
-            // create a new account if a guest user based on their email.
-            if (! Auth::check()) {
-                $user = User::firstOrCreate([
-                    'email' => $this->email,
-                ], [
-                    'name' => $this->name,
-                    'password' => bcrypt(getTrx(18)),
-                    'status' => 'active',
-                    'username' => text_trimer($this->name, 12),
-                ]);
-
-                Auth::login($user);
-                // TODO: send welcome email?
-            }
-
-            // Create order
-            $order = Order::create([
-                'user_id' => Auth::check() ? Auth::id() : null,
-                'email' => $this->email,
+            $orderData = [
                 'name' => $this->name,
-                'code' => getTrx(8),
+                'email' => $this->email,
                 'subtotal' => $this->subtotal,
                 'discount' => $this->discount,
                 'total' => $this->total,
                 'payment_method' => $this->paymentMethod,
-                'payment_status' => 'pending',
-                'order_status' => 'pending',
-            ]);
-
-            // Create order items
-            foreach ($this->cart->items as $item) {
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item->product_id,
-                    'price' => $item->price,
-                    'quantity' => $item->quantity,
-                    'license_type' => $item->license_type,
-                    'extended_support' => $item->extended_support,
-                    'support_price' => $item->support_price,
-                    'total' => $item->price * $item->quantity,
-                ]);
-            }
-
-            DB::commit();
-            $paymentData = [
-                'email' => $this->email,
-                'name' => $this->name,
-                // 'order' => $order,
-                'amount' => $this->total,
-                'ngn_amount' => $this->total * get_setting('currency_rate'),
-                'order_id' => $order->id,
-                'currency' => get_setting('currency_code'),
-                'reference' => $order->code,
-                'description' => 'Order #'.$order->code,
             ];
+
+            $order = $this->orderService->createOrder($orderData, $this->cart);
 
             if ($this->paymentMethod === 'manual_payment') {
                 $this->currentOrder = $order;
                 $this->showBankTransfer = true;
                 $this->processingPayment = false;
                 $this->totalNgn = $this->totalToNgn();
-
                 return;
             }
+            $paymentData = [
+                'email' => $this->email,
+                'name' => $this->name,
+                'amount' => $this->total,
+                'ngn_amount' => round($this->total * get_setting('currency_rate')),
+                'order_id' => $order->id,
+                'currency' => get_setting('currency_code'),
+                'reference' => $order->code,
+                'description' => 'Order #' . $order->code,
+            ];
 
+            // process payment
             $paymentController = app(PaymentController::class);
 
             return match ($this->paymentMethod) {
@@ -211,23 +167,17 @@ class Checkout extends Component
                 'cryptomus_payment' => $paymentController->initCryptomus($paymentData),
                 default => throw new \Exception('Invalid payment method selected'),
             };
-
-            // Redirect to success page
-            $this->redirect(route('payment.success', $order->code), navigate: true);
         } catch (\Exception $e) {
-            DB::rollback();
             $this->processingPayment = false;
+            \Log::error($e);
             $this->toast('error', 'Unable to process your payment at this time. Please try again later.');
         }
     }
 
-    public function totalToNgn()
+    public function totalToNgn(): int
     {
-        if (get_setting('currency_code') === 'NGN') {
-            return $this->total;
-        }
-
-        return $this->total * get_setting('currency_rate');
+        $rate = (float) get_setting('currency_rate', 1);
+        return (int) round($this->total * $rate);
     }
 
     public function uploadBankTransferReceipt()
@@ -238,12 +188,12 @@ class Checkout extends Component
             // Upload receipt file
             $receiptPath = $this->paymentReceipt->store('payment_receipts', 'uploads');
 
-            // Update order with receipt information
-            $this->currentOrder->payment_receipt = $receiptPath;
-            $this->currentOrder->bank_reference = $this->bankReference;
-            $this->currentOrder->notes = 'Manual payment receipt uploaded. Reference: '.$this->bankReference;
-            $this->currentOrder->save();
-
+            // Process manual payment
+            $this->orderService->processManualPayment(
+                $this->currentOrder,
+                $receiptPath,
+                $this->bankReference
+            );
             // Empty cart
             $this->cart->delete();
 

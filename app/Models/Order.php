@@ -27,6 +27,7 @@ class Order extends Model
         'payment_status',
         'order_status',
         'notes',
+        'cart_id'
     ];
 
     public function items()
