@@ -118,7 +118,7 @@ class PayPalService
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            throw new Exception("PayPal API Error: {$response->getMessage()}");
+            throw new Exception("Failed to create PayPal payment: {$response->getMessage()}");
         }
     }
 
@@ -146,7 +146,7 @@ class PayPalService
                 'orderId' => $orderId,
                 'trace' => $e->getTraceAsString(),
             ]);
-            throw new Exception("PayPal Order Details Error: {$response->getMessage()}");
+            throw new Exception("Failed to get PayPal order details : {$response->getMessage()}");
         }
     }
 }

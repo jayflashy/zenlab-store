@@ -27,7 +27,7 @@ class FlutterwaveService
     {
         $amount = round($amount);
         $data = [
-            'payment_options' => 'card,banktransfer,ussd,mobilemoneyghana',
+            'payment_options' => config('payment.flutterwave.payment_options', 'card,banktransfer,ussd,mobilemoneyghana'),
             'amount' => $amount,
             'email' => $details['email'],
             'tx_ref' => $details['reference'],
@@ -42,7 +42,7 @@ class FlutterwaveService
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->secretKey,
+            'Authorization' => 'Bearer ' . $this->secretKey,
             'Content-Type' => 'application/json',
         ])->post("{$this->baseUrl}/payments", $data);
 
@@ -53,7 +53,7 @@ class FlutterwaveService
     public function getTransactionStatus($reference)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->secretKey,
+            'Authorization' => 'Bearer ' . $this->secretKey,
         ])->get("{$this->baseUrl}/transactions/{$reference}/verify");
 
         return $response->json();
@@ -62,12 +62,13 @@ class FlutterwaveService
     /**
      * Validate webhook signature
      *
-     * @param  string  $signature
+     * @param  array  $payload
+     * @return bool
      */
     public function validateWebhookHash(array $payload): bool
     {
         $receivedHash = request()->header('verif-hash');
-        $hash = config('services.flutterwave.hash');
+        $hash = $this->hashKey;
 
         if (! $receivedHash || ($hash !== $receivedHash)) {
             // This request isn't from Flutterwave; discard
