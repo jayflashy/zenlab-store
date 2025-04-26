@@ -83,7 +83,7 @@ class Checkout extends Component
             ['name' => 'Crypto', 'key' => 'cryptomus_payment', 'image' => 'cryptomus.png'],
             ['name' => 'Bank Transfer', 'key' => 'manual_payment', 'image' => 'bank.png'],
         ];
-        $this->paymentGateways = array_filter($allGateways, function($gateway) {
+        $this->paymentGateways = array_filter($allGateways, function ($gateway) {
             return sys_setting($gateway['key']) == 1;
         });
     }

@@ -2,38 +2,50 @@
 
 namespace App\Livewire\Admin;
 
-use App\Enums\DiscountType;
-use App\Models\Coupon;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Traits\LivewireToast;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Livewire\Attributes\Layout;
 
 #[Layout('admin.layouts.app')]
 class CouponManager extends Component
 {
     use LivewireToast;
     use WithPagination;
+
     public $view = 'list'; // possible values: list, create, edit
 
     // List view properties
     public $searchTerm = '';
+
     public $showExpired = false;
+
     public $perPage = 10;
 
     // Form properties
     public $editingCouponId = null;
+
     public $code;
+
     public $discount;
+
     public $discount_type = 'percent';
+
     public $type = 'general';
+
     public $product_id = null;
+
     public $category_id = null;
+
     public $limit = null;
+
     public $expires_at = null;
+
     public bool $active = true;
+
     public $deleteId;
 
     public $showDeleteModal = false;
@@ -51,6 +63,7 @@ class CouponManager extends Component
         'product' => 'Specific Product',
         'category' => 'Product Category',
     ];
+
     public function backToList(): void
     {
         $this->view = 'list';
@@ -130,7 +143,7 @@ class CouponManager extends Component
 
         $coupon = $this->editingCouponId
             ? Coupon::findOrFail($this->editingCouponId)
-            : new Coupon();
+            : new Coupon;
 
         $coupon->fill([
             'code' => $this->code,
@@ -202,7 +215,7 @@ class CouponManager extends Component
             'category_id',
             'limit',
             'expires_at',
-            'active'
+            'active',
         ]);
 
         // Set defaults
@@ -218,6 +231,7 @@ class CouponManager extends Component
     {
         return $this->view === 'edit' ? 'Edit Coupon' : 'Create New Coupon';
     }
+
     /**
      * Render the component
      */
@@ -226,13 +240,11 @@ class CouponManager extends Component
         $couponsQuery = Coupon::query()
             ->when(
                 $this->searchTerm,
-                fn($query) =>
-                $query->where('code', 'like', "%{$this->searchTerm}%")
+                fn ($query) => $query->where('code', 'like', "%{$this->searchTerm}%")
             )
             ->when(
-                !$this->showExpired,
-                fn($query) =>
-                $query->where(function ($q) {
+                ! $this->showExpired,
+                fn ($query) => $query->where(function ($q) {
                     $q->whereNull('expires_at')
                         ->orWhere('expires_at', '>', now());
                 })
