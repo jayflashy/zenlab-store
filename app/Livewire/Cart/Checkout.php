@@ -190,7 +190,7 @@ class Checkout extends Component
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
-                'description' => 'Order #' . $order->code,
+                'description' => 'Order #'.$order->code,
             ];
 
             if ($this->paymentMethod === 'manual_payment') {
@@ -241,7 +241,7 @@ class Checkout extends Component
             // Update order with receipt information
             $this->currentOrder->payment_receipt = $receiptPath;
             $this->currentOrder->bank_reference = $this->bankReference;
-            $this->currentOrder->notes = 'Manual payment receipt uploaded. Reference: ' . $this->bankReference;
+            $this->currentOrder->notes = 'Manual payment receipt uploaded. Reference: '.$this->bankReference;
             $this->currentOrder->save();
 
             // Empty cart
