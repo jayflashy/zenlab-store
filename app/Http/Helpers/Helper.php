@@ -304,5 +304,5 @@ function footerPages($count = 3)
 // get coupons
 function allCoupons()
 {
-    return Cache::remember('allCoupons', 16000, fn () => Coupon::get());
+    return Cache::remember('allCoupons', 16000, fn () => Coupon::valid()->get());
 }

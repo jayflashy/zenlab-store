@@ -25,6 +25,7 @@ class Coupon extends Model
         'product_id',
         'category_id',
         'limit',
+        'active',
     ];
 
     /**
@@ -73,7 +74,12 @@ class Coupon extends Model
     {
         parent::boot();
         static::saved(function (): void {
-            Cache::forget('SiteCoupons');
+            $coupons = Cache::has('SiteCoupons') ? Cache::get('SiteCoupons') : collect();
+            Cache::put('SiteCoupons', Coupon::all(), now()->addHours(24));
+        });
+        static::deleted(function (): void {
+            $coupons = Cache::has('SiteCoupons') ? Cache::get('SiteCoupons') : collect();
+            Cache::put('SiteCoupons', Coupon::all(), now()->addHours(24));
         });
     }
 }

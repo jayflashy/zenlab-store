@@ -74,7 +74,7 @@
 
             <!-- Coupons -->
             <li class="sidebar-list__item">
-                <a href="#" wire:navigate class="sidebar-list__link">
+                <a href="{{route('admin.coupons')}}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="fa fa-percent icon"></i>
                         <i class="fa fa-percent icon-active"></i>
