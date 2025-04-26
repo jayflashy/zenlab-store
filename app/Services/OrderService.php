@@ -81,14 +81,15 @@ class OrderService
     {
         $order->payment_status = 'completed';
         $order->order_status = 'processing';
-        $order->payment_details = json_encode($paymentData);
-        $order->payment_completed_at = now();
+        $order->response = ($paymentData);
+        $order->payment_date = now();
         $order->save();
 
         // Clear the cart after successful order
         if ($order->cart_id) {
             Cart::where('id', $order->cart_id)->delete();
         }
+        // send email and other notification
 
         return $order;
     }
@@ -103,12 +104,9 @@ class OrderService
     public function failOrder(Order $order, array $paymentData = [])
     {
         $order->payment_status = 'failed';
-        $order->payment_details = json_encode($paymentData);
+        $order->response = ($paymentData);
         $order->save();
 
-        if ($order->cart_id) {
-            Cart::where('id', $order->cart_id)->delete();
-        }
         return $order;
     }
 
@@ -125,7 +123,7 @@ class OrderService
         $order->payment_receipt = $receiptPath;
         $order->bank_reference = $reference;
         $order->payment_status = 'pending';
-        $order->order_status = 'pending';
+        $order->order_status = 'processing';
         $order->notes = 'Manual payment receipt uploaded. Reference: ' . $reference;
         $order->save();
 

@@ -1,4 +1,5 @@
-@section('title', 'Transaction Successful')
+@section('title', $order->order_status == 'completed' ? 'Transaction Successful' : 'Order Status: ' . ucfirst($order->order_status))
+
 <section class="cart-thank section-bg padding-y-120 position-relative z-index-1 overflow-hidden">
     <img src="{{ static_asset('images/gradients/thank-you-gradient.png') }}" alt="" class="bg--gradient">
 
@@ -6,7 +7,15 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8 col-sm-10">
                 <div class="cart-thank__content text-center">
-                    <h3 class="cart-thank__title mb-10">Transaction in process</h3>
+                    <h3 class="cart-thank__title mb-10">
+                        @if ($order->order_status == 'completed')
+                            Transaction Successful
+                        @elseif ($order->order_status == 'pending')
+                            Transaction in Process
+                        @else
+                            Order {{ ucfirst($order->order_status) }}
+                        @endif
+                    </h3>
                 </div>
             </div>
         </div>
@@ -31,6 +40,8 @@
                                             <span class="badge bg-info">Processing</span>
                                         @elseif($order->order_status == 'completed')
                                             <span class="badge bg-success">Completed</span>
+                                        @elseif($order->order_status == 'failed' || $order->order_status == 'cancelled')
+                                            <span class="badge bg-danger">{{ ucfirst($order->order_status) }}</span>
                                         @else
                                             <span class="badge bg-secondary">{{ ucfirst($order->order_status) }}</span>
                                         @endif
@@ -46,7 +57,7 @@
                                 </li>
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500">Total</span>
-                                    <span class="text">{{format_price($order->total) }}</span>
+                                    <span class="text">{{ format_price($order->total) }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -67,18 +78,18 @@
                                                 <small>({{ ucfirst($item->license_type) }})</small>
                                             @endif
                                         </span>
-                                        <span class="text">{{format_price($item->price) }}</span>
+                                        <span class="text">{{ format_price($item->price) }}</span>
                                     </li>
                                 @endforeach
                                 @if ($order->discount > 0)
                                     <li class="list-text__item flx-align flex-nowrap">
                                         <span class="text text-heading fw-500">Discount</span>
-                                        <span class="text">-{{format_price($order->discount) }}</span>
+                                        <span class="text">-{{ format_price($order->discount) }}</span>
                                     </li>
                                 @endif
                                 <li class="list-text__item flx-align flex-nowrap">
                                     <span class="text text-heading fw-500">Total</span>
-                                    <span class="text">{{format_price($order->total) }}</span>
+                                    <span class="text">{{ format_price($order->total) }}</span>
                                 </li>
                             </ul>
                             <div class="flx-between gap-2 mt-3">
@@ -95,7 +106,6 @@
         </div>
     </div>
 </section>
- </section>
 
 @section('meta')
 

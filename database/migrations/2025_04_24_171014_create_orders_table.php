@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('order_status')->default('pending');
             $table->text('notes')->nullable();
             $table->json('response')->nullable();
+            $table->datetime('payment_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

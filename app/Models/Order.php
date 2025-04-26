@@ -27,8 +27,10 @@ class Order extends Model
         'payment_status',
         'order_status',
         'notes',
-        'cart_id'
+        'cart_id',
+        'payment_date',
     ];
+
 
     public function items()
     {

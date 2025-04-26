@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Services\CryptomusService;
 use App\Services\FlutterwaveService;
+use App\Services\OrderService;
 use App\Services\PayPalService;
 use App\Services\PaystackService;
 use App\Traits\ApiResponse;
@@ -14,22 +16,23 @@ class PaymentController extends Controller
     use ApiResponse;
 
     private $paystack;
-
     private $paypal;
-
     private $flutterwave;
-
     private $cryptomus;
+    private $orderService;
 
     public function __construct(
         PaystackService $paystack,
         FlutterwaveService $flutterwave,
         PayPalService $paypal,
-        CryptomusService $cryptomus
+        CryptomusService $cryptomus,
+        OrderService $orderService
     ) {
         $this->paystack = $paystack;
         $this->flutterwave = $flutterwave;
         $this->paypal = $paypal;
+        $this->cryptomus = $cryptomus;
+        $this->orderService = $orderService;
     }
 
     public function initPaystack($data)
@@ -93,7 +96,25 @@ class PaymentController extends Controller
 
     public function paystackSuccess(Request $request)
     {
-        return $payment = $this->paystack->getTransactionStatus($request->reference);
+        try {
+            $paymentData = $this->paystack->getTransactionStatus($request->reference);
+            // Verify transaction details
+            if (! empty($paymentData['data']) && $paymentData['data']['status'] == 'success') {
+                $details = $paymentData['data']['metadata'];
+                $order = Order::where('code', $paymentData['data']['reference'])->firstOrFail();
+                $this->orderService->completeOrder($order, $paymentData);
+
+                return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
+            } else {
+                // Find order by reference
+                $order = Order::where('code', $paymentData['data']['reference'])->firstOrFail();
+                $this->orderService->failOrder($order, $paymentData);
+                return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
+            }
+        } catch (\Exception $e) {
+            logger()->error('Paystack callback error: ' . $e->getMessage());
+            return redirect()->route('checkout')->with('error', 'Something went wrong with your payment');
+        }
     }
 
     public function flutterSuccess(Request $request)
@@ -109,5 +130,21 @@ class PaymentController extends Controller
     public function paypalSuccess(Request $request)
     {
         return $request;
+    }
+
+    public function callbackResponse($type, $message, $url = null)
+    {
+        if (request()->wantsJson()) {
+            if ($type == 'success') {
+                return $this->successResponse($message);
+            }
+
+            return $this->errorResponse($message);
+        }
+        if ($type == 'success') {
+            return redirect($url)->withSuccess($message);
+        }
+
+        return redirect($url)->withError($message);
     }
 }
