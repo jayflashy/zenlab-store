@@ -158,7 +158,6 @@
         ])
     @endif
 
-
     {{-- delete modal --}}
     @if ($showDeleteModal)
         <div class="common-modal modal fade show" tabindex="-1" id="deleteModal" aria-hidden="true"

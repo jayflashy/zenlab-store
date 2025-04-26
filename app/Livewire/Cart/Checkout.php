@@ -96,9 +96,8 @@ class Checkout extends Component
             $this->cartItems = $this->cart->items()->with('product.category')->get()->toArray();
 
             // Calculate totals
-            $this->subtotal = $this->cart->items->sum(function ($item) {
-                return $item->price * $item->quantity;
-            });
+            $items          = collect($this->cartItems);
+            $this->subtotal = $items->sum(fn ($i) => $i['price'] * $i['quantity']);
 
             $this->total = $this->subtotal - $this->discount;
             $this->totalNgn = $this->totalToNgn();

@@ -40,4 +40,11 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+    /**
+     * Check if the order is paid.
+     */
+    public function isPaid(): bool
+    {
+        return $this->payment_status === 'completed';
+    }
 }

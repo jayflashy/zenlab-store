@@ -95,7 +95,7 @@
 
             <!-- Orders -->
             <li class="sidebar-list__item">
-                <a href="#" wire:navigate class="sidebar-list__link">
+                <a href="{{route('admin.orders')}}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="fad fa-shopping-cart icon"></i>
                         <i class="fas fa-shopping-cart icon-active"></i>

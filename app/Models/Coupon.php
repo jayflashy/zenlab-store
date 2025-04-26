@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\DiscountType;
-use App\Enums\Enums\CouponType;
+use App\Enums\CouponType;
 use Cache;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
@@ -45,12 +45,10 @@ class Coupon extends Model
     public function scopeValid($query)
     {
         return $query->where(function ($query) {
-            $query->whereNull('expires_at')
-                ->orWhere('expires_at', '>', now());
+            $query->whereNull('expires_at')->orWhere('expires_at', '>', now());
         })->where(function ($query) {
-            $query->whereNull('limit')
-                ->orWhere('limit', '>', 0);
-        });
+            $query->whereNull('limit')->orWhere('limit', '>', 0);
+        })->where('active', true);
     }
 
     /**
@@ -74,12 +72,18 @@ class Coupon extends Model
     {
         parent::boot();
         static::saved(function (): void {
-            $coupons = Cache::has('SiteCoupons') ? Cache::get('SiteCoupons') : collect();
-            Cache::put('SiteCoupons', Coupon::all(), now()->addHours(24));
+            self::refreshCache();
         });
         static::deleted(function (): void {
-            $coupons = Cache::has('SiteCoupons') ? Cache::get('SiteCoupons') : collect();
-            Cache::put('SiteCoupons', Coupon::all(), now()->addHours(24));
+            self::refreshCache();
         });
+    }
+
+    /**
+     * Refresh the coupons cache.
+     */
+    private static function refreshCache(): void
+    {
+        Cache::put('SiteCoupons', Coupon::all(), now()->addHours(24));
     }
 }
