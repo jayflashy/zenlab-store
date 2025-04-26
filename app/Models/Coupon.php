@@ -45,10 +45,10 @@ class Coupon extends Model
     {
         return $query->where(function ($query) {
             $query->whereNull('expires_at')
-                  ->orWhere('expires_at', '>', now());
+                ->orWhere('expires_at', '>', now());
         })->where(function ($query) {
             $query->whereNull('limit')
-                  ->orWhere('limit', '>', 0);
+                ->orWhere('limit', '>', 0);
         });
     }
 

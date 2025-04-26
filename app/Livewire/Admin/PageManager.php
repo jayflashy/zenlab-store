@@ -90,7 +90,6 @@ class PageManager extends Component
             return my_asset($this->existingImage);
         }
 
-        return null;
     }
 
     public function updatedTitle(): void

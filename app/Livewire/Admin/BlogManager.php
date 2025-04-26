@@ -294,7 +294,6 @@ class BlogManager extends Component
             return my_asset($this->existingImage);
         }
 
-        return null;
     }
 
     public function render()

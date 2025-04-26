@@ -26,7 +26,6 @@ class OrderService
             if (! $userId && isset($orderData['email']) && isset($orderData['name'])) {
                 $user = $this->createOrGetUser($orderData['name'], $orderData['email']);
                 $userId = $user->id;
-                Auth::login($user);
             }
 
             // Create the order
@@ -101,6 +100,7 @@ class OrderService
     public function failOrder(Order $order, array $paymentData = [])
     {
         $order->payment_status = 'failed';
+        $order->order_status = 'failed';
         $order->response = ($paymentData);
         $order->save();
 
@@ -118,7 +118,7 @@ class OrderService
         $order->bank_reference = $reference;
         $order->payment_status = 'pending';
         $order->order_status = 'processing';
-        $order->notes = 'Manual payment receipt uploaded. Reference: '.$reference;
+        $order->notes = 'Manual payment receipt uploaded. Reference: ' . $reference;
         $order->save();
 
         // Clear cart but don't mark as completed yet
@@ -142,7 +142,7 @@ class OrderService
                 'name' => $name,
                 'password' => bcrypt(getTrx(18)),
                 'status' => 'active',
-                'username' => text_trimer($name, 12),
+                'username' => text_trimer($name, 19) . rand(1000, 9999),
             ]
         );
     }

@@ -18,21 +18,37 @@ class Checkout extends Component
     use WithFileUploads;
 
     public $cart;
+
     public $cartItems = [];
+
     public $name;
+
     public $email;
+
     public $paymentMethod = '';
+
     public $couponCode = '';
+
     public $couponStatus = [];
+
     public $discount = 0;
+
     public $subtotal = 0;
+
     public $total = 0;
+
     public $totalNgn = 0;
+
     public $processingPayment = false;
+
     public $showBankTransfer = false;
+
     public $paymentReceipt;
+
     public $bankReference;
+
     public $currentOrder;
+
     public $paymentGateways = [];
 
     protected $orderService;
@@ -100,6 +116,7 @@ class Checkout extends Component
         if ($this->couponCode === '') {
             $this->couponStatus = ['status' => 'danger', 'message' => 'Please enter a coupon code'];
             $this->toast('error', 'Please enter a coupon code');
+
             return;
         }
         // Check if the coupon code is valid
@@ -107,8 +124,9 @@ class Checkout extends Component
         $coupon = $coupons->where('code', strtoupper($this->couponCode))->first();
 
         if ($coupon) {
-            if (!$coupon->valid()) {
+            if (! $coupon->valid()) {
                 $this->couponStatus = ['status' => 'danger', 'message' => 'Coupon code is expired'];
+
                 return;
             }
             // get coupon discount type
@@ -166,7 +184,7 @@ class Checkout extends Component
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
-                'description' => 'Order #' . $order->code,
+                'description' => 'Order #'.$order->code,
             ];
 
             // process payment
