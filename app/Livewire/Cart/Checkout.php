@@ -189,12 +189,12 @@ class Checkout extends Component
 
     public function totalToNgn()
     {
-        if(get_setting('currency_code') === 'NGN') {
+        if (get_setting('currency_code') === 'NGN') {
             return $this->total;
         }
         $rate = (float) get_setting('currency_rate', 1);
 
-        return ($this->total * $rate);
+        return $this->total * $rate;
     }
 
     public function uploadBankTransferReceipt()

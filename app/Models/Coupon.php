@@ -13,7 +13,6 @@ class Coupon extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
      */
     protected $fillable = [
         'code',
@@ -23,7 +22,7 @@ class Coupon extends Model
         'type',
         'product_id',
         'category_id',
-        'limit'
+        'limit',
     ];
 
     /**
