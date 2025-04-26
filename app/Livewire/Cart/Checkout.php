@@ -82,10 +82,7 @@ class Checkout extends Component
         $this->cart = Cart::getCurrentCart();
         if ($this->cart) {
             // Load cart items with products
-            $this->cartItems = $this->cart->items()
-                ->with('product.category')
-                ->get()
-                ->toArray();
+            $this->cartItems = $this->cart->items()->with('product.category')->get()->toArray();
 
             // Calculate totals
             $this->subtotal = $this->cart->items->sum(function ($item) {
@@ -150,8 +147,6 @@ class Checkout extends Component
                     'status' => 'active',
                     'username' => text_trimer($this->name, 12),
                 ]);
-                // Merge carts
-                Cart::mergeGuestCart($user->id, session()->getId());
 
                 Auth::login($user);
                 // TODO: send welcome email?
@@ -195,7 +190,7 @@ class Checkout extends Component
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
-                'description' => 'Order #'.$order->code,
+                'description' => 'Order #' . $order->code,
             ];
 
             if ($this->paymentMethod === 'manual_payment') {
@@ -222,7 +217,7 @@ class Checkout extends Component
         } catch (\Exception $e) {
             DB::rollback();
             $this->processingPayment = false;
-            $this->toast('error', 'Error processing payment: '.$e->getMessage());
+            $this->toast('error', 'Unable to process your payment at this time. Please try again later.');
         }
     }
 
@@ -246,7 +241,7 @@ class Checkout extends Component
             // Update order with receipt information
             $this->currentOrder->payment_receipt = $receiptPath;
             $this->currentOrder->bank_reference = $this->bankReference;
-            $this->currentOrder->notes = 'Manual payment receipt uploaded. Reference: '.$this->bankReference;
+            $this->currentOrder->notes = 'Manual payment receipt uploaded. Reference: ' . $this->bankReference;
             $this->currentOrder->save();
 
             // Empty cart
@@ -260,7 +255,7 @@ class Checkout extends Component
             $this->successAlert('Payment receipt uploaded successfully. We will verify your payment shortly.');
             $this->redirect(route('payment.success', $this->currentOrder->code), navigate: true);
         } catch (\Exception $e) {
-            $this->toast('error', 'Error uploading receipt: '.$e->getMessage());
+            $this->toast('error', 'Error uploading receipt: ');
         }
     }
 

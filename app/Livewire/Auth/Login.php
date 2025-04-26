@@ -35,7 +35,7 @@ class Login extends Component
     public function login(): void
     {
         $this->validate();
-
+        $oldSession = session()->getId();
         $this->ensureIsNotRateLimited();
 
         if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
@@ -47,9 +47,9 @@ class Login extends Component
         }
         // merge guest cart with user cart
         try {
-            Cart::mergeGuestCart(Auth::user()->id, session()->getId());
+            Cart::mergeGuestCart(Auth::user()->id, $oldSession);
         } catch (\Exception $e) {
-            \Log::error('Failed to merge guest cart: '.$e->getMessage());
+            \Log::error('Failed to merge guest cart: ' . $e->getMessage());
         }
 
         RateLimiter::clear($this->throttleKey());
@@ -85,6 +85,6 @@ class Login extends Component
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
     }
 }
