@@ -302,9 +302,9 @@ class BlogManager extends Component
 
         if ($this->view === 'list') {
             $blogs = Blog::when($this->search, function ($query): void {
-                $query->where('title', 'like', '%'.$this->search.'%')
-                    ->orWhere('tags', 'like', '%'.$this->search.'%')
-                    ->orWhere('about', 'like', '%'.$this->search.'%');
+                $query->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('tags', 'like', '%' . $this->search . '%')
+                    ->orWhere('about', 'like', '%' . $this->search . '%');
             })
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10);

@@ -61,7 +61,7 @@ class PayPalService
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            throw new Exception('Failed to retrieve PayPal access token: '.$e->getMessage());
+            throw new Exception('Failed to retrieve PayPal access token: ' . $e->getMessage());
         }
     }
 

@@ -204,7 +204,7 @@ class PageManager extends Component
                 Storage::disk('uploads')->delete($page->image);
             } catch (Throwable $e) {
                 // Log the error but continue with deletion
-                Log::error('Failed to delete image file: '.$e->getMessage());
+                Log::error('Failed to delete image file: ' . $e->getMessage());
             }
         }
 
@@ -242,8 +242,8 @@ class PageManager extends Component
                 $imagePath = $this->image->store('pages', 'uploads');
                 $page->image = $imagePath;
             } catch (Throwable $e) {
-                Log::error('Failed to store image: '.$e->getMessage());
-                $this->errorAlert('Failed to upload image: '.$e->getMessage());
+                Log::error('Failed to store image: ' . $e->getMessage());
+                $this->errorAlert('Failed to upload image: ' . $e->getMessage());
 
                 return;
             }
@@ -283,8 +283,8 @@ class PageManager extends Component
                 $imagePath = $this->image->store('pages', 'uploads');
                 $page->image = $imagePath;
             } catch (Throwable $e) {
-                Log::error('Failed to update image: '.$e->getMessage());
-                $this->errorAlert('Failed to upload image: '.$e->getMessage());
+                Log::error('Failed to update image: ' . $e->getMessage());
+                $this->errorAlert('Failed to upload image: ' . $e->getMessage());
 
                 return;
             }
@@ -314,9 +314,9 @@ class PageManager extends Component
 
         if ($this->view === 'list') {
             $pages = Page::when($this->search, function ($query): void {
-                $query->where('title', 'like', '%'.$this->search.'%')
-                    ->orWhere('type', 'like', '%'.$this->search.'%')
-                    ->orWhere('content', 'like', '%'.$this->search.'%');
+                $query->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('type', 'like', '%' . $this->search . '%')
+                    ->orWhere('content', 'like', '%' . $this->search . '%');
             })
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10);

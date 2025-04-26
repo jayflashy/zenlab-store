@@ -181,7 +181,7 @@ class ProductList extends Component
                 $product->delete();
             }
 
-            $this->successAlert(count($this->selectedProducts).' Products deleted successfully');
+            $this->successAlert(count($this->selectedProducts) . ' Products deleted successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
             $this->showBulkActionModal = null;
@@ -196,7 +196,7 @@ class ProductList extends Component
                 'publish_date' => now(),
             ]);
 
-            $this->successAlert(count($this->selectedProducts).' Products published successfully');
+            $this->successAlert(count($this->selectedProducts) . ' Products published successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
             $this->showBulkActionModal = null;
@@ -210,7 +210,7 @@ class ProductList extends Component
                 'featured' => 1,
             ]);
 
-            $this->successAlert(count($this->selectedProducts).' Products featured successfully');
+            $this->successAlert(count($this->selectedProducts) . ' Products featured successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
             $this->showBulkActionModal = null;
@@ -224,7 +224,7 @@ class ProductList extends Component
                 'status' => 'archived',
             ]);
 
-            $this->successAlert(count($this->selectedProducts).' Products archived successfully');
+            $this->successAlert(count($this->selectedProducts) . ' Products archived successfully');
             $this->selectedProducts = [];
             $this->selectAll = false;
             $this->showBulkActionModal = null;
@@ -276,9 +276,9 @@ class ProductList extends Component
             ->with('category')
             ->when($this->search, function ($query): void {
                 $query->where(function ($query): void {
-                    $query->where('name', 'like', '%'.$this->search.'%')
-                        ->orWhere('slug', 'like', '%'.$this->search.'%')
-                        ->orWhere('short_description', 'like', '%'.$this->search.'%');
+                    $query->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('slug', 'like', '%' . $this->search . '%')
+                        ->orWhere('short_description', 'like', '%' . $this->search . '%');
                 });
             })
             ->when($this->statusFilter, function ($query): void {

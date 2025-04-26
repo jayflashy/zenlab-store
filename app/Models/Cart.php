@@ -87,7 +87,7 @@ class Cart extends Model
                 $guestCart->delete();
             });
         } catch (\Exception $e) {
-            \Log::error('Failed to merge guest cart: '.$e->getMessage());
+            \Log::error('Failed to merge guest cart: ' . $e->getMessage());
         }
 
         return $userCart;

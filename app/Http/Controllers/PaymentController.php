@@ -127,7 +127,7 @@ class PaymentController extends Controller
                 return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
             }
         } catch (\Exception $e) {
-            logger()->error('Paystack callback error: '.$e->getMessage());
+            logger()->error('Paystack callback error: ' . $e->getMessage());
 
             return redirect()->route('checkout')->with('error', 'Something went wrong with your payment');
         }

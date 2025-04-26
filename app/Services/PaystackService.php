@@ -33,7 +33,7 @@ class PaystackService
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->secretKey,
+            'Authorization' => 'Bearer ' . $this->secretKey,
             'Content-Type' => 'application/json',
         ])->post("{$this->baseUrl}/transaction/initialize", $data);
 
@@ -44,7 +44,7 @@ class PaystackService
     public function getTransactionStatus($reference)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->secretKey,
+            'Authorization' => 'Bearer ' . $this->secretKey,
         ])->get("{$this->baseUrl}/transaction/verify/{$reference}");
 
         return $response->json();

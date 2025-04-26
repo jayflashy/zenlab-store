@@ -184,7 +184,7 @@ class Checkout extends Component
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
-                'description' => 'Order #'.$order->code,
+                'description' => 'Order #' . $order->code,
             ];
 
             // process payment

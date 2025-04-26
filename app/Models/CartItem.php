@@ -54,7 +54,7 @@ class CartItem extends Model
     // Get license display name
     public function getLicenseNameAttribute()
     {
-        $licenseName = ucfirst($this->license_type).' License';
+        $licenseName = ucfirst($this->license_type) . ' License';
 
         if ($this->extended_support) {
             $licenseName .= ' + Extended Support';

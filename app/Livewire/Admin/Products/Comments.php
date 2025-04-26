@@ -140,13 +140,13 @@ class Comments extends Component
         $comments = Comment::with(['user', 'product', 'parent'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->where('content', 'like', '%'.$this->search.'%')
+                    $q->where('content', 'like', '%' . $this->search . '%')
                         // ->orWhereHas('user', function ($u) {
                         //     $u->where('name', 'like', '%' . $this->search . '%')
                         //         ->orWhere('email', 'like', '%' . $this->search . '%');
                         // })
                         ->orWhereHas('product', function ($p) {
-                            $p->where('name', 'like', '%'.$this->search.'%');
+                            $p->where('name', 'like', '%' . $this->search . '%');
                         });
                 });
             })
