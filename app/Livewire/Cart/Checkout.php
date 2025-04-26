@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Cart;
 
+use App\Enums\DiscountType;
 use App\Http\Controllers\PaymentController;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Services\OrderService;
 use App\Traits\LivewireToast;
 use Auth;
@@ -16,35 +18,21 @@ class Checkout extends Component
     use WithFileUploads;
 
     public $cart;
-
     public $cartItems = [];
-
     public $name;
-
     public $email;
-
     public $paymentMethod = '';
-
     public $couponCode = '';
-
+    public $couponStatus = [];
     public $discount = 0;
-
     public $subtotal = 0;
-
     public $total = 0;
-
     public $totalNgn = 0;
-
     public $processingPayment = false;
-
     public $showBankTransfer = false;
-
     public $paymentReceipt;
-
     public $bankReference;
-
     public $currentOrder;
-
     public $paymentGateways = [];
 
     protected $orderService;
@@ -110,22 +98,33 @@ class Checkout extends Component
     public function applyCoupon()
     {
         if ($this->couponCode === '') {
+            $this->couponStatus = ['status' => 'danger', 'message' => 'Please enter a coupon code'];
             $this->toast('error', 'Please enter a coupon code');
-
             return;
         }
+        // Check if the coupon code is valid
+        $coupons = allCoupons();
+        $coupon = $coupons->where('code', strtoupper($this->couponCode))->first();
 
-        if (strtoupper($this->couponCode) === 'DISCOUNT10') {
-            $this->discount = round($this->subtotal * 0.1, 2); // 10% discount
+        if ($coupon) {
+            if (!$coupon->valid()) {
+                $this->couponStatus = ['status' => 'danger', 'message' => 'Coupon code is expired'];
+                return;
+            }
+            // get coupon discount type
+            if ($coupon->discount_type === DiscountType::PERCENT) {
+                $this->discount = round($this->subtotal * ($coupon->discount / 100), 2);
+            } else {
+                $this->discount = $coupon->discount;
+            }
             $this->total = $this->subtotal - $this->discount;
-            $this->toast('success', 'Coupon applied successfully!');
-        } elseif (strtoupper($this->couponCode) === 'FREESHIPPING') {
-            $this->total = $this->subtotal - $this->discount;
-            $this->toast('success', 'Free shipping coupon applied!');
+            $this->totalNgn = $this->totalToNgn();
+
+            $this->couponStatus = ['status' => 'success', 'message' => 'Coupon code applied successfully'];
         } else {
             $this->discount = 0;
             $this->total = $this->subtotal;
-            $this->toast('error', 'Invalid coupon code');
+            $this->couponStatus = ['status' => 'danger', 'message' => 'Invalid coupon code'];
         }
     }
 
@@ -167,7 +166,7 @@ class Checkout extends Component
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
-                'description' => 'Order #'.$order->code,
+                'description' => 'Order #' . $order->code,
             ];
 
             // process payment

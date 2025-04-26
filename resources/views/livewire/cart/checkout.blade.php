@@ -91,15 +91,14 @@
                         <ul class="billing-list">
                             <li class="billing-list__item flx-between">
                                 <span class="text text-heading fw-500">You have {{ count($cartItems) }} item(s)</span>
-                                <span class="amount text-heading fw-500">{{ format_price($subtotal) }}</span>
-                            </li>
-                            <li class="billing-list__item flx-between">
-                                <span class="text text-heading fw-500">Discount</span>
-                                <span class="amount text-body">{{ format_price($discount) }}</span>
                             </li>
                             <li class="billing-list__item flx-between">
                                 <span class="text text-heading fw-500">Subtotal</span>
                                 <span class="amount text-body">{{ format_price($subtotal) }}</span>
+                            </li>
+                            <li class="billing-list__item flx-between">
+                                <span class="text text-heading fw-500">Discount</span>
+                                <span class="amount text-body">{{ format_price($discount) }}</span>
                             </li>
                             <li class="billing-list__item flx-between">
                                 <span class="text text-heading font-20 fw-500 font-heading">Total</span>
@@ -119,6 +118,9 @@
                                 </span>
                                 <span wire:loading.remove wire:target="applyCoupon">Apply</span>
                             </button>
+                            @if($couponStatus)
+                                <span class="text-{{$couponStatus['status']}}">{{ $couponStatus['message'] }}</span>
+                            @endif
                         </div>
                     </div>
 
