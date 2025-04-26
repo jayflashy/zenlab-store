@@ -24,8 +24,8 @@
             <li class="sidebar-list__item">
                 <a href="{{ route('admin.categories') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-tags icon"></i>
-                        <i class="fa fa-tags icon-active"></i>
+                        <i class="fas fa-tags icon"></i>
+                        <i class="fad fa-tags icon-active"></i>
                     </span>
                     <span class="text">Categories</span>
                 </a>
@@ -33,8 +33,8 @@
             <li class="sidebar-list__item side-hsb">
                 <a href="javascript:void(0)" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-users icon-active"></i>
-                        <i class="fa fa-users icon"></i>
+                        <i class="fad fa-store icon-active"></i>
+                        <i class="fas fa-store icon"></i>
                     </span>
                     <span class="text">Products</span>
                 </a>
@@ -65,8 +65,8 @@
             <li class="sidebar-list__item">
                 <a href="#" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-key icon"></i>
-                        <i class="fa fa-key icon-active"></i>
+                        <i class="fas fa-key icon"></i>
+                        <i class="fad fa-key icon-active"></i>
                     </span>
                     <span class="text">Licenses</span>
                 </a>
@@ -76,8 +76,8 @@
             <li class="sidebar-list__item">
                 <a href="{{route('admin.coupons')}}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-percent icon"></i>
-                        <i class="fa fa-percent icon-active"></i>
+                        <i class="fas fa-percent icon"></i>
+                        <i class="fad fa-percent icon-active"></i>
                     </span>
                     <span class="text">Coupons</span>
                 </a>
@@ -86,8 +86,8 @@
             <li class="sidebar-list__item">
                 <a href="#" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-user icon"></i>
-                        <i class="fa fa-user icon-active"></i>
+                        <i class="fas fa-user icon"></i>
+                        <i class="fad fa-user icon-active"></i>
                     </span>
                     <span class="text">Users</span>
                 </a>
@@ -97,8 +97,8 @@
             <li class="sidebar-list__item">
                 <a href="#" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-shopping-cart icon"></i>
-                        <i class="fa fa-shopping-cart icon-active"></i>
+                        <i class="fad fa-shopping-cart icon"></i>
+                        <i class="fas fa-shopping-cart icon-active"></i>
                     </span>
                     <span class="text">Orders</span>
                 </a>
@@ -107,8 +107,8 @@
             <li class="sidebar-list__item">
                 <a href="#" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-chart-line icon"></i>
-                        <i class="fa fa-chart-line icon-active"></i>
+                        <i class="fad fa-chart-line icon"></i>
+                        <i class="fas fa-chart-line icon-active"></i>
                     </span>
                     <span class="text">Reports</span>
                 </a>
@@ -118,8 +118,8 @@
             <li class="sidebar-list__item side-hsb">
                 <a href="javascript:void(0)" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-blog icon"></i>
-                        <i class="fa fa-blog icon-active"></i>
+                        <i class="fad fa-blog icon"></i>
+                        <i class="fas fa-blog icon-active"></i>
                     </span>
                     <span class="text">Blogs</span>
                 </a>
@@ -136,8 +136,8 @@
             <li class="sidebar-list__item side-hsb">
                 <a href="javascript:void(0)" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-folders icon"></i>
-                        <i class="fa fa-folders icon-active"></i>
+                        <i class="fad fa-folders icon"></i>
+                        <i class="fas fa-folders icon-active"></i>
                     </span>
                     <span class="text">Pages</span>
                 </a>
@@ -155,8 +155,8 @@
             <li class="sidebar-list__item side-hsb">
                 <a href="javascript:void(0)" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fa fa-envelope icon"></i>
-                        <i class="fa fa-envelope icon-active"></i>
+                        <i class="fad fa-envelope icon"></i>
+                        <i class="fas fa-envelope icon-active"></i>
                     </span>
                     <span class="text">Email</span>
                 </a>
