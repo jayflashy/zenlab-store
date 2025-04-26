@@ -34,6 +34,9 @@ class CouponManager extends Component
     public $limit = null;
     public $expires_at = null;
     public bool $active = true;
+    public $deleteId;
+
+    public $showDeleteModal = false;
 
     protected $listeners = ['delete'];
 
@@ -167,21 +170,20 @@ class CouponManager extends Component
      */
     public function confirmDelete($id)
     {
-        $this->dispatch('confirm', [
-            'title' => 'Are you sure?',
-            'text' => 'Do you want to delete this coupon? This action cannot be undone.',
-            'method' => 'delete',
-            'params' => $id,
-        ]);
+        $this->deleteId = $id;
+        $this->showDeleteModal = true;
     }
 
     /**
      * Delete the coupon
      */
-    public function delete($id)
+    public function deleteCoupon($id)
     {
         $coupon = Coupon::findOrFail($id);
         $coupon->delete();
+
+        $this->showDeleteModal = false;
+        $this->deleteId = null;
         $this->successAlert('Coupon deleted successfully!');
     }
 

@@ -36,7 +36,7 @@
                             <label for="per-page" class="me-2 form-label mb-0">Show</label>
                             <div class="select-has-icon">
                                 <select wire:model.live="perPage" id="per-page" class="common-input border">
-                                    @foreach([10, 25, 50, 100] as $value)
+                                    @foreach ([10, 25, 50, 100] as $value)
                                         <option value="{{ $value }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
@@ -79,13 +79,15 @@
                                     @switch($coupon->type->value)
                                         @case('general')
                                             <span class="badge bg-info">General</span>
-                                            @break
+                                        @break
+
                                         @case('product')
                                             <span class="badge bg-primary">Product: {{ $coupon->product?->name ?? 'N/A' }}</span>
-                                            @break
+                                        @break
+
                                         @case('category')
                                             <span class="badge bg-warning">Category: {{ $coupon->category?->name ?? 'N/A' }}</span>
-                                            @break
+                                        @break
                                     @endswitch
                                 </td>
                                 <td>
@@ -114,22 +116,22 @@
                                     </button>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center py-4 text-muted">
-                                    No coupons found. Create your first coupon!
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-            @if ($coupons->hasPages())
-                <div class="card-footer">
-                    {{ $coupons->links('livewire::bootstrap') }}
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-muted">
+                                        No coupons found. Create your first coupon!
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-            @endif
-        </div>
+                @if ($coupons->hasPages())
+                    <div class="card-footer">
+                        {{ $coupons->links('livewire::bootstrap') }}
+                    </div>
+                @endif
+            </div>
     @else
         {{-- Form View Header --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -152,8 +154,35 @@
             'discountTypes' => $discountTypes,
             'couponTypes' => $couponTypes,
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
         ])
+    @endif
+
+
+    {{-- delete modal --}}
+    @if ($showDeleteModal)
+        <div class="common-modal modal fade show" tabindex="-1" id="deleteModal" aria-hidden="true"
+            style="display:block;background-color: rgba(0, 0, 0, 0.5);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Delete</h5>
+                        <button type="button" class="btn-close" wire:click="$set('showDeleteModal', false)"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this coupon?</p>
+                        <p class="text-danger">This action cannot be undone and will permanently remove the coupon from your store.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Cancel</button>
+                        <button type="button" class="btn btn-danger" wire:click="deleteCoupon('{{$deleteId}}')">
+                            <i class="fas fa-trash me-1"></i> Delete Coupon
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
 </div>
 
