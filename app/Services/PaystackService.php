@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Http;
 class PaystackService
 {
     protected $publicKey;
+
     protected $secretKey;
+
     protected $baseUrl;
 
     public function __construct()

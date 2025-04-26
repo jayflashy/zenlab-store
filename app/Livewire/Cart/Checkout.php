@@ -4,13 +4,9 @@ namespace App\Livewire\Cart;
 
 use App\Http\Controllers\PaymentController;
 use App\Models\Cart;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\User;
 use App\Services\OrderService;
 use App\Traits\LivewireToast;
 use Auth;
-use DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -20,20 +16,35 @@ class Checkout extends Component
     use WithFileUploads;
 
     public $cart;
+
     public $cartItems = [];
+
     public $name;
+
     public $email;
+
     public $paymentMethod = '';
+
     public $couponCode = '';
+
     public $discount = 0;
+
     public $subtotal = 0;
+
     public $total = 0;
+
     public $totalNgn = 0;
+
     public $processingPayment = false;
+
     public $showBankTransfer = false;
+
     public $paymentReceipt;
+
     public $bankReference;
+
     public $currentOrder;
+
     public $paymentGateways = [];
 
     protected $orderService;
@@ -53,6 +64,7 @@ class Checkout extends Component
     {
         $this->orderService = $orderService;
     }
+
     public function mount()
     {
         $this->loadCart();
@@ -64,7 +76,7 @@ class Checkout extends Component
             ['name' => 'Paypal', 'key' => 'paypal_payment', 'image' => 'paypal.png'],
             ['name' => 'Paystack', 'key' => 'paystack_payment', 'image' => 'card.png'],
             ['name' => 'Flutterwave', 'key' => 'flutterwave_payment', 'image' => 'card.png'],
-            ['name' => 'Cryptomus', 'key' => 'cryptomus_payment', 'image' => 'cryptomus.png'],
+            ['name' => 'Crypto', 'key' => 'cryptomus_payment', 'image' => 'cryptomus.png'],
             ['name' => 'Bank Transfer', 'key' => 'manual_payment', 'image' => 'bank.png'],
         ];
     }
@@ -144,6 +156,7 @@ class Checkout extends Component
                 $this->showBankTransfer = true;
                 $this->processingPayment = false;
                 $this->totalNgn = $this->totalToNgn();
+
                 return;
             }
             $paymentData = [
@@ -154,7 +167,7 @@ class Checkout extends Component
                 'order_id' => $order->id,
                 'currency' => get_setting('currency_code'),
                 'reference' => $order->code,
-                'description' => 'Order #' . $order->code,
+                'description' => 'Order #'.$order->code,
             ];
 
             // process payment
@@ -177,6 +190,7 @@ class Checkout extends Component
     public function totalToNgn(): int
     {
         $rate = (float) get_setting('currency_rate', 1);
+
         return (int) round($this->total * $rate);
     }
 

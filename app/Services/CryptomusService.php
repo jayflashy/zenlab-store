@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Http;
 class CryptomusService
 {
     protected $apiKey;
+
     protected $merchantId;
+
     protected $baseUrl;
 
     public function __construct()
@@ -20,23 +22,52 @@ class CryptomusService
     // Generate a payment link
     public function createPayment($amount, $details, $currency = 'USD')
     {
+        $amount = number_format($amount, 2, '.', '');
         $data = [
             'amount' => $amount,
             'currency' => $currency,
             'order_id' => $details['reference'],
             'url_success' => route('cryptomus.success'),
             'url_callback' => route('cryptomus.success'),
-            'url_return' => $details['cancelUrl'],
+            'url_return' => route('checkout'),
             'description' => $details['description'],
+            'subtract' => 10,
+            'accuracy_payment_percent' => 4,
+            'currencies' => [
+                [
+                    'currency' => 'USDT',
+                ],
+                [
+                    'currency' => 'BTC',
+                ],
+                [
+                    'currency' => 'ETH',
+                ],
+                [
+                    'currency' => 'SOL',
+                ],
+                [
+                    'currency' => 'TON',
+                ],
+                [
+                    'currency' => 'BNB',
+                ],
+                [
+                    'currency' => 'TRX',
+                ],
+            ],
+
         ];
         $signature = $this->generateSignature($data);
         $response = Http::withHeaders([
             'merchant' => $this->merchantId,
             'sign' => $signature,
-            'Content-Type' => 'application/json',
         ])->post("{$this->baseUrl}/payment", $data);
 
-        return $response->json();
+        if ($response->successful()) {
+            return $response->json();
+        }
+        throw new \Exception("Cryptomus Error: {$response->body()}");
     }
 
     // Check the status of a payment
@@ -57,11 +88,9 @@ class CryptomusService
      */
     private function generateSignature(array $payload): string
     {
-        // ksort($payload);
         $jsonData = json_encode($payload, JSON_UNESCAPED_UNICODE);
 
-        return $sign = md5(base64_encode($jsonData).$this->apiKey);
-        // return hash_hmac('sha512', $jsonData, $this->apiKey);
+        return md5(base64_encode($jsonData).$this->apiKey);
     }
 
     /**

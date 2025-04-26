@@ -2,21 +2,18 @@
 
 namespace App\Services;
 
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Cart;
 use App\Models\User;
-use App\Events\OrderCreated;
-use DB;
 use Auth;
+use DB;
 
 class OrderService
 {
     /**
      * Create a new order from cart items
      *
-     * @param array $orderData
-     * @param Cart $cart
      * @return Order
      */
     public function createOrder(array $orderData, Cart $cart)
@@ -26,7 +23,7 @@ class OrderService
 
             // Handle guest user if needed
             $userId = Auth::id();
-            if (!$userId && isset($orderData['email']) && isset($orderData['name'])) {
+            if (! $userId && isset($orderData['email']) && isset($orderData['name'])) {
                 $user = $this->createOrGetUser($orderData['name'], $orderData['email']);
                 $userId = $user->id;
                 Auth::login($user);
@@ -44,7 +41,7 @@ class OrderService
                 'payment_method' => $orderData['payment_method'],
                 'payment_status' => 'pending',
                 'order_status' => 'pending',
-                'cart_id' => $cart->id
+                'cart_id' => $cart->id,
             ]);
 
             // Create order items
@@ -73,8 +70,6 @@ class OrderService
     /**
      * Mark an order as complete
      *
-     * @param Order $order
-     * @param array $paymentData
      * @return Order
      */
     public function completeOrder(Order $order, array $paymentData = [])
@@ -101,8 +96,6 @@ class OrderService
     /**
      * Mark an order as failed
      *
-     * @param Order $order
-     * @param array $paymentData
      * @return Order
      */
     public function failOrder(Order $order, array $paymentData = [])
@@ -117,9 +110,6 @@ class OrderService
     /**
      * Handle manual payment (bank transfer)
      *
-     * @param Order $order
-     * @param string $receiptPath
-     * @param string $reference
      * @return Order
      */
     public function processManualPayment(Order $order, string $receiptPath, string $reference)
@@ -128,7 +118,7 @@ class OrderService
         $order->bank_reference = $reference;
         $order->payment_status = 'pending';
         $order->order_status = 'processing';
-        $order->notes = 'Manual payment receipt uploaded. Reference: ' . $reference;
+        $order->notes = 'Manual payment receipt uploaded. Reference: '.$reference;
         $order->save();
 
         // Clear cart but don't mark as completed yet
@@ -142,8 +132,6 @@ class OrderService
     /**
      * Create or get user from email
      *
-     * @param string $name
-     * @param string $email
      * @return User
      */
     protected function createOrGetUser(string $name, string $email)

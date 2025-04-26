@@ -31,7 +31,6 @@ class Order extends Model
         'payment_date',
     ];
 
-
     public function items()
     {
         return $this->hasMany(OrderItem::class);

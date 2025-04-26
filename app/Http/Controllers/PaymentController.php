@@ -16,9 +16,13 @@ class PaymentController extends Controller
     use ApiResponse;
 
     private $paystack;
+
     private $paypal;
+
     private $flutterwave;
+
     private $cryptomus;
+
     private $orderService;
 
     public function __construct(
@@ -65,7 +69,6 @@ class PaymentController extends Controller
             if (isset($res['data']['link'])) {
                 return redirect($res['data']['link']);
             }
-
             throw new \Exception('Unable to initialize payment');
         } catch (\Exception $e) {
             throw new \Exception('Unable to initialize payment');
@@ -92,7 +95,18 @@ class PaymentController extends Controller
         }
     }
 
-    public function initCryptomus($order) {}
+    public function initCryptomus($data)
+    {
+        try {
+            $res = $this->cryptomus->createPayment($data['amount'], $data);
+            if (isset($res['result']['url'])) {
+                return redirect($res['result']['url']);
+            }
+            throw new \Exception('Unable to initialize payment');
+        } catch (\Exception $e) {
+            throw new \Exception('Unable to initialize payment');
+        }
+    }
 
     public function paystackSuccess(Request $request)
     {
@@ -109,10 +123,12 @@ class PaymentController extends Controller
                 // Find order by reference
                 $order = Order::where('code', $paymentData['data']['reference'])->firstOrFail();
                 $this->orderService->failOrder($order, $paymentData);
+
                 return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
             }
         } catch (\Exception $e) {
-            logger()->error('Paystack callback error: ' . $e->getMessage());
+            logger()->error('Paystack callback error: '.$e->getMessage());
+
             return redirect()->route('checkout')->with('error', 'Something went wrong with your payment');
         }
     }
@@ -133,6 +149,7 @@ class PaymentController extends Controller
         } else {
             $order = Order::where('code', $paymentData['data']['tx_ref'])->firstOrFail();
             $this->orderService->failOrder($order, $paymentData);
+
             return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
         }
     }
@@ -151,9 +168,10 @@ class PaymentController extends Controller
             $this->orderService->completeOrder($order, $paymentData);
 
             return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
-        }else{
+        } else {
             $order = Order::where('code', $paymentData['purchase_units'][0]['custom_id'])->firstOrFail();
             $this->orderService->failOrder($order, $paymentData);
+
             return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
         }
 

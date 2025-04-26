@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Log;
 class PayPalService
 {
     private string $clientId;
+
     private string $secret;
+
     private string $baseUrl;
+
     private ?string $cachedAccessToken = null;
+
     private ?int $tokenExpiryTime = null;
 
     public function __construct()
