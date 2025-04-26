@@ -79,7 +79,7 @@ class OrderService
         $order->payment_date = now();
         $order->save();
         // increase sales for each order items
-        foreach ($order->items as $item) {
+        foreach ($order->items()->with('product')->get() as $item) {
             $item->product->update(['sales_count' => $item->product->sales_count + $item->quantity]);
         }
 
