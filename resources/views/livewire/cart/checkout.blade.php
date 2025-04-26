@@ -35,29 +35,26 @@
                                 <div class="card-body p-4">
                                     <div class="payment-select-card-wrapper row">
                                         @foreach ($paymentGateways as $method)
-                                            @if (sys_setting($method['key']) == 1)
-                                                <div class="col-sm-6">
-                                                    <div class="payment-select-card mb-4">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <div class="d-flex align-items-center gap-3">
-                                                                <div class="common-check common-radio mb-0">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        wire:model="paymentMethod" value="{{ $method['key'] }}"
-                                                                        id="{{ $method['key'] }}" required>
-                                                                    <label class="form-check-label" for="{{ $method['key'] }}"> </label>
-                                                                </div>
-                                                                <div>
-                                                                    <h6 class="font-16 mb-0">{{ $method['name'] }}</h6>
-                                                                </div>
+                                            <div class="col-sm-6">
+                                                <div class="payment-select-card mb-4">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <div class="common-check common-radio mb-0">
+                                                                <input class="form-check-input" type="radio" wire:model="paymentMethod"
+                                                                    value="{{ $method['key'] }}" id="{{ $method['key'] }}" required>
+                                                                <label class="form-check-label" for="{{ $method['key'] }}"> </label>
                                                             </div>
-                                                            <div class="payment-select-card__logo">
-                                                                <img src="{{ static_asset('payments/' . $method['image']) }}"
-                                                                    alt="{{ $method['name'] }}">
+                                                            <div>
+                                                                <h6 class="font-16 mb-0">{{ $method['name'] }}</h6>
                                                             </div>
+                                                        </div>
+                                                        <div class="payment-select-card__logo">
+                                                            <img src="{{ static_asset('payments/' . $method['image']) }}"
+                                                                alt="{{ $method['name'] }}">
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            </div>
                                         @endforeach
                                     </div>
                                     @error('paymentMethod')
@@ -118,8 +115,8 @@
                                 </span>
                                 <span wire:loading.remove wire:target="applyCoupon">Apply</span>
                             </button>
-                            @if($couponStatus)
-                                <span class="text-{{$couponStatus['status']}}">{{ $couponStatus['message'] }}</span>
+                            @if ($couponStatus)
+                                <span class="text-{{ $couponStatus['status'] }}">{{ $couponStatus['message'] }}</span>
                             @endif
                         </div>
                     </div>
@@ -190,7 +187,8 @@
                             <div class="mb-3">
                                 <label for="bankReference" class="form-label">Bank Reference/Transaction ID <span
                                         class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="bankReference" placeholder="Enter bank reference" wire:model="bankReference" required>
+                                <input type="text" class="form-control" id="bankReference" placeholder="Enter bank reference"
+                                    wire:model="bankReference" required>
                                 @error('bankReference')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
