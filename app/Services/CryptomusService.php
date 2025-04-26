@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Http;
 class CryptomusService
 {
     protected $apiKey;
-
     protected $merchantId;
-
     protected $baseUrl;
 
     public function __construct()

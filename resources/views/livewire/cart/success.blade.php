@@ -77,6 +77,9 @@
                                             @if ($item->license_type)
                                                 <small>({{ ucfirst($item->license_type) }})</small>
                                             @endif
+                                            @if ($item->extended_support)
+                                            <small> + Support</small>
+                                        @endif
                                         </span>
                                         <span class="text">{{ format_price($item->price) }}</span>
                                     </li>

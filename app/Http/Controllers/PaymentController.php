@@ -100,7 +100,7 @@ class PaymentController extends Controller
             $paymentData = $this->paystack->getTransactionStatus($request->reference);
             // Verify transaction details
             if (! empty($paymentData['data']) && $paymentData['data']['status'] == 'success') {
-                $details = $paymentData['data']['metadata'];
+                $metadata = $paymentData['data']['metadata'];
                 $order = Order::where('code', $paymentData['data']['reference'])->firstOrFail();
                 $this->orderService->completeOrder($order, $paymentData);
 
@@ -120,15 +120,43 @@ class PaymentController extends Controller
     public function flutterSuccess(Request $request)
     {
         if ($request->status == 'cancelled') {
-            return $this->errorResponse('Payment Was Cancelled');
+            return $this->callbackResponse('error', 'Payment Was Cancelled', route('checkout'));
         }
-        $transactionID = request()->transaction_id;
+        $transactionID = $request->transaction_id;
+        $paymentData = $this->flutterwave->getTransactionStatus($transactionID);
+        if ($paymentData['status'] == 'success' && $paymentData['data']['status'] == 'successful') {
+            $metadata = $paymentData['data']['meta'];
+            $order = Order::where('code', $paymentData['data']['tx_ref'])->firstOrFail();
+            $this->orderService->completeOrder($order, $paymentData);
 
-        return $response = $this->flutterwave->getTransactionStatus($transactionID);
+            return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
+        } else {
+            $order = Order::where('code', $paymentData['data']['tx_ref'])->firstOrFail();
+            $this->orderService->failOrder($order, $paymentData);
+            return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
+        }
     }
 
     public function paypalSuccess(Request $request)
     {
+        $orderId = $request->token;
+        if (empty($orderId)) {
+            return $this->callbackResponse('error', 'Invalid Payment', route('checkout'));
+        }
+        $paymentData = $this->paypal->getOrderDetails($orderId);
+        if ($paymentData['status'] == 'APPROVED') {
+            // confirm payment
+            $code = $paymentData['purchase_units'][0]['custom_id'] ?? null;
+            $order = Order::where('code', $code)->firstOrFail();
+            $this->orderService->completeOrder($order, $paymentData);
+
+            return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
+        }else{
+            $order = Order::where('code', $paymentData['purchase_units'][0]['custom_id'])->firstOrFail();
+            $this->orderService->failOrder($order, $paymentData);
+            return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
+        }
+
         return $request;
     }
 

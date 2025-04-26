@@ -9,13 +9,9 @@ use Illuminate\Support\Facades\Log;
 class PayPalService
 {
     private string $clientId;
-
     private string $secret;
-
     private string $baseUrl;
-
     private ?string $cachedAccessToken = null;
-
     private ?int $tokenExpiryTime = null;
 
     public function __construct()
@@ -111,14 +107,10 @@ class PayPalService
                 return $response->json();
             }
 
-            throw new Exception("PayPal API Error: {$response->getMessage()}");
+            throw new Exception("PayPal API Error: {$response->body()}");
         } catch (Exception $e) {
-            Log::error('PayPal createPayment failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
 
-            throw new Exception("Failed to create PayPal payment: {$response->getMessage()}");
+            throw new Exception("Failed to create PayPal payment: {$e->getMessage()}");
         }
     }
 

@@ -80,10 +80,14 @@ class OrderService
     public function completeOrder(Order $order, array $paymentData = [])
     {
         $order->payment_status = 'completed';
-        $order->order_status = 'processing';
+        $order->order_status = 'completed';
         $order->response = ($paymentData);
         $order->payment_date = now();
         $order->save();
+        // increase sales for each order items
+        foreach ($order->items as $item) {
+            $item->product->update(['sales_count' => $item->product->sales_count + $item->quantity]);
+        }
 
         // Clear the cart after successful order
         if ($order->cart_id) {

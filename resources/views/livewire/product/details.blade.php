@@ -205,13 +205,13 @@
                             <div class="license-dropdown">
                                 <div class="license-dropdown__item mb-3" wire:click="toggleLicenseType">
                                     <h6 class="license-dropdown__title font-body mb-1 font-16">Regular License</h6>
-                                    <p class="license-dropdown__desc font-13">Use, by you or one client, in a solitary finished result
+                                    <p class="license-dropdown__desc {{ $selectedLicenseType === 'regular' ? 'activeSelectItem' : '' }} font-13">Use, by you or one client, in a solitary finished result
                                         which end clients are not charged for. The complete cost incorporates the thing cost and a purchaser
                                         fee..</p>
                                 </div>
                                 <div class="license-dropdown__item" wire:click="toggleLicenseType">
                                     <h6 class="license-dropdown__title font-body mb-1 font-16">Extended License</h6>
-                                    <p class="license-dropdown__desc font-13">Use, by you or one client, in a solitary final result which
+                                    <p class="license-dropdown__desc {{ $selectedLicenseType === 'extended' ? 'activeSelectItem' : '' }} font-13">Use, by you or one client, in a solitary final result which
                                         end clients can be charged for. The all out cost incorporates the thing cost and a purchaser
                                         fee.</p>
                                 </div>

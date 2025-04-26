@@ -7,11 +7,8 @@ use Illuminate\Support\Facades\Http;
 class FlutterwaveService
 {
     protected $publicKey;
-
     protected $secretKey;
-
     protected $hashKey;
-
     protected $baseUrl;
 
     public function __construct()
