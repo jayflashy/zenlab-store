@@ -4,9 +4,11 @@ namespace App\Livewire\Admin\Products;
 
 use App\Models\Comment;
 use App\Traits\LivewireToast;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Layout('admin.layouts.app')]
 class Comments extends Component
 {
     use LivewireToast;
@@ -140,13 +142,13 @@ class Comments extends Component
         $comments = Comment::with(['user', 'product', 'parent'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->where('content', 'like', '%'.$this->search.'%')
-                        // ->orWhereHas('user', function ($u) {
-                        //     $u->where('name', 'like', '%' . $this->search . '%')
-                        //         ->orWhere('email', 'like', '%' . $this->search . '%');
-                        // })
+                    $q->where('content', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('user', function ($u) {
+                            $u->where('name', 'like', '%' . $this->search . '%')
+                                ->orWhere('email', 'like', '%' . $this->search . '%');
+                        })
                         ->orWhereHas('product', function ($p) {
-                            $p->where('name', 'like', '%'.$this->search.'%');
+                            $p->where('name', 'like', '%' . $this->search . '%');
                         });
                 });
             })
@@ -156,7 +158,6 @@ class Comments extends Component
             ->latest()
             ->paginate(30);
 
-        return view('livewire.admin.products.comments', compact('comments'))
-            ->layout('admin.layouts.app');
+        return view('livewire.admin.products.comments', compact('comments'));
     }
 }

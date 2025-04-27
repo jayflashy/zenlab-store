@@ -3,9 +3,11 @@
 use App\Http\Controllers\Admin\SettingsController;
 use App\Livewire\Admin\BlogManager;
 use App\Livewire\Admin\CategoryManager;
+use App\Livewire\Admin\CouponManager;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\EmailSetting;
 use App\Livewire\Admin\EmailTemplate;
+use App\Livewire\Admin\OrderManager;
 use App\Livewire\Admin\PageManager;
 use App\Livewire\Admin\Products\Comments as ProductComments;
 use App\Livewire\Admin\Products\ProductForm;
@@ -29,6 +31,10 @@ Route::middleware('admin')->group(function (): void {
     Route::get('products/edit/{id}', ProductForm::class)->name('products.edit');
     Route::get('products/comments', ProductComments::class)->name('products.comments');
     Route::get('products/ratings', Ratings::class)->name('products.ratings');
+    // coupons
+    Route::get('coupons', CouponManager::class)->name('coupons');
+    // orders
+    Route::get('orders', OrderManager::class)->name('orders');
 
     // Blogs
     Route::get('blogs', BlogManager::class)->name('blogs');

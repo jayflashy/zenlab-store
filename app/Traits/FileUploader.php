@@ -35,8 +35,8 @@ trait FileUploader
         $extension = $format ? strtolower($format) : $file->getClientOriginalExtension();
 
         // Create a unique filename
-        $filename = Str::random(35).'-'.time().'.'.$extension;
-        $fullPath = $path.'/'.$filename;
+        $filename = Str::random(35) . '-' . time() . '.' . $extension;
+        $fullPath = $path . '/' . $filename;
 
         // Read the image using Intervention
         $image = Image::read($file);

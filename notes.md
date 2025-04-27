@@ -13,3 +13,6 @@
 - Ratings and comments
 - add to cart and license 
 - share buttons
+
+<!-- Change related post from slider in product details -->
+TODO: add cron to delete session carts after 24 hours (and their items)

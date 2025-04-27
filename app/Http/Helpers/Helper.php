@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Coupon;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Models\SystemSetting;
@@ -10,10 +11,10 @@ if (! function_exists('static_asset')) {
     function static_asset(string $path, $secure = null)
     {
         if (PHP_SAPI == 'cli-server') {
-            return app('url')->asset('assets/'.$path, $secure);
+            return app('url')->asset('assets/' . $path, $secure);
         }
 
-        return app('url')->asset('public/assets/'.$path, $secure);
+        return app('url')->asset('public/assets/' . $path, $secure);
     }
 }
 
@@ -22,10 +23,10 @@ if (! function_exists('my_asset')) {
     function my_asset(string $path, $secure = null)
     {
         if (PHP_SAPI == 'cli-server') {
-            return app('url')->asset('uploads/'.$path, $secure);
+            return app('url')->asset('uploads/' . $path, $secure);
         }
 
-        return app('url')->asset('public/uploads/'.$path, $secure);
+        return app('url')->asset('public/uploads/' . $path, $secure);
     }
 }
 
@@ -82,7 +83,7 @@ if (! function_exists('format_price')) {
         $fomated_price = number_format($price, 2);
         $currency = get_setting('currency');
 
-        return $currency.$fomated_price;
+        return $currency . $fomated_price;
     }
 }
 
@@ -93,7 +94,7 @@ if (! function_exists('ngnformat_price')) {
         $fomated_price = number_format($price, 2);
         $currency = '₦';
 
-        return $currency.$fomated_price;
+        return $currency . $fomated_price;
     }
 }
 
@@ -102,7 +103,7 @@ function sym_price($price): string
     $fomated_price = number_format($price, 2);
     $currency = get_setting('currency_code');
 
-    return $currency.' '.$fomated_price;
+    return $currency . ' ' . $fomated_price;
 }
 
 function format_number($price, $place = 2): string
@@ -155,7 +156,7 @@ function uniqueSlug($name, $model)
     // If the slug already exists, append a number to make it unique
     $i = 1;
     do {
-        $newSlug = $slug.'-'.$i;
+        $newSlug = $slug . '-' . $i;
 
         if (! $allSlugs->contains('slug', $newSlug)) {
             return $newSlug;
@@ -169,7 +170,7 @@ function uniqueSlug($name, $model)
 function checkRelatedSlugs(string $slug, $model)
 {
     // Use DB::table to query the model's table for slugs starting with the provided slug
-    return DB::table($model)->where('slug', 'LIKE', $slug.'%')->get();
+    return DB::table($model)->where('slug', 'LIKE', $slug . '%')->get();
 }
 
 // Generate a random alphanumeric string of a specified length
@@ -195,7 +196,7 @@ function getTrans(string $prefix, $len = 15): string
         $randomString .= $characters[random_int(0, $charactersLength - 1)];
     }
 
-    return $prefix.'_'.$randomString;
+    return $prefix . '_' . $randomString;
 }
 
 // Round the given amount to a specified number of decimal places
@@ -283,19 +284,25 @@ function queryBuild(string $key, $value): ?string
         $match = preg_match("/{$pattern}/", $url);
 
         if ($match != 0) {
-            return preg_replace('~(\?|&)'.$key.'[^&]*~', "\?{$key}={$value}", $url);
+            return preg_replace('~(\?|&)' . $key . '[^&]*~', "\?{$key}={$value}", $url);
         }
 
-        $filteredURL = preg_replace('~(\?|&)'.$key.'[^&]*~', '', $url);
+        $filteredURL = preg_replace('~(\?|&)' . $key . '[^&]*~', '', $url);
 
-        return $filteredURL.$delimeter."{$key}={$value}";
+        return $filteredURL . $delimeter . "{$key}={$value}";
     }
 
-    return request()->getRequestUri().$delimeter."{$key}={$value}";
+    return request()->getRequestUri() . $delimeter . "{$key}={$value}";
 }
 
 // footer pages
 function footerPages($count = 3)
 {
     return Cache::remember("footerPages_{$count}", 16000, fn () => Page::where('type', 'custom')->limit($count)->get());
+}
+
+// get coupons
+function allCoupons()
+{
+    return Cache::remember('allCoupons', 16000, fn () => Coupon::valid()->get());
 }

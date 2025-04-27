@@ -216,8 +216,8 @@ class CategoryManager extends Component
     public function render()
     {
         $categories = Category::query()
-            ->when($this->searchTerm, fn ($q) => $q->where('name', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('slug', 'like', '%'.$this->searchTerm.'%'))
+            ->when($this->searchTerm, fn ($q) => $q->where('name', 'like', '%' . $this->searchTerm . '%')
+                ->orWhere('slug', 'like', '%' . $this->searchTerm . '%'))
             ->when(! $this->showInactive, fn ($q) => $q->where('is_active', true))
             ->with('parent')
             ->withCount('children')

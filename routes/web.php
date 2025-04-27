@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaymentController;
 use App\Livewire\Blogs;
 use App\Livewire\BlogView;
 use App\Livewire\Cart\Checkout;
@@ -25,7 +26,7 @@ Route::get('/blogs/{slug}', BlogView::class)->name('blogs.view');
 Route::get('/cart', Cart::class)->name('cart');
 Route::get('/checkout', Checkout::class)->name('checkout');
 Route::get('/shop', Home::class)->name('shop');
-Route::get('/transaction-success', PaymentSuccess::class)->name('payment.success');
+Route::get('payment/success/{order_id?}', PaymentSuccess::class)->name('payment.success');
 // pages
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/policy', [PageController::class, 'policy'])->name('policy');
@@ -48,8 +49,17 @@ Route::middleware(['auth'])->group(function (): void {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::prefix('admin')->as('admin.')->group(function (): void {
-    require __DIR__.'/admin.php';
+    require __DIR__ . '/admin.php';
+});
+
+// Payment Callback
+Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+    Route::any('/paystack', 'paystackSuccess')->name('paystack.success');
+    Route::any('/flutter', 'flutterSuccess')->name('flutter.success');
+    Route::post('/cryptomus', 'cryptomusSuccess')->name('cryptomus.success');
+    Route::get('/paypal', 'paypalSuccess')->name('paypal.success');
+    Route::get('/paypal-cancel', 'paypalError')->name('paypal.cancel');
 });

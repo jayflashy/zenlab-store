@@ -211,9 +211,9 @@
                                 <input type="hidden" name="types[]" value="FLW_SECRET_KEY">
                                 <label class="form-label">{{ __('FLW SECRET KEY') }}</label>
                                 <input type="text" class="common-input border" name="FLW_SECRET_KEY"
-                                    <input type="text" class="common-input border" name="FLW_SECRET_KEY"
-                                        value="{{ env('FLW_SECRET_KEY') }}" placeholder="FLUTTERWAVE SECRET KEY" required>
-                                </div>
+                                    value="{{ env('FLW_SECRET_KEY') }}"
+                                    placeholder="FLUTTERWAVE SECRET KEY" required>
+                            </div>
                             <div class="form-group mb-0 text-end">
                                 <button type="submit" class="btn btn-sm w-100 btn-main">{{ __('Save') }}</button>
                             </div>
@@ -251,7 +251,9 @@
             </div>
             <div class="col-sm-6 col-md-4 ">
                 <div class="card common-card mb-2">
-                    <h5 class="card-header fw-bold">{{ __('Cryptomus Credentials') }}</h5>
+                    <div class="card-header">
+                        <h5 class="fw-bold mb-0">{{ __('Cryptomus Credentials') }}</h5>
+                    </div>
                     <form action="{{ route('admin.settings.env_key') }}" method="POST" class=" ajaxForm">
                         @csrf
                         <div class="card-body">
@@ -274,7 +276,9 @@
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="card common-card">
-                    <h5 class="card-header fw-bold mb-0">Bank Payment Details</h5>
+                    <div class="card-header">
+                        <h5 class="fw-bold mb-0">Bank Payment Details</h5>
+                    </div>
                     <div class="card-body">
                         <form action="{{ route('admin.settings.store_settings') }}" method="post" class="ajaxForm">
                             @csrf
