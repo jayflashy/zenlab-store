@@ -50,8 +50,6 @@ class CouponManager extends Component
 
     public $showDeleteModal = false;
 
-    protected $listeners = ['delete'];
-
     // Defining constants for dropdown values
     protected const DISCOUNT_TYPES = [
         'percent' => 'Percentage (%)',
@@ -129,7 +127,7 @@ class CouponManager extends Component
         $this->category_id = $coupon->category_id;
         $this->limit = $coupon->limit;
         $this->expires_at = $coupon->expires_at ? $coupon->expires_at->format('Y-m-d') : null;
-        $this->active = boolval($coupon->active) ?? $coupon->active;
+        $this->active = (bool) $coupon->active;
 
         $this->view = 'edit';
     }
@@ -215,7 +213,6 @@ class CouponManager extends Component
             'category_id',
             'limit',
             'expires_at',
-            'active',
         ]);
 
         // Set defaults

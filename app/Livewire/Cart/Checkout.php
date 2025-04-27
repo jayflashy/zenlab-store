@@ -5,7 +5,6 @@ namespace App\Livewire\Cart;
 use App\Enums\DiscountType;
 use App\Http\Controllers\PaymentController;
 use App\Models\Cart;
-use App\Models\Coupon;
 use App\Services\OrderService;
 use App\Traits\LivewireToast;
 use Auth;
@@ -192,6 +191,7 @@ class Checkout extends Component
             // process payment
             $paymentController = app(PaymentController::class);
 
+            $this->processingPayment = false;
             return match ($this->paymentMethod) {
                 'paystack_payment' => $paymentController->initPaystack($paymentData),
                 'flutterwave_payment' => $paymentController->initFlutter($paymentData),

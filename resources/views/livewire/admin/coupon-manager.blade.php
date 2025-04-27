@@ -132,57 +132,57 @@
                     </div>
                 @endif
             </div>
-    @else
-        {{-- Form View Header --}}
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h1 class="h3 mb-0">{{ $view === 'create' ? 'Create Coupon' : 'Edit Coupon' }}</h1>
-                <p class="text-muted mb-0">
-                    {{ $view === 'create' ? 'Create a new discount coupon' : 'Update coupon details' }}
-                </p>
+        @else
+            {{-- Form View Header --}}
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 mb-0">{{ $view === 'create' ? 'Create Coupon' : 'Edit Coupon' }}</h1>
+                    <p class="text-muted mb-0">
+                        {{ $view === 'create' ? 'Create a new discount coupon' : 'Update coupon details' }}
+                    </p>
+                </div>
+                <div>
+                    <button wire:click="backToList" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Back to List
+                    </button>
+                </div>
             </div>
-            <div>
-                <button wire:click="backToList" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-1"></i> Back to List
-                </button>
-            </div>
-        </div>
 
-        {{-- Coupon Form --}}
-        @include('partials.coupon.form', [
-            'view' => $view,
-            'discountTypes' => $discountTypes,
-            'couponTypes' => $couponTypes,
-            'products' => $products,
-            'categories' => $categories,
-        ])
-    @endif
+            {{-- Coupon Form --}}
+            @include('partials.coupon.form', [
+                'view' => $view,
+                'discountTypes' => $discountTypes,
+                'couponTypes' => $couponTypes,
+                'products' => $products,
+                'categories' => $categories,
+            ])
+        @endif
 
-    {{-- delete modal --}}
-    @if ($showDeleteModal)
-        <div class="common-modal modal fade show" tabindex="-1" id="deleteModal" aria-hidden="true"
-            style="display:block;background-color: rgba(0, 0, 0, 0.5);">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close" wire:click="$set('showDeleteModal', false)"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this coupon?</p>
-                        <p class="text-danger">This action cannot be undone and will permanently remove the coupon from your store.
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Cancel</button>
-                        <button type="button" class="btn btn-danger" wire:click="deleteCoupon('{{$deleteId}}')">
-                            <i class="fas fa-trash me-1"></i> Delete Coupon
-                        </button>
+        {{-- delete modal --}}
+        @if ($showDeleteModal)
+            <div class="common-modal modal fade show" tabindex="-1" id="deleteModal" role="dialog" aria-labelledby="deleteModalTitle"
+                aria-modal="true" style="display:block;background-color: rgba(0, 0, 0, 0.5);">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalTitle">Confirm Delete</h5>
+                            <button type="button" class="btn-close" wire:click="$set('showDeleteModal', false)"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this coupon?</p>
+                            <p class="text-danger">This action cannot be undone and will permanently remove the coupon from your store.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Cancel</button>
+                            <button type="button" class="btn btn-danger" wire:click="deleteCoupon('{{ $deleteId }}')">
+                                <i class="fas fa-trash me-1"></i> Delete Coupon
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endif
-</div>
+        @endif
+    </div>
 
-@include('layouts.meta')
+    @include('layouts.meta')
