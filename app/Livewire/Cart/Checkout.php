@@ -192,6 +192,7 @@ class Checkout extends Component
             $paymentController = app(PaymentController::class);
 
             $this->processingPayment = false;
+
             return match ($this->paymentMethod) {
                 'paystack_payment' => $paymentController->initPaystack($paymentData),
                 'flutterwave_payment' => $paymentController->initFlutter($paymentData),
