@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\DiscountType;
 use App\Enums\CouponType;
+use App\Enums\DiscountType;
 use Cache;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;

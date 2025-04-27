@@ -5,35 +5,46 @@ namespace App\Livewire\Admin;
 use App\Models\Order;
 use App\Services\OrderService;
 use App\Traits\LivewireToast;
-use Livewire\Component;
-use Livewire\WithPagination;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 #[Layout('admin.layouts.app')]
 class OrderManager extends Component
 {
     use LivewireToast;
-    use WithPagination;
     use WithFileUploads;
+    use WithPagination;
 
     public $searchTerm = '';
+
     public $statusFilter = '';
+
     public $paymentStatusFilter = '';
+
     public $paymentGatewayFilter = '';
+
     public $dateFrom = '';
+
     public $dateTo = '';
+
     public $perPage = 25;
 
     // Order view and edit properties
     public $viewingOrder = null;
+
     public $editingNotes = false;
+
     public $orderNotes = '';
 
     // Status update properties
     public $updatingOrderId = null;
+
     public $newOrderStatus = '';
+
     public $newPaymentStatus = '';
+
     public $deleteId;
 
     public $showDeleteModal = false;
@@ -70,7 +81,7 @@ class OrderManager extends Component
 
     public function saveNotes()
     {
-        if (!$this->viewingOrder) {
+        if (! $this->viewingOrder) {
             return;
         }
 
@@ -92,8 +103,9 @@ class OrderManager extends Component
     {
         $order = Order::find($this->updatingOrderId);
 
-        if (!$order) {
+        if (! $order) {
             $this->error('Order not found');
+
             return;
         }
 
@@ -135,8 +147,9 @@ class OrderManager extends Component
     {
         $order = Order::find($orderId);
 
-        if (!$order) {
+        if (! $order) {
             $this->error('Order not found');
+
             return;
         }
 
@@ -153,8 +166,9 @@ class OrderManager extends Component
     {
         $order = Order::find($orderId);
 
-        if (!$order || !$order->payment_receipt) {
+        if (! $order || ! $order->payment_receipt) {
             $this->error('Receipt not found');
+
             return;
         }
 
