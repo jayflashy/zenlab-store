@@ -135,9 +135,9 @@ class EmailTemplate extends Component
         if ($this->view === 'list') {
             $this->title = 'Email Templates';
             $templates = NotifyTemplate::when($this->search, function ($query): void {
-                $query->where('name', 'like', '%'.$this->search.'%')
-                    ->orWhere('type', 'like', '%'.$this->search.'%')
-                    ->orWhere('subject', 'like', '%'.$this->search.'%');
+                $query->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('type', 'like', '%' . $this->search . '%')
+                    ->orWhere('subject', 'like', '%' . $this->search . '%');
             })
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);

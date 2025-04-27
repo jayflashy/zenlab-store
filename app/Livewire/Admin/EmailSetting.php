@@ -66,7 +66,7 @@ class EmailSetting extends Component
 
             $this->toast('success', 'Test email sent successfully!', 'success');
         } catch (Exception $exception) {
-            $this->toast('error', 'Failed to send test email: '.$exception->getMessage(), 'error');
+            $this->toast('error', 'Failed to send test email: ' . $exception->getMessage(), 'error');
         }
     }
 
