@@ -18,7 +18,6 @@
         </svg>
     </div>
     {{-- mobile menu --}}
-    @include('user.layouts.mobile-nav')
 
     <section class="dashboard">
         <div class="dashboard__inner d-flex">

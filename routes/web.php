@@ -37,10 +37,6 @@ Route::get('user', User::class)->name('user.index');
 
 Route::get('dashboard', User::class)->name('dashboard');
 
-// Route::view('dashboard', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
-
 Route::middleware(['auth'])->group(function (): void {
     Route::redirect('settings', 'settings/profile');
 
