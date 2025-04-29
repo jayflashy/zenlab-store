@@ -33,10 +33,7 @@ Route::get('/policy', [PageController::class, 'policy'])->name('policy');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 Route::get('/pages/{slug}', [PageController::class, 'show'])->name('pages.view');
 
-Route::get('user', User::class)->name('user.index');
-
 Route::get('dashboard', User::class)->name('dashboard');
-
 Route::middleware(['auth'])->group(function (): void {
     Route::redirect('settings', 'settings/profile');
 
@@ -49,6 +46,10 @@ require __DIR__ . '/auth.php';
 
 Route::prefix('admin')->as('admin.')->group(function (): void {
     require __DIR__ . '/admin.php';
+});
+// user
+Route::prefix('user')->as('user.')->group(function (): void {
+    require __DIR__ . '/user.php';
 });
 
 // Payment Callback

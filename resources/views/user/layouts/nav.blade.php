@@ -6,13 +6,7 @@
         <button type="button" class="icon-btn arrow-icon text-heading bg-gray-seven flx-center">
             <img src="{{static_asset('images/icons/angle-right.svg')}}" alt="">
         </button>
-        <form action="#" class="search-input d-sm-block d-none">
-            <span class="icon">
-                <img src="{{static_asset('images/icons/search-dark.svg')}}" alt="" class="white-version">
-                <img src="{{static_asset('images/icons/search-dark-white.svg')}}" alt="" class="dark-version">
-            </span>
-            <input type="text" class="common-input common-input--md common-input--bg pill w-100" placeholder="Search here...">
-        </form>
+
     </div>
     <div class="dashboard-nav__right">
         <div class="header-right flx-align">
@@ -47,18 +41,8 @@
                                 <span class="text">Profile</span>
                             </a>
                         </li>
-
                         <li class="sidebar-list__item">
-                            <a href="setting.html" class="sidebar-list__link">
-                                <span class="sidebar-list__icon">
-                                    <img src="{{static_asset('images/icons/sidebar-icon10.svg')}}" alt="" class="icon">
-                                    <img src="{{static_asset('images/icons/sidebar-icon-active10.svg')}}" alt="" class="icon icon-active">
-                                </span>
-                                <span class="text">Settings</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-list__item">
-                            <a href="login.html" class="sidebar-list__link">
+                            <a href="{{route('logout')}}" class="sidebar-list__link">
                                 <span class="sidebar-list__icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon13.svg')}}" alt="" class="icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon-active13.svg')}}" alt="" class="icon icon-active">
@@ -69,7 +53,7 @@
                     </ul>
                 </div>
 
-                <div class="language-select flx-align select-has-icon">
+                <div class="language-select flx-align select-has-icon" hidden>
                     <img src="{{static_asset('images/icons/globe.svg')}}" alt="" class="globe-icon white-version">
                     <img src="{{static_asset('images/icons/globe-white.svg')}}" alt="" class="globe-icon dark-version">
                     <select class="select py-0 ps-2 border-0 fw-500">
