@@ -22,7 +22,7 @@
                                         <img src="{{ static_asset('images/icons/camera.svg') }}" alt="Upload Image">
                                     </label>
                                 </div>
-                                <div class="avatar-preview" style="background-image: url({{ $imageUrl }});">
+                                <div class="avatar-preview prof-img" style="background-image: url({{ $imageUrl }});">
                                     <div id="imagePreview">
                                     </div>
                                 </div>
@@ -84,18 +84,18 @@
                         <div class="dashboard-card__header pb-0">
                             <ul class="nav tab-bordered nav-pills" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-18 font-heading active" id="pills-personalInfo-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-personalInfo" type="button" role="tab"
+                                    <button class="nav-link font-18 font-heading {{ $tab == 'personalInfo' ? 'active' : '' }}"
+                                        wire:click="setTab('personalInfo')" id="pills-personalInfo-tab" type="button" role="tab"
                                         aria-controls="pills-personalInfo" aria-selected="true">Personal Info</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-18 font-heading" id="pills-notifications-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-notifications" type="button" role="tab"
+                                    <button class="nav-link font-18 font-heading {{ $tab == 'notifications' ? 'active' : '' }}"
+                                        wire:click="setTab('notifications')" id="pills-notifications-tab" type="button" role="tab"
                                         aria-controls="pills-notifications" aria-selected="false" tabindex="-1">Notifications</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-18 font-heading" id="pills-changePassword-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-changePassword" type="button" role="tab"
+                                    <button class="nav-link font-18 font-heading {{ $tab == 'changePassword' ? 'active' : '' }}"
+                                        wire:click="setTab('changePassword')" id="pills-changePassword-tab" type="button" role="tab"
                                         aria-controls="pills-changePassword" aria-selected="false" tabindex="-1">Change
                                         Password</button>
                                 </li>
@@ -104,8 +104,8 @@
 
                         <div class="profile-info-content">
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-personalInfo" role="tabpanel"
-                                    aria-labelledby="pills-personalInfo-tab" tabindex="0">
+                                <div class="tab-pane fade {{ $tab == 'personalInfo' ? 'show active' : '' }}" id="pills-personalInfo"
+                                    role="tabpanel" aria-labelledby="pills-personalInfo-tab" tabindex="0">
                                     <form wire:submit.prevent="updateProfile">
                                         <div class="row gy-4">
                                             <div class="col-sm-6 col-xs-6">
@@ -175,8 +175,8 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="tab-pane fade" id="pills-notifications" role="tabpanel"
-                                    aria-labelledby="pills-notifications-tab" tabindex="0">
+                                <div class="tab-pane fade {{ $tab == 'notifications' ? 'show active' : '' }}" id="pills-notifications"
+                                    role="tabpanel" aria-labelledby="pills-notifications-tab" tabindex="0">
                                     <form wire:submit.prevent="updateNotifications">
                                         <div class="row gy-3">
                                             <div class="col-sm-6 col-xs-6">
@@ -202,8 +202,8 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="tab-pane fade" id="pills-changePassword" role="tabpanel"
-                                    aria-labelledby="pills-changePassword-tab" tabindex="0">
+                                <div class="tab-pane fade {{ $tab == 'changePassword' ? 'show active' : '' }}" id="pills-changePassword"
+                                    role="tabpanel" aria-labelledby="pills-changePassword-tab" tabindex="0">
                                     <form wire:submit.prevent="updatePassword">
                                         <div class="row gy-4">
                                             <div class="col-12">
@@ -281,7 +281,14 @@
         document.addEventListener('livewire:initialized', () => {
             // Image preview for uploaded images
             document.getElementById('imageUpload').addEventListener('change', function() {
-
+                const input = this;
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.prof-img').style.backgroundImage = `url('${e.target.result}')`;
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
             });
         });
     </script>

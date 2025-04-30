@@ -11,6 +11,7 @@ use Livewire\WithFileUploads;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 #[Layout('user.layouts.app')]
 class Profile extends Component
@@ -39,6 +40,8 @@ class Profile extends Component
     public $update_notify = false;
     public $trx_notify = false;
 
+    public $tab = 'personalInfo';
+
     // Validation rules for profile update
     protected function rules()
     {
@@ -47,8 +50,7 @@ class Profile extends Component
             'username' => 'required|string|max:50|unique:users,username,' . $this->user->id,
             'email' => 'required|email|unique:users,email,' . $this->user->id,
             'phone' => 'nullable|string|max:20',
-            'country' => 'nullable|string|max:100',
-            'image' => 'nullable|image|max:2024', // 1MB Max
+            'country' => 'nullable|string|max:100'
         ];
     }
 
@@ -56,6 +58,12 @@ class Profile extends Component
     {
         $this->user = Auth::user();
         $this->loadUserData();
+        $this->tab = 'personalInfo';
+    }
+
+    public function setTab($tab)
+    {
+        $this->tab = $tab;
     }
 
     public function loadUserData()
@@ -77,17 +85,6 @@ class Profile extends Component
         $this->validate();
 
         try {
-            // Process image upload if provided
-            if ($this->image) {
-
-                $imagePath = Storage::disk('uploads')->putFile('users', $this->image);
-
-                if ($this->user->image && !str_contains($this->user->image, 'default.jpg')) {
-                    Storage::disk('uploads')->delete($this->user->image);
-                }
-                $this->user->image = $imagePath;
-            }
-
             // Update user details
             $this->user->name = $this->name;
             $this->user->username = $this->username;
@@ -104,16 +101,41 @@ class Profile extends Component
             $this->toast('error', 'An error occurred: ' . $e->getMessage());
         }
     }
-
-    public function updatePassword()
+    public function updatedImage()
     {
         $this->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|min:8|different:current_password',
-            'confirm_password' => 'required|same:new_password',
+            'image' => 'nullable|image|max:2024', // max ~2MB
         ]);
 
         try {
+            $imagePath = Storage::disk('uploads')->putFile('users', $this->image);
+
+            if ($this->user->image && !str_contains($this->user->image, 'default.jpg')) {
+                Storage::disk('uploads')->delete($this->user->image);
+            }
+
+            $this->user->image = $imagePath;
+            $this->user->save();
+
+            $this->imageUrl = $this->user->image ? my_asset($this->user->image) : my_asset('users/default.jpg');
+            $this->image = null;
+
+            $this->toast('success', 'Profile picture updated!');
+        } catch (\Exception $e) {
+            $this->toast('error', 'Image upload failed: ' . $e->getMessage());
+        }
+    }
+
+
+    public function updatePassword()
+    {
+
+        try {
+            $this->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|min:8|different:current_password',
+                'confirm_password' => 'required|same:new_password',
+            ]);
             // Check if current password is correct
             if (!Hash::check($this->current_password, $this->user->password)) {
                 $this->toast('error', 'Current password is incorrect');
@@ -126,8 +148,12 @@ class Profile extends Component
 
             // Reset password fields
             $this->reset(['current_password', 'new_password', 'confirm_password']);
-
             $this->toast('success', 'Password updated successfully!');
+        } catch (ValidationException $e) {
+            foreach ($e->validator->errors()->all() as $error) {
+                $this->toast('error', $error);
+            }
+            throw $e;
         } catch (\Exception $e) {
             $this->toast('error', 'An error occurred: ' . $e->getMessage());
         }
