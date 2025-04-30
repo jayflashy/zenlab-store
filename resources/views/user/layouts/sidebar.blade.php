@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="{{ route('user.profile') }}" class="sidebar-list__link">
+                <a href="{{ route('user.profile') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon2.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active2.svg') }}" alt="" class="icon icon-active" />
@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="{{ route('user.orders') }}" class="sidebar-list__link">
+                <a href="{{ route('user.orders') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon12.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active12.svg') }}" alt="" class="icon icon-active" />
@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="{{ route('user.reviews') }}" class="sidebar-list__link">
+                <a href="{{ route('user.reviews') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon7.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active7.svg') }}" alt="" class="icon icon-active" />
@@ -50,7 +50,7 @@
             </li>
 
             <li class="sidebar-list__item">
-                <a href="{{ route('user.downloads') }}" class="sidebar-list__link">
+                <a href="{{ route('user.downloads') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon6.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active6.svg') }}" alt="" class="icon icon-active" />
@@ -59,7 +59,7 @@
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="{{ route('logout') }}" class="sidebar-list__link">
+                <a href="{{ route('logout') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon13.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active13.svg') }}" alt="" class="icon icon-active" />

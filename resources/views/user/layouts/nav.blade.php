@@ -33,7 +33,7 @@
                     </button>
                     <ul class="user-profile-dropdown">
                         <li class="sidebar-list__item">
-                            <a href="dashboard-profile.html" class="sidebar-list__link">
+                            <a href="{{route('user.profile')}}" wire:navigate class="sidebar-list__link">
                                 <span class="sidebar-list__icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon2.svg')}}" alt="" class="icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon-active2.svg')}}" alt="" class="icon icon-active">
