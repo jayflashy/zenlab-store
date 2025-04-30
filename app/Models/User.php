@@ -25,10 +25,14 @@ class User extends Authenticatable
         'password',
         'username',
         'phone',
-        'country_id',
+        'country',
         'address',
         'email_verify',
         'status',
+        'country',
+        'image',
+        'update_notify',
+        'trx_notify',
     ];
 
     /**
@@ -51,6 +55,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'update_notify' => 'boolean',
+            'trx_notify' => 'boolean',
         ];
     }
 

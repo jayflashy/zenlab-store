@@ -17,64 +17,63 @@
                         <div class="profile-info__inner mb-40 text-center">
                             <div class="avatar-upload mb-24">
                                 <div class="avatar-edit">
-                                    <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+                                    <input type="file" id="imageUpload" wire:model="image" accept=".png, .jpg, .jpeg">
                                     <label for="imageUpload">
-                                        <img src="{{ static_asset('images/icons/camera.svg') }}" alt="">
+                                        <img src="{{ static_asset('images/icons/camera.svg') }}" alt="Upload Image">
                                     </label>
                                 </div>
-                                <div class="avatar-preview"
-                                    style="background-image: url({{ my_asset($user->image ?? 'users/default.jpg') }});">
+                                <div class="avatar-preview" style="background-image: url({{ $imageUrl }});">
                                     <div id="imagePreview">
                                     </div>
                                 </div>
                             </div>
 
-                            <h5 class="profile-info__name mb-1">Michel Smith</h5>
+                            <h5 class="profile-info__name mb-1">{{ $name }}</h5>
                             <span class="profile-info__designation font-14">Buyer</span>
                         </div>
 
                         <ul class="profile-info-list">
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="assets/images/icons/profile-info-icon1.svg" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon1.svg') }}" alt="" class="icon">
                                     <span class="text text-heading fw-500">Username</span>
                                 </span>
-                                <span class="profile-info-list__info">michel15</span>
+                                <span class="profile-info-list__info">{{ $username }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="assets/images/icons/profile-info-icon2.svg" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon2.svg') }}" alt="" class="icon">
                                     <span class="text text-heading fw-500">Email</span>
                                 </span>
-                                <span class="profile-info-list__info">michel15@gmail.com</span>
+                                <span class="profile-info-list__info">{{ $email }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="assets/images/icons/profile-info-icon3.svg" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon3.svg') }}" alt="" class="icon">
                                     <span class="text text-heading fw-500">Phone</span>
                                 </span>
-                                <span class="profile-info-list__info">+880 15589 236 45</span>
+                                <span class="profile-info-list__info">{{ $phone }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="assets/images/icons/profile-info-icon4.svg" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon4.svg') }}" alt="" class="icon">
                                     <span class="text text-heading fw-500">Country</span>
                                 </span>
-                                <span class="profile-info-list__info">Bangladesh</span>
+                                <span class="profile-info-list__info">{{ $country }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="assets/images/icons/profile-info-icon6.svg" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon6.svg') }}" alt="" class="icon">
                                     <span class="text text-heading fw-500">Member Since</span>
                                 </span>
-                                <span class="profile-info-list__info">Jan, 01, 2024</span>
+                                <span class="profile-info-list__info">{{ show_date($user->created_at, 'M d, Y') }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="assets/images/icons/profile-info-icon7.svg" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon7.svg') }}" alt="" class="icon">
                                     <span class="text text-heading fw-500">Purchased</span>
                                 </span>
-                                <span class="profile-info-list__info">0 items</span>
+                                <span class="profile-info-list__info">{{ $user->purchases_count ?? 0 }} items</span>
                             </li>
                         </ul>
 
@@ -107,87 +106,122 @@
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-personalInfo" role="tabpanel"
                                     aria-labelledby="pills-personalInfo-tab" tabindex="0">
-                                    <form action="#" autocomplete="off">
+                                    <form wire:submit.prevent="updateProfile">
                                         <div class="row gy-4">
                                             <div class="col-sm-6 col-xs-6">
-                                                <label for="fName" class="form-label mb-2 font-18 font-heading fw-600">
+                                                <label for="name" class="form-label mb-2 font-18 font-heading fw-600">
                                                     Full Name
                                                 </label>
-                                                <input type="text" class="common-input border" id="fName" value="" required
-                                                    placeholder="Full Name">
+                                                <input type="text" class="common-input border" id="name" wire:model="name"
+                                                    required placeholder="Full Name">
+                                                @error('name')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <div class="col-sm-6 col-xs-6">
-                                                <label for="lastNamee" class="form-label mb-2 font-18 font-heading fw-600">
+                                                <label for="username" class="form-label mb-2 font-18 font-heading fw-600">
                                                     Username
                                                 </label>
-                                                <input type="text" class="common-input border" id="lastNamee" value=""
+                                                <input type="text" class="common-input border" id="username" wire:model="username"
                                                     placeholder="Username">
+                                                @error('username')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <div class="col-sm-6 col-xs-6">
-                                                <label for="emailAdddd" class="form-label mb-2 font-18 font-heading fw-600">Email
+                                                <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Email
                                                     Address</label>
-                                                <input type="email" class="common-input border" id="emailAdddd"
-                                                    value="" placeholder="Email Address">
+                                                <input type="email" class="common-input border" id="email" wire:model="email"
+                                                    placeholder="Email Address">
+                                                @error('email')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <div class="col-sm-6 col-xs-6">
-                                                <label for="phonee" class="form-label mb-2 font-18 font-heading fw-600">Phone
+                                                <label for="phone" class="form-label mb-2 font-18 font-heading fw-600">Phone
                                                     Number</label>
-                                                <input type="tel" class="common-input border" id="phonee" value=""
+                                                <input type="tel" class="common-input border" id="phone" wire:model="phone"
                                                     placeholder="Phone Number">
+                                                @error('phone')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
 
                                             <div class="col-sm-6 col-xs-6">
-                                                <label for="Countryyy" class="form-label mb-2 font-18 font-heading fw-600">Country</label>
+                                                <label for="country" class="form-label mb-2 font-18 font-heading fw-600">Country</label>
                                                 <div class="select-has-icon">
-                                                    <select class="common-input border" id="Countryyy">
-                                                        <option value="1">USA</option>
-                                                        <option value="1">Bangladesh</option>
-                                                        <option value="1">India</option>
-                                                        <option value="1">Pakistan</option>
+                                                    <select class="common-input border" id="country" wire:model="country">
+                                                        <option value="">Select Country</option>
+                                                        <option value="USA">USA</option>
+                                                        <option value="Bangladesh">Bangladesh</option>
+                                                        <option value="India">India</option>
+                                                        <option value="Pakistan">Pakistan</option>
+                                                        <option value="United Kingdom">United Kingdom</option>
+                                                        <option value="Canada">Canada</option>
+                                                        <option value="Australia">Australia</option>
+                                                        <option value="Germany">Germany</option>
+                                                        <option value="France">France</option>
+                                                        <option value="Japan">Japan</option>
                                                     </select>
                                                 </div>
+                                                @error('country')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
 
                                             <div class="col-sm-12 text-end">
-                                                <button class="btn btn-main btn-lg pill mt-4"> Update Profile</button>
+                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Update Profile</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="tab-pane fade" id="pills-notifications" role="tabpanel"
                                     aria-labelledby="pills-notifications-tab" tabindex="0">
-                                    <div class="row gy-3">
-                                        <div class="col-sm-6 col-xs-6">
-                                            <div class="common-check">
-                                                <input class="form-check-input" type="checkbox" id="updateNotification">
-                                                <label class="form-check-label" for="updateNotification"> Item update notification</label>
+                                    <form wire:submit.prevent="updateNotifications">
+                                        <div class="row gy-3">
+                                            <div class="col-sm-6 col-xs-6">
+                                                <div class="common-check">
+                                                    <input class="form-check-input" type="checkbox" id="updateNotification"
+                                                        wire:model="update_notify">
+                                                    <label class="form-check-label" for="updateNotification">Item update
+                                                        notification</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-6">
+                                                <div class="common-check">
+                                                    <input class="form-check-input" type="checkbox" id="trxNootification"
+                                                        wire:model="trx_notify">
+                                                    <label class="form-check-label" for="trxNootification">Transaction
+                                                        notification</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 text-end">
+                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Save Notification
+                                                    Settings</button>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 col-xs-6">
-                                            <div class="common-check">
-                                                <input class="form-check-input" type="checkbox" id="trxNootification">
-                                                <label class="form-check-label" for="trxNootification"> Transaction notification</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                                 <div class="tab-pane fade" id="pills-changePassword" role="tabpanel"
                                     aria-labelledby="pills-changePassword-tab" tabindex="0">
-                                    <form action="#" autocomplete="off">
+                                    <form wire:submit.prevent="updatePassword">
                                         <div class="row gy-4">
-
                                             <div class="col-12">
                                                 <label for="current-password" class="form-label mb-2 font-18 font-heading fw-600">Current
                                                     Password</label>
                                                 <div class="position-relative">
                                                     <input type="password"
-                                                        class="common-input common-input--withIcon common-input--withLeftIcon "
-                                                        id="current-password" placeholder="************">
-                                                    <span class="input-icon input-icon--left"><img src="assets/images/icons/key-icon.svg"
-                                                            alt=""></span>
+                                                        class="common-input common-input--withIcon common-input--withLeftIcon"
+                                                        id="current-password" wire:model="current_password" placeholder="************">
+                                                    <span class="input-icon input-icon--left">
+                                                        <img src="{{ static_asset('images/icons/key-icon.svg') }}" alt="">
+                                                    </span>
                                                     <span class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
                                                         id="#current-password"></span>
                                                 </div>
+                                                @error('current_password')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
 
                                             <div class="col-sm-6 col-xs-6">
@@ -195,45 +229,62 @@
                                                     Password</label>
                                                 <div class="position-relative">
                                                     <input type="password"
-                                                        class="common-input common-input--withIcon common-input--withLeftIcon "
-                                                        id="new-password" placeholder="************">
-                                                    <span class="input-icon input-icon--left"><img src="assets/images/icons/lock-two.svg"
-                                                            alt=""></span>
+                                                        class="common-input common-input--withIcon common-input--withLeftIcon"
+                                                        id="new-password" wire:model="new_password" placeholder="************">
+                                                    <span class="input-icon input-icon--left">
+                                                        <img src="{{ static_asset('images/icons/lock-two.svg') }}" alt="">
+                                                    </span>
                                                     <span class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
                                                         id="#new-password"></span>
                                                 </div>
+                                                @error('new_password')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
 
                                             <div class="col-sm-6 col-xs-6">
-                                                <label for="confirm-password" class="form-label mb-2 font-18 font-heading fw-600">Current
+                                                <label for="confirm-password" class="form-label mb-2 font-18 font-heading fw-600">Confirm
                                                     Password</label>
                                                 <div class="position-relative">
                                                     <input type="password"
-                                                        class="common-input common-input--withIcon common-input--withLeftIcon "
-                                                        id="confirm-password" placeholder="************">
-                                                    <span class="input-icon input-icon--left"><img src="assets/images/icons/lock-two.svg"
-                                                            alt=""></span>
+                                                        class="common-input common-input--withIcon common-input--withLeftIcon"
+                                                        id="confirm-password" wire:model="confirm_password" placeholder="************">
+                                                    <span class="input-icon input-icon--left">
+                                                        <img src="{{ static_asset('images/icons/lock-two.svg') }}" alt="">
+                                                    </span>
                                                     <span class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
                                                         id="#confirm-password"></span>
                                                 </div>
+                                                @error('confirm_password')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
 
                                             <div class="col-sm-12 text-end">
-                                                <button class="btn btn-main btn-lg pill mt-4"> Update Password</button>
+                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Update Password</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
         <!-- Profile Content End -->
-
     </div>
 </div>
+
+@section('scripts')
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            // Image preview for uploaded images
+            document.getElementById('imageUpload').addEventListener('change', function() {
+
+            });
+        });
+    </script>
+@endsection
 
 @include('layouts.meta')
