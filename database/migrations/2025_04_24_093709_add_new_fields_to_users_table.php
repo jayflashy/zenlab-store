@@ -41,7 +41,7 @@ return new class extends Migration
                 'status',
                 'email_verify',
                 'update_notify',
-                'trx_notify'
+                'trx_notify',
             ]);
         });
     }

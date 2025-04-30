@@ -6,12 +6,11 @@ use App\Models\User;
 use App\Traits\LivewireToast;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Rule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Layout;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 #[Layout('user.layouts.app')]
 class Profile extends Component
@@ -21,23 +20,32 @@ class Profile extends Component
 
     // User information properties
     public $user;
+
     public $name;
+
     public $username;
+
     public $email;
+
     public $phone;
+
     public $country;
 
     // Profile image
     public $image;
+
     public $imageUrl;
 
     // Password change properties
     public $current_password;
+
     public $new_password;
+
     public $confirm_password;
 
     // Notification settings
     public $update_notify = false;
+
     public $trx_notify = false;
 
     public $tab = 'personalInfo';
@@ -50,7 +58,7 @@ class Profile extends Component
             'username' => 'required|string|max:50|unique:users,username,' . $this->user->id,
             'email' => 'required|email|unique:users,email,' . $this->user->id,
             'phone' => 'nullable|string|max:20',
-            'country' => 'nullable|string|max:100'
+            'country' => 'nullable|string|max:100',
         ];
     }
 
@@ -101,6 +109,7 @@ class Profile extends Component
             $this->toast('error', 'An error occurred: ' . $e->getMessage());
         }
     }
+
     public function updatedImage()
     {
         $this->validate([
@@ -110,7 +119,7 @@ class Profile extends Component
         try {
             $imagePath = Storage::disk('uploads')->putFile('users', $this->image);
 
-            if ($this->user->image && !str_contains($this->user->image, 'default.jpg')) {
+            if ($this->user->image && ! str_contains($this->user->image, 'default.jpg')) {
                 Storage::disk('uploads')->delete($this->user->image);
             }
 
@@ -126,7 +135,6 @@ class Profile extends Component
         }
     }
 
-
     public function updatePassword()
     {
 
@@ -137,8 +145,9 @@ class Profile extends Component
                 'confirm_password' => 'required|same:new_password',
             ]);
             // Check if current password is correct
-            if (!Hash::check($this->current_password, $this->user->password)) {
+            if (! Hash::check($this->current_password, $this->user->password)) {
                 $this->toast('error', 'Current password is incorrect');
+
                 return;
             }
 
