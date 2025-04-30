@@ -1,17 +1,17 @@
 <?php
 
-namespace [namespace];
+namespace App\Livewire\User;
 
 use App\Traits\LivewireToast;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 
 #[Layout('user.layouts.app')]
-class [class] extends Component
+class Reviews extends Component
 {
     use LivewireToast;
     public function render()
     {
-        return view('[view]');
+        return view('livewire.user.reviews');
     }
 }

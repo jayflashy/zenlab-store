@@ -4,25 +4,25 @@
     </button>
     <div class="dashboard-sidebar__inner">
         <a href="{{ route('user.index') }}" wire:navigate class="logo mb-48">
-            <img src="{{ my_asset($settings->logo) }}" alt="" style="height: 50px;"/>
+            <img src="{{ my_asset($settings->logo) }}" alt="" style="height: 50px;" />
         </a>
         <a href="{{ route('user.index') }}" wire:navigate class="logo favicon mb-48">
-            <img src="{{ my_asset($settings->favicon) }}" alt="" style="height: 50px;"/>
+            <img src="{{ my_asset($settings->favicon) }}" alt="" style="height: 50px;" />
         </a>
 
         <!-- Sidebar List Start -->
         <ul class="sidebar-list">
             <li class="sidebar-list__item">
-                <a href="{{route('user.dashboard')}}" wire:navigate class="sidebar-list__link">
+                <a href="{{ route('user.dashboard') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon1.svg') }}" alt="" class="icon"  />
+                        <img src="{{ static_asset('images/icons/sidebar-icon1.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active1.svg') }}" alt="" class="icon icon-active" />
                     </span>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="dashboard-profile.html" class="sidebar-list__link">
+                <a href="{{ route('user.profile') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon2.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active2.svg') }}" alt="" class="icon icon-active" />
@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="statement.html" class="sidebar-list__link">
+                <a href="{{ route('user.orders') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon12.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active12.svg') }}" alt="" class="icon icon-active" />
@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li class="sidebar-list__item">
-                <a href="review.html" class="sidebar-list__link">
+                <a href="{{ route('user.reviews') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon7.svg') }}" alt="" class="icon" />
                         <img src="{{ static_asset('images/icons/sidebar-icon-active7.svg') }}" alt="" class="icon icon-active" />
@@ -50,11 +50,10 @@
             </li>
 
             <li class="sidebar-list__item">
-                <a href="download.html" class="sidebar-list__link">
+                <a href="{{ route('user.downloads') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon6.svg') }}" alt="" class="icon" />
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active6.svg') }}" alt=""
-                            class="icon icon-active" />
+                        <img src="{{ static_asset('images/icons/sidebar-icon-active6.svg') }}" alt="" class="icon icon-active" />
                     </span>
                     <span class="text">Downloads</span>
                 </a>
@@ -63,8 +62,7 @@
                 <a href="{{ route('logout') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon13.svg') }}" alt="" class="icon" />
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active13.svg') }}" alt=""
-                            class="icon icon-active" />
+                        <img src="{{ static_asset('images/icons/sidebar-icon-active13.svg') }}" alt="" class="icon icon-active" />
                     </span>
                     <span class="text">Logout</span>
                 </a>

@@ -17,14 +17,11 @@
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
     </div>
-    {{-- mobile menu --}}
-
     <section class="dashboard">
         <div class="dashboard__inner d-flex">
 
             {{-- sidebar --}}
             @include('user.layouts.sidebar')
-
 
             <div class="dashboard-body">
                 {{-- dashboard nav --}}
@@ -32,7 +29,7 @@
 
                 <div class="dashboard-body__content">
                     {{-- page content --}}
-                    {{ $slot }}
+                    {{ $slot ?? ''}}
                 </div>
 
                 {{-- Footer --}}
