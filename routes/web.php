@@ -48,7 +48,7 @@ Route::prefix('admin')->as('admin.')->group(function (): void {
     require __DIR__ . '/admin.php';
 });
 // user
-Route::prefix('user')->as('user.')->group(function (): void {
+Route::prefix('user')->as('user.')->middleware('auth')->group(function (): void {
     require __DIR__ . '/user.php';
 });
 
