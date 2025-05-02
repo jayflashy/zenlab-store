@@ -71,13 +71,12 @@ class User extends Authenticatable
             ->implode('');
     }
 
-
-    function orders()
+    public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    function reviews()
+    public function reviews()
     {
         return $this->hasMany(Rating::class);
     }

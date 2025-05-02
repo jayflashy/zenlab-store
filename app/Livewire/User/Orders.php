@@ -13,18 +13,20 @@ use Livewire\WithPagination;
 class Orders extends Component
 {
     use LivewireToast;
-
     use WithPagination;
 
     public $searchTerm = '';
 
     public $statusFilter = '';
+
     public $paymentStatusFilter = '';
 
     public $perPage = 25;
 
     public $view = 'list';
+
     public $order;
+
     public $pageTitle = 'Order History';
 
     public function mount($code = null)
@@ -86,6 +88,7 @@ class Orders extends Component
             'completed' => 'Completed',
             'failed' => 'Failed',
         ];
+
         return view('livewire.user.orders', compact('orders', 'orderStatuses', 'paymentStatuses'));
     }
 }

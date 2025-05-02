@@ -5,8 +5,8 @@ namespace App\Livewire\User;
 use App\Models\Order;
 use App\Traits\LivewireToast;
 use Auth;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('layouts.invoice')]
 class Invoice extends Component
@@ -19,7 +19,6 @@ class Invoice extends Component
 
     // meta
     public string $metaTitle;
-
 
     public function mount($code = null)
     {
