@@ -3,6 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Traits\LivewireToast;
+use Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -11,8 +12,11 @@ class Reviews extends Component
 {
     use LivewireToast;
 
+    public $metaTitle = 'Reviews';
+
     public function render()
     {
-        return view('livewire.user.reviews');
+        $reviews = Auth::user()->reviews()->paginate(25);
+        return view('livewire.user.reviews', compact('reviews'));
     }
 }

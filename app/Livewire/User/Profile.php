@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -144,9 +145,7 @@ class Profile extends Component
                 'current_password' => 'required',
                 'new_password' => [
                     'required',
-                    'min:8',
-                    'different:current_password',
-                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+                    'different:current_password',Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(),
                 ],
                 'confirm_password' => 'required|same:new_password',
             ]);
