@@ -10,6 +10,23 @@ use Livewire\Attributes\Layout;
 class [class] extends Component
 {
     use LivewireToast;
+
+
+    // meta
+    public string $metaTitle;
+
+    public string $metaDescription;
+
+    public string $metaKeywords;
+
+    public string $metaImage;
+
+    public function mount()
+    {
+        // set meta
+        $this->metaTitle = "[class]";
+    }
+
     public function render()
     {
         return view('[view]');

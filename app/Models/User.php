@@ -70,4 +70,15 @@ class User extends Authenticatable
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
+
+
+    function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    function reviews()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('phone')->nullable()->after('country');
             $table->text('address')->nullable()->after('phone');
             $table->string('image')->nullable()->after('address');
-            $table->double('balance', 10, 2)->default(0)->after('image');
+            $table->decimal('balance', 10, 2)->default(0)->after('image');
             $table->enum('status', ['active', 'pending', 'disabled'])->default('pending')->after('balance');
             $table->boolean('email_verify')->default(false)->after('email_verified_at');
             $table->boolean('update_notify')->default(false)->after('email_verify');
