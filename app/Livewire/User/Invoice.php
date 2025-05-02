@@ -24,6 +24,7 @@ class Invoice extends Component
     {
         $order = Order::whereUserId(Auth::id())->whereCode($code)->with(['user', 'items.product'])->firstOrFail();
         $this->order = $order;
+
         $this->pageTitle = 'Order Invoice - ' . $order->code;
         // set meta
         $this->metaTitle = 'Order Invoice - ' . $order->code;

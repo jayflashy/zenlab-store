@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User;
 
+use Exception;
 use App\Models\User;
 use App\Traits\LivewireToast;
 use Illuminate\Support\Facades\Auth;
@@ -105,8 +106,8 @@ class Profile extends Component
             $this->image = null;
 
             $this->toast('success', 'Profile updated successfully!');
-        } catch (\Exception $e) {
-            $this->toast('error', 'An error occurred: ' . $e->getMessage());
+        } catch (Exception $exception) {
+            $this->toast('error', 'An error occurred: ' . $exception->getMessage());
         }
     }
 
@@ -119,7 +120,7 @@ class Profile extends Component
         try {
             $imagePath = Storage::disk('uploads')->putFile('users', $this->image);
 
-            if ($this->user->image && ! str_contains($this->user->image, 'default.jpg')) {
+            if ($this->user->image && ! str_contains((string) $this->user->image, 'default.jpg')) {
                 Storage::disk('uploads')->delete($this->user->image);
             }
 
@@ -130,8 +131,8 @@ class Profile extends Component
             $this->image = null;
 
             $this->toast('success', 'Profile picture updated!');
-        } catch (\Exception $e) {
-            $this->toast('error', 'Image upload failed: ' . $e->getMessage());
+        } catch (Exception $exception) {
+            $this->toast('error', 'Image upload failed: ' . $exception->getMessage());
         }
     }
 
@@ -162,8 +163,9 @@ class Profile extends Component
             foreach ($e->validator->errors()->all() as $error) {
                 $this->toast('error', $error);
             }
+
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->toast('error', 'An error occurred: ' . $e->getMessage());
         }
     }
@@ -176,8 +178,8 @@ class Profile extends Component
             $this->user->save();
 
             $this->toast('success', 'Notification settings updated!');
-        } catch (\Exception $e) {
-            $this->toast('error', 'An error occurred: ' . $e->getMessage());
+        } catch (Exception $exception) {
+            $this->toast('error', 'An error occurred: ' . $exception->getMessage());
         }
     }
 

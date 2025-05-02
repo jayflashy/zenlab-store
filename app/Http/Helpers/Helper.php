@@ -306,6 +306,7 @@ function allCoupons()
 {
     return Cache::remember('allCoupons', 16000, fn () => Coupon::valid()->get());
 }
+
 function getPaymentMethodLabel($method)
 {
     $paymentMethods = [
@@ -318,6 +319,7 @@ function getPaymentMethodLabel($method)
 
     return $paymentMethods[$method];
 }
+
 function getPaymentStatusClass($status)
 {
     return [
@@ -335,6 +337,7 @@ function getPaymentStatusLabel($status)
         'failed' => 'Failed',
     ][$status] ?? 'Pending';
 }
+
 function getOrderStatusClass($status)
 {
     return [

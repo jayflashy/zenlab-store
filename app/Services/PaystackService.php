@@ -52,14 +52,12 @@ class PaystackService
 
     /**
      * Validate webhook signature
-     *
-     * @param  array  $payload
      */
     public function validateWebhookHash(array $payload): bool
     {
         $receivedHash = request()->header('x-paystack-signature');
 
-        if (! $receivedHash || ($receivedHash !== hash_hmac('sha512', json_encode($payload), $this->secretKey))) {
+        if (! $receivedHash || ($receivedHash !== hash_hmac('sha512', json_encode($payload), (string) $this->secretKey))) {
             // This request isn't from Paystack; discard
             return false;
         }

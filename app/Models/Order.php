@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasUlids, SoftDeletes;
-
+    use HasUlids;
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      */

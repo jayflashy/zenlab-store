@@ -24,7 +24,7 @@ class Ratings extends Component
 
     public $stars = '';
 
-    public $editingRating = null;
+    public $editingRating;
 
     public $editStars = 3;
 
@@ -136,25 +136,25 @@ class Ratings extends Component
         $ratingTypes = ['Quality', 'Value', 'Design', 'Functionality', 'Customer Service'];
 
         $ratings = Rating::with(['user', 'product'])
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
+            ->when($this->search, function ($query): void {
+                $query->where(function ($q): void {
                     $q->where('review', 'like', '%' . $this->search . '%')
-                        ->orWhereHas('user', function ($u) {
+                        ->orWhereHas('user', function ($u): void {
                             $u->where('name', 'like', '%' . $this->search . '%')
                                 ->orWhere('email', 'like', '%' . $this->search . '%');
                         })
-                        ->orWhereHas('product', function ($p) {
+                        ->orWhereHas('product', function ($p): void {
                             $p->where('name', 'like', '%' . $this->search . '%');
                         });
                 });
             })
-            ->when($this->status, function ($query) {
+            ->when($this->status, function ($query): void {
                 $query->where('status', $this->status);
             })
-            ->when($this->type, function ($query) {
+            ->when($this->type, function ($query): void {
                 $query->where('type', $this->type);
             })
-            ->when($this->stars, function ($query) {
+            ->when($this->stars, function ($query): void {
                 $query->where('stars', $this->stars);
             })
             ->latest()

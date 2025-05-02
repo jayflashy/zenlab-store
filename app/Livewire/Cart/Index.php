@@ -38,7 +38,7 @@ class Index extends Component
             // Calculate total
             $this->cart->load('items.product.category');
             $this->cartItems = $this->cart->items->toArray();
-            $this->cartTotal = $this->cart->items->sum(fn ($item) => $item->price * $item->quantity);
+            $this->cartTotal = $this->cart->items->sum(fn ($item): int|float => $item->price * $item->quantity);
         }
     }
 

@@ -55,17 +55,17 @@ class Orders extends Component
     {
         $ordersQuery = Order::query()
             ->whereUserId(Auth::id())->with(['user', 'items.product'])
-            ->when($this->searchTerm, function ($query) {
-                $query->where(function ($query) {
+            ->when($this->searchTerm, function ($query): void {
+                $query->where(function ($query): void {
                     $query->where('code', 'like', '%' . $this->searchTerm . '%')
                         ->orWhere('email', 'like', '%' . $this->searchTerm . '%')
                         ->orWhere('name', 'like', '%' . $this->searchTerm . '%');
                 });
             })
-            ->when($this->statusFilter, function ($query) {
+            ->when($this->statusFilter, function ($query): void {
                 $query->where('order_status', $this->statusFilter);
             })
-            ->when($this->paymentStatusFilter, function ($query) {
+            ->when($this->paymentStatusFilter, function ($query): void {
                 $query->where('payment_status', $this->paymentStatusFilter);
             });
 

@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Auth;
 
+use Exception;
+use Log;
 use App\Models\Cart;
 use App\Traits\LivewireToast;
 use Illuminate\Auth\Events\Lockout;
@@ -45,11 +47,12 @@ class Login extends Component
                 'email' => __('auth.failed'),
             ]);
         }
+
         // merge guest cart with user cart
         try {
             Cart::mergeGuestCart(Auth::user()->id, $oldSession);
-        } catch (\Exception $e) {
-            \Log::error('Failed to merge guest cart: ' . $e->getMessage());
+        } catch (Exception $exception) {
+            Log::error('Failed to merge guest cart: ' . $exception->getMessage());
         }
 
         RateLimiter::clear($this->throttleKey());

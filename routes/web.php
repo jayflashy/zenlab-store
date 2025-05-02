@@ -53,7 +53,7 @@ Route::prefix('user')->as('user.')->middleware('auth')->group(function (): void 
 });
 
 // Payment Callback
-Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+Route::controller(PaymentController::class)->prefix('payment')->group(function (): void {
     Route::any('/paystack', 'paystackSuccess')->name('paystack.success');
     Route::any('/flutter', 'flutterSuccess')->name('flutter.success');
     Route::post('/cryptomus', 'cryptomusSuccess')->name('cryptomus.success');

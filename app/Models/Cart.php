@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Exception;
+use Log;
 use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -33,9 +35,7 @@ class Cart extends Model
 
     public function getTotalAttribute()
     {
-        return $this->items->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
+        return $this->items->sum(fn($item): int|float => $item->price * $item->quantity);
     }
 
     public static function getCurrentCart()
@@ -46,13 +46,12 @@ class Cart extends Model
                 ['user_id' => Auth::id(), 'status' => 'active'],
                 ['session_id' => session()->getId()]
             );
-        } else {
-            // For guests
-            return self::firstOrCreate(
-                ['session_id' => session()->getId(), 'status' => 'active'],
-                ['user_id' => null]
-            );
         }
+        // For guests
+        return self::firstOrCreate(
+            ['session_id' => session()->getId(), 'status' => 'active'],
+            ['user_id' => null]
+        );
     }
 
     // Method to merge guest cart with user cart on login
@@ -64,8 +63,9 @@ class Cart extends Model
         if (! $guestCart) {
             return $userCart;
         }
+
         try {
-            DB::transaction(function () use ($guestCart, $userCart) {
+            DB::transaction(function () use ($guestCart, $userCart): void {
                 foreach ($guestCart->items as $item) {
                     $existingItem = CartItem::where('cart_id', $userCart->id)
                         ->where('product_id', $item->product_id)
@@ -86,8 +86,8 @@ class Cart extends Model
                 // Delete the guest cart after merging
                 $guestCart->delete();
             });
-        } catch (\Exception $e) {
-            \Log::error('Failed to merge guest cart: ' . $e->getMessage());
+        } catch (Exception $exception) {
+            Log::error('Failed to merge guest cart: ' . $exception->getMessage());
         }
 
         return $userCart;

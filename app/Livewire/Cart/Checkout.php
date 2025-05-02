@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Cart;
 
+use Exception;
+use Log;
+use App\Models\User;
 use App\Enums\DiscountType;
 use App\Http\Controllers\PaymentController;
 use App\Models\Cart;
@@ -75,6 +78,7 @@ class Checkout extends Component
         if ($this->cart->items->isEmpty()) {
             $this->redirect(route('cart'), navigate: true);
         }
+
         $allGateways = [
             ['name' => 'Paypal', 'key' => 'paypal_payment', 'image' => 'paypal.png'],
             ['name' => 'Paystack', 'key' => 'paystack_payment', 'image' => 'card.png'],
@@ -82,9 +86,7 @@ class Checkout extends Component
             ['name' => 'Crypto', 'key' => 'cryptomus_payment', 'image' => 'cryptomus.png'],
             ['name' => 'Bank Transfer', 'key' => 'manual_payment', 'image' => 'bank.png'],
         ];
-        $this->paymentGateways = array_filter($allGateways, function ($gateway) {
-            return sys_setting($gateway['key']) == 1;
-        });
+        $this->paymentGateways = array_filter($allGateways, fn($gateway): bool => sys_setting($gateway['key']) == 1);
     }
 
     public function loadCart()
@@ -96,7 +98,7 @@ class Checkout extends Component
 
             // Calculate totals
             $items = collect($this->cartItems);
-            $this->subtotal = $items->sum(fn ($i) => $i['price'] * $i['quantity']);
+            $this->subtotal = $items->sum(fn ($i): int|float => $i['price'] * $i['quantity']);
 
             $this->total = $this->subtotal - $this->discount;
             $this->totalNgn = $this->totalToNgn();
@@ -106,7 +108,7 @@ class Checkout extends Component
     public function fillUserInfo()
     {
         if (Auth::check()) {
-            /** @var \App\Models\User $user */
+            /** @var User $user */
             $user = Auth::user();
             $this->name = $user->name;
             $this->email = $user->email;
@@ -121,9 +123,10 @@ class Checkout extends Component
 
             return;
         }
+
         // Check if the coupon code is valid
         $coupons = allCoupons();
-        $coupon = $coupons->where('code', strtoupper($this->couponCode))->first();
+        $coupon = $coupons->where('code', strtoupper((string) $this->couponCode))->first();
 
         if ($coupon) {
             if (! $coupon->valid()) {
@@ -131,12 +134,14 @@ class Checkout extends Component
 
                 return;
             }
+
             // get coupon discount type
             if ($coupon->discount_type === DiscountType::PERCENT) {
                 $this->discount = round($this->subtotal * ($coupon->discount / 100), 2);
             } else {
                 $this->discount = $coupon->discount;
             }
+
             $this->total = $this->subtotal - $this->discount;
             $this->totalNgn = $this->totalToNgn();
 
@@ -158,6 +163,7 @@ class Checkout extends Component
 
             return;
         }
+
         try {
             $orderData = [
                 'name' => $this->name,
@@ -178,6 +184,7 @@ class Checkout extends Component
 
                 return;
             }
+
             $paymentData = [
                 'email' => $this->email,
                 'name' => $this->name,
@@ -199,11 +206,11 @@ class Checkout extends Component
                 'flutterwave_payment' => $paymentController->initFlutter($paymentData),
                 'paypal_payment' => $paymentController->initPaypal($paymentData),
                 'cryptomus_payment' => $paymentController->initCryptomus($paymentData),
-                default => throw new \Exception('Invalid payment method selected'),
+                default => throw new Exception('Invalid payment method selected'),
             };
-        } catch (\Exception $e) {
+        } catch (Exception $exception) {
             $this->processingPayment = false;
-            \Log::error($e);
+            Log::error($exception);
             $this->toast('error', 'Unable to process your payment at this time. Please try again later.');
         }
     }
@@ -213,6 +220,7 @@ class Checkout extends Component
         if (get_setting('currency_code') === 'NGN') {
             return $this->total;
         }
+
         $rate = (float) get_setting('currency_rate', 1);
 
         return $this->total * $rate;
@@ -242,7 +250,7 @@ class Checkout extends Component
 
             $this->successAlert('Payment receipt uploaded successfully. We will verify your payment shortly.');
             $this->redirect(route('payment.success', $this->currentOrder->code), navigate: true);
-        } catch (\Exception $e) {
+        } catch (Exception) {
             $this->toast('error', 'Error uploading receipt: ');
         }
     }

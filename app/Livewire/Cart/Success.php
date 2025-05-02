@@ -30,6 +30,7 @@ class Success extends Component
                 return redirect()->route('home');
             }
         }
+
         // Set order items and total
         $this->orderItems = $this->order->items;
         $this->orderTotal = $this->order->total;
