@@ -4,7 +4,7 @@
             <i class="las la-bars"></i>
         </button>
         <button type="button" class="icon-btn arrow-icon text-heading bg-gray-seven flx-center">
-            <img src="{{static_asset('images/icons/angle-right.svg')}}" alt="">
+            <img src="{{ static_asset('images/icons/angle-right.svg') }}" alt="">
         </button>
 
     </div>
@@ -17,10 +17,10 @@
                     <label class="theme-switch" for="checkbox">
                         <input type="checkbox" class="d-none" id="checkbox">
                         <span class="slider text-black header-right__button white-version">
-                            <img src="{{static_asset('images/icons/sun.svg')}}" alt="">
+                            <img src="{{ static_asset('images/icons/sun.svg') }}" alt="">
                         </span>
                         <span class="slider text-black header-right__button dark-version">
-                            <img src="{{static_asset('images/icons/moon.svg')}}" alt="">
+                            <img src="{{ static_asset('images/icons/moon.svg') }}" alt="">
                         </span>
                     </label>
                 </div>
@@ -28,24 +28,26 @@
                 <div class="user-profile">
                     <button class="user-profile__button flex-align">
                         <span class="user-profile__thumb">
-                            <img src="{{static_asset('images/thumbs/user-profile.png')}}" class="cover-img" alt="">
+                            <img src="{{ my_asset(auth()->user()->image ?? 'users/default.jpg') }}" class="cover-img my-auto" alt="">
                         </span>
                     </button>
                     <ul class="user-profile-dropdown">
                         <li class="sidebar-list__item">
-                            <a href="{{route('user.profile')}}" wire:navigate class="sidebar-list__link">
+                            <a href="{{ route('user.profile') }}" wire:navigate class="sidebar-list__link">
                                 <span class="sidebar-list__icon">
-                                    <img src="{{static_asset('images/icons/sidebar-icon2.svg')}}" alt="" class="icon">
-                                    <img src="{{static_asset('images/icons/sidebar-icon-active2.svg')}}" alt="" class="icon icon-active">
+                                    <img src="{{ static_asset('images/icons/sidebar-icon2.svg') }}" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/sidebar-icon-active2.svg') }}" alt=""
+                                        class="icon icon-active">
                                 </span>
                                 <span class="text">Profile</span>
                             </a>
                         </li>
                         <li class="sidebar-list__item">
-                            <a href="{{route('logout')}}" class="sidebar-list__link">
+                            <a href="{{ route('logout') }}" class="sidebar-list__link">
                                 <span class="sidebar-list__icon">
-                                    <img src="{{static_asset('images/icons/sidebar-icon13.svg')}}" alt="" class="icon">
-                                    <img src="{{static_asset('images/icons/sidebar-icon-active13.svg')}}" alt="" class="icon icon-active">
+                                    <img src="{{ static_asset('images/icons/sidebar-icon13.svg') }}" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/sidebar-icon-active13.svg') }}" alt=""
+                                        class="icon icon-active">
                                 </span>
                                 <span class="text">Logout</span>
                             </a>
@@ -53,7 +55,7 @@
                     </ul>
                 </div>
 
-                <div class="language-select flx-align select-has-icon" hidden>
+                {{-- <div class="language-select flx-align select-has-icon" hidden>
                     <img src="{{static_asset('images/icons/globe.svg')}}" alt="" class="globe-icon white-version">
                     <img src="{{static_asset('images/icons/globe-white.svg')}}" alt="" class="globe-icon dark-version">
                     <select class="select py-0 ps-2 border-0 fw-500">
@@ -62,7 +64,7 @@
                         <option value="3">Eur</option>
                         <option value="4">Urd</option>
                     </select>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

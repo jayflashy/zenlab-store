@@ -4906,10 +4906,11 @@ input[type=number] {
 }
 
 .user-profile__thumb {
-    width: 40px;
-    height: 40px;
+    width: 33px;
+    height: 33px;
     overflow: hidden;
     border-radius: 50%;
+    border: 1px solid hsl(var(--gray-five));
 }
 
 .user-profile__button {
