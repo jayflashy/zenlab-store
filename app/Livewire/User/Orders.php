@@ -45,16 +45,35 @@ class Orders extends Component
 
     public function orderDetails($code)
     {
-        $order = Order::whereUserId(Auth::id())->whereCode($code)->with(['user', 'items.product'])->firstOrFail();
+        $order = Order::whereUserId(Auth::id())->whereCode($code)->with(['items.product'])->firstOrFail();
         $this->view = 'details';
         $this->order = $order;
         $this->pageTitle = 'Order Details - ' . $order->code;
+    }
+    private function getOrderStatuses(): array
+    {
+        return [
+            'pending'    => 'Pending',
+            'processing' => 'Processing',
+            'completed'  => 'Completed',
+            'cancelled'  => 'Cancelled',
+            'failed'     => 'Failed',
+        ];
+    }
+
+    private function getPaymentStatuses(): array
+    {
+        return [
+            'pending'   => 'Pending',
+            'completed' => 'Completed',
+            'failed'    => 'Failed',
+        ];
     }
 
     public function render()
     {
         $ordersQuery = Order::query()
-            ->whereUserId(Auth::id())->with(['user', 'items.product'])
+            ->whereUserId(Auth::id())->with(['items.product'])
             ->when($this->searchTerm, function ($query): void {
                 $query->where(function ($query): void {
                     $query->where('code', 'like', '%' . $this->searchTerm . '%')
@@ -70,19 +89,8 @@ class Orders extends Component
             });
 
         $orders = $ordersQuery->latest()->paginate($this->perPage);
-        $orderStatuses = [
-            'pending' => 'Pending',
-            'processing' => 'Processing',
-            'completed' => 'Completed',
-            'cancelled' => 'Cancelled',
-            'failed' => 'Failed',
-        ];
-
-        $paymentStatuses = [
-            'pending' => 'Pending',
-            'completed' => 'Completed',
-            'failed' => 'Failed',
-        ];
+        $orderStatuses = $this->getOrderStatuses();
+        $paymentStatuses = $this->getPaymentStatuses();
 
         return view('livewire.user.orders', compact('orders', 'orderStatuses', 'paymentStatuses'));
     }

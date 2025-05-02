@@ -317,7 +317,7 @@ function getPaymentMethodLabel($method)
         'manual_payment' => 'Bank Transfer',
     ];
 
-    return $paymentMethods[$method];
+    return $paymentMethods[$method] ?? ucfirst(str_replace('_', ' ', $method));
 }
 
 function getPaymentStatusClass($status)

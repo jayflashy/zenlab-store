@@ -114,7 +114,7 @@ class Profile extends Component
     public function updatedImage()
     {
         $this->validate([
-            'image' => 'nullable|image|max:2024', // max ~2MB
+            'image' => 'nullable|image|max:2048', // max ~2MB
         ]);
 
         try {
@@ -142,7 +142,12 @@ class Profile extends Component
         try {
             $this->validate([
                 'current_password' => 'required',
-                'new_password' => 'required|min:8|different:current_password',
+                'new_password' => [
+                    'required',
+                    'min:8',
+                    'different:current_password',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                ],
                 'confirm_password' => 'required|same:new_password',
             ]);
             // Check if current password is correct
@@ -153,7 +158,7 @@ class Profile extends Component
             }
 
             // Update password
-            $this->user->password = Hash::make($this->new_password);
+            $this->user->password = $this->new_password;
             $this->user->save();
 
             // Reset password fields

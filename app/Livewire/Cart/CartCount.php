@@ -20,7 +20,7 @@ class CartCount extends Component
     {
         $cart = Cart::getCurrentCart();
 
-        $this->cartCount = $cart ? $cart->items->sum('quantity') : 0;
+        $this->cartCount = $cart ? $cart->items()->sum('quantity') : 0;
     }
 
     public function render()
