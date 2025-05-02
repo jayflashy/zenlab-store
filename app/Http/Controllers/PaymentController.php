@@ -107,6 +107,7 @@ class PaymentController extends Controller
 
                 return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
             }
+
             // Find order by reference
             $order = Order::where('code', $paymentData['data']['reference'])->firstOrFail();
             $this->orderService->failOrder($order, $paymentData);
@@ -134,6 +135,7 @@ class PaymentController extends Controller
 
             return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
         }
+
         $order = Order::where('code', $paymentData['data']['tx_ref'])->firstOrFail();
         $this->orderService->failOrder($order, $paymentData);
 
@@ -156,6 +158,7 @@ class PaymentController extends Controller
 
             return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
         }
+
         $order = Order::where('code', $paymentData['purchase_units'][0]['custom_id'])->firstOrFail();
         $this->orderService->failOrder($order, $paymentData);
 

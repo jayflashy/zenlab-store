@@ -109,6 +109,7 @@ class OrderManager extends Component
 
             return;
         }
+
         $oldPaymentStatus = $order->payment_status;
 
         $order->order_status = $this->newOrderStatus;
