@@ -32,14 +32,14 @@ class OrderManager extends Component
     public $perPage = 25;
 
     // Order view and edit properties
-    public $viewingOrder = null;
+    public $viewingOrder;
 
     public $editingNotes = false;
 
     public $orderNotes = '';
 
     // Status update properties
-    public $updatingOrderId = null;
+    public $updatingOrderId;
 
     public $newOrderStatus = '';
 
@@ -50,7 +50,7 @@ class OrderManager extends Component
     public $showDeleteModal = false;
 
     // For manual payment verification
-    public $manualPaymentReceipt = null;
+    public $manualPaymentReceipt;
 
     protected $orderService;
 
@@ -87,6 +87,7 @@ class OrderManager extends Component
 
         $this->viewingOrder->notes = $this->orderNotes;
         $this->viewingOrder->save();
+
         $this->editingNotes = false;
         $this->successAlert('Order notes updated successfully');
     }
@@ -104,12 +105,11 @@ class OrderManager extends Component
         $order = Order::find($this->updatingOrderId);
 
         if (! $order) {
-            $this->error('Order not found');
+            $this->errorAlert('Order not found');
 
             return;
         }
 
-        $oldOrderStatus = $order->order_status;
         $oldPaymentStatus = $order->payment_status;
 
         $order->order_status = $this->newOrderStatus;
@@ -148,7 +148,7 @@ class OrderManager extends Component
         $order = Order::find($orderId);
 
         if (! $order) {
-            $this->error('Order not found');
+            $this->errorAlert('Order not found');
 
             return;
         }
@@ -167,7 +167,7 @@ class OrderManager extends Component
         $order = Order::find($orderId);
 
         if (! $order || ! $order->payment_receipt) {
-            $this->error('Receipt not found');
+            $this->errorAlert('Receipt not found');
 
             return;
         }
@@ -201,26 +201,26 @@ class OrderManager extends Component
     {
         $ordersQuery = Order::query()
             ->with(['user', 'items.product'])
-            ->when($this->searchTerm, function ($query) {
-                $query->where(function ($query) {
+            ->when($this->searchTerm, function ($query): void {
+                $query->where(function ($query): void {
                     $query->where('code', 'like', '%' . $this->searchTerm . '%')
                         ->orWhere('email', 'like', '%' . $this->searchTerm . '%')
                         ->orWhere('name', 'like', '%' . $this->searchTerm . '%');
                 });
             })
-            ->when($this->statusFilter, function ($query) {
+            ->when($this->statusFilter, function ($query): void {
                 $query->where('order_status', $this->statusFilter);
             })
-            ->when($this->paymentStatusFilter, function ($query) {
+            ->when($this->paymentStatusFilter, function ($query): void {
                 $query->where('payment_status', $this->paymentStatusFilter);
             })
-            ->when($this->paymentGatewayFilter, function ($query) {
+            ->when($this->paymentGatewayFilter, function ($query): void {
                 $query->where('payment_method', $this->paymentGatewayFilter);
             })
-            ->when($this->dateFrom, function ($query) {
+            ->when($this->dateFrom, function ($query): void {
                 $query->whereDate('created_at', '>=', $this->dateFrom);
             })
-            ->when($this->dateTo, function ($query) {
+            ->when($this->dateTo, function ($query): void {
                 $query->whereDate('created_at', '<=', $this->dateTo);
             });
 

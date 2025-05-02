@@ -9,35 +9,15 @@ use App\Services\OrderService;
 use App\Services\PayPalService;
 use App\Services\PaystackService;
 use App\Traits\ApiResponse;
+use Exception;
 use Illuminate\Http\Request;
+use Log;
 
 class PaymentController extends Controller
 {
     use ApiResponse;
 
-    private $paystack;
-
-    private $paypal;
-
-    private $flutterwave;
-
-    private $cryptomus;
-
-    private $orderService;
-
-    public function __construct(
-        PaystackService $paystack,
-        FlutterwaveService $flutterwave,
-        PayPalService $paypal,
-        CryptomusService $cryptomus,
-        OrderService $orderService
-    ) {
-        $this->paystack = $paystack;
-        $this->flutterwave = $flutterwave;
-        $this->paypal = $paypal;
-        $this->cryptomus = $cryptomus;
-        $this->orderService = $orderService;
-    }
+    public function __construct(private PaystackService $paystack, private FlutterwaveService $flutterwave, private PayPalService $paypal, private CryptomusService $cryptomus, private OrderService $orderService) {}
 
     public function initPaystack($data)
     {
@@ -46,14 +26,16 @@ class PaymentController extends Controller
             if ($data['currency'] != 'NGN') {
                 $data['amount'] = $data['ngn_amount'];
             }
+
             $res = $this->paystack->createPayment($data['amount'], $data);
             if (isset($res['data']['authorization_url'])) {
 
                 return redirect($res['data']['authorization_url']);
             }
-            throw new \Exception('Unable to initialize payment');
-        } catch (\Exception $e) {
-            throw new \Exception('Unable to initialize payment');
+
+            throw new Exception('Unable to initialize payment');
+        } catch (Exception) {
+            throw new Exception('Unable to initialize payment');
         }
     }
 
@@ -65,13 +47,15 @@ class PaymentController extends Controller
             if ($data['currency'] != 'NGN') {
                 $amount = $data['ngn_amount'];
             }
+
             $res = $this->flutterwave->createPayment($amount, $data);
             if (isset($res['data']['link'])) {
                 return redirect($res['data']['link']);
             }
-            throw new \Exception('Unable to initialize payment');
-        } catch (\Exception $e) {
-            throw new \Exception('Unable to initialize payment');
+
+            throw new Exception('Unable to initialize payment');
+        } catch (Exception) {
+            throw new Exception('Unable to initialize payment');
         }
     }
 
@@ -80,18 +64,20 @@ class PaymentController extends Controller
         try {
             $res = $this->paypal->createPayment($data['amount'], $data);
             if (isset($res['status']) && $res['status'] === 'ERROR') {
-                \Log::error('PayPal init failed', $res);
+                Log::error('PayPal init failed', $res);
 
                 return $this->errorResponse($res['message'] ?? 'Unable to initialize payment');
             }
+
             foreach ($res['links'] as $link) {
                 if ($link['rel'] === 'approve') {
                     return redirect($link['href']);
                 }
             }
-            throw new \Exception('Unable to initialize payment');
-        } catch (\Exception $e) {
-            throw new \Exception('Unable to initialize payment');
+
+            throw new Exception('Unable to initialize payment');
+        } catch (Exception) {
+            throw new Exception('Unable to initialize payment');
         }
     }
 
@@ -102,9 +88,10 @@ class PaymentController extends Controller
             if (isset($res['result']['url'])) {
                 return redirect($res['result']['url']);
             }
-            throw new \Exception('Unable to initialize payment');
-        } catch (\Exception $e) {
-            throw new \Exception('Unable to initialize payment');
+
+            throw new Exception('Unable to initialize payment');
+        } catch (Exception) {
+            throw new Exception('Unable to initialize payment');
         }
     }
 
@@ -119,15 +106,15 @@ class PaymentController extends Controller
                 $this->orderService->completeOrder($order, $paymentData);
 
                 return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
-            } else {
-                // Find order by reference
-                $order = Order::where('code', $paymentData['data']['reference'])->firstOrFail();
-                $this->orderService->failOrder($order, $paymentData);
-
-                return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
             }
-        } catch (\Exception $e) {
-            logger()->error('Paystack callback error: ' . $e->getMessage());
+
+            // Find order by reference
+            $order = Order::where('code', $paymentData['data']['reference'])->firstOrFail();
+            $this->orderService->failOrder($order, $paymentData);
+
+            return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
+        } catch (Exception $exception) {
+            logger()->error('Paystack callback error: ' . $exception->getMessage());
 
             return redirect()->route('checkout')->with('error', 'Something went wrong with your payment');
         }
@@ -138,6 +125,7 @@ class PaymentController extends Controller
         if ($request->status == 'cancelled') {
             return $this->callbackResponse('error', 'Payment Was Cancelled', route('checkout'));
         }
+
         $transactionID = $request->transaction_id;
         $paymentData = $this->flutterwave->getTransactionStatus($transactionID);
         if ($paymentData['status'] == 'success' && $paymentData['data']['status'] == 'successful') {
@@ -146,12 +134,12 @@ class PaymentController extends Controller
             $this->orderService->completeOrder($order, $paymentData);
 
             return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
-        } else {
-            $order = Order::where('code', $paymentData['data']['tx_ref'])->firstOrFail();
-            $this->orderService->failOrder($order, $paymentData);
-
-            return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
         }
+
+        $order = Order::where('code', $paymentData['data']['tx_ref'])->firstOrFail();
+        $this->orderService->failOrder($order, $paymentData);
+
+        return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
     }
 
     public function paypalSuccess(Request $request)
@@ -160,6 +148,7 @@ class PaymentController extends Controller
         if (empty($orderId)) {
             return $this->callbackResponse('error', 'Invalid Payment', route('checkout'));
         }
+
         $paymentData = $this->paypal->getOrderDetails($orderId);
         if ($paymentData['status'] == 'APPROVED') {
             // confirm payment
@@ -168,14 +157,12 @@ class PaymentController extends Controller
             $this->orderService->completeOrder($order, $paymentData);
 
             return $this->callbackResponse('success', 'Payment was successful', route('payment.success', $order->code));
-        } else {
-            $order = Order::where('code', $paymentData['purchase_units'][0]['custom_id'])->firstOrFail();
-            $this->orderService->failOrder($order, $paymentData);
-
-            return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
         }
 
-        return $request;
+        $order = Order::where('code', $paymentData['purchase_units'][0]['custom_id'])->firstOrFail();
+        $this->orderService->failOrder($order, $paymentData);
+
+        return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
     }
 
     public function callbackResponse($type, $message, $url = null)
@@ -187,6 +174,7 @@ class PaymentController extends Controller
 
             return $this->errorResponse($message);
         }
+
         if ($type == 'success') {
             return redirect($url)->withSuccess($message);
         }

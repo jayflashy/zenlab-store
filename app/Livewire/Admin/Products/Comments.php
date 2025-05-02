@@ -20,7 +20,7 @@ class Comments extends Component
 
     public $status = '';
 
-    public $editingComment = null;
+    public $editingComment;
 
     public $editContent = '';
 
@@ -28,7 +28,7 @@ class Comments extends Component
 
     public $isPreviewingComment = false;
 
-    public $previewComment = null;
+    public $previewComment;
 
     public $deleteId;
 
@@ -100,6 +100,7 @@ class Comments extends Component
     {
         $comment = Comment::findOrFail($commentId);
         $comment->update(['status' => 'approved']);
+
         $this->isPreviewingComment = false;
         $this->successAlert('Comment approved successfully!');
     }
@@ -108,6 +109,7 @@ class Comments extends Component
     {
         $comment = Comment::findOrFail($commentId);
         $comment->update(['status' => 'rejected']);
+
         $this->isPreviewingComment = false;
         $this->warningAlert('Comment rejected!', 'Rejected');
     }
@@ -140,19 +142,19 @@ class Comments extends Component
     public function render()
     {
         $comments = Comment::with(['user', 'product', 'parent'])
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
+            ->when($this->search, function ($query): void {
+                $query->where(function ($q): void {
                     $q->where('content', 'like', '%' . $this->search . '%')
-                        ->orWhereHas('user', function ($u) {
+                        ->orWhereHas('user', function ($u): void {
                             $u->where('name', 'like', '%' . $this->search . '%')
                                 ->orWhere('email', 'like', '%' . $this->search . '%');
                         })
-                        ->orWhereHas('product', function ($p) {
+                        ->orWhereHas('product', function ($p): void {
                             $p->where('name', 'like', '%' . $this->search . '%');
                         });
                 });
             })
-            ->when($this->status, function ($query) {
+            ->when($this->status, function ($query): void {
                 $query->where('status', $this->status);
             })
             ->latest()

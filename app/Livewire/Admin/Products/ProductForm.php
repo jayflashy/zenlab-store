@@ -308,6 +308,7 @@ class ProductForm extends Component
             );
             $product->image = $imagePath;
         }
+
         // handles thumbnail upload
         if ($this->thumbnail) {
             $thumbnailPath = $this->handleImage(

@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Coupon extends Model
 {
-    use HasUlids, SoftDeletes;
+    use HasUlids;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -44,9 +45,9 @@ class Coupon extends Model
      */
     public function scopeValid($query)
     {
-        return $query->where(function ($query) {
+        return $query->where(function ($query): void {
             $query->whereNull('expires_at')->orWhere('expires_at', '>', now());
-        })->where(function ($query) {
+        })->where(function ($query): void {
             $query->whereNull('limit')->orWhere('limit', '>', 0);
         })->where('active', true);
     }

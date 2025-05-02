@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\User;
 use Auth;
 use DB;
+use Exception;
 
 class OrderService
 {
@@ -60,9 +61,9 @@ class OrderService
             DB::commit();
 
             return $order;
-        } catch (\Exception $e) {
+        } catch (Exception $exception) {
             DB::rollback();
-            throw $e;
+            throw $exception;
         }
     }
 
@@ -87,6 +88,7 @@ class OrderService
         if ($order->cart_id) {
             Cart::where('id', $order->cart_id)->delete();
         }
+
         // send email and other notification
 
         return $order;
@@ -142,7 +144,7 @@ class OrderService
                 'name' => $name,
                 'password' => bcrypt(getTrx(18)),
                 'status' => 'active',
-                'username' => text_trimer($name, 19) . rand(1000, 9999),
+                'username' => text_trimer($name, 19) . random_int(1000, 9999),
             ]
         );
     }

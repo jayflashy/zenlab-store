@@ -26,7 +26,7 @@ class CouponManager extends Component
     public $perPage = 10;
 
     // Form properties
-    public $editingCouponId = null;
+    public $editingCouponId;
 
     public $code;
 
@@ -36,13 +36,13 @@ class CouponManager extends Component
 
     public $type = 'general';
 
-    public $product_id = null;
+    public $product_id;
 
-    public $category_id = null;
+    public $category_id;
 
-    public $limit = null;
+    public $limit;
 
-    public $expires_at = null;
+    public $expires_at;
 
     public bool $active = true;
 
@@ -68,7 +68,7 @@ class CouponManager extends Component
         $this->resetForm();
     }
 
-    protected function rules()
+    protected function rules(): array
     {
         $rules = [
             'code' => 'required|string|max:20|unique:coupons,code',
@@ -241,7 +241,7 @@ class CouponManager extends Component
             )
             ->when(
                 ! $this->showExpired,
-                fn ($query) => $query->where(function ($q) {
+                fn ($query) => $query->where(function ($q): void {
                     $q->whereNull('expires_at')
                         ->orWhere('expires_at', '>', now());
                 })

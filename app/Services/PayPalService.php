@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Log;
 
 class PayPalService
 {
-    private string $clientId;
+    private readonly string $clientId;
 
-    private string $secret;
+    private readonly string $secret;
 
-    private string $baseUrl;
+    private readonly string $baseUrl;
 
     private ?string $cachedAccessToken = null;
 
@@ -55,13 +55,13 @@ class PayPalService
             }
 
             throw new Exception("PayPal API Error: {$response->body()}");
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             Log::error('PayPal getAccessToken failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
+                'error' => $exception->getMessage(),
+                'trace' => $exception->getTraceAsString(),
             ]);
 
-            throw new Exception('Failed to retrieve PayPal access token: ' . $e->getMessage());
+            throw new Exception('Failed to retrieve PayPal access token: ' . $exception->getMessage());
         }
     }
 
@@ -112,9 +112,9 @@ class PayPalService
             }
 
             throw new Exception("PayPal API Error: {$response->body()}");
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
 
-            throw new Exception("Failed to create PayPal payment: {$e->getMessage()}");
+            throw new Exception("Failed to create PayPal payment: {$exception->getMessage()}");
         }
     }
 
@@ -136,13 +136,13 @@ class PayPalService
             }
 
             throw new Exception("PayPal API Error: {$response->body()}");
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             Log::error('PayPal getOrderDetails failed', [
-                'error' => $e->getMessage(),
+                'error' => $exception->getMessage(),
                 'orderId' => $orderId,
-                'trace' => $e->getTraceAsString(),
+                'trace' => $exception->getTraceAsString(),
             ]);
-            throw new Exception("Failed to get PayPal order details : {$response->getMessage()}");
+            throw new Exception("Failed to get PayPal order details : {$exception->getMessage()}");
         }
     }
 }

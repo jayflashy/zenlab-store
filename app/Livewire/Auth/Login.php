@@ -4,6 +4,7 @@ namespace App\Livewire\Auth;
 
 use App\Models\Cart;
 use App\Traits\LivewireToast;
+use Exception;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -12,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Log;
 
 #[Layout('layouts.auth')]
 class Login extends Component
@@ -45,11 +47,12 @@ class Login extends Component
                 'email' => __('auth.failed'),
             ]);
         }
+
         // merge guest cart with user cart
         try {
             Cart::mergeGuestCart(Auth::user()->id, $oldSession);
-        } catch (\Exception $e) {
-            \Log::error('Failed to merge guest cart: ' . $e->getMessage());
+        } catch (Exception $exception) {
+            Log::error('Failed to merge guest cart: ' . $exception->getMessage());
         }
 
         RateLimiter::clear($this->throttleKey());

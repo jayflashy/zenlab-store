@@ -8,18 +8,10 @@ use Illuminate\View\Component;
 
 class CartBreadcrumb extends Component
 {
-    public int $step;
-
-    public string $stepTitle;
-
     /**
      * Create a new component instance.
      */
-    public function __construct(int $step = 1, string $stepTitle = 'Cart')
-    {
-        $this->step = $step;
-        $this->stepTitle = $stepTitle;
-    }
+    public function __construct(public int $step = 1, public string $stepTitle = 'Cart') {}
 
     /**
      * Get the view / contents that represent the component.

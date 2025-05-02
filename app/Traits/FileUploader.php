@@ -2,10 +2,12 @@
 
 namespace App\Traits;
 
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
+use Log;
 
 trait FileUploader
 {
@@ -22,7 +24,7 @@ trait FileUploader
         ?string $format = null,
         string $disk = 'uploads'
     ): ?string {
-        if (! $file) {
+        if ($file === null) {
             return null;
         }
 
@@ -65,9 +67,9 @@ trait FileUploader
         // Store the file
         try {
             Storage::disk($disk)->put($fullPath, $encodedImage);
-        } catch (\Exception $e) {
+        } catch (Exception $exception) {
             // Log the error or handle it appropriately
-            \Log::error("Failed to store image: {$e->getMessage()}");
+            Log::error("Failed to store image: {$exception->getMessage()}");
 
             return null;
         }
@@ -90,7 +92,7 @@ trait FileUploader
         ?string $oldFile = null,
         string $disk = 'uploads'
     ): ?string {
-        if (! $file) {
+        if ($file === null) {
             return null;
         }
 

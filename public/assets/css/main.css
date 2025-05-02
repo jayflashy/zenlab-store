@@ -94,6 +94,7 @@
     --body-color: var(--black-three);
     --body-bg: 0 0% 100%;
     --border-color: 236 13% 77%;
+    --border-color2: 236 24% 92%;
     --section-bg: 210 25% 97%;
     /* Card box shadow */
     --box-shadow: 0px 20px 30px 0px rgba(197, 196, 201, 0.25);
@@ -249,6 +250,7 @@
     --black-three-l: 77%;
     --gray-five: 234 13% 29%;
     --border-color: 234 13% 29%;
+    --border-color2: 234 14% 34%;
     --white-one: 234 13% 29%;
     --box-shadow: 0px 20px 30px 0px var(--dark-black-one);
 }
@@ -3110,6 +3112,14 @@ input[type=number] {
     border-bottom: 0;
 }
 
+/* Common list group */
+.common-list .list-group-item{
+    background-color: hsl(var(--white));
+    color: hsl(var(--black));
+    border: .5px solid hsl(var(--border-color2));
+}
+
+
 /* ================= Common Modal Css End ========================= */
 /* ================================= preload Css Start =========================== */
 .loader-mask {
@@ -4906,10 +4916,11 @@ input[type=number] {
 }
 
 .user-profile__thumb {
-    width: 40px;
-    height: 40px;
+    width: 33px;
+    height: 33px;
     overflow: hidden;
     border-radius: 50%;
+    border: 1px solid hsl(var(--border-color2));
 }
 
 .user-profile__button {

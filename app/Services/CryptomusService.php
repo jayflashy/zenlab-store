@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Http;
 
 class CryptomusService
@@ -67,7 +68,8 @@ class CryptomusService
         if ($response->successful()) {
             return $response->json();
         }
-        throw new \Exception("Cryptomus Error: {$response->body()}");
+
+        throw new Exception("Cryptomus Error: {$response->body()}");
     }
 
     // Check the status of a payment
@@ -80,7 +82,8 @@ class CryptomusService
         if ($response->successful()) {
             return $response->json();
         }
-        throw new \Exception('Unable to retrieve payment status.');
+
+        throw new Exception('Unable to retrieve payment status.');
     }
 
     /**

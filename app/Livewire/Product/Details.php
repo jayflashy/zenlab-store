@@ -9,6 +9,9 @@ use App\Traits\LivewireToast;
 use Cache;
 use Livewire\Component;
 
+/**
+ * @property-read float $currentPrice
+ */
 class Details extends Component
 {
     use LivewireToast;
@@ -39,10 +42,11 @@ class Details extends Component
     {
         $product = Product::where('slug', $slug)->with('ratings.user')->firstorFail();
         $this->product = $product;
+
         $this->pageTitle = $product->name;
         // set meta
         $this->metaTitle = $this->product->name;
-        $this->metaDescription = str()->limit(strip_tags($this->product->short_description), 150);
+        $this->metaDescription = str()->limit(strip_tags((string) $this->product->short_description), 150);
         $this->metaKeywords = implode(',', $product->tags);
         $this->metaImage = $this->product->image ? my_asset($this->product->image) : my_asset(get_setting('logo'));
     }
@@ -51,13 +55,11 @@ class Details extends Component
     {
         $cacheKey = 'related_products_' . $this->product->id;
 
-        return Cache::remember($cacheKey, now()->addMinutes(30), function () {
-            return Product::where('category_id', $this->product->category_id)
-                ->where('id', '!=', $this->product->id)
-                ->inRandomOrder()
-                ->limit(4)
-                ->get();
-        });
+        return Cache::remember($cacheKey, now()->addMinutes(30), fn () => Product::where('category_id', $this->product->category_id)
+            ->where('id', '!=', $this->product->id)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get());
     }
 
     public function toggleLicenseType()

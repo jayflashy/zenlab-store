@@ -33,14 +33,7 @@ Route::get('/policy', [PageController::class, 'policy'])->name('policy');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 Route::get('/pages/{slug}', [PageController::class, 'show'])->name('pages.view');
 
-Route::get('user', User::class)->name('user.index');
-
 Route::get('dashboard', User::class)->name('dashboard');
-
-// Route::view('dashboard', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
-
 Route::middleware(['auth'])->group(function (): void {
     Route::redirect('settings', 'settings/profile');
 
@@ -54,9 +47,13 @@ require __DIR__ . '/auth.php';
 Route::prefix('admin')->as('admin.')->group(function (): void {
     require __DIR__ . '/admin.php';
 });
+// user
+Route::prefix('user')->as('user.')->middleware('auth')->group(function (): void {
+    require __DIR__ . '/user.php';
+});
 
 // Payment Callback
-Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+Route::controller(PaymentController::class)->prefix('payment')->group(function (): void {
     Route::any('/paystack', 'paystackSuccess')->name('paystack.success');
     Route::any('/flutter', 'flutterSuccess')->name('flutter.success');
     Route::post('/cryptomus', 'cryptomusSuccess')->name('cryptomus.success');

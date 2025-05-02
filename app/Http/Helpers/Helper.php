@@ -306,3 +306,45 @@ function allCoupons()
 {
     return Cache::remember('allCoupons', 16000, fn () => Coupon::valid()->get());
 }
+
+function getPaymentMethodLabel($method)
+{
+    $paymentMethods = [
+        'paystack_payment' => 'Paystack',
+        'flutterwave_payment' => 'Flutterwave',
+        'paypal_payment' => 'PayPal',
+        'cryptomus_payment' => 'Cryptomus',
+        'manual_payment' => 'Bank Transfer',
+    ];
+
+    return $paymentMethods[$method] ?? ucfirst(str_replace('_', ' ', $method));
+}
+
+function getPaymentStatusClass($status)
+{
+    return [
+        'pending' => 'bg-warning',
+        'completed' => 'bg-success',
+        'failed' => 'bg-danger',
+    ][$status] ?? 'bg-secondary';
+}
+
+function getPaymentStatusLabel($status)
+{
+    return [
+        'pending' => 'Pending',
+        'completed' => 'Completed',
+        'failed' => 'Failed',
+    ][$status] ?? 'Pending';
+}
+
+function getOrderStatusClass($status)
+{
+    return [
+        'pending' => 'bg-warning',
+        'processing' => 'bg-info',
+        'completed' => 'bg-success',
+        'cancelled' => 'bg-secondary',
+        'failed' => 'bg-danger',
+    ][$status] ?? 'bg-secondary';
+}

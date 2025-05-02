@@ -25,10 +25,13 @@ class User extends Authenticatable
         'password',
         'username',
         'phone',
-        'country_id',
+        'country',
         'address',
         'email_verify',
         'status',
+        'image',
+        'update_notify',
+        'trx_notify',
     ];
 
     /**
@@ -51,6 +54,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'update_notify' => 'boolean',
+            'trx_notify' => 'boolean',
         ];
     }
 
@@ -63,5 +68,15 @@ class User extends Authenticatable
             ->explode(' ')
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Rating::class);
     }
 }
