@@ -6,7 +6,7 @@
         <a wire:navigate href="{{ route('user.orders') }}" class="btn btn-outline-main">
             <i class="fas fa-arrow-left me-1"></i> Back
         </a>
-        <a wire:navigate href="{{ route('user.orders.invoice', $order->code) }}" class="btn btn-main">
+        <a wire:navigate href="{{ route('user.orders.invoice', $order->code) }}" target="_blank" class="btn btn-main">
             <i class="fas fa-file-alt me-1"></i> Invoice
         </a>
     </div>
@@ -40,15 +40,7 @@
                     <strong>Payment Status</strong>
                 </div>
                 <div class="col-auto">
-                    @php
-                        $paymentStatusClass =
-                            [
-                                'pending' => 'bg-warning',
-                                'completed' => 'bg-success',
-                                'failed' => 'bg-danger',
-                            ][$order->payment_status] ?? 'bg-secondary';
-                    @endphp
-                    <span class="badge {{ $paymentStatusClass }}">{{ ucfirst($order->payment_status) }}</span>
+                    <span class="badge {{ getPaymentStatusClass($order->payment_status) }}">{{ ucfirst($order->payment_status) }}</span>
                 </div>
             </div>
         </li>
@@ -58,17 +50,7 @@
                     <strong>Order Status</strong>
                 </div>
                 <div class="col-auto">
-                    @php
-                        $orderStatusClass =
-                            [
-                                'pending' => 'bg-warning',
-                                'processing' => 'bg-info',
-                                'completed' => 'bg-success',
-                                'cancelled' => 'bg-secondary',
-                                'failed' => 'bg-danger',
-                            ][$order->order_status] ?? 'bg-secondary';
-                    @endphp
-                    <span class="badge {{ $orderStatusClass }}">{{ ucfirst($order->order_status) }}</span>
+                    <span class="badge {{ getOrderStatusClass($order->order_status) }}">{{ ucfirst($order->order_status) }}</span>
                 </div>
             </div>
         </li>
@@ -78,17 +60,7 @@
                     <strong>Payment Method</strong>
                 </div>
                 <div class="col-auto">
-                    @php
-                        $paymentMethods = [
-                            'paystack_payment' => 'Paystack',
-                            'flutterwave_payment' => 'Flutterwave',
-                            'paypal_payment' => 'PayPal',
-                            'cryptomus_payment' => 'Cryptomus',
-                            'manual_payment' => 'Bank Transfer',
-                        ];
-                        $paymentMethodLabel = $paymentMethods[$order->payment_method] ?? $order->payment_method;
-                    @endphp
-                    {{ $paymentMethodLabel }}
+                    {{ getPaymentMethodLabel($order->payment_method) }}
                 </div>
             </div>
         </li>
@@ -109,7 +81,7 @@
                                 @endif
                             </span>
                         </div>
-                        <div>({{ format_price($item->price) }} x {{$item->quantity}})</div>
+                        <div>({{ format_price($item->price) }} x {{ $item->quantity }})</div>
                     </div>
                     <div class="col-auto">
                         <h6 class="fw-light mb-0">{{ format_price($item->total) }}</h6>
@@ -119,9 +91,9 @@
                     <div class="col">
                         <div>
                             @if ($item->extended_support)
-                            12 months of support
+                                12 months of support
                             @else
-                            6 months of support
+                                6 months of support
                             @endif
                         </div>
                     </div>
@@ -163,7 +135,7 @@
                     <h4 class="mb-0">Total</h4>
                 </div>
                 <div class="col-auto">
-                    <h6 class="mb-0">{{ format_price($order->subtotal) }}</h6>
+                    <h6 class="mb-0">{{ format_price($order->total) }}</h6>
                 </div>
             </div>
         </li>

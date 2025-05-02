@@ -20,6 +20,9 @@
                     <p class="text-muted fw-light mb-0">{{ $order->email }}</p>
                     <p class="text-muted fw-light mb-0">{{ $order->user->address ?? '' }}</p>
                     <p class="text-muted fw-light mb-0">{{ $order->user->country ?? '' }}</p>
+                    @if($order->payment_date)
+                        <p class="text-muted fw-light mb-0">{{ show_datetime($order->payment_date) }}</p>
+                    @endif
                 </div>
                 <div class="col">
                     @if ($order->payment_status == 'completed')
@@ -368,20 +371,13 @@
                         <td colspan="3">
                             <p class="mb-0">Total</p>
                         </td>
-                        <td class="text-end"> {{ format_price($order->total) }}</td>
+                        <td class="text-end fw-bold"> {{ format_price($order->total) }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="my-4">@php
-            $paymentMethods = [
-                'paystack_payment' => 'Paystack',
-                'flutterwave_payment' => 'Flutterwave',
-                'paypal_payment' => 'PayPal',
-                'cryptomus_payment' => 'Cryptomus',
-                'manual_payment' => 'Bank Transfer',
-            ];
-            $paymentMethodLabel = $paymentMethods[$order->payment_method] ?? $order->payment_method;
+            $paymentMethodLabel = getPaymentMethodLabel($order->payment_method);
         @endphp
 
             <p class="text-muted">
@@ -389,7 +385,7 @@
             </p>
         </div>
         <div class="mt-auto text-center print-actions">
-            <button class="btn btn-primary btn-md fw-medium print-btn" onclick="window.print()">
+            <button class="btn btn-primary btn-md fw-medium print-btn" x-data x-on:click="window.print()">
                 <i class="fa-solid fa-print me-2"></i>
                 Print
             </button>
@@ -397,7 +393,5 @@
     </div>
 
 </div>
-
-
 
 @include('layouts.meta')

@@ -79,35 +79,18 @@
                             @endif
                         </td>
                         <td>
-                            @php
-                                $paymentStatusClass =
-                                    [
-                                        'pending' => 'bg-warning',
-                                        'completed' => 'bg-success',
-                                        'failed' => 'bg-danger',
-                                    ][$order->payment_status] ?? 'bg-secondary';
-                            @endphp
-                            <span class="badge {{ $paymentStatusClass }}">{{ ucfirst($order->payment_status) }}</span>
+                            <span
+                                class="badge {{ getPaymentStatusClass($order->payment_status) }}">{{ ucfirst($order->payment_status) }}</span>
                         </td>
                         <td>
-                            @php
-                                $orderStatusClass =
-                                    [
-                                        'pending' => 'bg-warning',
-                                        'processing' => 'bg-info',
-                                        'completed' => 'bg-success',
-                                        'cancelled' => 'bg-secondary',
-                                        'failed' => 'bg-danger',
-                                    ][$order->order_status] ?? 'bg-secondary';
-                            @endphp
-                            <span class="badge {{ $orderStatusClass }}">{{ ucfirst($order->order_status) }}</span>
+                            <span class="badge {{ getOrderStatusClass($order->order_status) }}">{{ ucfirst($order->order_status) }}</span>
                         </td>
                         <td>{{ show_date($order->created_at, 'M d, Y H:ia') }}</td>
                         <td class="text-end">
                             <div class=" gap-2">
                                 @if ($order->payment_status === 'completed')
                                     <a wire:navigate href="{{ route('user.orders.invoice', $order->code) }}" title="Invoice"
-                                        class="btn btn-sm btn-outline-primary">
+                                        class="btn btn-sm btn-outline-primary" target="_blank">
                                         <i class="far fa-file-alt"></i>
                                     </a>
                                 @endif
@@ -119,7 +102,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center py-4 text-muted">
+                        <td colspan="6" class="text-center py-4 text-muted">
                             No orders found matching your criteria.
                         </td>
                     </tr>

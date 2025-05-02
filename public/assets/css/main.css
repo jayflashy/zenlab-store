@@ -4920,7 +4920,7 @@ input[type=number] {
     height: 33px;
     overflow: hidden;
     border-radius: 50%;
-    border: 1px solid hsl(var(--gray-five));
+    border: 1px solid hsl(var(--border-color2));
 }
 
 .user-profile__button {

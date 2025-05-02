@@ -21,11 +21,13 @@ class Orders extends Component
 
     public $paymentStatusFilter = '';
 
-    public $perPage = 25;
+    public int $perPage = 25;
 
     public $view = 'list';
 
-    public $order;
+    public ?Order $order = null;
+
+    public $metaTitle = 'Order History';
 
     public $pageTitle = 'Order History';
 
@@ -36,6 +38,7 @@ class Orders extends Component
         $routeName = request()->route()->getName();
 
         if ($routeName === 'user.orders.view' && $code) {
+            $this->resetPage();
             $this->orderDetails($code);
         }
     }
@@ -58,8 +61,8 @@ class Orders extends Component
 
     public function render()
     {
-        $ordersQuery = Order::query()->with(['user', 'items.product'])
-            ->whereUserId(Auth::id())->with(['user'])
+        $ordersQuery = Order::query()
+            ->whereUserId(Auth::id())->with(['user', 'items.product'])
             ->when($this->searchTerm, function ($query) {
                 $query->where(function ($query) {
                     $query->where('code', 'like', '%' . $this->searchTerm . '%')

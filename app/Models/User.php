@@ -29,7 +29,6 @@ class User extends Authenticatable
         'address',
         'email_verify',
         'status',
-        'country',
         'image',
         'update_notify',
         'trx_notify',
