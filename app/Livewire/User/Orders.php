@@ -50,23 +50,24 @@ class Orders extends Component
         $this->order = $order;
         $this->pageTitle = 'Order Details - ' . $order->code;
     }
+
     private function getOrderStatuses(): array
     {
         return [
-            'pending'    => 'Pending',
+            'pending' => 'Pending',
             'processing' => 'Processing',
-            'completed'  => 'Completed',
-            'cancelled'  => 'Cancelled',
-            'failed'     => 'Failed',
+            'completed' => 'Completed',
+            'cancelled' => 'Cancelled',
+            'failed' => 'Failed',
         ];
     }
 
     private function getPaymentStatuses(): array
     {
         return [
-            'pending'   => 'Pending',
+            'pending' => 'Pending',
             'completed' => 'Completed',
-            'failed'    => 'Failed',
+            'failed' => 'Failed',
         ];
     }
 

@@ -146,7 +146,7 @@ class Profile extends Component
                     'required',
                     'min:8',
                     'different:current_password',
-                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
                 ],
                 'confirm_password' => 'required|same:new_password',
             ]);
