@@ -10,7 +10,7 @@
 <link rel="canonical" href="{{ url()->current() }}">
 
 <title>@lang(get_setting('title', 'ZenLab')) | @yield('title')</title>
-<link rel="shortcut icon" href="{{ my_asset(get_setting('favicon', 'favicon.ico')) }}">
+<link rel="shortcut icon" href="{{ my_asset(get_setting('favicon', 'favicon.png')) }}">
 
 <!-- App css -->
 <link href="{{ static_asset('css/vendors.css') }}" rel="stylesheet" type="text/css">

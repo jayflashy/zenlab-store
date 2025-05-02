@@ -56,7 +56,7 @@ class Orders extends Component
 
     public function render()
     {
-        $ordersQuery = Order::query()
+        $ordersQuery = Order::query()->with(['user', 'items.product'])
             ->whereUserId(Auth::id())->with(['user'])
             ->when($this->searchTerm, function ($query) {
                 $query->where(function ($query) {

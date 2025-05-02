@@ -8,7 +8,7 @@ use Auth;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 
-#[Layout('user.layouts.app')]
+#[Layout('layouts.invoice')]
 class Invoice extends Component
 {
     use LivewireToast;
@@ -16,7 +16,6 @@ class Invoice extends Component
     public $order;
 
     public string $pageTitle;
-
 
     // meta
     public string $metaTitle;
@@ -28,7 +27,7 @@ class Invoice extends Component
         $this->order = $order;
         $this->pageTitle = 'Order Invoice - ' . $order->code;
         // set meta
-        $this->metaTitle = "Invoice";
+        $this->metaTitle = 'Order Invoice - ' . $order->code;
     }
 
     public function render()
