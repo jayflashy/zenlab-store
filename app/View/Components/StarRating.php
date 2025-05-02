@@ -11,9 +11,7 @@ class StarRating extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public float $rating, public int $count = 0)
-    {
-    }
+    public function __construct(public float $rating, public int $count = 0) {}
 
     /**
      * Get the view / contents that represent the component.

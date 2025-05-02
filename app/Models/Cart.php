@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Exception;
-use Log;
 use Auth;
 use DB;
+use Exception;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class Cart extends Model
 {
@@ -35,7 +35,7 @@ class Cart extends Model
 
     public function getTotalAttribute()
     {
-        return $this->items->sum(fn($item): int|float => $item->price * $item->quantity);
+        return $this->items->sum(fn ($item): int|float => $item->price * $item->quantity);
     }
 
     public static function getCurrentCart()
@@ -47,6 +47,7 @@ class Cart extends Model
                 ['session_id' => session()->getId()]
             );
         }
+
         // For guests
         return self::firstOrCreate(
             ['session_id' => session()->getId(), 'status' => 'active'],

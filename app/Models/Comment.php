@@ -12,6 +12,7 @@ class Comment extends Model
 {
     use HasUlids;
     use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      */

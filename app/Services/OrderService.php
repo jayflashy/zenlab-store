@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use Exception;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
 use Auth;
 use DB;
+use Exception;
 
 class OrderService
 {

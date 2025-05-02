@@ -13,6 +13,7 @@ class Coupon extends Model
 {
     use HasUlids;
     use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      */

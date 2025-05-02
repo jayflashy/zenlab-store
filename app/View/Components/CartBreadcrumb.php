@@ -11,9 +11,7 @@ class CartBreadcrumb extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public int $step = 1, public string $stepTitle = 'Cart')
-    {
-    }
+    public function __construct(public int $step = 1, public string $stepTitle = 'Cart') {}
 
     /**
      * Get the view / contents that represent the component.

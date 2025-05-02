@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use Log;
 use App\Models\Order;
 use App\Services\CryptomusService;
 use App\Services\FlutterwaveService;
@@ -11,15 +9,15 @@ use App\Services\OrderService;
 use App\Services\PayPalService;
 use App\Services\PaystackService;
 use App\Traits\ApiResponse;
+use Exception;
 use Illuminate\Http\Request;
+use Log;
 
 class PaymentController extends Controller
 {
     use ApiResponse;
 
-    public function __construct(private PaystackService $paystack, private FlutterwaveService $flutterwave, private PayPalService $paypal, private CryptomusService $cryptomus, private OrderService $orderService)
-    {
-    }
+    public function __construct(private PaystackService $paystack, private FlutterwaveService $flutterwave, private PayPalService $paypal, private CryptomusService $cryptomus, private OrderService $orderService) {}
 
     public function initPaystack($data)
     {
@@ -112,6 +110,7 @@ class PaymentController extends Controller
             // Find order by reference
             $order = Order::where('code', $paymentData['data']['reference'])->firstOrFail();
             $this->orderService->failOrder($order, $paymentData);
+
             return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
         } catch (Exception $exception) {
             logger()->error('Paystack callback error: ' . $exception->getMessage());
@@ -137,6 +136,7 @@ class PaymentController extends Controller
         }
         $order = Order::where('code', $paymentData['data']['tx_ref'])->firstOrFail();
         $this->orderService->failOrder($order, $paymentData);
+
         return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
     }
 
@@ -158,6 +158,7 @@ class PaymentController extends Controller
         }
         $order = Order::where('code', $paymentData['purchase_units'][0]['custom_id'])->firstOrFail();
         $this->orderService->failOrder($order, $paymentData);
+
         return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
     }
 

@@ -2,17 +2,17 @@
 
 namespace App\Livewire\Cart;
 
-use Exception;
-use Log;
-use App\Models\User;
 use App\Enums\DiscountType;
 use App\Http\Controllers\PaymentController;
 use App\Models\Cart;
+use App\Models\User;
 use App\Services\OrderService;
 use App\Traits\LivewireToast;
 use Auth;
+use Exception;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Log;
 
 class Checkout extends Component
 {
@@ -86,7 +86,7 @@ class Checkout extends Component
             ['name' => 'Crypto', 'key' => 'cryptomus_payment', 'image' => 'cryptomus.png'],
             ['name' => 'Bank Transfer', 'key' => 'manual_payment', 'image' => 'bank.png'],
         ];
-        $this->paymentGateways = array_filter($allGateways, fn($gateway): bool => sys_setting($gateway['key']) == 1);
+        $this->paymentGateways = array_filter($allGateways, fn ($gateway): bool => sys_setting($gateway['key']) == 1);
     }
 
     public function loadCart()
