@@ -174,8 +174,6 @@ class PaymentController extends Controller
 
             return $this->callbackResponse('error', 'Payment was not successful', route('checkout'));
         }
-
-        return $request;
     }
 
     public function callbackResponse($type, $message, $url = null)

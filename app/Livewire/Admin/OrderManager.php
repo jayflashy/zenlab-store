@@ -104,8 +104,7 @@ class OrderManager extends Component
         $order = Order::find($this->updatingOrderId);
 
         if (! $order) {
-            $this->error('Order not found');
-
+            $this->errorAlert('Order not found');
             return;
         }
 
@@ -148,7 +147,7 @@ class OrderManager extends Component
         $order = Order::find($orderId);
 
         if (! $order) {
-            $this->error('Order not found');
+            $this->erroralert('Order not found');
 
             return;
         }
@@ -167,7 +166,7 @@ class OrderManager extends Component
         $order = Order::find($orderId);
 
         if (! $order || ! $order->payment_receipt) {
-            $this->error('Receipt not found');
+            $this->erroralert('Receipt not found');
 
             return;
         }

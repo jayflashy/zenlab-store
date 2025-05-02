@@ -106,6 +106,7 @@ class Checkout extends Component
     public function fillUserInfo()
     {
         if (Auth::check()) {
+            /** @var \App\Models\User $user */
             $user = Auth::user();
             $this->name = $user->name;
             $this->email = $user->email;

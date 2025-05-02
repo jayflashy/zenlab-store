@@ -142,7 +142,7 @@ class PayPalService
                 'orderId' => $orderId,
                 'trace' => $e->getTraceAsString(),
             ]);
-            throw new Exception("Failed to get PayPal order details : {$response->getMessage()}");
+            throw new Exception("Failed to get PayPal order details : {$e->getMessage()}");
         }
     }
 }

@@ -51,14 +51,6 @@ class Orders extends Component
         $this->pageTitle = 'Order Details - ' . $order->code;
     }
 
-    public function orderInvoice($code)
-    {
-        $order = Order::whereUserId(Auth::id())->whereCode($code)->with(['user', 'items.product'])->firstOrFail();
-        $this->view = 'invoice';
-        $this->order = $order;
-        $this->pageTitle = 'Order Invoice - ' . $order->code;
-    }
-
     public function render()
     {
         $ordersQuery = Order::query()

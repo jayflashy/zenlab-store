@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
@@ -31,12 +33,12 @@ class Order extends Model
         'payment_date',
     ];
 
-    public function items()
+    public function items() :HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function user()
+    public function user() :BelongsTo
     {
         return $this->belongsTo(User::class);
     }

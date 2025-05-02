@@ -50,7 +50,7 @@ class Index extends Component
             return;
         }
 
-        $newQuantity = $cartItem->quantity + $change;
+        $newQuantity = (int) $cartItem->quantity + $change;
 
         if ($newQuantity > 0) {
             $cartItem->update([

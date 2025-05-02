@@ -9,6 +9,9 @@ use App\Traits\LivewireToast;
 use Cache;
 use Livewire\Component;
 
+/**
+ * @property-read float $currentPrice
+ */
 class Details extends Component
 {
     use LivewireToast;
