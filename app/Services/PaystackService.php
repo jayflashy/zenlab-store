@@ -52,8 +52,6 @@ class PaystackService
 
     /**
      * Validate webhook signature
-     *
-     * @param  array  $payload
      */
     public function validateWebhookHash(array $payload): bool
     {

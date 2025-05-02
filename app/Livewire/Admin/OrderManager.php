@@ -105,6 +105,7 @@ class OrderManager extends Component
 
         if (! $order) {
             $this->errorAlert('Order not found');
+
             return;
         }
 
