@@ -57,7 +57,7 @@ class Profile extends Component
     {
         return [
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:50|unique:users,username,' . $this->user->id,
+            'username' => 'required|string|max:50|alpha_dash|unique:users,username,' . $this->user->id,
             'email' => 'required|email|unique:users,email,' . $this->user->id,
             'phone' => 'nullable|string|max:20',
             'country' => 'nullable|string|max:100',

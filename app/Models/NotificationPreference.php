@@ -7,22 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Rating extends Model
+class NotificationPreference extends Model
 {
     use HasUlids;
     use SoftDeletes;
-    //
+
 
     /**
      * The attributes that are mass assignable.
+     *
+     * @var array
      */
     protected $fillable = [
-        'product_id',
         'user_id',
-        'stars',
-        'review',
+        'product_id',
         'type',
-        'status',
+        'active',
     ];
 
     /**
@@ -31,26 +31,21 @@ class Rating extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'stars' => 'integer',
+        'active' => 'boolean',
     ];
-
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class);
-    }
-
-    public function scopeApproved()
-    {
-        return $this->whereStatus('approved');
-    }
-
-    public function scopePending($query)
-    {
-        return $query->where('status', 'pending');
-    }
-
+    /**
+     * Get the user who owns the notification preference.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the product associated with this notification preference.
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DownloadController;
 use App\Livewire\User;
 use App\Livewire\User\Downloads;
 use App\Livewire\User\Invoice;
@@ -17,3 +18,4 @@ Route::get('orders/{code}/invoice', Invoice::class)->name('orders.invoice');
 
 Route::get('reviews', Reviews::class)->name('reviews');
 Route::get('downloads', Downloads::class)->name('downloads');
+Route::get('download/{id}', [DownloadController::class, 'download'])->name('download');
