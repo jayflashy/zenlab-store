@@ -18,15 +18,12 @@ Route::middleware('guest')->group(function (): void {
 });
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('verify-email', VerifyEmail::class)
-        ->name('verification.notice');
+    Route::get('verify-email', VerifyEmail::class)->name('verification.notice');
 
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
     Route::get('confirm-password', ConfirmPassword::class)->name('password.confirm');
 });
 
-Route::get('logout', Logout::class)
-    ->name('logout');
-Route::post('logout', Logout::class)
-    ->name('logout');
+Route::get('logout', Logout::class)->name('logout');
+Route::post('logout', Logout::class)->name('logout');
