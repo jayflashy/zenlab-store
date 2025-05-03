@@ -145,7 +145,7 @@ class Profile extends Component
                 'current_password' => 'required',
                 'new_password' => [
                     'required',
-                    'different:current_password',Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(),
+                    'different:current_password', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(),
                 ],
                 'confirm_password' => 'required|same:new_password',
             ]);
