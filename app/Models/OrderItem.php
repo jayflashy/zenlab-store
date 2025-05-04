@@ -7,12 +7,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
 {
     use HasUlids;
-    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +25,10 @@ class OrderItem extends Model
         'support_price',
         'total',
         'support_end_date',
+    ];
+
+    protected $casts = [
+        'support_end_date' => 'datetime',
     ];
 
     public function order(): BelongsTo
@@ -53,10 +55,8 @@ class OrderItem extends Model
      */
     public function isDownloadable(): bool
     {
-        if ($this->support_end_date < now()) {
-            return false;
-        }
-
-        return true;
+        return $this->support_end_date === null
+            ? true
+            : $this->support_end_date->isFuture();
     }
 }

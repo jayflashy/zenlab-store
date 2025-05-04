@@ -58,7 +58,7 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="{{ route('user.download', $item->id) }}">
-                                        <i class="las la-download me-2"></i>Download Files
+                                        <i class="las la-download me-2"></i>Download
                                     </a>
                                 </li>
                                 <li>
