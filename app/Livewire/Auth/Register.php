@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\LivewireToast;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -24,13 +25,20 @@ class Register extends Component
 
     public $terms = false;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|lowercase|max:105|unique:users',
-        'username' => 'required|string|max:255|unique:users|alpha_dash',
-        'password' => 'required|string|min:6|regex:/[A-Z]/',
-        'terms' => 'accepted',
-    ];
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|lowercase|max:105|unique:users',
+            'username' => 'required|string|max:255|unique:users|alpha_dash',
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised(),
+            ],
+            'terms' => 'accepted',
+        ];
+    }
 
     protected $messages = [
         'name.required' => 'Please enter your full name.',
