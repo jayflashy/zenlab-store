@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('order_items', function (Blueprint $table) {
-            $table->string('license_code')->nullable();
-            $table->date('support_end_date')->nullable();
+            $table->string('license_code')->nullable()->after('license_type');
+            $table->date('support_end_date')->nullable()->after('total');
             $table->index('license_code');
         });
     }
@@ -26,6 +26,7 @@ return new class extends Migration
         Schema::table('order_items', function (Blueprint $table) {
             $table->dropColumn([
                 'license_code',
+                'support_end_date',
             ]);
         });
     }

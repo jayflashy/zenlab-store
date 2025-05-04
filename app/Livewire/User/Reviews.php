@@ -3,7 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Traits\LivewireToast;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 

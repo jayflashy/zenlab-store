@@ -31,6 +31,11 @@ class Downloads extends Component
         }
     }
 
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function updatedNotify($value, $key)
     {
         $user = Auth::user();
