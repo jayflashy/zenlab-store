@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class NotificationPreference extends Model
 {
     use HasUlids;
-    use SoftDeletes;
 
 
     /**
