@@ -23,7 +23,6 @@ class DownloadController extends Controller
 
         $product = $orderItem->product;
 
-        // Validate product existence
         if (! $product) {
             return back()->with('error', 'Product not found');
         }
@@ -36,15 +35,12 @@ class DownloadController extends Controller
             return back()->with('error', 'Support period has expired');
         }
 
-        // Validate download availability
         if (empty($product->download_url)) {
             return back()->with('error', 'Download file not available');
         }
 
-        // Increment download count
         $product->increment('downloads_count');
 
-        // Handle download based on type
         if ($product->download_type === 'file') {
             $filePath = $product->file_path;
             $fileName = Str::slug(get_setting('name') . ' ' . $product->name) . '.' . pathinfo($filePath, PATHINFO_EXTENSION);
@@ -55,7 +51,6 @@ class DownloadController extends Controller
             return Storage::disk('uploads')->download($filePath, $fileName);
         }
 
-        // Assume it's a URL download type
         return redirect($product->download_url);
     }
 
