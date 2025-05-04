@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrderItem;
+use Auth;
 use Storage;
 
 class DownloadController extends Controller
@@ -46,5 +47,24 @@ class DownloadController extends Controller
 
         // Return file download response
         return Storage::disk('uploads')->download($filePath, $fileName);
+    }
+
+
+    public function certificate($id)
+    {
+        $userId = Auth::id();
+
+        $orderItem = OrderItem::with([
+            'order',
+            'product',
+            'userReview' => fn($query) => $query->where('user_id', $userId)
+        ])->where('id', $id)
+            ->whereHas('order', fn($query) => $query->where('user_id', $userId))
+            ->firstOrFail();
+
+        return view('user.certificate', [
+            'item' => $orderItem,
+            'order' => $orderItem->order,
+        ]);
     }
 }

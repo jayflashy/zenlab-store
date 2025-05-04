@@ -14,7 +14,7 @@
                 @forelse ($items as $item)
                     <div class="download-item flx-between gap-3 p-3 border-bottom">
                         <div class="position-absolute top-0 start-0 translate-middle-y bg-light px-2 py-1 rounded small text-muted">
-                            <i class="fas fa-hashtag me-1"></i>{{ $item->order->code ?? "" }}
+                            <i class="fas fa-hashtag me-1"></i>{{ $item->order->code ?? '' }}
                         </div>
                         <div class="download-item__content flx-align flex-nowrap gap-3 flex-grow-1">
                             <div class="download-item__thumb flex-shrink-0">
@@ -137,15 +137,13 @@
             const modalBody = modal.querySelector('#purchaseCode');
             modalBody.value = code || 'No code available.';
 
-            // Update the copy button to copy the purchase code
-            const copyButton = modal.querySelector('.btn-copy');
-            copyButton.addEventListener('click', function() {
+            modal.querySelector('.btn-copy').onclick = function() {
                 navigator.clipboard.writeText(modalBody.value).then(function() {
                     toastr.success('License Code Copied');
                 }, function(err) {
                     toastr.error('Could not copy text: ', err);
                 });
-            });
+            };
         });
     </script>
 </div>
