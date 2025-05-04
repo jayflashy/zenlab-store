@@ -1,25 +1,46 @@
- <div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Forgot password')" :description="__('Enter your email to receive a password reset link')" />
+@section('title', 'Forgot Password')
+@include('layouts.meta')
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+<div>
+    <h4 class="account-content__title mb-48 text-capitalize">Forgot Password</h4>
+    <p class="mb-4 font-14 text-muted">Enter your email to receive a password reset link</p>
 
-    <form wire:submit="sendPasswordResetLink" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Email Address')"
-            type="email"
-            required
-            autofocus
-            placeholder="email@example.com"
-        />
+    @if (session('status'))
+        <div class="alert alert-success font-14 text-center">
+            {{ session('status') }}
+        </div>
+    @endif
 
-        <flux:button variant="primary" type="submit" class="w-full">{{ __('Email password reset link') }}</flux:button>
+    <form wire:submit.prevent="sendPasswordResetLink">
+        <div class="row gy-4">
+            <div class="col-12">
+                <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Email Address</label>
+                <div class="position-relative">
+                    <input type="email" id="email" class="common-input common-input--bg common-input--withIcon"
+                        placeholder="email@example.com" wire:model="email" autofocus>
+                    <span class="input-icon">
+                        <img src="{{ static_asset('images/icons/envelope-icon.svg') }}" alt="">
+                    </span>
+                    @error('email')
+                        <span class="text-danger mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-main btn-lg w-100 pill" wire:loading.attr="disabled">
+                    <span wire:loading.remove>Email Password Reset Link</span>
+                    <span wire:loading>Processing...</span>
+                </button>
+            </div>
+
+            <div class="col-sm-12 mb-0">
+                <div class="have-account text-center">
+                    <p class="text font-14">Or, return to
+                        <a class="link text-main text-decoration-underline fw-500" href="{{ route('login') }}">Log in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </form>
-
-    <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-400">
-        {{ __('Or, return to') }}
-        <flux:link :href="route('login')" wire:navigate>{{ __('log in') }}</flux:link>
-    </div>
 </div>

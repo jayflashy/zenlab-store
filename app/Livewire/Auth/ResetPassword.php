@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Traits\LivewireToast;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -12,9 +13,10 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
-#[Layout('components.layouts.auth')]
+#[Layout('layouts.auth')]
 class ResetPassword extends Component
 {
+    use LivewireToast;
     #[Locked]
     public string $token = '';
 
@@ -42,7 +44,7 @@ class ResetPassword extends Component
         $this->validate([
             'token' => ['required'],
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'string', 'confirmed', Rules\Password::min(8)->mixedCase()->numbers()],
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -65,10 +67,11 @@ class ResetPassword extends Component
         // redirect them back to where they came from with their error message.
         if ($status != Password::PasswordReset) {
             $this->addError('email', __($status));
-
+            $this->errorAlert('Password Reset Failed');
             return;
         }
 
+        $this->successAlert('Password Reset Successfully');
         Session::flash('status', __($status));
 
         $this->redirectRoute('login', navigate: true);

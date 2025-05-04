@@ -34,7 +34,7 @@ class Register extends Component
             'password' => [
                 'required',
                 'string',
-                Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised(),
+                Password::min(8)->mixedCase()->letters()->numbers(),
             ],
             'terms' => 'accepted',
         ];
