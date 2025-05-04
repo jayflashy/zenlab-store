@@ -17,6 +17,7 @@ class Reviews extends Component
     public function render()
     {
         $reviews = Auth::user()->reviews()->paginate(25);
+        $reviews->load(['user','product']);
 
         return view('livewire.user.reviews', compact('reviews'));
     }
