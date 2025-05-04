@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrderItem;
-use Illuminate\Http\Request;
 use Storage;
 
 class DownloadController extends Controller
@@ -11,7 +10,7 @@ class DownloadController extends Controller
     /**
      * Initiate download for purchased product
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function download($id)
@@ -30,7 +29,7 @@ class DownloadController extends Controller
         }
 
         // Check if product exists and has a file to download
-        if (!$orderItem->product || !$orderItem->product->file_path) {
+        if (! $orderItem->product || ! $orderItem->product->file_path) {
             return back()->with('error', 'Download file not available');
         }
 
@@ -42,7 +41,7 @@ class DownloadController extends Controller
         $fileName = $orderItem->product->name . '.' . pathinfo($filePath, PATHINFO_EXTENSION);
 
         // Check if file exists in storage
-        if (!Storage::disk('uploads')->exists($filePath)) {
+        if (! Storage::disk('uploads')->exists($filePath)) {
             return back()->with('error', 'Download file not found');
         }
 

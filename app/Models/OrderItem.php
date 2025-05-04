@@ -56,6 +56,7 @@ class OrderItem extends Model
         if ($this->support_end_date < now()) {
             return false;
         }
+
         return true;
     }
 }

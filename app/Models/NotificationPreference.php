@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NotificationPreference extends Model
 {
     use HasUlids;
-
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +30,7 @@ class NotificationPreference extends Model
     protected $casts = [
         'active' => 'boolean',
     ];
+
     /**
      * Get the user who owns the notification preference.
      */

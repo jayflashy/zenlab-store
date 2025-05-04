@@ -67,7 +67,7 @@ class User extends Authenticatable
     {
         return Str::of($this->name)
             ->explode(' ')
-            ->map(fn(string $name) => Str::of($name)->substr(0, 1))
+            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
 
@@ -91,9 +91,6 @@ class User extends Authenticatable
 
     /**
      * Check if the user is subscribed to updates for a product.
-     *
-     * @param int $productId
-     * @return bool
      */
     public function isSubscribedToProductUpdates(int $productId): bool
     {

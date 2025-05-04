@@ -16,7 +16,9 @@ class Downloads extends Component
     use WithPagination;
 
     public $search = '';
+
     public $metaTitle = 'Downloads';
+
     public $notify = [];
 
     public function mount()
@@ -48,16 +50,15 @@ class Downloads extends Component
         }
     }
 
-
     public function render()
     {
         $query = OrderItem::whereHas('order', function ($query) {
             $query->where('user_id', Auth::id())->where('order_status', 'completed');
         })
-        ->with(['order','product', 'userReview' => function($query) {
-            $query->where('user_id', Auth::id());
-        }])
-        ->latest();
+            ->with(['order', 'product', 'userReview' => function ($query) {
+                $query->where('user_id', Auth::id());
+            }])
+            ->latest();
 
         if ($this->search) {
             $query->whereHas('product', function ($query) {
@@ -66,6 +67,7 @@ class Downloads extends Component
         }
 
         $items = $query->paginate(30);
+
         return view('livewire.user.downloads', compact('items'));
     }
 }
