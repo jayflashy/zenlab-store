@@ -36,7 +36,7 @@
                                         @endfor
                                     </div>
                                 </td>
-                                <td>{{ $rating->review ? text_trimer($rating->review, 30) : 'No review' }}</td>
+                                <td>{{ $rating->review ? text_trimer($rating->review, 30) : 'No review found' }}</td>
                                 <td>
                                     <span
                                         class="badge bg-{{ $rating->status === 'approved' ? 'success' : ($rating->status === 'rejected' ? 'danger' : 'warning') }}">

@@ -18,5 +18,5 @@ Route::get('orders/{code}/invoice', Invoice::class)->name('orders.invoice');
 
 Route::get('reviews', Reviews::class)->name('reviews');
 Route::get('downloads', Downloads::class)->name('downloads');
-Route::get('download/{id}', [DownloadController::class, 'download'])->name('download');
+Route::get('download/{id}', [DownloadController::class, 'download'])->name('download')->middleware(['throttle:10,1']);
 Route::get('license/certificate/{id}', [DownloadController::class, 'certificate'])->name('license.certificate');

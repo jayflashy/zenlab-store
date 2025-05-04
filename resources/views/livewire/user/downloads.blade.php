@@ -12,9 +12,9 @@
         <div class="col-lg-12">
             <div class="download-wrapper bg-white border border-gray-five">
                 @forelse ($items as $item)
-                    <div class="download-item flx-between gap-3 p-3 border-bottom">
+                    <div class="download-item flx-between gap-3 p-3">
                         <div class="position-absolute top-0 start-0 translate-middle-y bg-light px-2 py-1 rounded small text-muted">
-                            <i class="fas fa-hashtag me-1"></i>{{ $item->order->code ?? '' }}
+                            <i class="fas fa-hashtag me-1"></i>{{ $item->order?->code ?? '' }}
                         </div>
                         <div class="download-item__content flx-align flex-nowrap gap-3 flex-grow-1">
                             <div class="download-item__thumb flex-shrink-0">
@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="download-item__right flex-shrink-0 d-inline-flex flex-column gap-2 align-items-end text-end">
-                            <button type="button" class="btn btn-main " data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" class="btn btn-outline-main" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -64,7 +64,7 @@
                                 <li>
                                     <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#purchaseCodeModal"
                                         data-code="{{ $item->license_code }}">
-                                        <i class="las la-key me-2"></i>Purchase Code
+                                        <i class="las la-key me-2"></i>License Code
                                     </a>
                                 </li>
                                 <li>
@@ -86,7 +86,7 @@
                                 </div>
                             @else
                                 <a href="{{ route('products.view', ['slug' => $item->product->slug, 'review' => 'true']) }}"
-                                    class=" mt-2">
+                                    class=" mt-2 text-decoration-underline">
                                     Review
                                 </a>
                             @endif
@@ -95,7 +95,7 @@
                 @empty
                     <div class="text-center py-5">
                         <div class="mb-3">
-                            <img src="{{ static_asset('images/icons/no-data.svg') }}" alt="No Downloads" class="w-25">
+                            <img src="{{ static_asset('images/icons/sidebar-icon6.svg') }}" alt="No Downloads" class="w-25">
                         </div>
                         <h5>No downloads found</h5>
                         <p class="text-muted">You don't have any downloadable items yet</p>

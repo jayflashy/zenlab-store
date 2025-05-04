@@ -50,6 +50,8 @@
             </div>
         </div>
     </div>
+@endsection
+@section('styles')
     <style>
         @media print {
             @page {

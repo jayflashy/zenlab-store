@@ -28,10 +28,7 @@ class DownloadController extends Controller
         }
 
         // Validate support period
-        $supportEndDate = now()->diffInDays($orderItem->support_end_date);
-        $daysSinceOrder = $orderItem->order->created_at->diffInDays(now());
-
-        if ($daysSinceOrder > $supportEndDate) {
+        if (! $orderItem->isDownloadable()) {
             return back()->with('error', 'Support period has expired');
         }
 
@@ -59,7 +56,7 @@ class DownloadController extends Controller
         $userId = Auth::id();
 
         $orderItem = OrderItem::where('id', $id)
-            ->whereHas('order', fn ($query) => $query->where('user_id', $userId))
+            ->whereHas('order', fn($query) => $query->where('user_id', $userId))
             ->firstOrFail();
 
         return view('user.certificate', [
