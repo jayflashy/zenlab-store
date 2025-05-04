@@ -17,6 +17,7 @@ use Livewire\Component;
 class ResetPassword extends Component
 {
     use LivewireToast;
+
     #[Locked]
     public string $token = '';
 
@@ -68,6 +69,7 @@ class ResetPassword extends Component
         if ($status != Password::PasswordReset) {
             $this->addError('email', __($status));
             $this->errorAlert('Password Reset Failed');
+
             return;
         }
 
