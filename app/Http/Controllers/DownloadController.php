@@ -11,12 +11,11 @@ class DownloadController extends Controller
      * Initiate download for purchased product
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function download($id)
     {
         $orderItem = OrderItem::where('id', $id)
-            ->whereHas('order', function ($query) {
+            ->whereHas('order', function ($query): void {
                 $query->where('user_id', auth()->id())
                     ->where('order_status', 'completed');
             })
@@ -38,7 +37,7 @@ class DownloadController extends Controller
 
         // Get file path from the product
         $filePath = $orderItem->product->file_path;
-        $fileName = $orderItem->product->name . '.' . pathinfo($filePath, PATHINFO_EXTENSION);
+        $fileName = $orderItem->product->name . '.' . pathinfo((string) $filePath, PATHINFO_EXTENSION);
 
         // Check if file exists in storage
         if (! Storage::disk('uploads')->exists($filePath)) {

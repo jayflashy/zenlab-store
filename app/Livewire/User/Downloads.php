@@ -52,16 +52,16 @@ class Downloads extends Component
 
     public function render()
     {
-        $query = OrderItem::whereHas('order', function ($query) {
+        $query = OrderItem::whereHas('order', function ($query): void {
             $query->where('user_id', Auth::id())->where('order_status', 'completed');
         })
-            ->with(['order', 'product', 'userReview' => function ($query) {
+            ->with(['order', 'product', 'userReview' => function ($query): void {
                 $query->where('user_id', Auth::id());
             }])
             ->latest();
 
         if ($this->search) {
-            $query->whereHas('product', function ($query) {
+            $query->whereHas('product', function ($query): void {
                 $query->where('name', 'like', '%' . $this->search . '%');
             });
         }
