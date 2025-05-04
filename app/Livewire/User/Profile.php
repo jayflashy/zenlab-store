@@ -52,6 +52,8 @@ class Profile extends Component
 
     public $tab = 'personalInfo';
 
+    public $countries;
+
     // Validation rules for profile update
     protected function rules()
     {
@@ -69,6 +71,14 @@ class Profile extends Component
         $this->user = Auth::user();
         $this->loadUserData();
         $this->tab = 'personalInfo';
+        $this->loadCountryList();
+    }
+
+    private function loadCountryList()
+    {
+        $countryJson = static_asset('countries.json');
+        $this->countries = json_decode(file_get_contents($countryJson), true);
+
     }
 
     public function setTab($tab)

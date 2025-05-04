@@ -56,7 +56,7 @@ class DownloadController extends Controller
         $userId = Auth::id();
 
         $orderItem = OrderItem::where('id', $id)
-            ->whereHas('order', fn($query) => $query->where('user_id', $userId))
+            ->whereHas('order', fn ($query) => $query->where('user_id', $userId))
             ->firstOrFail();
 
         return view('user.certificate', [
