@@ -14,13 +14,18 @@ class User extends Component
     use LivewireToast;
 
     public $user;
-    public int $totalOrders = 0;
-    public int $totalItems = 0;
-    public int $completedOrders = 0;
-    public float $totalSpent = 0.0;
-    public string $metaTitle = 'User Dashboard';
-    public $orders;
 
+    public int $totalOrders = 0;
+
+    public int $totalItems = 0;
+
+    public int $completedOrders = 0;
+
+    public float $totalSpent = 0.0;
+
+    public string $metaTitle = 'User Dashboard';
+
+    public $orders;
 
     public function mount()
     {

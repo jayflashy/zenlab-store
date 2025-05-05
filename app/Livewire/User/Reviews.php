@@ -14,6 +14,7 @@ class Reviews extends Component
     use LivewireToast;
 
     public $metaTitle = 'Reviews';
+
     public $type = '';
 
     public $stars = '';
@@ -27,6 +28,7 @@ class Reviews extends Component
     public $editType = 'Quality';
 
     public $isEditing = false;
+
     public $ratingTypes = ['Quality', 'Value', 'Design', 'Functionality', 'Customer Service'];
 
     protected $rules = [
@@ -34,6 +36,7 @@ class Reviews extends Component
         'editReview' => 'nullable|string|max:1000',
         'editType' => 'required|string',
     ];
+
     public function editRating($ratingId)
     {
         $this->isEditing = true;

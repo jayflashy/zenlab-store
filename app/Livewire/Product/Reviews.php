@@ -7,22 +7,28 @@ use App\Models\Rating;
 use App\Traits\LivewireToast;
 use Auth;
 use Livewire\Component;
-use Livewire\Attributes\Layout;
 
 class Reviews extends Component
 {
     use LivewireToast;
 
     public Product $product;
-    public $userRating = null;
-    public $stars = 0;
-    public $editStars = 0;
-    public $type = '';
-    public $review = '';
-    public $isEditing = false;
-    public $showForm = false;
-    public $ratingTypes = ['Quality', 'Value', 'Design', 'Functionality', 'Customer Service'];
 
+    public $userRating = null;
+
+    public $stars = 0;
+
+    public $editStars = 0;
+
+    public $type = '';
+
+    public $review = '';
+
+    public $isEditing = false;
+
+    public $showForm = false;
+
+    public $ratingTypes = ['Quality', 'Value', 'Design', 'Functionality', 'Customer Service'];
 
     public function mount()
     {
@@ -41,6 +47,7 @@ class Reviews extends Component
             }
         }
     }
+
     protected function rules()
     {
         return [
@@ -52,10 +59,10 @@ class Reviews extends Component
 
     public function toggleForm()
     {
-        $this->showForm = !$this->showForm;
+        $this->showForm = ! $this->showForm;
 
         // Reset the form if we're closing it
-        if (!$this->showForm) {
+        if (! $this->showForm) {
             $this->resetForm();
         }
     }
@@ -84,8 +91,9 @@ class Reviews extends Component
 
     public function submitReview()
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             $this->errorAlert('Please login to submit a review');
+
             return;
         }
 
@@ -126,6 +134,7 @@ class Reviews extends Component
     {
         $ratings = $this->product->ratings()->with('user')->orderBy('updated_at', 'desc')->get();
         $this->product->load('ratings.user');
+
         return view('livewire.product.reviews', compact('ratings'));
     }
 }
