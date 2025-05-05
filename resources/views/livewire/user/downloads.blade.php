@@ -14,7 +14,7 @@
                 @forelse ($items as $item)
                     <div class="download-item flx-between gap-3 p-3">
                         <div class="position-absolute top-0 start-0 translate-middle-y bg-light px-2 py-1 rounded small text-muted">
-                            <i class="fas fa-hashtag me-1"></i>{{ $item->order?->code ?? '' }}
+                            <i class="fas fa-hashtag me-1"></i>{{ $item->uid }}
                         </div>
                         <div class="download-item__content flx-align flex-nowrap gap-3 flex-grow-1">
                             <div class="download-item__thumb flex-shrink-0">

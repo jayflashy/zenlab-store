@@ -49,4 +49,14 @@ class Order extends Model
     {
         return $this->payment_status === 'completed';
     }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($order) {
+            if (is_null($order->uid)) {
+                $max = static::max('uid') ?? 0;
+                $order->uid = $max + 1;
+            }
+        });
+    }
 }

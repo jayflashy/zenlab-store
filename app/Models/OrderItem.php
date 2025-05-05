@@ -59,4 +59,14 @@ class OrderItem extends Model
             ? true
             : $this->support_end_date->isFuture();
     }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($order) {
+            if (is_null($order->uid)) {
+                $max = static::max('uid') ?? 0;
+                $order->uid = $max + 1;
+            }
+        });
+    }
 }
