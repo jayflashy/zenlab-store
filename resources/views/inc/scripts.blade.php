@@ -21,19 +21,48 @@
 
         toastr.info('Copied Successfully', "Success");
     }
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('alert', event => {
-            event.detail.forEach(({ type, message, title }) => {
+            event.detail.forEach(({
+                type,
+                message,
+                title
+            }) => {
                 toastr[type](message, title ?? 'Successful');
             });
         });
     });
     document.addEventListener('livewire:navigating', () => {
         JDLoader.open('.loader-mask');
+        (function() {
+            try {
+                const theme = localStorage.getItem('zenlab-theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            } catch (e) {
+                // fallback
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
     })
     document.addEventListener('livewire:navigated', () => {
         JDLoader.close('.loader-mask');
-
+        (function() {
+            try {
+                const theme = localStorage.getItem('zenlab-theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            } catch (e) {
+                // fallback
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
         const currentUrl = window.location.href.split(/[?#]/)[0];
         const navItems = document.querySelectorAll('.nav-menu__item');
 

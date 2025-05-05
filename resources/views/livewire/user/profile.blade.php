@@ -108,7 +108,7 @@
                                     role="tabpanel" aria-labelledby="pills-personalInfo-tab" tabindex="0">
                                     <form wire:submit.prevent="updateProfile">
                                         <div class="row gy-4">
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <label for="name" class="form-label mb-2 font-18 font-heading fw-600">
                                                     Full Name
                                                 </label>
@@ -118,7 +118,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <label for="username" class="form-label mb-2 font-18 font-heading fw-600">
                                                     Username
                                                 </label>
@@ -128,7 +128,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Email
                                                     Address</label>
                                                 <input type="email" class="common-input border" id="email" wire:model="email"
@@ -137,7 +137,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <label for="phone" class="form-label mb-2 font-18 font-heading fw-600">Phone
                                                     Number</label>
                                                 <input type="tel" class="common-input border" id="phone" wire:model="phone"
@@ -147,7 +147,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <label for="country" class="form-label mb-2 font-18 font-heading fw-600">Country</label>
                                                 <div class="select-has-icon">
                                                     <select class="common-input border" id="country" wire:model="country">
@@ -172,7 +172,7 @@
                                     role="tabpanel" aria-labelledby="pills-notifications-tab" tabindex="0">
                                     <form wire:submit.prevent="updateNotifications">
                                         <div class="row gy-3">
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <div class="common-check">
                                                     <input class="form-check-input" type="checkbox" id="updateNotification"
                                                         wire:model="update_notify">
@@ -180,7 +180,7 @@
                                                         notification</label>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <div class="common-check">
                                                     <input class="form-check-input" type="checkbox" id="trxNootification"
                                                         wire:model="trx_notify">
@@ -217,7 +217,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <label for="new-password" class="form-label mb-2 font-18 font-heading fw-600">New
                                                     Password</label>
                                                 <div class="position-relative">
@@ -235,7 +235,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="col-sm-6 col-xs-6">
+                                            <div class="col-sm-6">
                                                 <label for="confirm-password" class="form-label mb-2 font-18 font-heading fw-600">Confirm
                                                     Password</label>
                                                 <div class="position-relative">

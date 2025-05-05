@@ -12,6 +12,24 @@
 <title>@lang(get_setting('title', 'ZenLab')) | @yield('title')</title>
 <link rel="shortcut icon" href="{{ my_asset(get_setting('favicon', 'favicon.png')) }}">
 
+{{-- check for dark mode --}}
+<script>
+    (function () {
+        try {
+            const theme = localStorage.getItem('zenlab-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        } catch (e) {
+            // fallback
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    })();
+</script>
+
+
 <!-- App css -->
 <link href="{{ static_asset('css/vendors.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ static_asset('css/main.css') }}" rel="stylesheet" type="text/css">
