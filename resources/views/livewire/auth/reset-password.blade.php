@@ -1,43 +1,64 @@
-<div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Reset password')" :description="__('Please enter your new password below')" />
+<div>
+    <h4 class="account-content__title mb-48 text-capitalize">Reset Password</h4>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+    <form wire:submit.prevent="resetPassword">
+        <div class="row gy-4">
+            <div class="col-12">
+                <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Email</label>
+                <div class="position-relative">
+                    <input type="email" id="email" class="common-input common-input--bg common-input--withIcon"
+                        placeholder="infoname@mail.com" wire:model.lazy="email">
+                    <span class="input-icon">
+                        <img src="{{ static_asset('images/icons/envelope-icon.svg') }}" alt="">
+                    </span>
+                    @error('email')
+                        <span class="text-danger mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
 
-    <form wire:submit="resetPassword" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Email')"
-            type="email"
-            required
-            autocomplete="email"
-        />
+            <div class="col-12">
+                <label for="password" class="form-label mb-2 font-18 font-heading fw-600">New Password</label>
+                <div class="position-relative">
+                    <input type="password" id="password" class="common-input common-input--bg common-input--withIcon"
+                        placeholder="Enter new password" wire:model.lazy="password">
+                    <span class="input-icon">
+                        <img src="{{ static_asset('images/icons/lock-icon.svg') }}" alt="">
+                    </span>
+                    @error('password')
+                        <span class="text-danger mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
 
-        <!-- Password -->
-        <flux:input
-            wire:model="password"
-            :label="__('Password')"
-            type="password"
-            required
-            autocomplete="new-password"
-            :placeholder="__('Password')"
-        />
+            <div class="col-12">
+                <label for="password_confirmation" class="form-label mb-2 font-18 font-heading fw-600">Confirm Password</label>
+                <div class="position-relative">
+                    <input type="password" id="password_confirmation" class="common-input common-input--bg common-input--withIcon"
+                        placeholder="Confirm new password" wire:model.lazy="password_confirmation">
+                    <span class="input-icon">
+                        <img src="{{ static_asset('images/icons/lock-icon.svg') }}" alt="">
+                    </span>
+                    @error('password_confirmation')
+                        <span class="text-danger mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
 
-        <!-- Confirm Password -->
-        <flux:input
-            wire:model="password_confirmation"
-            :label="__('Confirm password')"
-            type="password"
-            required
-            autocomplete="new-password"
-            :placeholder="__('Confirm password')"
-        />
-
-        <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full">
-                {{ __('Reset password') }}
-            </flux:button>
+            <div class="col-12">
+                <button type="submit" class="btn btn-main btn-lg w-100 pill" wire:loading.attr="disabled">
+                    <span wire:loading.remove>Reset Password</span>
+                    <span wire:loading>Processing...</span>
+                </button>
+            </div>
+            <div class="col-sm-12 mb-0">
+                <div class="have-account">
+                    <p class="text font-14">Back to <a class="link text-main text-decoration-underline fw-500"
+                            href="{{ route('login') }}">Login</a></p>
+                </div>
+            </div>
         </div>
     </form>
 </div>
+@section('title', 'Reset Password')
+@include('layouts.meta')
