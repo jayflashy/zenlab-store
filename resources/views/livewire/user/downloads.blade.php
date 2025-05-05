@@ -79,7 +79,7 @@
                                     <ul class="star-rating justify-content-center mb-0">
                                         @for ($i = 1; $i <= 5; $i++)
                                             <li class="star-rating__item font-14">
-                                                <i class="{{ $i <= $item->userReview->rating ? 'fas' : 'far' }} fa-star"></i>
+                                                <i class="{{ $i <= $item->userReview->stars ? 'fas' : 'far' }} fa-star"></i>
                                             </li>
                                         @endfor
                                     </ul>

@@ -74,7 +74,64 @@
             </div>
         </div>
     </div>
+    <!-- Edit Rating Modal -->
+    @if ($isEditing)
+        <div class="common-modal modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Rating</h5>
+                        <button wire:click="cancelEdit" type="button" class="btn-close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form wire:submit.prevent="updateRating">
+                            <div class="mb-3">
+                                <label class="form-label">Product</label>
+                                <input type="text" class="form-control common-input" value="{{ $editingRating->product?->name }}"
+                                    readonly>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="form-label">Star Rating</label>
+                                <div class="star-rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <button type="button" wire:click="$set('editStars', {{ $i }})"
+                                            class="btn btn-link p-0 text-decoration-none">
+                                            <i
+                                                class="la la-2x {{ $i <= $editStars ? 'la-star text-warning' : 'la-star-o text-secondary' }} fs-3"></i>
+                                        </button>
+                                    @endfor
+                                    <span class="ms-2">({{ $editStars }}/5)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Rating Type</label>
+                                <select wire:model.defer="editType" class="form-select common-input">
+                                    @foreach ($ratingTypes as $ratingType)
+                                        <option value="{{ $ratingType }}">{{ $ratingType }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="form-label">Review</label>
+                                <textarea wire:model.defer="editReview" class="form-controls common-input" rows="4"></textarea>
+                                @error('editReview')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-secondary" wire:click="cancelEdit">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Update Rating</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
 
 @include('layouts.meta')
