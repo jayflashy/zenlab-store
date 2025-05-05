@@ -6,7 +6,7 @@ use App\Traits\LivewireToast;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 
-#[Layout('user.layouts.app')]
+#[Layout('layouts.app')]
 class Favourites extends Component
 {
     use LivewireToast;
