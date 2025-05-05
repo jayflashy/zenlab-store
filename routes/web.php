@@ -10,6 +10,7 @@ use App\Livewire\Cart\Success as PaymentSuccess;
 use App\Livewire\Contact;
 use App\Livewire\Home;
 use App\Livewire\Product\Details as ProductsDetails;
+use App\Livewire\Product\Favourites;
 use App\Livewire\Product\Index as Products;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -26,6 +27,7 @@ Route::get('/blogs/{slug}', BlogView::class)->name('blogs.view');
 Route::get('/cart', Cart::class)->name('cart');
 Route::get('/checkout', Checkout::class)->name('checkout');
 Route::get('/shop', Home::class)->name('shop');
+Route::get('/favorites', Favourites::class)->name('favorites');
 Route::get('payment/success/{order_id?}', PaymentSuccess::class)->name('payment.success');
 // pages
 Route::get('/about', [PageController::class, 'about'])->name('about');

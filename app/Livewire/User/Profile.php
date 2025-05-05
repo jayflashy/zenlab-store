@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -51,12 +52,14 @@ class Profile extends Component
 
     public $tab = 'personalInfo';
 
+    public $countries;
+
     // Validation rules for profile update
     protected function rules()
     {
         return [
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:50|unique:users,username,' . $this->user->id,
+            'username' => 'required|string|max:50|alpha_dash|unique:users,username,' . $this->user->id,
             'email' => 'required|email|unique:users,email,' . $this->user->id,
             'phone' => 'nullable|string|max:20',
             'country' => 'nullable|string|max:100',
@@ -68,6 +71,14 @@ class Profile extends Component
         $this->user = Auth::user();
         $this->loadUserData();
         $this->tab = 'personalInfo';
+        $this->loadCountryList();
+    }
+
+    private function loadCountryList()
+    {
+        $countryJson = static_asset('countries.json');
+        $this->countries = json_decode(file_get_contents($countryJson), true);
+
     }
 
     public function setTab($tab)
@@ -144,9 +155,7 @@ class Profile extends Component
                 'current_password' => 'required',
                 'new_password' => [
                     'required',
-                    'min:8',
-                    'different:current_password',
-                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+                    'different:current_password', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(),
                 ],
                 'confirm_password' => 'required|same:new_password',
             ]);

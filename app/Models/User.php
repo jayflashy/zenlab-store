@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -70,13 +71,33 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Rating::class);
+    }
+
+    /**
+     * Get the user's notification preferences.
+     */
+    public function notificationPreferences(): HasMany
+    {
+        return $this->hasMany(NotificationPreference::class);
+    }
+
+    /**
+     * Check if the user is subscribed to updates for a product.
+     */
+    public function isSubscribedToProductUpdates(int $productId): bool
+    {
+        return $this->notificationPreferences()
+            ->where('product_id', $productId)
+            ->where('type', 'product_update')
+            ->where('active', true)
+            ->exists();
     }
 }

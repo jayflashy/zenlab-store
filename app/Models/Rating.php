@@ -44,6 +44,11 @@ class Rating extends Model
         return $this->whereStatus('approved');
     }
 
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

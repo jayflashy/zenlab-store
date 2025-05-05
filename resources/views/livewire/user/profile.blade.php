@@ -152,16 +152,9 @@
                                                 <div class="select-has-icon">
                                                     <select class="common-input border" id="country" wire:model="country">
                                                         <option value="">Select Country</option>
-                                                        <option value="USA">USA</option>
-                                                        <option value="Bangladesh">Bangladesh</option>
-                                                        <option value="India">India</option>
-                                                        <option value="Pakistan">Pakistan</option>
-                                                        <option value="United Kingdom">United Kingdom</option>
-                                                        <option value="Canada">Canada</option>
-                                                        <option value="Australia">Australia</option>
-                                                        <option value="Germany">Germany</option>
-                                                        <option value="France">France</option>
-                                                        <option value="Japan">Japan</option>
+                                                        @foreach ($countries as $key => $country)
+                                                            <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 @error('country')
