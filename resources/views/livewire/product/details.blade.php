@@ -68,21 +68,24 @@
             <div class="breadcrumb-tab flx-wrap align-items-start gap-lg-4 gap-2">
                 <ul class="nav tab-bordered nav-pills" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-product-details-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-product-details" type="button" role="tab" aria-controls="pills-product-details"
-                            aria-selected="true">Product Details</button>
+                        <button class="nav-link {{ request()->has('review') ? '' : 'active' }}" id="pills-product-details-tab"
+                            data-bs-toggle="pill" data-bs-target="#pills-product-details" type="button" role="tab"
+                            aria-controls="pills-product-details" aria-selected="{{ request()->has('review') ? 'false' : 'true' }}">
+                            Product Details
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-rating-tab" data-bs-toggle="pill" data-bs-target="#pills-rating" type="button"
-                            role="tab" aria-controls="pills-rating" aria-selected="false" tabindex="-1">
+                        <button class="nav-link {{ request()->has('review') ? 'active' : '' }}" id="pills-rating-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-rating" type="button" role="tab" aria-controls="pills-rating"
+                            aria-selected="{{ request()->has('review') ? 'true' : 'false' }}" tabindex="-1">
                             <x-star-rating :rating="$product->averageRating()" :count="$product->ratingCount()" />
-
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments"
-                            type="button" role="tab" aria-controls="pills-comments" aria-selected="false" tabindex="-1">Comments
-                            ({{ $product->commentCount() }})</button>
+                            type="button" role="tab" aria-controls="pills-comments" aria-selected="false" tabindex="-1">
+                            Comments ({{ $product->commentCount() }})
+                        </button>
                     </li>
                 </ul>
                 <div class="social-share pb-3">
@@ -98,8 +101,8 @@
             <div class="row gy-4">
                 <div class="col-lg-8">
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-product-details" role="tabpanel"
-                            aria-labelledby="pills-product-details-tab" tabindex="0">
+                        <div class="tab-pane fade {{ request()->has('review') ? '' : 'show active' }}" id="pills-product-details"
+                            role="tabpanel" aria-labelledby="pills-product-details-tab" tabindex="0">
                             <!-- Product Details Content Start -->
                             <div class="product-details">
                                 <div class="product-details__thumb">
@@ -160,33 +163,9 @@
                             <!-- Product Details Content End -->
                         </div>
                         {{-- Rating --}}
-                        <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab" tabindex="0">
-                            <div class="product-review-wrapper">
-                                <h5 class="mb-32">Product Ratings</h5>
-                                @forelse ($product->ratings as $rating)
-                                    <div class="product-review">
-                                        <div class="product-review__top flx-between">
-                                            <div class="product-review__rating flx-align">
-                                                <x-star-rating :rating="$rating->stars" />
-                                                <span class="product-review__reason">For <span
-                                                        class="product-review__subject">{{ $rating->type }}</span> </span>
-                                            </div>
-                                            <div class="product-review__date">
-                                                by <a href="#"
-                                                    class="product-review__user text--base">{{ $rating->user->name ?? 'User' }} </a>
-                                                {{ $rating->created_at->diffForHumans() }}
-                                            </div>
-                                        </div>
-                                        <div class="product-review__body">
-                                            <p class="product-review__desc">{!! nl2br($rating->review) !!}</p>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <div class="product-review text-center">
-                                        <p class="">No ratings found</p>
-                                    </div>
-                                @endforelse
-                            </div>
+                        <div class="tab-pane fade {{ request()->has('review') ? 'show active' : '' }}" id="pills-rating" role="tabpanel"
+                            aria-labelledby="pills-rating-tab" tabindex="0">
+                            @livewire('product.reviews', ['product' => $product])
                         </div>
                         {{-- Comments --}}
                         <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab"
@@ -205,19 +184,26 @@
                             <div class="license-dropdown">
                                 <div class="license-dropdown__item mb-3" wire:click="toggleLicenseType">
                                     <h6 class="license-dropdown__title font-body mb-1 font-16">Regular License</h6>
-                                    <p class="license-dropdown__desc {{ $selectedLicenseType === 'regular' ? 'activeSelectItem' : '' }} font-13">Use, by you or one client, in a solitary finished result
+                                    <p
+                                        class="license-dropdown__desc {{ $selectedLicenseType === 'regular' ? 'activeSelectItem' : '' }} font-13">
+                                        Use, by you or one client, in a solitary finished result
                                         which end clients are not charged for. The complete cost incorporates the thing cost and a purchaser
-                                        fee..</p>
+                                        fee..
+                                    </p>
                                 </div>
                                 <div class="license-dropdown__item" wire:click="toggleLicenseType">
                                     <h6 class="license-dropdown__title font-body mb-1 font-16">Extended License</h6>
-                                    <p class="license-dropdown__desc {{ $selectedLicenseType === 'extended' ? 'activeSelectItem' : '' }} font-13">Use, by you or one client, in a solitary final result which
+                                    <p
+                                        class="license-dropdown__desc {{ $selectedLicenseType === 'extended' ? 'activeSelectItem' : '' }} font-13">
+                                        Use, by you or one client, in a solitary final result which
                                         end clients can be charged for. The all out cost incorporates the thing cost and a purchaser
-                                        fee.</p>
+                                        fee.
+                                    </p>
                                 </div>
                                 <div class="mt-3 pt-2 border-top text-center ">
-                                    <a href="#" class="link hover-text-decoration-underline font-14 text-main fw-500">View License
-                                        Details</a>
+                                    <a href="#" class="link hover-text-decoration-underline font-14 text-main fw-500">
+                                        View License Details
+                                    </a>
                                 </div>
                             </div>
                             <h6 class="product-sidebar__title">{{ format_price($currentPrice) }}</h6>
@@ -242,7 +228,8 @@
 
                         <div class="flx-between mt-3">
                             <div class="common-check mb-0">
-                                <input class="form-check-input" type="checkbox" wire:model.live="extendedSupport" name="checkbox" id="extended">
+                                <input class="form-check-input" type="checkbox" wire:model.live="extendedSupport" name="checkbox"
+                                    id="extended">
                                 <label class="form-check-label mb-0 fw-300 text-body" for="extended">Extended support
                                     {{ $selectedLicenseType === 'extended' ? '12' : '6' }} months</label>
                             </div>

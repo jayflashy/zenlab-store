@@ -28,7 +28,8 @@
                 <div class="user-profile">
                     <button class="user-profile__button flex-align">
                         <span class="user-profile__thumb">
-                            <img src="{{ my_asset(auth()->user()->image ?? 'users/default.jpg') }}" class="cover-img my-auto" alt="">
+                            <img src="{{ my_asset(auth()->user()->image ?? 'users/default.jpg') }}" class="cover-img my-auto"
+                                alt="">
                         </span>
                     </button>
                     <ul class="user-profile-dropdown">
@@ -40,6 +41,14 @@
                                         class="icon icon-active">
                                 </span>
                                 <span class="text">Profile</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-list__item">
+                            <a href="{{ route('favorites') }}" wire:navigate class="sidebar-list__link">
+                                <span class="sidebar-list__icon">
+                                    <i class="fa fa-1x fa-heart" class="icon"></i>
+                                </span>
+                                <span class="text">Favorites</span>
                             </a>
                         </li>
                         <li class="sidebar-list__item">

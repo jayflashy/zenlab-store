@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
     use HasUlids;
-    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +48,15 @@ class Order extends Model
     public function isPaid(): bool
     {
         return $this->payment_status === 'completed';
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($order) {
+            if (is_null($order->uid)) {
+                $max = static::max('uid') ?? 0;
+                $order->uid = $max + 1;
+            }
+        });
     }
 }

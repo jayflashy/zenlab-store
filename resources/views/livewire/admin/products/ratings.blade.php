@@ -182,7 +182,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Review</label>
-                                <textarea wire:model.defer="editReview" class="form-control common-input" rows="4"></textarea>
+                                <textarea wire:model.defer="editReview" class="form- common-input" rows="4"></textarea>
                                 @error('editReview')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror

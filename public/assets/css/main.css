@@ -2383,6 +2383,7 @@ select option {
 
 .select-has-icon select {
     background-image: none;
+    appearance: none;
     -webkit-appearance: none;
     padding: 19px 24px;
     font-size: 1rem;
@@ -2487,6 +2488,8 @@ input::-webkit-inner-spin-button {
 }
 
 input[type=number] {
+    appearance: textfield;
+    -webkit-appearance: textfield;
     -moz-appearance: textfield;
 }
 
@@ -3113,7 +3116,7 @@ input[type=number] {
 }
 
 /* Common list group */
-.common-list .list-group-item{
+.common-list .list-group-item {
     background-color: hsl(var(--white));
     color: hsl(var(--black));
     border: .5px solid hsl(var(--border-color2));
@@ -5425,6 +5428,7 @@ input[type=number] {
 
 .product-item__title .link {
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -5764,6 +5768,7 @@ input[type=number] {
 
 .post-item__title .link {
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -6137,6 +6142,7 @@ input[type=number] {
 
 .popular-item-card__title .link {
     display: -webkit-box;
+    line-clamp: 1;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -9239,30 +9245,6 @@ input[type=number] {
     display: none !important;
 }
 
-[data-theme=light] {
-    /* Home one Start */
-    /* Home one End */
-    /* Home Two Start */
-    /* Home Two End */
-    /* All product start */
-    /* All product start */
-    /* Profile start */
-    /* Profile End */
-    /* Cart End */
-    /* Profile End */
-    /* product details Start */
-    /* product details End */
-    /* Cart  Start */
-    /* Cart  End */
-    /* Dashboard  Start */
-    /* Dashboard  End */
-    /* Blog Details  Start */
-    /* Blog Details  End */
-    /* Brand & Footer Css Star */
-    /* Brand & Footer Css ENd */
-    /* ============================ Home Three Css Start ================================= */
-    /* ============================ Home Three Css End ================================= */
-}
 
 [data-theme=light] .sale-offer {
     background: var(--dark-black-one) !important;
@@ -11010,6 +10992,8 @@ input[type=number] {
 .dash-body {
     padding: 24px;
 }
+
 [data-theme=light] .image-upload-wrapper {
-    background: #fff; /* Was #171830 which is dark */
+    background: #fff;
+    /* Was #171830 which is dark */
 }
