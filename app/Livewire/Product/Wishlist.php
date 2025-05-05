@@ -7,7 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('layouts.app')]
-class Favourites extends Component
+class Wishlist extends Component
 {
     use LivewireToast;
 
@@ -23,11 +23,11 @@ class Favourites extends Component
     public function mount()
     {
         // set meta
-        $this->metaTitle = 'Favourites';
+        $this->metaTitle = 'Wishlist';
     }
 
     public function render()
     {
-        return view('livewire.product.favourites');
+        return view('livewire.product.wishlist');
     }
 }
