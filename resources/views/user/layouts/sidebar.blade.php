@@ -48,6 +48,15 @@
                     <span class="text">Reviews</span>
                 </a>
             </li>
+            <li class="sidebar-list__item">
+                <a href="{{ route('user.wishlist') }}" wire:navigate class="sidebar-list__link">
+                    <span class="sidebar-list__icon">
+                        <img src="{{ static_asset('images/icons/sidebar-icon11.svg') }}" alt="" class="icon" />
+                        <img src="{{ static_asset('images/icons/sidebar-icon-active11.svg') }}" alt="" class="icon icon-active" />
+                    </span>
+                    <span class="text">Wishlist</span>
+                </a>
+            </li>
 
             <li class="sidebar-list__item">
                 <a href="{{ route('user.downloads') }}" wire:navigate class="sidebar-list__link">
