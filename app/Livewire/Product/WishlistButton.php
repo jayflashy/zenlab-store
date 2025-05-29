@@ -5,12 +5,13 @@ namespace App\Livewire\Product;
 use App\Traits\LivewireToast;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Livewire\Attributes\Layout;
 
 class WishlistButton extends Component
 {
     use LivewireToast;
+
     public $product;
+
     public $isInWishlist = false;
 
     public function mount($product)
@@ -22,8 +23,9 @@ class WishlistButton extends Component
 
     public function toggleWishlist()
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             $this->warningAlert('Please login to add products to wishlist', 'warning');
+
             return;
         }
 
@@ -39,12 +41,11 @@ class WishlistButton extends Component
             ]);
             $message = 'Product added to wishlist!';
         }
-        $this->isInWishlist = !$this->isInWishlist;
+        $this->isInWishlist = ! $this->isInWishlist;
 
         $this->successAlert($message);
         $this->dispatch('wishlistUpdated');
     }
-
 
     public function render()
     {

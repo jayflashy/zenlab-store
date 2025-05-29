@@ -19,16 +19,24 @@ class Index extends Component
 
     // Filter properties
     public $search = '';
+
     public $categoryId = '';
+
     public $minPrice = '';
+
     public $maxPrice = '';
+
     public $ratingFilter = '';
+
     public $dateFilter = '';
+
     public $sortBy = 'latest';
+
     public $view = 'grid'; // grid or list view
 
     // For filter sidebar mobile toggle
     public $sidebarOpen = false;
+
     public $isFilterOpen = false;
 
     protected $queryString = [
@@ -47,9 +55,10 @@ class Index extends Component
     {
         // Initialize default values if needed
     }
-    function openFilter(): void
+
+    public function openFilter(): void
     {
-        $this->isFilterOpen = !$this->isFilterOpen;
+        $this->isFilterOpen = ! $this->isFilterOpen;
     }
 
     public function toggleView(string $viewType): void
@@ -59,14 +68,15 @@ class Index extends Component
 
     public function toggleSidebar(): void
     {
-        $this->sidebarOpen = !$this->sidebarOpen;
+        $this->sidebarOpen = ! $this->sidebarOpen;
     }
 
     public function toggleWishlist($productId): void
     {
         // Check if user is authenticated
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             $this->warningAlert('Please login to add products to wishlist', 'warning');
+
             return;
         }
 
@@ -83,7 +93,7 @@ class Index extends Component
             'minPrice',
             'maxPrice',
             'ratingFilter',
-            'dateFilter'
+            'dateFilter',
         ]);
     }
 
@@ -97,7 +107,7 @@ class Index extends Component
             'maxPrice',
             'ratingFilter',
             'dateFilter',
-            'sortBy'
+            'sortBy',
         ];
 
         if (in_array($name, $filterProperties)) {
@@ -141,7 +151,7 @@ class Index extends Component
 
         // Apply rating filter - Note: This is a simplified approach
         if ($this->ratingFilter) {
-            $minRating = (int)$this->ratingFilter;
+            $minRating = (int) $this->ratingFilter;
             // This subquery approach requires testing with your specific database
             $query->whereHas('ratings', function ($q) use ($minRating) {
                 $q->select('product_id')

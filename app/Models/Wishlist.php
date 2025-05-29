@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wishlist extends Model
 {
@@ -13,7 +12,6 @@ class Wishlist extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
      */
     protected $fillable = [
         'user_id',
