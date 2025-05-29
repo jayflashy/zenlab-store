@@ -44,7 +44,7 @@
                             </a>
                         </li>
                         <li class="sidebar-list__item">
-                            <a href="{{ route('favorites') }}" wire:navigate class="sidebar-list__link">
+                            <a href="{{ route('wishlist') }}" wire:navigate class="sidebar-list__link">
                                 <span class="sidebar-list__icon">
                                     <i class="fa fa-1x fa-heart" class="icon"></i>
                                 </span>

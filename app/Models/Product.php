@@ -142,4 +142,9 @@ class Product extends Model
     {
         return $this->comments()->approved()->count();
     }
+
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 }
