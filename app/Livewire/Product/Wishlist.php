@@ -16,9 +16,9 @@ class Wishlist extends Component
     // meta
     public string $metaTitle;
 
-    public string $metaDescription;
+    public string $metaDescription = 'Product Wishlist';
 
-    public string $metaKeywords;
+    public string $metaKeywords = 'wishlist';
 
     public string $metaImage;
 
@@ -43,7 +43,12 @@ class Wishlist extends Component
         }
         $this->wishlistItems = Auth::user()
             ->wishlists()
-            ->with('product')
+            ->with(['product' => function ($query) {
+                $query->where('status', 'published');
+            }])
+            ->whereHas('product', function ($query) {
+                $query->where('status', 'published');
+            })
             ->get();
     }
 

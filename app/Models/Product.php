@@ -113,6 +113,11 @@ class Product extends Model
         return array_merge([$this->image], $this->screenshots);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'published');
+    }
+
     public function ratings(): HasMany
     {
         return $this->hasMany(Rating::class)->where('status', 'approved');

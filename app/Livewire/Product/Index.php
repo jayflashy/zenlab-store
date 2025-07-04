@@ -131,7 +131,14 @@ class Index extends Component
 
     public function getCategories()
     {
-        return Category::active()->parents()->withCount('products')->orderBy('order')->get();
+        return Category::active()
+            ->parents()
+            ->withCount(['products' => function ($query) {
+                $query->where('status', 'published');
+            }])
+            ->having('products_count', '>', 0)
+            ->orderBy('order')
+            ->get();
     }
 
     public function getProducts()

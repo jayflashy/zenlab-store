@@ -43,17 +43,18 @@ class Home extends Component
 
     protected function loadAllProducts()
     {
-        $this->allProducts = Product::latest()->take(6)->get();
+        $this->allProducts = Product::with(['category', 'ratings'])->latest()->take(6)->get();
     }
 
     public function render()
     {
         $this->blogs = Blog::where('is_active', 1)->latest()->take(3)->get();
-        $categoryQuery = Category::active()->parents()->withCount('products')->orderBy('order');
-        $this->categories = $categoryQuery->limit(10)->get();
+
+        $allCategories = Category::active()->parents()->withCount('products')->orderBy('order')->limit(10)->get();
+        $this->categories = $allCategories;
 
         return view('livewire.home', [
-            'topCategories' => $categoryQuery->limit(8)->get(),
+            'topCategories' => $allCategories->take(8),
         ]);
     }
 }

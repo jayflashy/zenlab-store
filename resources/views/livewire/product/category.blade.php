@@ -1,4 +1,4 @@
-@section('title', 'Title')
+@section('title', $category->name)
 <div>
     {{-- breadcrumb --}}
     <section class="breadcrumb breadcrumb-one padding-y-60 section-bg position-relative z-index-1 overflow-hidden">
@@ -41,15 +41,9 @@
                     </button>
                     <div class="filter-sidebar__item">
                         <button type="button"
-                            class="filter-sidebar__buttons mb-3 pt-0 font-16 text-capitalize fw-500">Category</button>
+                            class="filter-sidebar__button font-16 text-capitalize fw-500">All Categories</button>
                         <div class="filter-sidebar__content">
                             <ul class="filter-sidebar-list">
-                                <li class="filter-sidebar-list__item">
-                                    <a href="javascript:void(0);" wire:click="$set('categoryId', '')"
-                                        class="filter-sidebar-list__text {{ $categoryId === '' ? 'active' : '' }}">
-                                        All Categories <span class="qty">{{ $this->getTotalProductsCount() }}</span>
-                                    </a>
-                                </li>
                                 @foreach ($categories as $category)
                                     <li class="filter-sidebar-list__item">
                                         <a href="{{ route('category', $category->slug) }}" wire:navigate
@@ -67,7 +61,7 @@
             <div class="col-xl-9 col-lg-8">
                 <div class="row gy-4 list-grid-wrapper grid-view">
                     @forelse($products as $product)
-                        @include('partials.product.list')
+                        @include('partials.product.list', ['product' => $product])
                     @empty
                         <div class="col-12">
                             <div class="alert alert-info text-center">
@@ -78,23 +72,8 @@
                         </div>
                     @endforelse
                 </div>
-
-                {{-- <!-- Pagination -->
-            <div class="mt-4">
-                {{ $products->links('partials.pagination') }}
-            </div> --}}
             </div>
         </div>
-        @if ($products->count() > 0)
-            <div class="row py-5 gy-4 list-grid-wrapper grid-view">
-                @foreach ($products as $product)
-                    @include('partials.product.list', ['product' => $product])
-                @endforeach
-            </div>
-        @else
-            <div class="text-center py-5">
-            </div>
-        @endif
     </div>
 </div>
 

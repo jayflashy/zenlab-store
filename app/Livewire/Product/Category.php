@@ -15,6 +15,8 @@ class Category extends Component
     use LivewireToast;
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     // meta
     public string $metaTitle;
 
@@ -36,7 +38,7 @@ class Category extends Component
 
     public function getTotalProductsCount()
     {
-        return Product::where('status', 'published')->count();
+        return $this->category->products()->active()->count();
     }
 
     public function getCategories()
@@ -48,7 +50,7 @@ class Category extends Component
     {
         $this->slug = $slug;
         $this->category = ModelsCategory::where('slug', $slug)->firstOrFail();
-        $this->products = $this->category->products()->get();
+        $this->products = Product::where('category_id', $this->category->id)->active()->limit(12)->get();
         $this->categories = $this->getCategories();
 
         // set meta
