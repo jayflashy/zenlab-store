@@ -218,17 +218,23 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab" tabindex="0">
                     <div class="row gy-4">
-                        @include('partials.product.list')
+                        @foreach ($products as $product)
+                            @include('partials.product.list', ['product' => $product])
+                        @endforeach
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-wordPress" role="tabpanel" aria-labelledby="pills-wordPress-tab" tabindex="0">
                     <div class="row gy-4">
-                        @include('partials.product.list')
+                        @foreach ($products as $product)
+                            @include('partials.product.list', ['product' => $product])
+                        @endforeach
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-php" role="tabpanel" aria-labelledby="pills-php-tab" tabindex="0">
                     <div class="row gy-4">
-                        @include('partials.product.list')
+                        @foreach ($products as $product)
+                            @include('partials.product.list', ['product' => $product])
+                        @endforeach
                     </div>
                 </div>
             </div>

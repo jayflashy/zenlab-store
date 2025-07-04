@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Product;
 
+use App\Models\Product;
 use App\Traits\LivewireToast;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -14,7 +15,7 @@ class WishlistButton extends Component
 
     public $isInWishlist = false;
 
-    public function mount($product)
+    public function mount(Product $product)
     {
         $this->product = $product;
         $this->isInWishlist = Auth::check()

@@ -7,7 +7,7 @@ use App\Livewire\User\Invoice;
 use App\Livewire\User\Orders;
 use App\Livewire\User\Profile;
 use App\Livewire\User\Reviews;
-use App\Livewire\User\Wishlist;
+use App\Livewire\Product\Wishlist;
 
 // Dashboard
 Route::get('', User::class)->name('index');

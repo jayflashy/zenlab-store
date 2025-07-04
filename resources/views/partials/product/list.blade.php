@@ -9,7 +9,8 @@
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
-                <a href="{{ route('products.view', $product->slug) }}" wire:navigate class="link">{{ $product->name }}</a>
+                <a href="{{ route('products.view', $product->slug) }}" wire:navigate
+                    class="link">{{ $product->name }}</a>
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
@@ -34,7 +35,8 @@
                         <ul class="star-rating">
                             @for ($i = 1; $i <= 5; $i++)
                                 <li class="star-rating__item font-11">
-                                    <i class="fas fa-star {{ $i <= $product->averageRating() ? 'text-warning' : 'text-muted' }}">
+                                    <i
+                                        class="fas fa-star {{ $i <= $product->averageRating() ? 'text-warning' : 'text-muted' }}">
                                     </i>
                                 </li>
                             @endfor
@@ -44,9 +46,16 @@
                         </span>
                     </div>
                 </div>
-                <a href="{{ $product->demo_url ?? '#' }}" class="btn btn-outline-light btn-sm pill">
-                    Live Demo
-                </a>
+                @if ($product->demo_url)
+                    <a href="{{ $product->demo_url }}" target="_blank" rel="noopener"
+                        class="btn btn-outline-light btn-sm pill">
+                        Live Demo
+                    </a>
+                @else
+                    <button class="btn btn-outline-light btn-sm pill" disabled title="Demo not available">
+                        No Demo
+                    </button>
+                @endif
             </div>
         </div>
     </div>

@@ -41,38 +41,38 @@
                     <div class="footer-widget__social">
                         <ul class="social-icon-list">
                             <li class="social-icon-list__item">
-                                <a href="{{ $settings->facebook }}" class="social-icon-list__link flx-center" target="_blank"
-                                    rel="noopener">
+                                <a href="{{ $settings->facebook }}" class="social-icon-list__link flx-center"
+                                    target="_blank" rel="noopener">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
                             </li>
                             <li class="social-icon-list__item">
-                                <a href="{{ $settings->twitter }}" class="social-icon-list__link flx-center" target="_blank"
-                                    rel="noopener">
+                                <a href="{{ $settings->twitter }}" class="social-icon-list__link flx-center"
+                                    target="_blank" rel="noopener">
                                     <i class="fab fa-x-twitter"></i>
                                 </a>
                             </li>
                             <li class="social-icon-list__item">
-                                <a href="{{ $settings->instagram }}" class="social-icon-list__link flx-center" target="_blank"
-                                    rel="noopener">
+                                <a href="{{ $settings->instagram }}" class="social-icon-list__link flx-center"
+                                    target="_blank" rel="noopener">
                                     <i class="fab fa-instagram"></i>
                                 </a>
                             </li>
                             <li class="social-icon-list__item">
-                                <a href="{{ $settings->telegram }}" class="social-icon-list__link flx-center" target="_blank"
-                                    rel="noopener">
+                                <a href="{{ $settings->telegram }}" class="social-icon-list__link flx-center"
+                                    target="_blank" rel="noopener">
                                     <i class="fab fa-telegram-plane"></i>
                                 </a>
                             </li>
                             <li class="social-icon-list__item">
-                                <a href="{{ $settings->linkedin }}" class="social-icon-list__link flx-center" target="_blank"
-                                    rel="noopener">
+                                <a href="{{ $settings->linkedin }}" class="social-icon-list__link flx-center"
+                                    target="_blank" rel="noopener">
                                     <i class="fab fa-linkedin-in"></i>
                                 </a>
                             </li>
                             <li class="social-icon-list__item">
-                                <a href="{{ $settings->whatsapp }}" class="social-icon-list__link flx-center" target="_blank"
-                                    rel="noopener">
+                                <a href="{{ $settings->whatsapp }}" class="social-icon-list__link flx-center"
+                                    target="_blank" rel="noopener">
                                     <i class="fab fa-whatsapp"></i>
                                 </a>
                             </li>
@@ -99,8 +99,10 @@
                                 <a href="{{ route('user.index') }}" wire:navigate class="footer-lists__link">Dashboard</a>
                             </li>
                         @else
-                            <li class="footer-lists__item"><a href="{{route('login')}}" wire:navigate class="footer-lists__link">Login </a></li>
-                            <li class="footer-lists__item"><a href="{{route('register')}}" wire:navigate class="footer-lists__link">Register</a></li>
+                            <li class="footer-lists__item"><a href="{{ route('login') }}" wire:navigate
+                                    class="footer-lists__link">Login </a></li>
+                            <li class="footer-lists__item"><a href="{{ route('register') }}" wire:navigate
+                                    class="footer-lists__link">Register</a></li>
                         @endauth
                     </ul>
                 </div>
@@ -116,7 +118,8 @@
                             <a href="{{ route('blogs') }}" wire:navigate class="footer-lists__link">Blog </a>
                         </li>
                         <li class="footer-lists__item">
-                            <a href="{{ route('terms') }}" wire:navigate class="footer-lists__link">Terms and Conditions</a>
+                            <a href="{{ route('terms') }}" wire:navigate class="footer-lists__link">Terms and
+                                Conditions</a>
                         </li>
                         {{-- show 3 custom pages --}}
                         @php
@@ -134,12 +137,14 @@
             <div class="col-xl-3 col-sm-6">
                 <div class="footer-widget">
                     <h5 class="footer-widget__title text-white">Categories</h5>
+                    @php
+                        $categories = \App\Models\Category::limit(5)->inRandomOrder()->get();
+                    @endphp
                     <ul class="footer-lists">
-                        <li class="footer-lists__item"><a href="dashboard.html" class="footer-lists__link">Dashboard </a></li>
-                        <li class="footer-lists__item"><a href="{{route('login')}}" class="footer-lists__link">Login </a></li>
-                        <li class="footer-lists__item"><a href="{{route('register')}}" class="footer-lists__link">Register</a></li>
-                        <li class="footer-lists__item"><a href="blog.html" class="footer-lists__link">Blog </a></li>
-                        <li class="footer-lists__item"><a href="blog-details.html" class="footer-lists__link">Blog Details</a></li>
+                        @foreach ($categories as $category)
+                            <li class="footer-lists__item"><a href="{{ route('category', $category->slug) }}"
+                                    wire:navigate class="footer-lists__link">{{ $category->name }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -151,7 +156,8 @@
 <div class="bottom-footer">
     <div class="container container-two">
         <div class="bottom-footer__inner flx-between gap-3">
-            <p class="bottom-footer__text font-14"> Copyright &copy; {{ Date('Y') . get_setting('name') }}, All rights reserved.</p>
+            <p class="bottom-footer__text font-14"> Copyright &copy; {{ Date('Y') . get_setting('name') }}, All rights
+                reserved.</p>
             <div class="footer-links">
                 <a href="{{ route('terms') }}" class="footer-link font-14">Terms of service</a>
                 <a href="{{ route('policy') }}" class="footer-link font-14">Privacy Policy</a>

@@ -3,6 +3,8 @@
 namespace App\Livewire\Product;
 
 use App\Traits\LivewireToast;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -20,10 +22,24 @@ class Wishlist extends Component
 
     public string $metaImage;
 
+    /** @var Collection<int, Wishlist> */
+    public Collection $wishlistItems;
+
     public function mount()
     {
-        // set meta
+        // set meta 
+        $this->loadWishlistItems();
         $this->metaTitle = 'Wishlist';
+    }
+    /**  
+     * Load the authenticated user’s wishlist items.  
+     */
+    public function loadWishlistItems(): void
+    {
+        $this->wishlistItems = Auth::user()
+            ->wishlists()
+            ->with('product')
+            ->get();
     }
 
     public function render()

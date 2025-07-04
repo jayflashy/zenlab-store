@@ -73,16 +73,26 @@ class Index extends Component
 
     public function toggleWishlist($productId): void
     {
-        // Check if user is authenticated
         if (! Auth::check()) {
             $this->warningAlert('Please login to add products to wishlist', 'warning');
 
             return;
         }
+        $user = Auth::user();
 
-        // Placeholder for wishlist functionality
-        // Replace with your actual wishlist implementation
-        $this->successAlert('Product added to wishlist!', 'success');
+        $wishlistItem = $user->wishlists()->where('product_id', $productId)->first();
+
+        if ($wishlistItem) {
+            $wishlistItem->delete();
+            $this->successAlert('Product removed from wishlist!', 'success');
+        } else {
+            $user->wishlists()->create([
+                'product_id' => $productId
+            ]);
+            $this->successAlert('Product added to wishlist!', 'success');
+        }
+
+        $this->dispatch('wishlistUpdated', $productId);
     }
 
     public function clearFilters(): void
@@ -116,6 +126,10 @@ class Index extends Component
             $this->dispatch('closeSidebar');
         }
     }
+    public function getTotalProductsCount()
+    {
+        return Product::where('status', 'published')->count();
+    }
 
     public function getCategories()
     {
@@ -124,7 +138,7 @@ class Index extends Component
 
     public function getProducts()
     {
-        $query = Product::query()->where('status', 'published');
+        $query = Product::query()->where('status', 'published')->with(['category', 'wishlists', 'ratings']);
 
         // Apply search filter
         if ($this->search) {
@@ -142,13 +156,12 @@ class Index extends Component
 
         // Apply price filter
         if ($this->minPrice !== '' && is_numeric($this->minPrice)) {
-            $query->where('regular_price', '>=', $this->minPrice);
+            $query->whereRaw('COALESCE(sale_price, regular_price) >= ?', [$this->minPrice]);
         }
 
         if ($this->maxPrice !== '' && is_numeric($this->maxPrice)) {
-            $query->where('regular_price', '<=', $this->maxPrice);
+            $query->whereRaw('COALESCE(sale_price, regular_price) <= ?', [$this->maxPrice]);
         }
-
         // Apply rating filter - Note: This is a simplified approach
         if ($this->ratingFilter) {
             $minRating = (int) $this->ratingFilter;

@@ -55,7 +55,7 @@
                             <button type="button" class="btn btn-outline-main" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
+                            <ul class="common-dropdown dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="{{ route('user.download', $item->id) }}">
                                         <i class="las la-download me-2"></i>Download
@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="purchaseCodeModal" tabindex="-1" aria-labelledby="purchaseCodeModalLabel" aria-hidden="true">
+    <div class="common-modal modal fade" id="purchaseCodeModal" tabindex="-1" aria-labelledby="purchaseCodeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

@@ -114,7 +114,7 @@
                                     <li class="filter-sidebar-list__item">
                                         <a href="javascript:void(0);" wire:click="$set('categoryId', '')"
                                             class="filter-sidebar-list__text {{ $categoryId === '' ? 'active' : '' }}">
-                                            All Categories <span class="qty">{{ $products->total() }}</span>
+                                            All Categories <span class="qty">{{ $this->getTotalProductsCount() }}</span>  
                                         </a>
                                     </li>
                                     @foreach ($categories as $category)
@@ -277,9 +277,9 @@
 @section('scripts')
     <script>
         window.addEventListener('closeSidebar', function() {
-            $(".filter-sidebar").removeClass("show");
-            $(".side-overlay").removeClass("show");
-            $("body").removeClass("scroll-hide-sm");
+            document.querySelector('.filter-sidebar')?.classList.remove('show');
+            document.querySelector('.side-overlay')?.classList.remove('show');
+            document.body.classList.remove('scroll-hide-sm');
         });
     </script>
 @endsection
