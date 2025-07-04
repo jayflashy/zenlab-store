@@ -5,8 +5,8 @@ namespace App\Livewire\Product;
 use App\Models\Category as ModelsCategory;
 use App\Models\Product;
 use App\Traits\LivewireToast;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
@@ -14,14 +14,22 @@ class Category extends Component
 {
     use LivewireToast;
     use WithPagination;
+
     // meta
     public string $metaTitle;
+
     public string $slug;
+
     public string $metaDescription;
+
     public $category;
+
     public $products;
+
     public $categoryId;
+
     public $categories;
+
     public string $metaKeywords;
 
     public string $metaImage;
@@ -35,9 +43,10 @@ class Category extends Component
     {
         return ModelsCategory::active()->parents()->withCount('products')->orderBy('order')->get();
     }
+
     public function mount($slug)
     {
-        $this->slug = $slug;  
+        $this->slug = $slug;
         $this->category = ModelsCategory::where('slug', $slug)->firstOrFail();
         $this->products = $this->category->products()->get();
         $this->categories = $this->getCategories();
