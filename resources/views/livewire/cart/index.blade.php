@@ -94,7 +94,7 @@
 
                     <div class="row mt-4">
                         <div class="col-lg-6 offset-lg-6">
-                            <div class="cart-summary bg-light p-4 rounded">
+                            <div class="cart-summary border p-4 rounded">
                                 <h5 class="mb-3">Order Summary</h5>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Subtotal</span>
