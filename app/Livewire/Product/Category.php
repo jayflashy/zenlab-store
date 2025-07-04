@@ -3,14 +3,13 @@
 namespace App\Livewire\Product;
 
 use App\Traits\LivewireToast;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('user.layouts.app')]
 class Category extends Component
 {
     use LivewireToast;
-
 
     // meta
     public string $metaTitle;
@@ -24,7 +23,7 @@ class Category extends Component
     public function mount()
     {
         // set meta
-        $this->metaTitle = "Category";
+        $this->metaTitle = 'Category';
     }
 
     public function render()

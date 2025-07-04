@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\DownloadController;
+use App\Livewire\Product\Wishlist;
 use App\Livewire\User;
 use App\Livewire\User\Downloads;
 use App\Livewire\User\Invoice;
 use App\Livewire\User\Orders;
 use App\Livewire\User\Profile;
 use App\Livewire\User\Reviews;
-use App\Livewire\Product\Wishlist;
 
 // Dashboard
 Route::get('', User::class)->name('index');

@@ -87,7 +87,7 @@ class Index extends Component
             $this->successAlert('Product removed from wishlist!', 'success');
         } else {
             $user->wishlists()->create([
-                'product_id' => $productId
+                'product_id' => $productId,
             ]);
             $this->successAlert('Product added to wishlist!', 'success');
         }
@@ -126,6 +126,7 @@ class Index extends Component
             $this->dispatch('closeSidebar');
         }
     }
+
     public function getTotalProductsCount()
     {
         return Product::where('status', 'published')->count();

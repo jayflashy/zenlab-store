@@ -9,6 +9,7 @@ use Livewire\Component;
 class Home extends Component
 {
     public $blogs;
+
     public $products;
 
     public function render()
