@@ -15,9 +15,9 @@
                             available for sale. Our unique collection is hand-curated by experts. Find and buy the perfect premium theme.
                         </p>
 
-                        <form action="#" class="search-box">
-                            <input type="text" class="common-input common-input--lg pill shadow-sm"
-                                placeholder="Search theme, plugins &amp; more...">
+                        <form wire:submit.prevent="updatedSearch" class="search-box">
+                            <input type="search" wire:model.live.debounce.500ms="search"
+                                class="common-input common-input--lg pill shadow-sm" placeholder="Search theme, plugins &amp; more...">
                             <button type="submit" class="btn btn-main btn-icon icon border-0">
                                 <img src="{{ static_asset('images/icons/search.svg') }}" alt="">
                             </button>
@@ -34,52 +34,66 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="filter-tab gap-3 flx-between">
-                        <button type="button" class="filter-tab__button btn btn-outline-light pill d-flex align-items-center">
-                            <span class="icon icon-left"><img src="{{static_asset('images/icons/filter.svg')}}" alt=""></span>
+                        <button type="button" wire:click="openFilter"
+                            class="filter-tab__button btn btn-outline-light pill d-flex align-items-center">
+                            <span class="icon icon-left"><img src="{{ static_asset('images/icons/filter.svg') }}" alt=""></span>
                             <span class="font-18 fw-500">Filters</span>
                         </button>
 
                         <div class="list-grid d-flex align-items-center gap-2">
-                            <button class="list-grid__button list-button d-sm-flex d-none text-body"><i class="las la-list"></i></button>
-                            <button class="list-grid__button grid-button d-sm-flex d-none active text-body">
+                            <button wire:click="toggleView('list')"
+                                class="list-grid__button list-button d-sm-flex d-none {{ $view === 'list' ? 'active' : '' }} text-body">
+                                <i class="las la-list"></i>
+                            </button>
+                            <button wire:click="toggleView('grid')"
+                                class="list-grid__button grid-button d-sm-flex d-none {{ $view === 'grid' ? 'active' : '' }} text-body">
                                 <i class="las la-border-all"></i>
                             </button>
                             <button class="list-grid__button sidebar-btn text-body d-lg-none d-flex"><i class="las la-bars"></i></button>
                         </div>
                     </div>
-                    <form action="#" class="filter-form pb-4 ">
+                    <form wire:submit.prevent class="filter-form pb-4" style="{{ $isFilterOpen ? 'display: block' : 'display:none' }}">
                         <div class="row gy-3">
                             <div class="col-sm-4 col-xs-6">
                                 <div class="flx-between gap-1">
                                     <label for="tag" class="form-label font-16">Tag</label>
-                                    <button type="reset" class="text-body font-14">Clear</button>
+                                    <button type="button" wire:click="$set('search', '')" class="text-body font-14">Clear</button>
                                 </div>
                                 <div class="position-relative">
-                                    <input type="text" class="common-input border-gray-five common-input--withLeftIcon" id="tag"
-                                        placeholder="Search By Tag...">
-                                    <span class="input-icon input-icon--left"><img src="{{static_asset('images/icons/search-two.svg')}}"
-                                            alt=""></span>
+                                    <input type="text" wire:model.live.debounce.500ms="search" placeholder="Search By Tag..."
+                                        class="common-input border-gray-five common-input--withLeftIcon" id="tag">
+                                    <span class="input-icon input-icon--left">
+                                        <img src="{{ static_asset('images/icons/search-two.svg') }}"alt="">
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-xs-6">
                                 <div class="flx-between gap-1">
                                     <label for="Price" class="form-label font-16">Price</label>
-                                    <button type="reset" class="text-body font-14">Clear</button>
+                                    <button type="button" wire:click="$set('minPrice', ''); $set('maxPrice', '');"
+                                        class="text-body font-14">Clear
+                                    </button>
                                 </div>
-                                <div class="position-relative">
-                                    <input type="text" class="common-input border-gray-five" id="Price" placeholder="$7 - $29">
+                                <div class="position-relative d-flex gap-2">
+                                    <input type="number" wire:model.live.debounce.500ms="minPrice" class="common-input border-gray-five"
+                                        id="minPrice" placeholder="Min">
+                                    <span class="mt-2">-</span>
+                                    <input type="number" wire:model.live.debounce.500ms="maxPrice" class="common-input border-gray-five"
+                                        id="maxPrice" placeholder="Max">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="flx-between gap-1">
                                     <label for="time" class="form-label font-16">Time Frame</label>
-                                    <button type="reset" class="text-body font-14">Clear</button>
+                                    <button type="button" wire:click="$set('dateFilter', '')" class="text-body font-14">Clear</button>
                                 </div>
                                 <div class="position-relative select-has-icon">
-                                    <select id="time" class="common-input border-gray-five">
-                                        <option value="1">Now</option>
-                                        <option value="2">Yesterday</option>
-                                        <option value="2">1 Month Ago</option>
+                                    <select id="time" wire:model.live="dateFilter" class="common-input border-gray-five">
+                                        <option value="">Any Date</option>
+                                        <option value="day">Last 24 Hours</option>
+                                        <option value="week">Last Week</option>
+                                        <option value="month">Last Month</option>
+                                        <option value="year">Last Year</option>
                                     </select>
                                 </div>
                             </div>
@@ -90,72 +104,27 @@
                 <div class="col-xl-3 col-lg-4">
                     <div class="filter-sidebar">
                         <button type="button"
-                            class="filter-sidebar__close p-2 position-absolute end-0 top-0 z-index-1 text-body hover-text-main font-20 d-lg-none d-block"><i
-                                class="las la-times"></i></button>
+                            class="filter-sidebar__close p-2 position-absolute end-0 top-0 z-index-1 text-body hover-text-main font-20 d-lg-none d-block">
+                            <i class="las la-times"></i>
+                        </button>
                         <div class="filter-sidebar__item">
                             <button type="button" class="filter-sidebar__button font-16 text-capitalize fw-500">Category</button>
                             <div class="filter-sidebar__content">
                                 <ul class="filter-sidebar-list">
                                     <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            All Categories <span class="qty">25489</span>
+                                        <a href="javascript:void(0);" wire:click="$set('categoryId', '')"
+                                            class="filter-sidebar-list__text {{ $categoryId === '' ? 'active' : '' }}">
+                                            All Categories <span class="qty">{{ $this->getTotalProductsCount() }}</span>  
                                         </a>
                                     </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            Site Template <span class="qty">12,501</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            WordPress <span class="qty">1258</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            UI Template <span class="qty">1520</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            Templates Kits <span class="qty">210</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            eCommerce <span class="qty">158</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            Marketing <span class="qty">178</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            CMS Template <span class="qty">122</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            Muse Themes <span class="qty">450</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            Blogging <span class="qty">155</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            Courses <span class="qty">125</span>
-                                        </a>
-                                    </li>
-                                    <li class="filter-sidebar-list__item">
-                                        <a href="" class="filter-sidebar-list__text">
-                                            Forums <span class="qty">35</span>
-                                        </a>
-                                    </li>
+                                    @foreach ($categories as $category)
+                                        <li class="filter-sidebar-list__item">
+                                            <a href="javascript:void(0);" wire:click="$set('categoryId', '{{ $category->id }}')"
+                                                class="filter-sidebar-list__text {{ $categoryId === $category->id ? 'active' : '' }}">
+                                                {{ $category->name }} <span class="qty">{{ $category->products_count }}</span>
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -166,107 +135,116 @@
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="veiwAll">
-                                                <label class="form-check-label" for="veiwAll"> View All</label>
+                                                <input class="form-check-input" type="radio" wire:model.live="ratingFilter"
+                                                    value="" id="viewAll">
+                                                <label class="form-check-label" for="viewAll"> View All</label>
                                             </div>
-                                            <span class="qty">(1859)</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
-                                            <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="oneStar">
+                                            <div class="common-check common-radio sdb-cc">
+                                                <input class="form-check-input" type="radio" wire:model.live="ratingFilter"
+                                                    value="1" id="oneStar">
                                                 <label class="form-check-label" for="oneStar"> 1 Star and above</label>
                                             </div>
-                                            <span class="qty">(785)</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="twoStar">
+                                                <input class="form-check-input" type="radio" wire:model.live="ratingFilter"
+                                                    value="2" id="twoStar">
                                                 <label class="form-check-label" for="twoStar"> 2 Star and above</label>
                                             </div>
-                                            <span class="qty">(1250)</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="threeStar">
+                                                <input class="form-check-input" type="radio" wire:model.live="ratingFilter"
+                                                    value="3" id="threeStar">
                                                 <label class="form-check-label" for="threeStar"> 3 Star and above</label>
                                             </div>
-                                            <span class="qty">(7580)</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="fourStar">
+                                                <input class="form-check-input" type="radio" wire:model.live="ratingFilter"
+                                                    value="4" id="fourStar">
                                                 <label class="form-check-label" for="fourStar"> 4 Star and above</label>
                                             </div>
-                                            <span class="qty">(1450)</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="fiveStar">
+                                                <input class="form-check-input" type="radio" wire:model.live="ratingFilter"
+                                                    value="5" id="fiveStar">
                                                 <label class="form-check-label" for="fiveStar"> 5 Star Rating</label>
                                             </div>
-                                            <span class="qty">(2530)</span>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="filter-sidebar__item">
-                            <button type="button" class="filter-sidebar__button font-16 text-capitalize fw-500">Date Updated</button>
+                            <button type="button" class="filter-sidebar__button font-16 text-capitalize fw-500">Sort By</button>
                             <div class="filter-sidebar__content">
                                 <ul class="filter-sidebar-list">
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="anyDate">
-                                                <label class="form-check-label" for="anyDate"> Any Date</label>
+                                                <input class="form-check-input" type="radio" wire:model.live="sortBy" value="latest"
+                                                    id="sortLatest">
+                                                <label class="form-check-label" for="sortLatest">Newest First</label>
                                             </div>
-                                            <span class="qty"> 5,203</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="lastYear">
-                                                <label class="form-check-label" for="lastYear"> In the last year</label>
+                                                <input class="form-check-input" type="radio" wire:model.live="sortBy" value="oldest"
+                                                    id="sortOldest">
+                                                <label class="form-check-label" for="sortOldest">Oldest First</label>
                                             </div>
-                                            <span class="qty">1,258</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="lastMonth">
-                                                <label class="form-check-label" for="lastMonth"> In the last month</label>
+                                                <input class="form-check-input" type="radio" wire:model.live="sortBy"
+                                                    value="price_low" id="sortPriceLow">
+                                                <label class="form-check-label" for="sortPriceLow">Price: Low to High</label>
                                             </div>
-                                            <span class="qty">2450</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="LastWeek">
-                                                <label class="form-check-label" for="LastWeek"> In the last week</label>
+                                                <input class="form-check-input" type="radio" wire:model.live="sortBy"
+                                                    value="price_high" id="sortPriceHigh">
+                                                <label class="form-check-label" for="sortPriceHigh">Price: High to Low</label>
                                             </div>
-                                            <span class="qty">325</span>
                                         </div>
                                     </li>
                                     <li class="filter-sidebar-list__item">
                                         <div class="filter-sidebar-list__text">
                                             <div class="common-check common-radio">
-                                                <input class="form-check-input" type="radio" name="radio" id="lastDay">
-                                                <label class="form-check-label" for="lastDay"> In the last day</label>
+                                                <input class="form-check-input" type="radio" wire:model.live="sortBy" value="popular"
+                                                    id="sortPopular">
+                                                <label class="form-check-label" for="sortPopular">Most Popular</label>
                                             </div>
-                                            <span class="qty">745</span>
+                                        </div>
+                                    </li>
+                                    <li class="filter-sidebar-list__item">
+                                        <div class="filter-sidebar-list__text">
+                                            <div class="common-check common-radio">
+                                                <input class="form-check-input" type="radio" wire:model.live="sortBy" value="rating"
+                                                    id="sortRating">
+                                                <label class="form-check-label" for="sortRating">Highest Rated</label>
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>
@@ -275,26 +253,35 @@
                     </div>
                 </div>
                 <div class="col-xl-9 col-lg-8">
-                            <div class="row gy-4 list-grid-wrapper">
-                                @include('partials.product.list')
+                    <div class="row gy-4 list-grid-wrapper {{ $view === 'list' ? 'list-view' : 'grid-view' }}">
+                        @forelse($products as $product)
+                            @include('partials.product.list')
+                        @empty
+                            <div class="col-12">
+                                <div class="alert alert-info text-center">
+                                    No products found matching your criteria. Please try different filters.
+                                </div>
                             </div>
-                        <!-- Pagination Start -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination common-pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link flx-align gap-2 flex-nowrap" href="#">Next
-                                        <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        @endforelse
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-4">
+                        {{ $products->links('partials.pagination') }}
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
+@section('scripts')
+    <script>
+        window.addEventListener('closeSidebar', function() {
+            document.querySelector('.filter-sidebar')?.classList.remove('show');
+            document.querySelector('.side-overlay')?.classList.remove('show');
+            document.body.classList.remove('scroll-hide-sm');
+        });
+    </script>
+@endsection
+@include('layouts.meta')
+@section('title', 'All Products')

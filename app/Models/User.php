@@ -100,4 +100,10 @@ class User extends Authenticatable
             ->where('active', true)
             ->exists();
     }
+
+    // wishlist
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 }

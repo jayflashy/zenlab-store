@@ -113,6 +113,11 @@ class Product extends Model
         return array_merge([$this->image], $this->screenshots);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'published');
+    }
+
     public function ratings(): HasMany
     {
         return $this->hasMany(Rating::class)->where('status', 'approved');
@@ -141,5 +146,10 @@ class Product extends Model
     public function commentCount()
     {
         return $this->comments()->approved()->count();
+    }
+
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class);
     }
 }
