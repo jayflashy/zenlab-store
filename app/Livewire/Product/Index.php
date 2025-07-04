@@ -51,10 +51,7 @@ class Index extends Component
         'sidebarOpen' => ['except' => false],
     ];
 
-    public function mount(): void
-    {
-        // Initialize default values if needed
-    }
+    public function mount(): void {}
 
     public function openFilter(): void
     {

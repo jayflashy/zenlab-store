@@ -138,12 +138,18 @@
                 <div class="footer-widget">
                     <h5 class="footer-widget__title text-white">Categories</h5>
                     @php
-                        $categories = \App\Models\Category::limit(5)->inRandomOrder()->get();
+                        $categories = cache()->remember('footer_categories', 3600, function () {
+                            return \App\Models\Category::limit(5)->inRandomOrder()->get();
+                        });
                     @endphp
                     <ul class="footer-lists">
                         @foreach ($categories as $category)
-                            <li class="footer-lists__item"><a href="{{ route('category', $category->slug) }}"
-                                    wire:navigate class="footer-lists__link">{{ $category->name }}</a></li>
+                            <li class="footer-lists__item">
+                                <a href="{{ route('category', $category->slug) }}" wire:navigate
+                                    class="footer-lists__link">
+                                    {{ $category->name }}
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>

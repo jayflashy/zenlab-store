@@ -14,7 +14,8 @@ class Home extends Component
     public function render()
     {
         $this->blogs = Blog::where('is_active', 1)->latest()->take(3)->get();
-        $this->products = Product::where('status', 'published')->latest()->take(12)->get();
+        $this->products = Product::where('status', 'published')
+            ->with(['category', 'ratings'])->latest()->take(12)->get();
 
         return view('livewire.home');
     }

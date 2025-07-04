@@ -22,7 +22,6 @@ class Wishlist extends Component
 
     public string $metaImage;
 
-    /** @var Collection<int, Wishlist> */
     public Collection $wishlistItems;
 
     public function mount()
@@ -36,6 +35,10 @@ class Wishlist extends Component
      */
     public function loadWishlistItems(): void
     {
+        if (! Auth::check()) {
+            $this->wishlistItems = collect();
+            return;
+        }
         $this->wishlistItems = Auth::user()
             ->wishlists()
             ->with('product')
