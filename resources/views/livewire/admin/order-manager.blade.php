@@ -106,8 +106,13 @@
                                 <span class="fw-bold">{{ $order->code }}</span>
                             </td>
                             <td>
-                                <div>{{ $order->name }}</div>
-                                <small class="text-muted">{{ $order->email }}</small>
+                                @if ($order->user_id)
+                                    <a href="{{ route('admin.users.show', $order->user_id) }}"
+                                        class="fw-bold">{{ $order->name }}</a>
+                                @else
+                                    <div>{{ $order->name }}</div>
+                                @endif
+                                <p class="text-muted mb-0">{{ $order->email }}</p>
                             </td>
                             <td>{{ $order->created_at->format('M d, Y H:i') }}</td>
                             <td>

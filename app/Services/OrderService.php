@@ -163,7 +163,7 @@ class OrderService
                 'name' => $name,
                 'password' => bcrypt(getTrx(18)),
                 'status' => 'active',
-                'username' => text_trimer($name, 19) . random_int(1000, 9999),
+                'username' => User::generateUniqueUsername(text_trimer($name,19)),
             ]
         );
     }

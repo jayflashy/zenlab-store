@@ -150,10 +150,10 @@
                                                     class="dashboard-widget__content flx-between gap-1 align-items-end">
                                                     <div>
                                                         <h4 class="dashboard-widget__number mb-1 mt-3">
-                                                            {{ $user->orders()->count() }}
+                                                            {{ format_price($user->balance) }}
                                                         </h4>
                                                         <span class="dashboard-widget__text font-14">
-                                                            Total Orders
+                                                            User Balance
                                                         </span>
                                                     </div>
                                                 </div>
@@ -435,28 +435,6 @@
                                     aria-labelledby="pills-changePassword-tab" tabindex="0">
                                     <form wire:submit.prevent="updatePassword">
                                         <div class="row gy-4">
-                                            <div class="col-12">
-                                                <label for="current-password"
-                                                    class="form-label mb-2 font-18 font-heading fw-600">Current
-                                                    Password</label>
-                                                <div class="position-relative">
-                                                    <input type="password"
-                                                        class="common-input common-input--withIcon common-input--withLeftIcon"
-                                                        id="current-password" wire:model="current_password"
-                                                        placeholder="************">
-                                                    <span class="input-icon input-icon--left">
-                                                        <img src="{{ static_asset('images/icons/key-icon.svg') }}"
-                                                            alt="">
-                                                    </span>
-                                                    <span
-                                                        class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
-                                                        id="#current-password"></span>
-                                                </div>
-                                                @error('current_password')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-
                                             <div class="col-sm-6">
                                                 <label for="new-password"
                                                     class="form-label mb-2 font-18 font-heading fw-600">New
@@ -526,6 +504,23 @@
         }
     </style>
 </div>
-
+@section('scripts')
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            // Image preview for uploaded images
+            document.getElementById('imageUpload').addEventListener('change', function() {
+                const input = this;
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.prof-img').style.backgroundImage =
+                            `url('${e.target.result}')`;
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        });
+    </script>
+@endsection
 
 @include('layouts.meta')

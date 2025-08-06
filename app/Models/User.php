@@ -116,8 +116,20 @@ class User extends Authenticatable
         return $this->orders()
             ->where('order_status', 'completed')
             ->where('payment_status', 'completed')
-            ->withCount('items') 
+            ->withCount('items')
             ->get()
-            ->sum('items_count'); 
+            ->sum('items_count');
+    }
+    public static function generateUniqueUsername(string $name): string
+    {
+        $baseUsername = self::generateUsername($name);
+        $username = $baseUsername;
+        $counter = 1;
+
+        while (self::where('username', $username)->exists()) {
+            $username = $baseUsername . '_' . $counter++;
+        }
+
+        return $username;
     }
 }

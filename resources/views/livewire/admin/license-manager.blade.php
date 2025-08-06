@@ -61,16 +61,17 @@
                     @forelse($orderItems as $orderItem)
                         <tr>
                             <td>
-                                <a href="{{ route('admin.orders.show', $orderItem->order->id) }}"
-                                    class="fw-bold">{{ $orderItem->order->code }}</a>
+                                <a href="{{ route('admin.orders.show', $orderItem->order?->id) }}"
+                                    class="fw-bold">{{ $orderItem->order?->code }}</a>
                             </td>
                             <td>
-                                <div>{{ $orderItem->order->user->name }}</div>
-                                <small class="text-muted">{{ $orderItem->order->user->email }}</small>
+                                <a href="{{ route('admin.users.show', $orderItem->order?->user_id) }}"
+                                    class="fw-bold">{{ $orderItem->order?->user?->name }}</a>
+                                <p class="text-muted mb-0">{{ $orderItem->order?->user?->email }}</p>
                             </td>
                             <td>{{ $orderItem->order->created_at->format('M d, Y H:i') }}</td>
                             <td>
-                                <p class="mb-0">Quantity: {{ $orderItem->quantity }}</p>
+                                <p class="mb-0">Quant: {{ $orderItem->quantity }}</p>
                                 <p class="mb-0"> {{ format_price($orderItem->total) }}</p>
                             </td>
                             <td>
