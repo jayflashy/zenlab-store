@@ -11,10 +11,18 @@ class AdminGuest
     /**
      * Handle an incoming request.
      *
-     * @param  Closure(Request):Response  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (\Auth::guard('admin')->check()) {
+            if (session('admin_link') != null) {
+                return redirect(session('admin_link'));
+            }
+
+            return to_route('admin.dashboard');
+        }
+
         return $next($request);
     }
 }

@@ -3,29 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
-    use HasUlids, SoftDeletes;
-    //
+    use HasFactory, HasUlids, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    protected $guard = 'admin';
+
     protected $fillable = [
-        //
+        'name',
+        'email',
+        'password',
+        'push_token',
+        'phone',
+        'type',
+        'is_active',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        //
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 }

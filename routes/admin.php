@@ -15,6 +15,7 @@ use App\Livewire\Admin\Products\Comments as ProductComments;
 use App\Livewire\Admin\Products\ProductForm;
 use App\Livewire\Admin\Products\ProductList;
 use App\Livewire\Admin\Products\Ratings;
+use App\Livewire\Admin\Profile;
 use App\Livewire\Admin\SettingsManager;
 use App\Livewire\Admin\UserManager;
 use App\Livewire\Admin\UserView;
@@ -25,6 +26,7 @@ Route::middleware('admin')->group(function (): void {
     // Dashboard
     Route::get('', Dashboard::class)->name('index');
     Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('profile', Profile::class)->name('profile');
     // categories
     Route::get('categories', CategoryManager::class)->name('categories');
     // license
@@ -43,7 +45,7 @@ Route::middleware('admin')->group(function (): void {
     // users
     Route::get('users', UserManager::class)->name('users');
     Route::get('users/{id}', UserView::class)->name('users.show');
-    
+
     Route::get('contact-message', ContactMessage::class)->name('contact-message');
 
     // Blogs

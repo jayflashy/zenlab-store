@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Livewire\Actions\Logout;
+use App\Livewire\Auth\AdminLogin;
+use App\Livewire\Auth\AdminLogout;
 use App\Livewire\Auth\ConfirmPassword;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;
@@ -27,3 +29,6 @@ Route::middleware('auth')->group(function (): void {
 
 Route::get('logout', Logout::class)->name('logout');
 Route::post('logout', Logout::class)->name('logout');
+
+Route::get('admin/login', AdminLogin::class)->middleware('admin.guest')->name('admin.login');
+Route::get('admin/logout', AdminLogout::class)->middleware('admin')->name('admin.logout');

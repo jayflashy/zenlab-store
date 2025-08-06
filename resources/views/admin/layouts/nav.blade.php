@@ -40,7 +40,7 @@
                     </button>
                     <ul class="user-profile-dropdown">
                         <li class="sidebar-list__item">
-                            <a href="dashboard-profile.html" class="sidebar-list__link">
+                            <a href="{{route('admin.profile')}}" class="sidebar-list__link">
                                 <span class="sidebar-list__icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon2.svg')}}" alt="" class="icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon-active2.svg')}}" alt="" class="icon icon-active">
@@ -50,7 +50,7 @@
                         </li>
 
                         <li class="sidebar-list__item">
-                            <a href="setting.html" class="sidebar-list__link">
+                            <a href="{{ route('admin.settings') }}" class="sidebar-list__link">
                                 <span class="sidebar-list__icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon10.svg')}}" alt="" class="icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon-active10.svg')}}" alt="" class="icon icon-active">
@@ -59,7 +59,7 @@
                             </a>
                         </li>
                         <li class="sidebar-list__item">
-                            <a href="{{route('login')}}" class="sidebar-list__link">
+                            <a href="{{route('admin.logout')}}" class="sidebar-list__link">
                                 <span class="sidebar-list__icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon13.svg')}}" alt="" class="icon">
                                     <img src="{{static_asset('images/icons/sidebar-icon-active13.svg')}}" alt="" class="icon icon-active">
