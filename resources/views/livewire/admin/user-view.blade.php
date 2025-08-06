@@ -1,13 +1,12 @@
-@section('title', 'Account Settings')
-<div>
-    <div class="cover-photo position-relative z-index-1 overflow-hidden">
-        <div class="avatar-upload">
-            <div class="avatar-preview">
-                <div id="imagePreviewTwo">
-                </div>
-            </div>
+@section('title', $metaTitle)
+<div class=" py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-3"></h1>
+            <p class="text-muted small"></p>
         </div>
     </div>
+
     <div class="dashboard-body__content profile-content-wrapper z-index-1 position-relative mt--100">
         <!-- Profile Content Start -->
         <div class="profile">
@@ -82,7 +81,7 @@
                                         class="icon">
                                     <span class="text text-heading fw-500">Purchased</span>
                                 </span>
-                                <span class="profile-info-list__info">{{ $user->purchasesCount() ?? 0 }} items</span>
+                                <span class="profile-info-list__info">{{ $purchases_count ?? 0 }} items</span>
                             </li>
                         </ul>
 
@@ -92,6 +91,13 @@
                     <div class="dashboard-card">
                         <div class="dashboard-card__header pb-0">
                             <ul class="nav tab-bordered nav-pills" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button
+                                        class="nav-link font-18 font-heading {{ $tab == 'statistics' ? 'active' : '' }}"
+                                        wire:click="setTab('statistics')" id="pills-statistics-tab" type="button"
+                                        role="tab" aria-controls="pills-statistics" aria-selected="true">Statistics
+                                        Info</button>
+                                </li>
                                 <li class="nav-item" role="presentation">
                                     <button
                                         class="nav-link font-18 font-heading {{ $tab == 'personalInfo' ? 'active' : '' }}"
@@ -119,6 +125,208 @@
 
                         <div class="profile-info-content">
                             <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade {{ $tab == 'statistics' ? 'show active' : '' }}"
+                                    id="pills-statistics" role="tabpanel" aria-labelledby="pills-statistics-tab"
+                                    tabindex="0">
+                                    <div class="row gy-3 widgets_bg pb-3">
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $purchases_count ?? 0 }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Total Orders
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->orders()->count() }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Total Orders
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ format_price($user->orders()->where('payment_status', 'completed')->sum('total')) }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Total Spent
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->orders()->whereIn('order_status', ['pending', 'processing'])->count() }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Active Orders
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->orders()->where('order_status', 'completed')->count() }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Completed Orders
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->orders()->with('items')->get()->flatMap->items->unique('product_id')->count() }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Unique Products
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->reviews()->count() }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Reviews Submitted
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->wishlists()->count() }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Wishlist Items
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->comments()->count() + $user->comments()->withCount('replies')->get()->sum('replies_count') }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Total Comments
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h4 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->orders()->with('items')->get()->flatMap->items->where('extended_support', true)->count() }}
+                                                        </h4>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Support Subscriptions
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h5 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ $user->orders()->latest()->first()?->created_at->format('M d, Y') ?? 'N/A' }}
+                                                        </h5>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Last Order
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h5 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ number_format($user->reviews()->avg('stars') ?? 0, 1) }}
+                                                            ★
+                                                        </h5>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Avg. Rating Given
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="dashboard-widget">
+                                                <div
+                                                    class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                                    <div>
+                                                        <h5 class="dashboard-widget__number mb-1 mt-3">
+                                                            {{ number_format($user->created_at->diffInDays(now())) }}
+                                                        </h5>
+                                                        <span class="dashboard-widget__text font-14">
+                                                            Account Age (Days)
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="tab-pane fade {{ $tab == 'personalInfo' ? 'show active' : '' }}"
                                     id="pills-personalInfo" role="tabpanel" aria-labelledby="pills-personalInfo-tab"
                                     tabindex="0">
@@ -308,25 +516,16 @@
         </div>
         <!-- Profile Content End -->
     </div>
+    <style>
+        [data-theme=light] .widgets_bg {
+            background-color: #0f131c;
+        }
+
+        [data-theme=dark] .widgets_bg {
+            background-color: #d7d0d0;
+        }
+    </style>
 </div>
 
-@section('scripts')
-    <script>
-        document.addEventListener('livewire:initialized', () => {
-            // Image preview for uploaded images
-            document.getElementById('imageUpload').addEventListener('change', function() {
-                const input = this;
-                if (input.files && input.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.querySelector('.prof-img').style.backgroundImage =
-                            `url('${e.target.result}')`;
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            });
-        });
-    </script>
-@endsection
 
 @include('layouts.meta')

@@ -67,7 +67,7 @@ class User extends Authenticatable
     {
         return Str::of($this->name)
             ->explode(' ')
-            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
+            ->map(fn(string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
 
@@ -105,5 +105,19 @@ class User extends Authenticatable
     public function wishlists(): HasMany
     {
         return $this->hasMany(Wishlist::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    public function purchasesCount()
+    {
+        return $this->orders()
+            ->where('order_status', 'completed')
+            ->where('payment_status', 'completed')
+            ->withCount('items') 
+            ->get()
+            ->sum('items_count'); 
     }
 }

@@ -87,7 +87,7 @@
             </li>
             <!-- Users -->
             <li class="sidebar-list__item">
-                <a href="#" wire:navigate class="sidebar-list__link">
+                <a href="{{ route('admin.users') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="fas fa-user icon"></i>
                         <i class="fad fa-user icon-active"></i>
@@ -107,7 +107,7 @@
                 </a>
             </li>
             <!-- Reports -->
-            <li class="sidebar-list__item">
+            <li class="sidebar-list__item" hidden>
                 <a href="#" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="fad fa-chart-line icon"></i>

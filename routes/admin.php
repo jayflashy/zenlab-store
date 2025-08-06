@@ -15,6 +15,8 @@ use App\Livewire\Admin\Products\ProductForm;
 use App\Livewire\Admin\Products\ProductList;
 use App\Livewire\Admin\Products\Ratings;
 use App\Livewire\Admin\SettingsManager;
+use App\Livewire\Admin\UserManager;
+use App\Livewire\Admin\UserView;
 
 // Auth;
 
@@ -37,6 +39,9 @@ Route::middleware('admin')->group(function (): void {
     // orders
     Route::get('orders', OrderManager::class)->name('orders');
     Route::get('orders/{id}', OrderManager::class)->name('orders.show');
+    // users
+    Route::get('users', UserManager::class)->name('users');
+    Route::get('users/{id}', UserView::class)->name('users.show');
 
     // Blogs
     Route::get('blogs', BlogManager::class)->name('blogs');
