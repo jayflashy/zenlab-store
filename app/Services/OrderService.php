@@ -106,14 +106,24 @@ class OrderService
         $order->load('user');
         // send email and other notification
         $itemsTableHtml = view('emails.partials.order-items-table', ['items' => $order->items])->render();
-        sendNotification('ORDER_CONFIRMATION', $order->user, [
-            'user_name' => $order->user->name,
-            'order_code' => $order->code,
-            'order_total' => format_price($order->total),
-            'payment_method' => ucfirst(str_replace('_payment', ' ', $order->payment_method)),
-            'order_items_table' => $itemsTableHtml,
-            'downloads_link' => route('user.downloads'),
-        ]);
+        if ($order->payment_method == 'manual_payment') {
+            sendNotification('MANUAL_PAYMENT_APPROVED', $order->user, [
+                'user_name' => $order->user->name,
+                'order_code' => $order->code,
+                'order_total' => format_price($order->total),
+                'order_items_table' => $itemsTableHtml,
+                'downloads_link' => route('user.downloads'),
+            ]);
+        } else {
+            sendNotification('ORDER_CONFIRMATION', $order->user, [
+                'user_name' => $order->user->name,
+                'order_code' => $order->code,
+                'order_total' => format_price($order->total),
+                'payment_method' => ucfirst(str_replace('_payment', ' ', $order->payment_method)),
+                'order_items_table' => $itemsTableHtml,
+                'downloads_link' => route('user.downloads'),
+            ]);
+        }
         return $order;
     }
 

@@ -39,7 +39,9 @@ class LicenseManager extends Component
     {
         $this->viewingOrderItem = OrderItem::with(['order.user', 'product'])->find($id);
         $this->licenseCode = $this->viewingOrderItem->license_code;
-        $this->supportEndDate = show_date($this->viewingOrderItem->support_end_date);
+        $this->supportEndDate = $this->viewingOrderItem->support_end_date
+            ? show_date($this->viewingOrderItem->support_end_date)
+            : null;
     }
 
     public function closeViewOrderItem()

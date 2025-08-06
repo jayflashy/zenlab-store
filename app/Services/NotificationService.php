@@ -62,8 +62,8 @@ class NotificationService
     {
         try {
             $shortcodes = [
-                'name' => $user->name,
-                'first_name' => $user->first_name,
+                'username' => $user->username,
+                'user_name' => $user->name,
                 'email' => $user->email,
             ];
             $template = $data;
@@ -221,6 +221,29 @@ class NotificationService
         }
     }
 
+    public function sendManualEmail($email, array $template, $shortcodes, $customData = [])
+    {
+        $shortcodes = array_merge($this->defaultShortcodes(), $shortcodes);  // combine shortcodes
+        $subject = $this->replaceText($template['subject'], $shortcodes);
+        $message = $this->replaceText($template['content'], $shortcodes);
+
+        try {
+            $data['subject'] = $subject;
+            $data['message'] = $message;
+            $data = array_merge($data, $customData);
+            if($email){
+                Mail::to($email)->queue(new SendMail($data));
+            }
+            return true;
+        } catch (\Exception $e) {
+            \Log::error('Notification failed', [
+                'type' => 'manual',
+                'error' => $e->getMessage(),
+            ]);
+
+            return false;
+        }
+    }
     /**
      * Send notification based on type
      */

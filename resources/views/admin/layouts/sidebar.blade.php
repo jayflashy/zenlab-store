@@ -107,13 +107,13 @@
                 </a>
             </li>
             <!-- Reports -->
-            <li class="sidebar-list__item" hidden>
-                <a href="#" wire:navigate class="sidebar-list__link">
+            <li class="sidebar-list__item">
+                <a href="{{ route('admin.contact-message') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <i class="fad fa-chart-line icon"></i>
-                        <i class="fas fa-chart-line icon-active"></i>
+                        <i class="fad fa-envelope icon"></i>
+                        <i class="fas fa-envelope icon-active"></i>
                     </span>
-                    <span class="text">Reports</span>
+                    <span class="text">Contact messages</span>
                 </a>
             </li>
 

@@ -117,7 +117,7 @@ class User extends Authenticatable
         return $this->orders()
             ->where('order_status', 'completed')
             ->where('payment_status', 'completed')
-            ->join('items', 'orders.id', '=', 'items.order_id')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
             ->count();
     }
     public static function generateUniqueUsername(string $name): string
