@@ -22,3 +22,14 @@ TODO: orders with invoice and details
     Add license code colum to order items table. 
 
 TODO: add review button to the review tab on the product. so first or create to update existing reviews
+
+
+## Admin Remaining
+- dashboard
+- product settings
+- licenses
+- users
+- reports
+- email templates
+- email setup
+- admin auth and profile

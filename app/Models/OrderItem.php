@@ -25,6 +25,7 @@ class OrderItem extends Model
         'support_price',
         'total',
         'support_end_date',
+        'license_code',
     ];
 
     protected $casts = [

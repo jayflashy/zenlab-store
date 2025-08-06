@@ -14,8 +14,8 @@
             <div class="row g-3">
                 <div class="col-md-4 col-lg-3">
                     <label for="search" class="form-label">Search</label>
-                    <input wire:model.live.debounce.300ms="searchTerm" type="search" id="search" class="common-input border"
-                        placeholder="Search by order code, customer name or email">
+                    <input wire:model.live.debounce.300ms="searchTerm" type="search" id="search"
+                        class="common-input border" placeholder="Search by order code, customer name or email">
                 </div>
 
                 <div class="col-sm-6 col-md-4 col-lg-3">
@@ -35,7 +35,8 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <label for="paymentStatusFilter" class="form-label">Payment Status</label>
                     <div class="select-has-icon">
-                        <select wire:model.live="paymentStatusFilter" id="paymentStatusFilter" class="common-input border">
+                        <select wire:model.live="paymentStatusFilter" id="paymentStatusFilter"
+                            class="common-input border">
                             <option value="">All Statuses</option>
                             <option value="pending">Pending</option>
                             <option value="completed">Completed</option>
@@ -47,7 +48,8 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <label for="paymentGatewayFilter" class="form-label">Payment Gateway</label>
                     <div class="select-has-icon">
-                        <select wire:model.live="paymentGatewayFilter" id="paymentGatewayFilter" class="common-input border">
+                        <select wire:model.live="paymentGatewayFilter" id="paymentGatewayFilter"
+                            class="common-input border">
                             <option value="">All Gateways</option>
                             <option value="paypal_payment">Paypal</option>
                             <option value="paystack_payment">Paystack</option>
@@ -123,7 +125,8 @@
                                         'cryptomus_payment' => 'Cryptomus',
                                         'manual_payment' => 'Bank Transfer',
                                     ];
-                                    $paymentMethodLabel = $paymentMethods[$order->payment_method] ?? $order->payment_method;
+                                    $paymentMethodLabel =
+                                        $paymentMethods[$order->payment_method] ?? $order->payment_method;
                                 @endphp
                                 {{ $paymentMethodLabel }}
                             </td>
@@ -136,7 +139,8 @@
                                             'failed' => 'bg-danger',
                                         ][$order->payment_status] ?? 'bg-secondary';
                                 @endphp
-                                <span class="badge {{ $paymentStatusClass }}">{{ ucfirst($order->payment_status) }}</span>
+                                <span
+                                    class="badge {{ $paymentStatusClass }}">{{ ucfirst($order->payment_status) }}</span>
 
                                 @if ($order->payment_method == 'manual_payment' && $order->payment_status == 'pending' && $order->payment_receipt)
                                     <a href="#" wire:click.prevent="verifyManualPayment('{{ $order->id }}')"
@@ -158,13 +162,16 @@
                             </td>
                             <td class="text-end">
                                 <div class="d-flex gap-2">
-                                    <button wire:click="viewOrder('{{ $order->id }}')" class="btn btn-sm btn-outline-main">
+                                    <button wire:click="viewOrder('{{ $order->id }}')"
+                                        class="btn btn-sm btn-outline-main">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <button wire:click="prepareStatusUpdate('{{ $order->id }}')" class="btn btn-sm btn-outline-primary">
+                                    <button wire:click="prepareStatusUpdate('{{ $order->id }}')"
+                                        class="btn btn-sm btn-outline-primary">
                                         <i class="fa fa-pencil"></i>
                                     </button>
-                                    <button wire:click="confirmDelete('{{ $order->id }}')" class="btn btn-sm btn-outline-danger">
+                                    <button wire:click="confirmDelete('{{ $order->id }}')"
+                                        class="btn btn-sm btn-outline-danger">
                                         <i class="la la-trash"></i>
                                     </button>
                                 </div>
@@ -191,7 +198,8 @@
 
     <!-- Order View Modal -->
     @if ($viewingOrder)
-        <div class="common-modal modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
+        <div class="common-modal modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);"
+            tabindex="-1">
             <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
                     <div class="modal-header pt-0">
@@ -218,9 +226,11 @@
                                         <h6 class="mb-0">Order Details</h6>
                                     </div>
                                     <div class="card-body">
-                                        <p><strong>Date:</strong> {{ show_date($viewingOrder->created_at, 'M d, Y H:i') }}</p>
+                                        <p><strong>Date:</strong>
+                                            {{ show_date($viewingOrder->created_at, 'M d, Y H:i') }}</p>
                                         <p><strong>Payment Method:</strong>
-                                            {{ $paymentMethods[$viewingOrder->payment_method] ?? $viewingOrder->payment_method }}</p>
+                                            {{ $paymentMethods[$viewingOrder->payment_method] ?? $viewingOrder->payment_method }}
+                                        </p>
                                         <p><strong>Payment Status:</strong> <span
                                                 class="badge {{ $viewingOrder->payment_status === 'completed' ? 'bg-success' : ($viewingOrder->payment_status === 'failed' ? 'bg-danger' : 'bg-warning') }}">{{ ucfirst($viewingOrder->payment_status) }}</span>
                                         </p>
@@ -229,7 +239,8 @@
                                         </p>
 
                                         @if ($viewingOrder->payment_date)
-                                            <p><strong>Payment Date:</strong> {{ show_date($viewingOrder->payment_date, 'M d, Y H:i') }}
+                                            <p><strong>Payment Date:</strong>
+                                                {{ show_date($viewingOrder->payment_date, 'M d, Y H:i') }}
                                             </p>
                                         @endif
                                     </div>
@@ -257,37 +268,41 @@
                                         @foreach ($viewingOrder->items as $item)
                                             <tr>
                                                 <td>
-                                                    <div>{{ $item->product->name ?? 'Product ID: ' . $item->product_id }}</div>
+                                                    <div>
+                                                        {{ $item->product->name ?? 'Product ID: ' . $item->product_id }}
+                                                    </div>
                                                 </td>
                                                 <td>{{ ucfirst($item->license_type) }}</td>
-                                                <td>{{ format_price($item->price)}}</td>
+                                                <td>{{ format_price($item->price) }}</td>
                                                 <td>{{ $item->quantity }}</td>
                                                 <td>
                                                     @if ($item->extended_support)
-                                                        Extended (+{{ format_price($item->support_price)}})
+                                                        Extended (+{{ format_price($item->support_price) }})
                                                     @else
                                                         Standard
                                                     @endif
                                                 </td>
-                                                <td class="text-end">{{ format_price($item->total)}}</td>
+                                                <td class="text-end">{{ format_price($item->total) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th colspan="5" class="text-end py-1">Subtotal:</th>
-                                            <th class="text-end py-1">{{ format_price($viewingOrder->subtotal)}}</th>
+                                            <th class="text-end py-1">{{ format_price($viewingOrder->subtotal) }}</th>
                                         </tr>
                                         @if ($viewingOrder->discount > 0)
                                             <tr>
                                                 <th colspan="5" class="text-end text-success py-1">Discount:</th>
-                                                <th class="text-end text-success py-1">-{{ format_price($viewingOrder->discount)}}
+                                                <th class="text-end text-success py-1">
+                                                    -{{ format_price($viewingOrder->discount) }}
                                                 </th>
                                             </tr>
                                         @endif
                                         <tr>
                                             <th colspan="5" class="text-end py-1">Total:</th>
-                                            <th class="text-end fw-bold py-1">{{ format_price($viewingOrder->total)}}</th>
+                                            <th class="text-end fw-bold py-1">{{ format_price($viewingOrder->total) }}
+                                            </th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -302,8 +317,8 @@
                                 <div class="card-body">
                                     <p><strong>Bank Reference:</strong> {{ $viewingOrder->bank_reference }}</p>
                                     <div class="mt-2">
-                                        <img src="{{ my_asset($viewingOrder->payment_receipt) }}" alt="Receipt" class="img-fluid mb-2"
-                                            style="max-width: 300px;">
+                                        <img src="{{ my_asset($viewingOrder->payment_receipt) }}" alt="Receipt"
+                                            class="img-fluid mb-2" style="max-width: 300px;">
                                         <br>
                                         <a href="{{ my_asset($viewingOrder->payment_receipt) }}" target="_blank"
                                             class="btn btn-sm btn-outline-success">
@@ -336,7 +351,8 @@
                                         <textarea wire:model="orderNotes" class="common-input border w-100" rows="3"></textarea>
                                     </div>
                                     <div class="mt-2 text-end">
-                                        <button wire:click="$set('editingNotes', false)" class="btn btn-sm btn-outline-secondary">
+                                        <button wire:click="$set('editingNotes', false)"
+                                            class="btn btn-sm btn-outline-secondary">
                                             Cancel
                                         </button>
                                         <button wire:click="saveNotes" class="btn btn-sm btn-main ms-2">
@@ -351,7 +367,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" wire:click="closeViewOrder" class="btn btn-secondary">Close</button>
-                        <button type="button" wire:click="prepareStatusUpdate('{{ $viewingOrder->id }}')" class="btn btn-main">Update
+                        <button type="button" wire:click="prepareStatusUpdate('{{ $viewingOrder->id }}')"
+                            class="btn btn-main">Update
                             Status</button>
                     </div>
                 </div>
@@ -361,7 +378,8 @@
 
     <!-- Status Update Modal -->
     @if ($updatingOrderId)
-        <div class="common-modal modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
+        <div class="common-modal modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);"
+            tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -385,7 +403,8 @@
                         <div class="mb-3">
                             <label for="newPaymentStatus" class="form-label">Payment Status</label>
                             <div class="select-has-icon">
-                                <select wire:model="newPaymentStatus" id="newPaymentStatus" class="common-input border">
+                                <select wire:model="newPaymentStatus" id="newPaymentStatus"
+                                    class="common-input border">
                                     <option value="pending">Pending</option>
                                     <option value="completed">Completed</option>
                                     <option value="failed">Failed</option>
@@ -403,8 +422,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" wire:click="cancelStatusUpdate" class="btn btn-outline-secondary">Cancel</button>
-                        <button type="button" wire:click="updateStatus" class="btn btn-primary">Update Status</button>
+                        <button type="button" wire:click="cancelStatusUpdate"
+                            class="btn btn-outline-secondary">Cancel</button>
+                        <button type="button" wire:click="updateStatus" class="btn btn-primary">Update
+                            Status</button>
                     </div>
                 </div>
             </div>
@@ -419,16 +440,20 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close" wire:click="$set('showDeleteModal', false)"></button>
+                        <button type="button" class="btn-close"
+                            wire:click="$set('showDeleteModal', false)"></button>
                     </div>
                     <div class="modal-body">
                         <p>Are you sure you want to delete this order?</p>
-                        <p class="text-danger">This action cannot be undone and will permanently remove the order from your store.
+                        <p class="text-danger">This action cannot be undone and will permanently remove the order from
+                            your store.
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Cancel</button>
-                        <button type="button" class="btn btn-danger" wire:click="deleteOrder('{{$deleteId}}')">
+                        <button type="button" class="btn btn-secondary"
+                            wire:click="$set('showDeleteModal', false)">Cancel</button>
+                        <button type="button" class="btn btn-danger"
+                            wire:click="deleteOrder('{{ $deleteId }}')">
                             <i class="fas fa-trash me-1"></i> Delete Order
                         </button>
                     </div>

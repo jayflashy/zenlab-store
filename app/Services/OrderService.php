@@ -9,6 +9,7 @@ use App\Models\User;
 use Auth;
 use DB;
 use Exception;
+use Str;
 
 class OrderService
 {
@@ -81,8 +82,26 @@ class OrderService
         $order->save();
         // increase sales for each order items
         foreach ($order->items()->with('product')->get() as $item) {
+            //generate license code for order item
+            $licenseCode = Str::uuid();
+            $extended = $item->extended_support;
+            if ($item->license_type == 'regular') {
+                $supportPeriod = 3;
+            } else {
+                $supportPeriod = 6;
+            }
+            if ($extended) {
+                $supportPeriod *= 2;
+            }
+            $item->update([
+                'license_code' => $licenseCode,
+                'support_end_date' => now()->addMonths($supportPeriod),
+            ]);
+
+            // update item product sales count
             $item->product->update(['sales_count' => $item->product->sales_count + $item->quantity]);
         }
+
 
         // Clear the cart after successful order
         if ($order->cart_id) {
