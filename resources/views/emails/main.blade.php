@@ -101,10 +101,10 @@
                     <!-- Header Section -->
                     <tr>
                         <td
-                            style="background-color: #16a34a; padding: 40px 30px; text-align: center; background-image: linear-gradient(135deg, #16a34a 0%, #22c55e 100%); background-repeat: no-repeat;">
+                            style="background-color: #0d6efd; padding: 40px 30px; text-align: center; background-image: linear-gradient(135deg, #0d6efd 0%, #2230c5 100%); background-repeat: no-repeat;">
                             <!--[if gte mso 9]>
                             <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:140px;">
-                            <v:fill type="gradient" color="#16a34a" color2="#22c55e" angle="135" />
+                            <v:fill type="gradient" color="#0d6efd" color2="#2230c5" angle="135" />
                             <v:textbox inset="0,0,0,0">
                             <![endif]-->
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -141,7 +141,7 @@
 
                             <!-- Subject Line -->
                             <h1
-                                style="margin: 0 0 30px 0; color: #15803d; font-size: 28px; font-weight: bold; line-height: 1.3; text-align: left;">
+                                style="margin: 0 0 30px 0; color: #0d5097; font-size: 28px; font-weight: bold; line-height: 1.3; text-align: left;">
                                 {{ $data['subject'] }}
                             </h1>
 
@@ -158,8 +158,10 @@
                                 style="margin: 30px 0;">
                                 <tr>
                                     <td
-                                        style="background-color: #f0fdf4; border: 2px solid #bbf7d0; border-left: 6px solid #22c55e; border-radius: 8px; padding: 30px;">
-                                        <div style="color: #15803d; font-size: 16px; line-height: 1.6; margin: 0;">
+                                        style="background-color: #f0fdf4; 
+                                        border: 2px solid #bbd1f7; 
+                                        border-left: 6px solid #2230c5; border-radius: 8px; padding: 30px;">
+                                        <div style="color: #0d5097; font-size: 16px; line-height: 1.6; margin: 0;">
                                             {!! $data['message'] !!}
                                         </div>
                                     </td>
@@ -175,14 +177,14 @@
                                             <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                                                 <tr>
                                                     <td
-                                                        style="background-color: #16a34a; border-radius: 8px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);">
+                                                        style="background-color: #0d6efd; border-radius: 8px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);">
                                                         <!--[if mso]>
-                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" style="height:48px;v-text-anchor:middle;width:200px;" arcsize="17%" fill="t" stroke="f" fillcolor="#16a34a">
-                                                    <v:fill type="solid" color="#16a34a" />
+                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" style="height:48px;v-text-anchor:middle;width:200px;" arcsize="17%" fill="t" stroke="f" fillcolor="#0d6efd">
+                                                    <v:fill type="solid" color="#0d6efd" />
                                                     <v:textbox inset="0,0,0,0">
                                                     <![endif]-->
                                                         <a href="{{ $data['link'] }}"
-                                                            style="background-color: #16a34a; border: none; color: #ffffff; display: inline-block; font-size: 16px; font-weight: bold; line-height: 48px; text-align: center; text-decoration: none; width: 200px; border-radius: 8px; padding: 0 20px;">
+                                                            style="background-color: #0d6efd; border: none; color: #ffffff; display: inline-block; font-size: 16px; font-weight: bold; line-height: 48px; text-align: center; text-decoration: none; width: 200px; border-radius: 8px; padding: 0 20px;">
                                                             {{ $data['link_text'] }}
                                                         </a>
                                                         <!--[if mso]>
@@ -202,14 +204,14 @@
                                 style="margin: 40px 0 30px 0;">
                                 <tr>
                                     <td height="1"
-                                        style="background-color: #d1fae5; line-height: 1px; font-size: 1px;">&nbsp;</td>
+                                        style="background-color: #d1dafa; line-height: 1px; font-size: 1px;">&nbsp;</td>
                                 </tr>
                             </table>
 
                             <!-- Signature -->
                             <p style="margin: 0; font-size: 16px; color: #6b7280; line-height: 1.6;">
                                 Best regards,<br>
-                                <strong style="color: #15803d;">The {{ $setting->name }} Team</strong>
+                                <strong style="color: #0d5097;">The {{ $setting->name }} Team</strong>
                             </p>
 
                         </td>
@@ -222,7 +224,7 @@
 
                             <!-- Company Name -->
                             <p
-                                style="margin: 0 0 15px 0; font-size: 20px; font-weight: bold; color: #15803d; line-height: 1.3;">
+                                style="margin: 0 0 15px 0; font-size: 20px; font-weight: bold; color: #0d5097; line-height: 1.3;">
                                 {{ $setting->name }}
                             </p>
 
@@ -230,7 +232,7 @@
                             <p style="margin: 0 0 10px 0; font-size: 15px; color: #6b7280; line-height: 1.5;">
                                 {{ $setting->phone }} |
                                 <a href="mailto:{{ $setting->admin_email }}"
-                                    style="color: #16a34a; text-decoration: none; font-weight: 500;">
+                                    style="color: #0d6efd; text-decoration: none; font-weight: 500;">
                                     {{ $setting->admin_email }}
                                 </a>
                             </p>
@@ -254,9 +256,9 @@
                             <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.6;">
                                 You're receiving this because you're a user at {{ $setting->name }}.<br>
                                 <a href="#"
-                                    style="color: #16a34a; text-decoration: none; font-weight: 500;">Unsubscribe</a> |
+                                    style="color: #0d6efd; text-decoration: none; font-weight: 500;">Unsubscribe</a> |
                                 <a href="#"
-                                    style="color: #16a34a; text-decoration: none; font-weight: 500;">Privacy Policy</a>
+                                    style="color: #0d6efd; text-decoration: none; font-weight: 500;">Privacy Policy</a>
                             </p>
 
                         </td>

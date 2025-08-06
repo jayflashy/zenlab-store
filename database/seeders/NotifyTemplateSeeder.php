@@ -47,7 +47,7 @@ class NotifyTemplateSeeder extends Seeder
                     <p>Hi {user_name},</p>
                     <p>Thanks for registering at <strong>{site_name}</strong>. Please click the button below to verify your email address and activate your account.</p>
                     <br>
-                    <p style="text-align:center;"><a href="{verification_link}" style="background-color:#16a34a;color:white;padding:12px 25px;text-decoration:none;border-radius:5px;">Verify Email Address</a></p>
+                    <p style="text-align:center;"><a href="{verification_link}" style="background-color:#0d6efd;color:white;padding:12px 25px;text-decoration:none;border-radius:5px;">Verify Email Address</a></p>
                     <br>
                     <p>If you did not create an account, no further action is required.</p>
                 ',
@@ -70,7 +70,7 @@ class NotifyTemplateSeeder extends Seeder
                     <p>Hello {user_name},</p>
                     <p>We received a request to reset your password. If you made this request, click the button below. This link is valid for 60 minutes.</p>
                     <br>
-                    <p style="text-align:center;"><a href="{reset_link}" style="background-color:#16a34a;color:white;padding:12px 25px;text-decoration:none;border-radius:5px;">Reset Your Password</a></p>
+                    <p style="text-align:center;"><a href="{reset_link}" style="background-color:#0d6efd;color:white;padding:12px 25px;text-decoration:none;border-radius:5px;">Reset Your Password</a></p>
                     <br>
                     <p>If you did not request a password reset, you can safely ignore this email.</p>
                 ',
@@ -173,7 +173,7 @@ class NotifyTemplateSeeder extends Seeder
                     <p><strong>New Version:</strong> {product_version}</p>
                     <p>You can download the latest version from your account\'s download page. We recommend updating to benefit from the latest features and improvements.</p>
                     <br>
-                    <p style="text-align:center;"><a href="{download_link}" style="background-color:#16a34a;color:white;padding:12px 25px;text-decoration:none;border-radius:5px;">Download Now</a></p>
+                    <p style="text-align:center;"><a href="{download_link}" style="background-color:#0d6efd;color:white;padding:12px 25px;text-decoration:none;border-radius:5px;">Download Now</a></p>
                 ',
                 'shortcodes' => ([
                     'user_name' => 'User name.',
@@ -197,7 +197,7 @@ class NotifyTemplateSeeder extends Seeder
                     <p><strong>{replier_name}</strong> has just replied to a comment you made on the product <strong>{product_name}</strong>.</p>
                     <p>Click the button below to view the reply and continue the conversation.</p>
                     <br>
-                    <p style="text-align:center;"><a href="{comment_link}" style="background-color:#16a34a;color:white;padding:12px 25px;text-decoration:none;border-radius:5px;">View Reply</a></p>
+                    <p style="text-align:center;"><a href="{comment_link}" style="background-color:#0d6efd;color:white;padding:12px 25px;text-decoration:none;border-radius:5px;">View Reply</a></p>
                 ',
                 'shortcodes' => ([
                     'user_name' => 'Recipient\'s name.',

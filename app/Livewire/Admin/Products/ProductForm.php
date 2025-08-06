@@ -2,16 +2,19 @@
 
 namespace App\Livewire\Admin\Products;
 
+use App\Jobs\ProductUpdateNotificationJob;
 use App\Models\Category;
 use App\Models\Product;
 use App\Traits\FileUploader;
 use App\Traits\LivewireToast;
 use Carbon\Carbon;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Purify;
 use Str;
 
+#[Layout('admin.layouts.app')]
 class ProductForm extends Component
 {
     use FileUploader;
@@ -282,6 +285,7 @@ class ProductForm extends Component
 
         $product = $this->formMode === 'edit' ? Product::findOrFail($this->productId) : new Product;
 
+        $oldVersion = $product->version;
         // Basic info
         $product->name = $this->name;
         $product->slug = $this->slug;
@@ -356,6 +360,13 @@ class ProductForm extends Component
 
         $product->save();
 
+        if ($this->formMode === 'edit') {
+            if ($product->version && $product->version !== $oldVersion) {
+                ProductUpdateNotificationJob::dispatch($product);
+                $this->infoAlert('Product update notifications are being sent to customers in the background.');
+            }
+        }
+
         $this->successAlert($this->formMode === 'edit' ? 'Product updated successfully!' : 'Product created successfully!');
 
         $this->redirect(route('admin.products.index'), navigate: true);
@@ -374,6 +385,6 @@ class ProductForm extends Component
         return view('livewire.admin.products.product-form', [
             'categories' => $categories,
             'pageTitle' => $this->pageTitle,
-        ])->layout('admin.layouts.app');
+        ]);
     }
 }

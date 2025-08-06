@@ -20,7 +20,7 @@
                 </td>
                 <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
                     <a href="{{ route('user.download', $item->id) }}"
-                        style="background-color:#16a34a;color:white;padding:8px 15px;text-decoration:none;border-radius:5px;display:inline-block;">
+                        style="background-color:#0d6efd;color:white;padding:6px 12px;text-decoration:none;border-radius:5px;display:inline-block;">
                         Download
                     </a>
                 </td>
