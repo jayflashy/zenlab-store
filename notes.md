@@ -24,12 +24,15 @@ TODO: orders with invoice and details
 TODO: add review button to the review tab on the product. so first or create to update existing reviews
 
 
-## Admin Remaining
+## Admin Done
 - dashboard
-- product settings
 - licenses
 - users
 - reports
 - email templates
 - email setup
 - admin auth and profile
+
+## Remiaing
+- product settings
+- ux improvements

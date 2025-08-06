@@ -5,6 +5,7 @@ namespace App\Livewire\Product;
 use App\Models\Category;
 use App\Models\Product;
 use App\Traits\LivewireToast;
+use Cache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -131,14 +132,16 @@ class Index extends Component
 
     public function getCategories()
     {
-        return Category::active()
-            ->parents()
-            ->withCount(['products' => function ($query) {
-                $query->where('status', 'published');
-            }])
-            ->having('products_count', '>', 0)
-            ->orderBy('order')
-            ->get();
+        return Cache::remember('product_page_categories', 3600, function () {
+            return Category::active()
+                ->parents()
+                ->withCount(['products' => function ($query) {
+                    $query->where('status', 'published');
+                }])
+                ->having('products_count', '>', 0)
+                ->orderBy('order')
+                ->get();
+        });
     }
 
     public function getProducts()
