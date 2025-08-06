@@ -82,7 +82,7 @@ class OrderService
         $order->save();
         // increase sales for each order items
         foreach ($order->items()->with('product')->get() as $item) {
-            //generate license code for order item
+            // generate license code for order item
             $licenseCode = Str::uuid();
             $extended = $item->extended_support;
             if ($item->license_type == 'regular') {
@@ -101,7 +101,6 @@ class OrderService
             // update item product sales count
             $item->product->update(['sales_count' => $item->product->sales_count + $item->quantity]);
         }
-
 
         // Clear the cart after successful order
         if ($order->cart_id) {
@@ -163,7 +162,7 @@ class OrderService
                 'name' => $name,
                 'password' => bcrypt(getTrx(18)),
                 'status' => 'active',
-                'username' => User::generateUniqueUsername(text_trimer($name,19)),
+                'username' => User::generateUniqueUsername(text_trimer($name, 19)),
             ]
         );
     }

@@ -4,8 +4,8 @@ namespace App\Livewire\Admin;
 
 use App\Models\User;
 use App\Traits\LivewireToast;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('admin.layouts.app')]
@@ -13,10 +13,13 @@ class UserManager extends Component
 {
     use LivewireToast;
     use WithPagination;
+
     public $search = '';
 
     public $emailVerifiedFilter = '';
+
     public $statusFilter = '';
+
     public $sortField = 'created_at';
 
     public $sortDirection = 'desc';
@@ -24,7 +27,8 @@ class UserManager extends Component
     public $perPage = 50;
 
     // meta
-    public string $metaTitle = "Manage Users";
+    public string $metaTitle = 'Manage Users';
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -81,7 +85,7 @@ class UserManager extends Component
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
-            
+
         return view('livewire.admin.user-manager', compact('users'));
     }
 }

@@ -6,8 +6,8 @@ use App\Models\User;
 use App\Traits\LivewireToast;
 use Exception;
 use Illuminate\Validation\ValidationException;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 use Storage;
 
 #[Layout('admin.layouts.app')]
@@ -16,6 +16,7 @@ class UserView extends Component
     use LivewireToast;
 
     public User $user;
+
     public $name;
 
     public $username;
@@ -43,6 +44,7 @@ class UserView extends Component
     public $tab = 'statistics';
 
     public $countries;
+
     public $purchases_count;
 
     // meta
@@ -52,10 +54,11 @@ class UserView extends Component
     {
         $this->user = User::findOrFail($id);
         // set meta
-        $this->metaTitle = $this->user->name . " Details";
+        $this->metaTitle = $this->user->name . ' Details';
         $this->loadUserData();
         $this->loadCountryList();
     }
+
     public function loadUserData()
     {
         $this->name = $this->user->name;
@@ -156,7 +159,6 @@ class UserView extends Component
         }
     }
 
-
     public function updateNotifications()
     {
         try {
@@ -174,6 +176,7 @@ class UserView extends Component
     {
         $this->tab = $tab;
     }
+
     private function loadCountryList()
     {
         $countryJson = static_asset('countries.json');
