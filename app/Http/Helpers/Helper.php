@@ -272,13 +272,13 @@ function queryBuild(string $key, $value): ?string
 // footer pages
 function footerPages($count = 3)
 {
-    return Cache::remember("footerPages_{$count}", 16000, fn() => Page::where('type', 'custom')->limit($count)->get());
+    return Cache::remember("footerPages_{$count}", 16000, fn () => Page::where('type', 'custom')->limit($count)->get());
 }
 
 // get coupons
 function allCoupons()
 {
-    return Cache::remember('allCoupons', 16000, fn() => Coupon::valid()->get());
+    return Cache::remember('allCoupons', 16000, fn () => Coupon::valid()->get());
 }
 
 function getPaymentMethodLabel($method)

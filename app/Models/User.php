@@ -68,7 +68,7 @@ class User extends Authenticatable
     {
         return Str::of($this->name)
             ->explode(' ')
-            ->map(fn(string $name) => Str::of($name)->substr(0, 1))
+            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
 
@@ -112,6 +112,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
     public function purchasesCount()
     {
         return $this->orders()
@@ -120,6 +121,7 @@ class User extends Authenticatable
             ->join('order_items', 'orders.id', '=', 'order_items.order_id')
             ->count();
     }
+
     public static function generateUniqueUsername(string $name): string
     {
         $baseUsername = generateUsername($name);

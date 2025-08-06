@@ -5,8 +5,8 @@ namespace App\Livewire\Admin;
 use App\Models\OrderItem;
 use App\Traits\LivewireToast;
 use Carbon\Carbon;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 use Livewire\WithPagination;
 use Str;
 
@@ -29,11 +29,13 @@ class LicenseManager extends Component
     public $supportEndDate;
 
     public $editingLicense = false;
+
     public $deleteId;
+
     public $showDeleteModal = false;
 
     // meta
-    public string $metaTitle = "LicenseManager";
+    public string $metaTitle = 'LicenseManager';
 
     public function viewOrderItem($id)
     {
@@ -74,7 +76,6 @@ class LicenseManager extends Component
         $this->editingLicense = false;
         $this->successAlert('License updated successfully');
     }
-
 
     public function confirmDelete($id)
     {
@@ -121,6 +122,7 @@ class LicenseManager extends Component
                 $query->where('license_type', $this->licenseTypeFilter);
             })->latest()
             ->paginate($this->perPage);
+
         return view('livewire.admin.license-manager', compact('orderItems'));
     }
 }

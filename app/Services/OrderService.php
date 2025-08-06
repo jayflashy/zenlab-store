@@ -98,7 +98,6 @@ class OrderService
             $item->product->update(['sales_count' => $item->product->sales_count + $item->quantity]);
         }
 
-
         // Clear the cart after successful order
         if ($order->cart_id) {
             Cart::where('id', $order->cart_id)->delete();
