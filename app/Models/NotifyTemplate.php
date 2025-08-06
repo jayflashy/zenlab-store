@@ -17,8 +17,15 @@ class NotifyTemplate extends Model
     ];
 
     protected $fillable = [
-        'name', 'channels', 'title', 'subject', 'message', 'content',
+        'name',
+        'channels',
+        'title',
+        'subject',
+        'message',
+        'content',
         'type',
-        'content', 'email_status', 'subject', 'shortcodes',
+        'content',
+        'email_status',
+        'shortcodes',
     ];
 }

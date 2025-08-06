@@ -75,7 +75,8 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-main" wire:navigate href="{{ route('admin.email.templates.edit', $template->id) }}">
+                                    <a class="btn btn-main" wire:navigate
+                                        href="{{ route('admin.email.templates.edit', $template->id) }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 </td>
@@ -108,7 +109,7 @@
                             <tbody class="list">
                                 @forelse($shortcodes as $shortcode => $key)
                                     <tr>
-                                        <td>@php echo "{". $key ."}"  @endphp</td>
+                                        <td>@php echo "{". $shortcode ."}"  @endphp</td>
                                         <td>{{ ucfirst(str_replace('_', ' ', $key)) }}</td>
                                     </tr>
                                 @empty
@@ -149,15 +150,17 @@
                             </div>
                             <div class="form-group">
                                 <label class="fw-bold">Email Subject <span class="text-danger">*</span></label>
-                                <input type="text" class="common-input border @error('subject') is-invalid @enderror" id="subject"
-                                    wire:model="subject" placeholder="@lang('Email subject')">
+                                <input type="text" class="common-input border @error('subject') is-invalid @enderror"
+                                    id="subject" wire:model="subject" placeholder="@lang('Email subject')">
                                 @error('subject')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="fw-bold" for="summernote">Email Content <span class="text-danger">*</span></label>
-                                <textarea wire:model.defer="content" class="common-input border @error('content') is-invalid @enderror" id="summernote" rows="10">{{ $content }}</textarea>
+                                <label class="fw-bold" for="summernote">Email Content <span
+                                        class="text-danger">*</span></label>
+                                <textarea wire:model.defer="content" class="common-input border @error('content') is-invalid @enderror" id="summernote"
+                                    rows="10">{{ $content }}</textarea>
 
                                 @error('content')
                                     <div class="invalid-feedback">{{ $message }}</div>

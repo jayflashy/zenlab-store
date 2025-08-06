@@ -98,7 +98,7 @@ class Reviews extends Component
         }
 
         $this->validate();
-
+        $user = Auth::user();
         try {
             if ($this->isEditing && $this->userRating) {
                 // Update existing rating
@@ -110,13 +110,22 @@ class Reviews extends Component
                 $this->successAlert('Your review has been updated!');
             } else {
                 // Create new rating
-                Rating::create([
+                $rating = Rating::create([
                     'product_id' => $this->product->id,
-                    'user_id' => Auth::id(),
+                    'user_id' => $user->id,
                     'stars' => $this->stars,
                     'type' => $this->type,
                     'review' => $this->review,
                     'status' => 'approved',
+                ]);
+                // notify admin
+                sendAdminNotification('ADMIN_NEW_REVIEW', [
+                    'moderation_link' => route('admin.products.ratings') . '?rating_id=' . $rating->id,
+                    'product_name' => $this->product->name,
+                    'authur_name' => $user->name,
+                    'user_email' => $user->email,
+                    'rating_stars' => $this->stars,
+                    'review_content' => $this->review,
                 ]);
                 $this->successAlert('Thank you for your review!');
                 $this->isEditing = true;

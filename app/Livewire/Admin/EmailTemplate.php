@@ -4,9 +4,11 @@ namespace App\Livewire\Admin;
 
 use App\Models\NotifyTemplate;
 use App\Traits\LivewireToast;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Layout('admin.layouts.app')]
 class EmailTemplate extends Component
 {
     use LivewireToast;
@@ -146,7 +148,6 @@ class EmailTemplate extends Component
         return view('livewire.admin.email-template', [
             'templates' => $templates,
             'title' => $this->title,
-        ])
-            ->layout('admin.layouts.app');
+        ]);
     }
 }

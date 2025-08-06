@@ -4,9 +4,11 @@ namespace App\Livewire\Admin;
 
 use App\Traits\LivewireToast;
 use App\Traits\SettingsTrait;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+#[Layout('admin.layouts.app')]
 class SettingsManager extends Component
 {
     use LivewireToast;
@@ -61,7 +63,6 @@ class SettingsManager extends Component
 
     public function render()
     {
-        return view('livewire.admin.settings-manager')
-            ->layout('admin.layouts.app');
+        return view('livewire.admin.settings-manager');
     }
 }

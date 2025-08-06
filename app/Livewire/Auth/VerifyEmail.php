@@ -16,15 +16,19 @@ class VerifyEmail extends Component
      */
     public function sendVerification(): void
     {
-        if (Auth::user()->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $user = Auth::user();
+
+        if ($user->email_verify) {
+            $this->redirectIntended(default: route('user.dashboard'), navigate: true);
 
             return;
         }
 
-        Auth::user()->sendEmailVerificationNotification();
+        $user->sendEmailVerification();
 
+        // Flash success message
         Session::flash('status', 'verification-link-sent');
+        $this->successAlert('Email verification link sent successfully!');
     }
 
     /**
@@ -35,5 +39,16 @@ class VerifyEmail extends Component
         $logout();
 
         $this->redirect('/', navigate: true);
+    }
+
+    public function mount()
+    {
+        $user = Auth::user();
+        if ($user->email_verify || ! sys_setting('verify_email')) {
+            $this->successAlert('Your email is already verified!');
+            $this->redirectIntended(default: route('user.dashboard'), navigate: true);
+
+            return;
+        }
     }
 }

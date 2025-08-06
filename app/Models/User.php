@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use URL;
 
 class User extends Authenticatable
 {
@@ -116,13 +117,12 @@ class User extends Authenticatable
         return $this->orders()
             ->where('order_status', 'completed')
             ->where('payment_status', 'completed')
-            ->withCount('items')
-            ->get()
-            ->sum('items_count');
+            ->join('items', 'orders.id', '=', 'items.order_id')
+            ->count();
     }
     public static function generateUniqueUsername(string $name): string
     {
-        $baseUsername = self::generateUsername($name);
+        $baseUsername = generateUsername($name);
         $username = $baseUsername;
         $counter = 1;
 
@@ -131,5 +131,32 @@ class User extends Authenticatable
         }
 
         return $username;
+    }
+
+
+    public function sendEmailVerification(): void
+    {
+        $link = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            [
+                'id' => $this->getKey(),
+                'hash' => sha1($this->getEmailForVerification()),
+            ]
+        );
+
+        sendNotification(
+            'EMAIL_VERIFICATION',
+            $this,
+            [
+                'user_name' => $this->name,
+                'email' => $this->email,
+                'verification_link' => $link,
+            ],
+            [
+                'link' => $link,
+                'link_text' => 'Verify Email',
+            ]
+        );
     }
 }

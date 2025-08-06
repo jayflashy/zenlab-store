@@ -4,6 +4,7 @@ use App\Models\Coupon;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Models\SystemSetting;
+use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 
@@ -323,5 +324,34 @@ function getOrderStatusClass($status)
 }
 function generateUsername(string $name): string
 {
-    return strtolower(preg_replace('/\s+/', '_', trim($name)));
+    if (empty(trim($name))) {
+        return 'user_' . uniqid();
+    }
+
+    $name = preg_replace('/[^a-zA-Z0-9\s]/', '', $name);
+    $username = strtolower(preg_replace('/\s+/', '_', trim($name)));
+    return substr($username, 0, 50);
+}
+
+
+
+function sendNotification(string $type, $user, array $shortcodes, $custom = [])
+{
+    try {
+        $ns = new NotificationService;
+        $ns->send($type, $user, $shortcodes, $custom);
+    } catch (\Exception $e) {
+        \Log::error($e);
+    }
+}
+
+
+function sendAdminNotification(string $type, array $shortcodes, $custom = [])
+{
+    try {
+        $ns = new NotificationService;
+        $ns->sendAdmin($type, $shortcodes, $custom);
+    } catch (\Exception $e) {
+        \Log::error($e);
+    }
 }

@@ -1,7 +1,8 @@
 <div>
     <section class="breadcrumb border-bottom p-0 d-block section-bg position-relative z-index-1">
         <div class="breadcrumb-two">
-            <img src="{{ static_asset('images/gradients/breadcrumb-gradient-bg.png') }}" alt="" class="bg--gradient">
+            <img src="{{ static_asset('images/gradients/breadcrumb-gradient-bg.png') }}" alt=""
+                class="bg--gradient">
             <div class="container container-two">
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
@@ -13,17 +14,20 @@
                                         class="breadcrumb-list__link text-body hover-text-main">Home</a>
                                 </li>
                                 <li class="breadcrumb-list__item font-14 text-body">
-                                    <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
+                                    <span class="breadcrumb-list__icon font-10"><i
+                                            class="fas fa-chevron-right"></i></span>
                                 </li>
                                 <li class="breadcrumb-list__item font-14 text-body">
                                     <a href="{{ route('products') }}" wire:navigate
                                         class="breadcrumb-list__link text-body hover-text-main">Products</a>
                                 </li>
                                 <li class="breadcrumb-list__item font-14 text-body">
-                                    <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
+                                    <span class="breadcrumb-list__icon font-10"><i
+                                            class="fas fa-chevron-right"></i></span>
                                 </li>
                                 <li class="breadcrumb-list__item font-14 text-body">
-                                    <span class="breadcrumb-list__text">{{ $product->category->name ?? 'Scripts' }}</span>
+                                    <span
+                                        class="breadcrumb-list__text">{{ $product->category->name ?? 'Scripts' }}</span>
                                 </li>
                             </ul>
 
@@ -32,7 +36,8 @@
                             <div class="breadcrumb-content flx-align gap-3">
                                 <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
                                     <span class="icon">
-                                        <img src="{{ static_asset('images/icons/cart-icon.svg') }}" alt="" class="white-version">
+                                        <img src="{{ static_asset('images/icons/cart-icon.svg') }}" alt=""
+                                            class="white-version">
                                         <img src="{{ static_asset('images/icons/cart-white.svg') }}" alt=""
                                             class="dark-version w-20">
                                     </span>
@@ -40,9 +45,10 @@
                                 </div>
                                 <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
                                     <span class="icon">
-                                        <img src="{{ static_asset('images/icons/check-icon.svg') }}" alt="" class="white-version">
-                                        <img src="{{ static_asset('images/icons/check-icon-white.svg') }}" alt=""
-                                            class="dark-version">
+                                        <img src="{{ static_asset('images/icons/check-icon.svg') }}" alt=""
+                                            class="white-version">
+                                        <img src="{{ static_asset('images/icons/check-icon-white.svg') }}"
+                                            alt="" class="dark-version">
                                     </span>
                                     @if ($product->publish_date >= now()->subMonths(2))
                                         <span class="text">Recently Updated</span>
@@ -50,9 +56,10 @@
                                 </div>
                                 <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
                                     <span class="icon">
-                                        <img src="{{ static_asset('images/icons/check-icon.svg') }}" alt="" class="white-version">
-                                        <img src="{{ static_asset('images/icons/check-icon-white.svg') }}" alt=""
-                                            class="dark-version">
+                                        <img src="{{ static_asset('images/icons/check-icon.svg') }}" alt=""
+                                            class="white-version">
+                                        <img src="{{ static_asset('images/icons/check-icon-white.svg') }}"
+                                            alt="" class="dark-version">
                                     </span>
                                     <span class="text">Well Documented</span>
                                 </div>
@@ -68,22 +75,27 @@
             <div class="breadcrumb-tab flx-wrap align-items-start gap-lg-4 gap-2">
                 <ul class="nav tab-bordered nav-pills" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link {{ request()->has('review') ? '' : 'active' }}" id="pills-product-details-tab"
-                            data-bs-toggle="pill" data-bs-target="#pills-product-details" type="button" role="tab"
-                            aria-controls="pills-product-details" aria-selected="{{ request()->has('review') ? 'false' : 'true' }}">
+                        <button
+                            class="nav-link {{ request()->has('review') || request()->has('comments') ? '' : 'active' }}"
+                            id="pills-product-details-tab" data-bs-toggle="pill" data-bs-target="#pills-product-details"
+                            type="button" role="tab" aria-controls="pills-product-details"
+                            aria-selected="{{ request()->has('review') || request()->has('comments') ? 'false' : 'true' }}">
                             Product Details
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link {{ request()->has('review') ? 'active' : '' }}" id="pills-rating-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-rating" type="button" role="tab" aria-controls="pills-rating"
+                        <button class="nav-link {{ request()->has('review') ? 'active' : '' }}" id="pills-rating-tab"
+                            data-bs-toggle="pill" data-bs-target="#pills-rating" type="button" role="tab"
+                            aria-controls="pills-rating"
                             aria-selected="{{ request()->has('review') ? 'true' : 'false' }}" tabindex="-1">
                             <x-star-rating :rating="$product->averageRating()" :count="$product->ratingCount()" />
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments"
-                            type="button" role="tab" aria-controls="pills-comments" aria-selected="false" tabindex="-1">
+                        <button class="nav-link {{ request()->has('comments') ? 'active' : '' }}"
+                            id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments"
+                            type="button" role="tab" aria-controls="pills-comments"
+                            aria-selected="{{ request()->has('comments') ? 'true' : 'false' }}" tabindex="-1">
                             Comments ({{ $product->commentCount() }})
                         </button>
                     </li>
@@ -101,8 +113,9 @@
             <div class="row gy-4">
                 <div class="col-lg-8">
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade {{ request()->has('review') ? '' : 'show active' }}" id="pills-product-details"
-                            role="tabpanel" aria-labelledby="pills-product-details-tab" tabindex="0">
+                        <div class="tab-pane fade {{ request()->has('review') || request()->has('comments') ? '' : 'show active' }}"
+                            id="pills-product-details" role="tabpanel" aria-labelledby="pills-product-details-tab"
+                            tabindex="0">
                             <!-- Product Details Content Start -->
                             <div class="product-details">
                                 <div class="product-details__thumb">
@@ -163,13 +176,13 @@
                             <!-- Product Details Content End -->
                         </div>
                         {{-- Rating --}}
-                        <div class="tab-pane fade {{ request()->has('review') ? 'show active' : '' }}" id="pills-rating" role="tabpanel"
-                            aria-labelledby="pills-rating-tab" tabindex="0">
+                        <div class="tab-pane fade {{ request()->has('review') ? 'show active' : '' }}"
+                            id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab" tabindex="0">
                             @livewire('product.reviews', ['product' => $product])
                         </div>
                         {{-- Comments --}}
-                        <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab"
-                            tabindex="0">
+                        <div class="tab-pane fade {{ request()->has('comments') ? 'show active' : '' }}"
+                            id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab" tabindex="0">
                             @livewire('product.comments', ['product' => $product])
                         </div>
                     </div>
@@ -187,7 +200,8 @@
                                     <p
                                         class="license-dropdown__desc {{ $selectedLicenseType === 'regular' ? 'activeSelectItem' : '' }} font-13">
                                         Use, by you or one client, in a solitary finished result
-                                        which end clients are not charged for. The complete cost incorporates the thing cost and a purchaser
+                                        which end clients are not charged for. The complete cost incorporates the thing
+                                        cost and a purchaser
                                         fee..
                                     </p>
                                 </div>
@@ -196,12 +210,14 @@
                                     <p
                                         class="license-dropdown__desc {{ $selectedLicenseType === 'extended' ? 'activeSelectItem' : '' }} font-13">
                                         Use, by you or one client, in a solitary final result which
-                                        end clients can be charged for. The all out cost incorporates the thing cost and a purchaser
+                                        end clients can be charged for. The all out cost incorporates the thing cost and
+                                        a purchaser
                                         fee.
                                     </p>
                                 </div>
                                 <div class="mt-3 pt-2 border-top text-center ">
-                                    <a href="#" class="link hover-text-decoration-underline font-14 text-main fw-500">
+                                    <a href="#"
+                                        class="link hover-text-decoration-underline font-14 text-main fw-500">
                                         View License Details
                                     </a>
                                 </div>
@@ -216,11 +232,13 @@
                                 <span class="text">Quality verified</span>
                             </li>
                             <li class="sidebar-list__item flx-align gap-2 font-14 fw-300 mb-2">
-                                <span class="icon"><img src="{{ static_asset('images/icons/check-cirlce.svg') }}"alt=""></span>
+                                <span class="icon"><img
+                                        src="{{ static_asset('images/icons/check-cirlce.svg') }}"alt=""></span>
                                 <span class="text">Use for a single project</span>
                             </li>
                             <li class="sidebar-list__item flx-align gap-2 font-14 fw-300">
-                                <span class="icon"><img src="{{ static_asset('images/icons/check-cirlce.svg') }}"alt=""></span>
+                                <span class="icon"><img
+                                        src="{{ static_asset('images/icons/check-cirlce.svg') }}"alt=""></span>
                                 <span
                                     class="text">{{ $selectedLicenseType === 'extended' ? 'Can be used for other clients' : 'Non-paying users only' }}</span>
                             </li>
@@ -228,15 +246,16 @@
 
                         <div class="flx-between mt-3">
                             <div class="common-check mb-0">
-                                <input class="form-check-input" type="checkbox" wire:model.live="extendedSupport" name="checkbox"
-                                    id="extended">
+                                <input class="form-check-input" type="checkbox" wire:model.live="extendedSupport"
+                                    name="checkbox" id="extended">
                                 <label class="form-check-label mb-0 fw-300 text-body" for="extended">Extended support
                                     {{ $selectedLicenseType === 'extended' ? '12' : '6' }} months</label>
                             </div>
                             <div class="flx-align gap-2">
                                 <span
                                     class="product-card__prevPrice text-decoration-line-through">{{ format_price($supportOriginalPrice) }}</span>
-                                <h6 class="product-card__price mb-0 font-14 fw-500">{{ format_price($supportPrice) }}</h6>
+                                <h6 class="product-card__price mb-0 font-14 fw-500">{{ format_price($supportPrice) }}
+                                </h6>
                             </div>
                         </div>
                         <button type="button" wire:click="addToCart"
