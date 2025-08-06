@@ -16,7 +16,8 @@
                 <a href="{{ route('admin.index') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <img src="{{ static_asset('images/icons/sidebar-icon1.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active1.svg') }}" alt="" class="icon icon-active">
+                        <img src="{{ static_asset('images/icons/sidebar-icon-active1.svg') }}" alt=""
+                            class="icon icon-active">
                     </span>
                     <span class="text">Dashboard</span>
                 </a>
@@ -43,16 +44,18 @@
                         <a href="{{ route('admin.products.create') }}" wire:navigate class="nav-submenu__link">Add</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.products.index') }}" wire:navigate class="nav-submenu__link">Listing</a>
+                        <a href="{{ route('admin.products.index') }}" wire:navigate
+                            class="nav-submenu__link">Listing</a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.products.comments') }}" wire:navigate class="nav-submenu__link">Comments
-                            {{-- <span class="badge bg-warning">2</span> cache pending  comments--}}
+                        <a href="{{ route('admin.products.comments') }}" wire:navigate
+                            class="nav-submenu__link">Comments
+                            {{-- <span class="badge bg-warning">2</span> cache pending  comments --}}
                         </a>
                     </li>
                     <li class="nav-submenu__item">
                         <a href="{{ route('admin.products.ratings') }}" wire:navigate class="nav-submenu__link">Ratings
-                            {{-- <span class="badge bg-warning">2</span> cache pending  ratings--}}
+                            {{-- <span class="badge bg-warning">2</span> cache pending  ratings --}}
                         </a>
                     </li>
                     <li class="nav-submenu__item">
@@ -63,7 +66,7 @@
 
             <!-- Licenses -->
             <li class="sidebar-list__item">
-                <a href="#" wire:navigate class="sidebar-list__link">
+                <a href="{{ route('admin.license') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="fas fa-key icon"></i>
                         <i class="fad fa-key icon-active"></i>
@@ -74,7 +77,7 @@
 
             <!-- Coupons -->
             <li class="sidebar-list__item">
-                <a href="{{route('admin.coupons')}}" wire:navigate class="sidebar-list__link">
+                <a href="{{ route('admin.coupons') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="fas fa-percent icon"></i>
                         <i class="fad fa-percent icon-active"></i>
@@ -95,7 +98,7 @@
 
             <!-- Orders -->
             <li class="sidebar-list__item">
-                <a href="{{route('admin.orders')}}" wire:navigate class="sidebar-list__link">
+                <a href="{{ route('admin.orders') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="fad fa-shopping-cart icon"></i>
                         <i class="fas fa-shopping-cart icon-active"></i>
@@ -125,7 +128,8 @@
                 </a>
                 <ul class="side-submenu">
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.blogs.create') }}" wire:navigate class="nav-submenu__link">Add Post</a>
+                        <a href="{{ route('admin.blogs.create') }}" wire:navigate class="nav-submenu__link">Add
+                            Post</a>
                     </li>
                     <li class="nav-submenu__item">
                         <a href="{{ route('admin.blogs') }}" wire:navigate class="nav-submenu__link">All Posts</a>
@@ -143,7 +147,8 @@
                 </a>
                 <ul class="side-submenu">
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.pages.create') }}" wire:navigate class="nav-submenu__link">New Page</a>
+                        <a href="{{ route('admin.pages.create') }}" wire:navigate class="nav-submenu__link">New
+                            Page</a>
                     </li>
                     <li class="nav-submenu__item">
                         <a href="{{ route('admin.pages') }}" wire:navigate class="nav-submenu__link">All Pages</a>
@@ -171,8 +176,10 @@
             <li class="sidebar-list__item side-hsb">
                 <a href="javascript:void(0)" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon10.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active10.svg') }}" alt="" class="icon icon-active">
+                        <img src="{{ static_asset('images/icons/sidebar-icon10.svg') }}" alt=""
+                            class="icon">
+                        <img src="{{ static_asset('images/icons/sidebar-icon-active10.svg') }}" alt=""
+                            class="icon icon-active">
                     </span>
                     <span class="text">Settings</span>
                 </a>
@@ -181,15 +188,18 @@
                         <a href="{{ route('admin.settings') }}" wire:navigate class="nav-submenu__link">General </a>
                     </li>
                     <li class="nav-submenu__item">
-                        <a href="{{ route('admin.settings.payments') }}" wire:navigate class="nav-submenu__link">Payments</a>
+                        <a href="{{ route('admin.settings.payments') }}" wire:navigate
+                            class="nav-submenu__link">Payments</a>
                     </li>
                 </ul>
             </li>
             <li class="sidebar-list__item">
-                <a href="{{route('login')}}" wire:navigate class="sidebar-list__link">
+                <a href="{{ route('login') }}" wire:navigate class="sidebar-list__link">
                     <span class="sidebar-list__icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon13.svg') }}" alt="" class="icon">
-                        <img src="{{ static_asset('images/icons/sidebar-icon-active13.svg') }}" alt="" class="icon icon-active">
+                        <img src="{{ static_asset('images/icons/sidebar-icon13.svg') }}" alt=""
+                            class="icon">
+                        <img src="{{ static_asset('images/icons/sidebar-icon-active13.svg') }}" alt=""
+                            class="icon icon-active">
                     </span>
                     <span class="text">Logout</span>
                 </a>

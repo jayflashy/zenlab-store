@@ -7,6 +7,7 @@ use App\Livewire\Admin\CouponManager;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\EmailSetting;
 use App\Livewire\Admin\EmailTemplate;
+use App\Livewire\Admin\LicenseManager;
 use App\Livewire\Admin\OrderManager;
 use App\Livewire\Admin\PageManager;
 use App\Livewire\Admin\Products\Comments as ProductComments;
@@ -21,10 +22,10 @@ Route::middleware('admin')->group(function (): void {
     // Dashboard
     Route::get('', Dashboard::class)->name('index');
     Route::get('dashboard', Dashboard::class)->name('dashboard');
-
     // categories
     Route::get('categories', CategoryManager::class)->name('categories');
-
+    // license
+    Route::get('license', LicenseManager::class)->name('license');
     // Products
     Route::get('products', ProductList::class)->name('products.index');
     Route::get('products/create', ProductForm::class)->name('products.create');
@@ -35,6 +36,7 @@ Route::middleware('admin')->group(function (): void {
     Route::get('coupons', CouponManager::class)->name('coupons');
     // orders
     Route::get('orders', OrderManager::class)->name('orders');
+    Route::get('orders/{id}', OrderManager::class)->name('orders.show');
 
     // Blogs
     Route::get('blogs', BlogManager::class)->name('blogs');
