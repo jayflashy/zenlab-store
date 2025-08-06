@@ -4,8 +4,8 @@ namespace App\Livewire\Admin;
 
 use App\Models\ContactMessage as ModelsContactMessage;
 use App\Traits\LivewireToast;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('admin.layouts.app')]
 class ContactMessage extends Component
@@ -15,17 +15,18 @@ class ContactMessage extends Component
     public $searchTerm = '';
 
     public $perPage = 25;
+
     public $viewingContactMessage;
 
     // meta
-    public string $metaTitle = "Contact Messages";
+    public string $metaTitle = 'Contact Messages';
 
     public function mount()
     {
         $this->deleteOldContacts();
     }
 
-    function deleteOldContacts()
+    public function deleteOldContacts()
     {
         $old = ModelsContactMessage::where('created_at', '<', now()->subDays(30))->delete();
         if ($old) {
@@ -59,6 +60,7 @@ class ContactMessage extends Component
                     ->orWhere('email', 'like', '%' . $this->searchTerm . '%');
             })
             ->paginate($this->perPage);
+
         return view('livewire.admin.contact-message', compact('contactmessages'));
     }
 }

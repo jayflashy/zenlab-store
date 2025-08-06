@@ -31,7 +31,7 @@ class Comments extends Component
         $this->validate();
 
         $user = Auth::user();
-        $comment =  $this->product->comments()->create([
+        $comment = $this->product->comments()->create([
             'content' => $this->newComment,
             'parent_id' => $this->parentId,
             'user_id' => $user->id,
@@ -48,7 +48,7 @@ class Comments extends Component
                         'user_name' => $recipient->name,
                         'replier_name' => $user->name,
                         'product_name' => $this->product->name,
-                        'comment_link' => route('products.view', $this->product->slug)."?comments#comment-".$comment->id,
+                        'comment_link' => route('products.view', $this->product->slug) . '?comments#comment-' . $comment->id,
                     ]);
                 }
             }

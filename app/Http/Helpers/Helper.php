@@ -330,10 +330,9 @@ function generateUsername(string $name): string
 
     $name = preg_replace('/[^a-zA-Z0-9\s]/', '', $name);
     $username = strtolower(preg_replace('/\s+/', '_', trim($name)));
+
     return substr($username, 0, 50);
 }
-
-
 
 function sendNotification(string $type, $user, array $shortcodes, $custom = [])
 {
@@ -344,7 +343,6 @@ function sendNotification(string $type, $user, array $shortcodes, $custom = [])
         \Log::error($e);
     }
 }
-
 
 function sendAdminNotification(string $type, array $shortcodes, $custom = [])
 {

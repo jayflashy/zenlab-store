@@ -4,15 +4,12 @@ namespace App\Jobs;
 
 use App\Models\Product;
 use App\Models\User;
-use App\Models\NotifyTemplate;
-use App\Mail\SendMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class ProductUpdateNotificationJob implements ShouldQueue
 {
@@ -43,14 +40,15 @@ class ProductUpdateNotificationJob implements ShouldQueue
         })->get();
 
         if ($usersToNotify->isEmpty()) {
-            Log::info("No users to notify for product update: " . $this->product->name);
+            Log::info('No users to notify for product update: ' . $this->product->name);
+
             return;
         }
 
         foreach ($usersToNotify as $user) {
             $orderItem = $user->orders()
                 ->where('order_status', 'completed')
-                ->whereHas('items', fn($q) => $q->where('product_id', $this->product->id))
+                ->whereHas('items', fn ($q) => $q->where('product_id', $this->product->id))
                 ->with('items')
                 ->latest() // Get the most recent order if they bought it multiple times
                 ->first()
@@ -58,15 +56,15 @@ class ProductUpdateNotificationJob implements ShouldQueue
                 ->where('product_id', $this->product->id)
                 ->first();
 
-            if (!$orderItem) {
+            if (! $orderItem) {
                 continue;
             }
 
             $shortcodes = [
-                'user_name'       => $user->name,
-                'product_name'    => $this->product->name,
+                'user_name' => $user->name,
+                'product_name' => $this->product->name,
                 'product_version' => $this->product->version,
-                'download_link'   => route('user.download', $orderItem->id),
+                'download_link' => route('user.download', $orderItem->id),
             ];
             sendNotification('PRODUCT_UPDATE', $user, $shortcodes);
         }

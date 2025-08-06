@@ -135,7 +135,6 @@ class User extends Authenticatable
         return $username;
     }
 
-
     public function sendEmailVerification(): void
     {
         $link = URL::temporarySignedRoute(

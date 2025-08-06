@@ -231,9 +231,10 @@ class NotificationService
             $data['subject'] = $subject;
             $data['message'] = $message;
             $data = array_merge($data, $customData);
-            if($email){
+            if ($email) {
                 Mail::to($email)->queue(new SendMail($data));
             }
+
             return true;
         } catch (\Exception $e) {
             \Log::error('Notification failed', [
@@ -244,6 +245,7 @@ class NotificationService
             return false;
         }
     }
+
     /**
      * Send notification based on type
      */

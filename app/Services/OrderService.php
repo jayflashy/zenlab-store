@@ -67,7 +67,7 @@ class OrderService
                 'customer_email' => $order->email,
                 'order_total' => format_price($order->total),
                 'payment_method' => $order->payment_method,
-                'order_link' => route('admin.orders.show', $order->id)
+                'order_link' => route('admin.orders.show', $order->id),
             ]);
 
             return $order;
@@ -91,7 +91,7 @@ class OrderService
         $order->save();
         // increase sales for each order items
         foreach ($order->items()->with('product')->get() as $item) {
-            //generate license code for order item
+            // generate license code for order item
             $licenseData = $this->generateLicenseData($item);
             $item->update($licenseData);
             // update item product sales count
@@ -123,6 +123,7 @@ class OrderService
                 'downloads_link' => route('user.downloads'),
             ]);
         }
+
         return $order;
     }
 
@@ -140,6 +141,7 @@ class OrderService
             'support_end_date' => now()->addMonths($supportPeriod),
         ];
     }
+
     /**
      * Mark an order as failed
      *
@@ -179,7 +181,7 @@ class OrderService
             'order_code' => $order->code,
             'customer_name' => $order->name,
             'order_total' => format_price($order->total),
-            'order_link' => route('admin.orders.show', $order->id)
+            'order_link' => route('admin.orders.show', $order->id),
         ]);
 
         return $order;

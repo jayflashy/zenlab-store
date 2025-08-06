@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\NotifyTemplate;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class NotifyTemplateSeeder extends Seeder
@@ -76,7 +75,7 @@ class NotifyTemplateSeeder extends Seeder
                 ',
                 'shortcodes' => ([
                     'user_name' => 'User full name.',
-                    'reset_link' => 'Password reset.'
+                    'reset_link' => 'Password reset.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -98,7 +97,7 @@ class NotifyTemplateSeeder extends Seeder
                 'shortcodes' => ([
                     'user_name' => 'User full name.',
                     'change_time' => 'Time of the password change.',
-                    'reset_link' => 'password reset link.'
+                    'reset_link' => 'password reset link.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -129,7 +128,7 @@ class NotifyTemplateSeeder extends Seeder
                     'order_total' => 'Total amount paid.',
                     'payment_method' => 'Payment method used.',
                     'order_items_table' => 'HTML table of products with download links.',
-                    'downloads_link' => 'Link to user\'s download page.'
+                    'downloads_link' => 'Link to user\'s download page.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -154,7 +153,7 @@ class NotifyTemplateSeeder extends Seeder
                     'user_name' => 'Customer name.',
                     'order_code' => 'Order ID.',
                     'order_items_table' => 'HTML table of products with download links.',
-                    'downloads_link' => 'Link to user\'s download page.'
+                    'downloads_link' => 'Link to user\'s download page.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -179,7 +178,7 @@ class NotifyTemplateSeeder extends Seeder
                     'user_name' => 'User name.',
                     'product_name' => 'Name of the updated product.',
                     'product_version' => 'New version number.',
-                    'download_link' => 'product download link.'
+                    'download_link' => 'product download link.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -203,7 +202,7 @@ class NotifyTemplateSeeder extends Seeder
                     'user_name' => 'Recipient\'s name.',
                     'replier_name' => 'replied username.',
                     'product_name' => 'Product name.',
-                    'comment_link' => 'admin comment thread.'
+                    'comment_link' => 'admin comment thread.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -237,7 +236,7 @@ class NotifyTemplateSeeder extends Seeder
                     'customer_email' => 'Customer email.',
                     'order_total' => 'Total sale amount.',
                     'payment_method' => 'Payment method used.',
-                    'order_link' => 'admin order link.'
+                    'order_link' => 'admin order link.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -265,7 +264,7 @@ class NotifyTemplateSeeder extends Seeder
                     'order_code' => 'Order ID.',
                     'customer_name' => 'Customer name.',
                     'order_total' => 'order total.',
-                    'order_link' => 'admin order link.'
+                    'order_link' => 'admin order link.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -294,7 +293,7 @@ class NotifyTemplateSeeder extends Seeder
                     'sender_name' => 'Sender\'s name.',
                     'sender_email' => 'Sender\'s email.',
                     'message_subject' => 'Message subject.',
-                    'message_content' => 'Contact message.'
+                    'message_content' => 'Contact message.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -326,7 +325,7 @@ class NotifyTemplateSeeder extends Seeder
                     'product_name' => 'Product name.',
                     'rating_stars' => 'Rating.',
                     'review_content' => 'comment.review text',
-                    'moderation_link' => 'review link.'
+                    'moderation_link' => 'review link.',
                 ]),
                 'email_status' => true,
                 'push_status' => false,
@@ -334,7 +333,6 @@ class NotifyTemplateSeeder extends Seeder
                 'channels' => ['email'],
             ],
         ];
-
 
         foreach ($templates as $templateData) {
             NotifyTemplate::updateOrCreate(

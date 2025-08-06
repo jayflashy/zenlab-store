@@ -3,7 +3,6 @@
 namespace App\Livewire\Auth;
 
 use App\Traits\LivewireToast;
-use Livewire\Component;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -12,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 #[Layout('layouts.auth')]
 class AdminLogin extends Component
@@ -60,6 +60,7 @@ class AdminLogin extends Component
 
         $this->redirectIntended(default: $url, navigate: true);
     }
+
     /**
      * Ensure the authentication request is not rate limited.
      */

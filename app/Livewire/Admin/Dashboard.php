@@ -18,14 +18,19 @@ class Dashboard extends Component
     use LivewireToast;
 
     public $totalRevenue = 0;
+
     public $totalOrders = 0;
+
     public $totalUsers = 0;
+
     public $totalProducts = 0;
 
     public $salesChartData = [];
 
     public $recentOrders = [];
+
     public $recentUsers = [];
+
     public $topSellingProducts = [];
 
     public function mount()
@@ -44,7 +49,7 @@ class Dashboard extends Component
 
         $topSellingData = OrderItem::query()
             ->select('product_id', DB::raw('SUM(quantity) as total_sales'))
-            ->whereHas('order', fn($q) => $q->where('payment_status', 'completed'))
+            ->whereHas('order', fn ($q) => $q->where('payment_status', 'completed'))
             ->groupBy('product_id')
             ->orderByDesc('total_sales')
             ->take(5)
@@ -58,9 +63,10 @@ class Dashboard extends Component
                 $product = $products->get($item->product_id);
                 if ($product) {
                     $product->total_sales = $item->total_sales;
+
                     return $product;
                 }
-                return null;
+
             })->filter()->sortByDesc('total_sales');
         } else {
             $this->topSellingProducts = collect();
@@ -85,10 +91,10 @@ class Dashboard extends Component
                 DB::raw('SUM(total) as total'),
             ])->pluck('total', 'date');
 
-        $dates = collect(Carbon::parse($startDate)->toPeriod($endDate))->map(fn($date) => $date->format('Y-m-d'));
+        $dates = collect(Carbon::parse($startDate)->toPeriod($endDate))->map(fn ($date) => $date->format('Y-m-d'));
 
-        $this->salesChartData['labels'] = $dates->map(fn($date) => Carbon::parse($date)->format('M d'))->toArray();
-        $this->salesChartData['data'] = $dates->map(fn($date) => $sales->get($date, 0))->toArray();
+        $this->salesChartData['labels'] = $dates->map(fn ($date) => Carbon::parse($date)->format('M d'))->toArray();
+        $this->salesChartData['data'] = $dates->map(fn ($date) => $sales->get($date, 0))->toArray();
     }
 
     public function render()

@@ -19,7 +19,6 @@ class Contact extends Component
 
     public $message;
 
-
     public function submit()
     {
         $this->validate([
@@ -44,7 +43,7 @@ class Contact extends Component
         $this->successAlert('Message sent successfully');
     }
 
-    function sendEmail(ContactMessage $contact)
+    public function sendEmail(ContactMessage $contact)
     {
         $template = NotifyTemplate::whereType('ADMIN_CONTACT_FORM')->first();
         $ns = app(NotificationService::class);
