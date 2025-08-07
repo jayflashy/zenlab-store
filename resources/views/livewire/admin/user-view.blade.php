@@ -382,9 +382,9 @@
                                                     <select class="common-input border" id="country"
                                                         wire:model="country">
                                                         <option value="">Select Country</option>
-                                                        @foreach ($countries as $key => $country)
-                                                            <option value="{{ $country['name'] }}">
-                                                                {{ $country['name'] }}</option>
+                                                        @foreach ($countries as $key => $countryItem)
+                                                            <option value="{{ $countryItem['name'] }}">
+                                                                {{ $countryItem['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

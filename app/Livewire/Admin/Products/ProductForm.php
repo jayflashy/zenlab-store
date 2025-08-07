@@ -361,7 +361,7 @@ class ProductForm extends Component
         $product->save();
 
         if ($this->formMode === 'edit') {
-            if ($product->version && $product->version !== $oldVersion) {
+            if ($product->version !== $oldVersion) {
                 ProductUpdateNotificationJob::dispatch($product);
                 $this->infoAlert('Product update notifications are being sent to customers in the background.');
             }

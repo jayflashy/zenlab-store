@@ -7,7 +7,7 @@
 /storage/pail
 /vendor
 .env
-.env.backup
+.env.backup*
 .env.production
 .phpactor.json
 .phpunit.result.cache
@@ -23,4 +23,3 @@ yarn-error.log
 /.zed
 /notes.md
 /public/assets/summernote
-.env.backup*

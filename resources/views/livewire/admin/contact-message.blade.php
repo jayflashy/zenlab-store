@@ -14,7 +14,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-6">
                     <label for="search" class="form-label">Search</label>
                     <input wire:model.live.debounce.300ms="searchTerm" type="search" id="search"
-                        class="common-input border" placeholder="Search by order code, customer name or email">
+                        class="common-input border" placeholder="Search by name, email or message content">
                 </div>
 
                 <div class="col-sm-6 col-md-4 col-lg-3">

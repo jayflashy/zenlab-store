@@ -13,13 +13,16 @@ class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public array $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
+        if (empty($data['subject'])) {
+            throw new \InvalidArgumentException('Subject is required in email data');
+        }
         $this->data = $data;
     }
 
@@ -28,8 +31,8 @@ class SendMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $femail = env('MAIL_FROM_ADDRESS');
-        $fname = env('MAIL_FROM_NAME');
+        $femail = config('mail.from.address');
+        $fname = config('mail.from.name');
 
         return new Envelope(
             from: new Address($femail, $fname),

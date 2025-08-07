@@ -39,11 +39,6 @@ class UserManager extends Component
         $this->resetPage();
     }
 
-    public function updatingCountryFilter()
-    {
-        $this->resetPage();
-    }
-
     public function sortBy($field)
     {
         if ($this->sortField === $field) {

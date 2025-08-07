@@ -47,7 +47,7 @@
                                     <a href="{{ route('admin.users.show', $comment->user_id) }}"
                                         class="">{{ $comment->user->name }}</a>
                                 @else
-                                    <div>{{ $comment->user->name ?? 'Guest User' }}</div>
+                                    <div>Guest User</div>
                                 @endif
                             </td>
                             <td>{{ text_trimer($comment->content, 50) }}</td>

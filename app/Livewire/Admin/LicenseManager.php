@@ -40,6 +40,11 @@ class LicenseManager extends Component
     public function viewOrderItem($id)
     {
         $this->viewingOrderItem = OrderItem::with(['order.user', 'product'])->find($id);
+        if (! $this->viewingOrderItem) {
+            $this->errorAlert('Order item not found');
+
+            return;
+        }
         $this->licenseCode = $this->viewingOrderItem->license_code;
         $this->supportEndDate = $this->viewingOrderItem->support_end_date
             ? show_date($this->viewingOrderItem->support_end_date)

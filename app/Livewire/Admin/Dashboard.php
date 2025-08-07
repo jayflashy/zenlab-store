@@ -7,6 +7,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
 use App\Traits\LivewireToast;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
@@ -40,40 +41,41 @@ class Dashboard extends Component
 
     public function loadStats()
     {
-        $this->totalRevenue = Order::where('payment_status', 'completed')->sum('total');
-        $this->totalOrders = Order::count();
-        $this->totalUsers = User::count();
-        $this->totalProducts = Product::count();
-        $this->recentOrders = Order::with('user')->latest()->take(5)->get();
-        $this->recentUsers = User::latest()->take(5)->get();
+        $stats = Cache::remember('admin_dashboard_stats', 300, function () {
+            $this->totalRevenue = Order::where('payment_status', 'completed')->sum('total');
+            $this->totalOrders = Order::count();
+            $this->totalUsers = User::count();
+            $this->totalProducts = Product::count();
+            $this->recentOrders = Order::with('user')->latest()->take(5)->get();
+            $this->recentUsers = User::latest()->take(5)->get();
 
-        $topSellingData = OrderItem::query()
-            ->select('product_id', DB::raw('SUM(quantity) as total_sales'))
-            ->whereHas('order', fn ($q) => $q->where('payment_status', 'completed'))
-            ->groupBy('product_id')
-            ->orderByDesc('total_sales')
-            ->take(5)
-            ->get();
-        $productIds = $topSellingData->pluck('product_id');
+            $topSellingData = OrderItem::query()
+                ->select('product_id', DB::raw('SUM(quantity) as total_sales'))
+                ->whereHas('order', fn ($q) => $q->where('payment_status', 'completed'))
+                ->groupBy('product_id')
+                ->orderByDesc('total_sales')
+                ->take(5)
+                ->get();
+            $productIds = $topSellingData->pluck('product_id');
 
-        if ($productIds->isNotEmpty()) {
-            $products = Product::with('category')->whereIn('id', $productIds)->get()->keyBy('id');
+            if ($productIds->isNotEmpty()) {
+                $products = Product::with('category')->whereIn('id', $productIds)->get()->keyBy('id');
 
-            $this->topSellingProducts = $topSellingData->map(function ($item) use ($products) {
-                $product = $products->get($item->product_id);
-                if ($product) {
-                    $product->total_sales = $item->total_sales;
+                $this->topSellingProducts = $topSellingData->map(function ($item) use ($products) {
+                    $product = $products->get($item->product_id);
+                    if ($product) {
+                        $product->total_sales = $item->total_sales;
 
-                    return $product;
-                }
+                        return $product;
+                    }
+                })->filter()->sortByDesc('total_sales');
+            }
 
-            })->filter()->sortByDesc('total_sales');
-        } else {
-            $this->topSellingProducts = collect();
-        }
+            $this->topSellingProducts = $this->topSellingProducts ?? collect();
 
-        $this->prepareSalesChartData();
-        $this->dispatch('statsRefreshed', salesChartData: $this->salesChartData);
+            $this->prepareSalesChartData();
+            $this->dispatch('statsRefreshed', salesChartData: $this->salesChartData);
+        });
     }
 
     private function prepareSalesChartData()

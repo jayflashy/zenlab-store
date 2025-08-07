@@ -17,6 +17,9 @@ class User
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
+        if (! $user) {
+            return to_route('login');
+        }
         if (! $user->email_verify && sys_setting('verify_email') == 1) {
             return to_route('verification.notice');
         }

@@ -51,9 +51,6 @@ class ProductUpdateNotificationJob implements ShouldQueue
                 ->whereHas('items', fn ($q) => $q->where('product_id', $this->product->id))
                 ->with('items')
                 ->latest() // Get the most recent order if they bought it multiple times
-                ->first()
-                ->items
-                ->where('product_id', $this->product->id)
                 ->first();
 
             if (! $orderItem) {

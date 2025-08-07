@@ -227,20 +227,24 @@
 
                         <ul class="sidebar-list">
                             <li class="sidebar-list__item flx-align gap-2 font-14 fw-300 mb-2">
-                                <span class="icon"><img src="{{ static_asset('images/icons/check-cirlce.svg') }}"
-                                        alt=""></span>
+                                <span class="icon">
+                                    <img src="{{ static_asset('images/icons/check-cirlce.svg') }}" alt="">
+                                </span>
                                 <span class="text">Quality verified</span>
                             </li>
                             <li class="sidebar-list__item flx-align gap-2 font-14 fw-300 mb-2">
-                                <span class="icon"><img
-                                        src="{{ static_asset('images/icons/check-cirlce.svg') }}"alt=""></span>
+                                <span class="icon">
+                                    <img src="{{ static_asset('images/icons/check-cirlce.svg') }}" alt="">
+                                </span>
                                 <span class="text">Use for a single project</span>
                             </li>
                             <li class="sidebar-list__item flx-align gap-2 font-14 fw-300">
-                                <span class="icon"><img
-                                        src="{{ static_asset('images/icons/check-cirlce.svg') }}"alt=""></span>
-                                <span
-                                    class="text">{{ $selectedLicenseType === 'extended' ? 'Can be used for other clients' : 'Non-paying users only' }}</span>
+                                <span class="icon">
+                                    <img src="{{ static_asset('images/icons/check-cirlce.svg') }}" alt="">
+                                </span>
+                                <span class="text">
+                                    {{ $selectedLicenseType === 'extended' ? 'Can be used for other clients' : 'Non-paying users only' }}
+                                </span>
                             </li>
                         </ul>
 

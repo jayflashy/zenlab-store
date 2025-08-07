@@ -69,7 +69,7 @@
                                     class="fw-bold">{{ $orderItem->order?->user?->name }}</a>
                                 <p class="text-muted mb-0">{{ $orderItem->order?->user?->email }}</p>
                             </td>
-                            <td>{{ $orderItem->order->created_at->format('M d, Y H:i') }}</td>
+                            <td>{{ $orderItem->order?->created_at?->format('M d, Y H:i') ?? 'N/A' }}</td>
                             <td>
                                 <p class="mb-0">Quant: {{ $orderItem->quantity }}</p>
                                 <p class="mb-0"> {{ format_price($orderItem->total) }}</p>
@@ -227,17 +227,19 @@
                             wire:click="$set('showDeleteModal', false)"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to delete this order Item?</p>
-                        <p class="text-danger">This action cannot be undone and will permanently remove the order from
-                            your store.
+                        <p>Are you sure you want to delete this order item?</p>
+                        <p class="text-danger">
+                            This action cannot be undone and will permanently remove the order item and its associated
+                            license from your store.
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            wire:click="$set('showDeleteModal', false)">Cancel</button>
+                        <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">
+                            Cancel
+                        </button>
                         <button type="button" class="btn btn-danger"
-                            wire:click="deleteOrder('{{ $deleteId }}')">
-                            <i class="fas fa-trash me-1"></i> Delete Order
+                            wire:click="deleteOrderItem('{{ $deleteId }}')">
+                            <i class="fas fa-trash me-1"></i> Delete Order Item
                         </button>
                     </div>
                 </div>

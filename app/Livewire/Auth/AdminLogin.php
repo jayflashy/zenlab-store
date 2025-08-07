@@ -87,6 +87,6 @@ class AdminLogin extends Component
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
+        return hash('sha256', Str::lower($this->email)) . '|' . request()->ip();
     }
 }

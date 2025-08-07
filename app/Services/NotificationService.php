@@ -16,9 +16,14 @@ class NotificationService
 
     public function __construct()
     {
-        $this->templates = Cache::remember('NotifyTemplates', 60 * 60, function () {
-            return NotifyTemplate::all();
-        });
+        try {
+            $this->templates = Cache::remember('NotifyTemplates', 60 * 60, function () {
+                return NotifyTemplate::all();
+            });
+        } catch (\Exception $e) {
+            \Log::error('Failed to load notification templates: ' . $e->getMessage());
+            $this->templates = collect();
+        }
     }
 
     /**
@@ -70,7 +75,7 @@ class NotificationService
 
             // Send Email Notification
             if (in_array('email', $channels)) {
-                $this->sendEmail($user, $template, $shortcodes);
+                $this->sendEmail($user, $template, $shortcodes, $customData);
             }
 
             return true;
@@ -91,8 +96,16 @@ class NotificationService
     public function sendBulk(string $type, $users, array $shortcodes = []): array
     {
         $results = [];
-        foreach ($users as $user) {
-            $results[$user->id] = $this->send($type, $user, $shortcodes);
+        $chunks = collect($users)->chunk(50);
+
+        foreach ($chunks as $chunk) {
+            foreach ($chunk as $user) {
+                dispatch(function () use ($type, $user, $shortcodes) {
+                    $this->send($type, $user, $shortcodes);
+                })->delay(now()->addSeconds(10));
+
+                $results[$user->id] = true;
+            }
         }
 
         return $results;
@@ -128,11 +141,6 @@ class NotificationService
      */
     private function replaceText(string $text, array $replacements): string
     {
-        // return preg_replace_callback(
-        //     '/{{([^}]+)}}/',
-        //     fn($match) => $replacements[$match[1]] ?? $match[0],
-        //     $text
-        // );
         $text = preg_replace_callback(
             '/\{\{\s*(\w+)\s*\}\}/',
             function ($match) use ($replacements) {
@@ -142,8 +150,6 @@ class NotificationService
             },
             $text
         );
-
-        // Then replace {key} pattern
         $text = preg_replace_callback(
             '/\{\s*(\w+)\s*\}/',
             function ($match) use ($replacements) {

@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('role_id')->nullable();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->index();
             $table->string('phone')->nullable();
             $table->string('type')->default('admin');
             $table->boolean('is_active')->default(true);

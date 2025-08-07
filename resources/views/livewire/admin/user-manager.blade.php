@@ -5,11 +5,6 @@
             <h1 class="h3 mb-0">{{ $metaTitle }}</h1>
             <p class="text-muted small">Manage users</p>
         </div>
-        <div>
-            <a wire:navigate href="{{ route('admin.users') }}" class="btn btn-main">
-                <i class="fa fa-plus-circle me-1"></i> Back to List
-            </a>
-        </div>
     </div>
 
     <!-- Search and Filters -->
@@ -23,7 +18,7 @@
                 </div>
 
                 <div class="col-sm-6 col-md-4 col-lg-3">
-                    <label for="licenseTypeFilter" class="form-label">Status</label>
+                    <label for="statusFilter" class="form-label">Status</label>
                     <div class="select-has-icon">
                         <select wire:model.live="statusFilter" id="statusFilter" class="common-input border">
                             <option value="">All Status</option>

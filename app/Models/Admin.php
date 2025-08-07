@@ -27,4 +27,10 @@ class Admin extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected $casts =
+        [
+            'password' => 'hashed',
+            'is_active' => 'boolean',
+        ];
 }

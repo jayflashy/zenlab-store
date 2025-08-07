@@ -55,7 +55,7 @@ class Contact extends Component
             $shortcodes = [
                 'sender_name' => $contact->name,
                 'sender_email' => $contact->email,
-                'message_subject' => $contact->subject,
+                'message_subject' => 'Contact Form Message',
                 'message_content' => $contact->message,
             ];
             $ns->sendManualEmail(get_setting('admin_email'), $data, $shortcodes);

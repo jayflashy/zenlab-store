@@ -179,8 +179,19 @@ class UserView extends Component
 
     private function loadCountryList()
     {
-        $countryJson = static_asset('countries.json');
-        $this->countries = json_decode(file_get_contents($countryJson), true);
+        $this->countries = cache()->remember('country_list', 86400, function () {
+            $countryJson = static_asset('countries.json');
+
+            if (! file_exists($countryJson)) {
+                \Log::error('Countries JSON file not found: ' . $countryJson);
+
+                return [];
+            }
+
+            $content = file_get_contents($countryJson);
+
+            return json_decode($content, true) ?: [];
+        });
     }
 
     public function render()

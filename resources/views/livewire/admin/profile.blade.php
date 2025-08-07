@@ -23,7 +23,7 @@
                         <label for="username" class="form-label mb-2 font-18 font-heading fw-600">
                             Email
                         </label>
-                        <input type="email" class="common-input border" id="username" wire:model="email"
+                        <input type="email" class="common-input border" id="email" wire:model="email"
                             placeholder="Email">
                         @error('email')
                             <span class="text-danger">{{ $message }}</span>

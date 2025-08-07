@@ -122,7 +122,7 @@ class Reviews extends Component
                 sendAdminNotification('ADMIN_NEW_REVIEW', [
                     'moderation_link' => route('admin.products.ratings') . '?rating_id=' . $rating->id,
                     'product_name' => $this->product->name,
-                    'authur_name' => $user->name,
+                    'author_name' => $user->name,
                     'user_email' => $user->email,
                     'rating_stars' => $this->stars,
                     'review_content' => $this->review,

@@ -70,4 +70,9 @@ class OrderItem extends Model
             }
         });
     }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('payment_status', 'completed');
+    }
 }
