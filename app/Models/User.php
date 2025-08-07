@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use URL;
 
 class User extends Authenticatable
 {
@@ -105,5 +106,58 @@ class User extends Authenticatable
     public function wishlists(): HasMany
     {
         return $this->hasMany(Wishlist::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function purchasesCount()
+    {
+        return $this->orders()
+            ->where('order_status', 'completed')
+            ->where('payment_status', 'completed')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->count();
+    }
+
+    public static function generateUniqueUsername(string $name): string
+    {
+        $baseUsername = generateUsername($name);
+        $username = $baseUsername;
+        $counter = 1;
+
+        while (self::where('username', $username)->exists()) {
+            $username = $baseUsername . '_' . $counter++;
+        }
+
+        return $username;
+    }
+
+    public function sendEmailVerification(): void
+    {
+        $link = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            [
+                'id' => $this->getKey(),
+                'hash' => sha1($this->getEmailForVerification()),
+            ]
+        );
+
+        sendNotification(
+            'EMAIL_VERIFICATION',
+            $this,
+            [
+                'user_name' => $this->name,
+                'email' => $this->email,
+                'verification_link' => $link,
+            ],
+            [
+                'link' => $link,
+                'link_text' => 'Verify Email',
+            ]
+        );
     }
 }

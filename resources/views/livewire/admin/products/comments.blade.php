@@ -43,9 +43,14 @@
                                 </a>
                             </td>
                             <td>
-                                {{ $comment->user ? $comment->user->name : 'Guest User' }}
+                                @if ($comment->user)
+                                    <a href="{{ route('admin.users.show', $comment->user_id) }}"
+                                        class="">{{ $comment->user->name }}</a>
+                                @else
+                                    <div>Guest User</div>
+                                @endif
                             </td>
-                            <td>{{ Str::limit($comment->content, 50) }}</td>
+                            <td>{{ text_trimer($comment->content, 50) }}</td>
                             <td>
                                 @if ($comment->parent_id)
                                     <span class="badge bg-info">Reply</span>

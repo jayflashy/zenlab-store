@@ -3,17 +3,22 @@
 use App\Http\Controllers\Admin\SettingsController;
 use App\Livewire\Admin\BlogManager;
 use App\Livewire\Admin\CategoryManager;
+use App\Livewire\Admin\ContactMessage;
 use App\Livewire\Admin\CouponManager;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\EmailSetting;
 use App\Livewire\Admin\EmailTemplate;
+use App\Livewire\Admin\LicenseManager;
 use App\Livewire\Admin\OrderManager;
 use App\Livewire\Admin\PageManager;
 use App\Livewire\Admin\Products\Comments as ProductComments;
 use App\Livewire\Admin\Products\ProductForm;
 use App\Livewire\Admin\Products\ProductList;
 use App\Livewire\Admin\Products\Ratings;
+use App\Livewire\Admin\Profile;
 use App\Livewire\Admin\SettingsManager;
+use App\Livewire\Admin\UserManager;
+use App\Livewire\Admin\UserView;
 
 // Auth;
 
@@ -21,10 +26,11 @@ Route::middleware('admin')->group(function (): void {
     // Dashboard
     Route::get('', Dashboard::class)->name('index');
     Route::get('dashboard', Dashboard::class)->name('dashboard');
-
+    Route::get('profile', Profile::class)->name('profile');
     // categories
     Route::get('categories', CategoryManager::class)->name('categories');
-
+    // license
+    Route::get('license', LicenseManager::class)->name('license');
     // Products
     Route::get('products', ProductList::class)->name('products.index');
     Route::get('products/create', ProductForm::class)->name('products.create');
@@ -35,6 +41,12 @@ Route::middleware('admin')->group(function (): void {
     Route::get('coupons', CouponManager::class)->name('coupons');
     // orders
     Route::get('orders', OrderManager::class)->name('orders');
+    Route::get('orders/{id}', OrderManager::class)->name('orders.show');
+    // users
+    Route::get('users', UserManager::class)->name('users');
+    Route::get('users/{id}', UserView::class)->name('users.show');
+
+    Route::get('contact-message', ContactMessage::class)->name('contact-message');
 
     // Blogs
     Route::get('blogs', BlogManager::class)->name('blogs');

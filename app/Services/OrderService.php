@@ -9,6 +9,7 @@ use App\Models\User;
 use Auth;
 use DB;
 use Exception;
+use Str;
 
 class OrderService
 {
@@ -59,6 +60,15 @@ class OrderService
             }
 
             DB::commit();
+            // notify admin of new order
+            sendAdminNotification('ADMIN_NEW_ORDER', [
+                'order_code' => $order->code,
+                'customer_name' => $order->name,
+                'customer_email' => $order->email,
+                'order_total' => format_price($order->total),
+                'payment_method' => $order->payment_method,
+                'order_link' => route('admin.orders.show', $order->id),
+            ]);
 
             return $order;
         } catch (Exception $exception) {
@@ -81,6 +91,10 @@ class OrderService
         $order->save();
         // increase sales for each order items
         foreach ($order->items()->with('product')->get() as $item) {
+            // generate license code for order item
+            $licenseData = $this->generateLicenseData($item);
+            $item->update($licenseData);
+            // update item product sales count
             $item->product->update(['sales_count' => $item->product->sales_count + $item->quantity]);
         }
 
@@ -88,10 +102,44 @@ class OrderService
         if ($order->cart_id) {
             Cart::where('id', $order->cart_id)->delete();
         }
-
+        $order->load('user');
         // send email and other notification
+        $itemsTableHtml = view('emails.partials.order-items-table', ['items' => $order->items])->render();
+        if ($order->payment_method == 'manual_payment') {
+            sendNotification('MANUAL_PAYMENT_APPROVED', $order->user, [
+                'user_name' => $order->user->name,
+                'order_code' => $order->code,
+                'order_total' => format_price($order->total),
+                'order_items_table' => $itemsTableHtml,
+                'downloads_link' => route('user.downloads'),
+            ]);
+        } else {
+            sendNotification('ORDER_CONFIRMATION', $order->user, [
+                'user_name' => $order->user->name,
+                'order_code' => $order->code,
+                'order_total' => format_price($order->total),
+                'payment_method' => ucfirst(str_replace('_payment', ' ', $order->payment_method)),
+                'order_items_table' => $itemsTableHtml,
+                'downloads_link' => route('user.downloads'),
+            ]);
+        }
 
         return $order;
+    }
+
+    private function generateLicenseData(OrderItem $item): array
+    {
+        $licenseCode = Str::uuid();
+        $supportPeriod = $item->license_type === 'regular' ? 3 : 6;
+
+        if ($item->extended_support) {
+            $supportPeriod *= 2;
+        }
+
+        return [
+            'license_code' => $licenseCode,
+            'support_end_date' => now()->addMonths($supportPeriod),
+        ];
     }
 
     /**
@@ -128,6 +176,14 @@ class OrderService
             Cart::where('id', $order->cart_id)->delete();
         }
 
+        // notify admin of new order
+        sendAdminNotification('ADMIN_MANUAL_PAYMENT', [
+            'order_code' => $order->code,
+            'customer_name' => $order->name,
+            'order_total' => format_price($order->total),
+            'order_link' => route('admin.orders.show', $order->id),
+        ]);
+
         return $order;
     }
 
@@ -144,7 +200,7 @@ class OrderService
                 'name' => $name,
                 'password' => bcrypt(getTrx(18)),
                 'status' => 'active',
-                'username' => text_trimer($name, 19) . random_int(1000, 9999),
+                'username' => User::generateUniqueUsername(text_trimer($name, 19)),
             ]
         );
     }

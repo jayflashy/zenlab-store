@@ -197,6 +197,13 @@ class OrderManager extends Component
         $this->successAlert('Order deleted successfully!');
     }
 
+    public function mount($id = null)
+    {
+        if ($id) {
+            $this->viewOrder($id);
+        }
+    }
+
     public function render()
     {
         $ordersQuery = Order::query()

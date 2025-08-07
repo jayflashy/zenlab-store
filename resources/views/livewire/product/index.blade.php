@@ -15,8 +15,8 @@
                             available for sale. Our unique collection is hand-curated by experts. Find and buy the perfect premium theme.
                         </p>
 
-                        <form wire:submit.prevent="updatedSearch" class="search-box">
-                            <input type="search" wire:model.live.debounce.500ms="search"
+                        <form wire:submit.prevent="submitSearch" class="search-box">
+                            <input type="search" wire:model.live.debounce.500ms="search" minlength="3"
                                 class="common-input common-input--lg pill shadow-sm" placeholder="Search theme, plugins &amp; more...">
                             <button type="submit" class="btn btn-main btn-icon icon border-0">
                                 <img src="{{ static_asset('images/icons/search.svg') }}" alt="">

@@ -8,7 +8,8 @@
     <div class="card-body">
         <div class="row mb-4">
             <div class="col-sm-6 col-md-3">
-                <input wire:model.debounce.live.300ms="search" type="text" class="form-control common-input" placeholder="Search...">
+                <input wire:model.debounce.live.300ms="search" type="text" class="form-control common-input"
+                    placeholder="Search...">
             </div>
             <div class="col-sm-6 col-md-3">
                 <select wire:model.live="status" class="form-select common-input">
@@ -62,12 +63,20 @@
                                 </a>
                             </td>
                             <td>
-                                {{ $rating->user ? $rating->user->name : 'Guest User' }}
+                                @if ($rating->user)
+                                    <a href="{{ route('admin.users.show', $rating->user->id) }}">
+                                        {{ $rating->user?->name }}
+                                    </a>
+                                @else
+                                    Guest User
+                                @endif
+
                             </td>
                             <td>
                                 <div class="star-rating">
                                     @for ($i = 1; $i <= 5; $i++)
-                                        <i class="la {{ $i <= $rating->stars ? 'la-star text-warning' : 'la-star-o' }}"></i>
+                                        <i
+                                            class="la {{ $i <= $rating->stars ? 'la-star text-warning' : 'la-star-o' }}"></i>
                                     @endfor
                                 </div>
                             </td>
@@ -84,13 +93,15 @@
                             <td>{{ $rating->created_at->format('M d, Y H:i') }}</td>
                             <td>
                                 <div class="dropdown">
-                                    <button class="btn btn-sm btn-light" type="button" id="dropdownMenuButton{{ $rating->id }}"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn btn-sm btn-light" type="button"
+                                        id="dropdownMenuButton{{ $rating->id }}" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                         <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $rating->id }}">
                                         <li>
-                                            <button wire:click="editRating('{{ $rating->id }}')" class="dropdown-item">
+                                            <button wire:click="editRating('{{ $rating->id }}')"
+                                                class="dropdown-item">
                                                 <i class="las la-edit me-2"></i> Edit
                                             </button>
                                         </li>
@@ -110,7 +121,8 @@
                                             <hr class="dropdown-divider">
                                         </li>
                                         <li>
-                                            <button wire:click="confirmDelete('{{ $rating->id }}')" class="dropdown-item text-danger">
+                                            <button wire:click="confirmDelete('{{ $rating->id }}')"
+                                                class="dropdown-item text-danger">
                                                 <i class="las la-trash me-2"></i> Delete
                                             </button>
                                         </li>
@@ -134,7 +146,8 @@
 
     <!-- Edit Rating Modal -->
     @if ($isEditing)
-        <div class="common-modal modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1">
+        <div class="common-modal modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);"
+            tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -145,14 +158,15 @@
                         <form wire:submit.prevent="updateRating">
                             <div class="mb-3">
                                 <label class="form-label">Product</label>
-                                <input type="text" class="form-control common-input" value="{{ $editingRating->product->name }}"
-                                    readonly>
+                                <input type="text" class="form-control common-input"
+                                    value="{{ $editingRating->product->name }}" readonly>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">User</label>
                                 <input type="text" class="form-control common-input"
-                                    value="{{ $editingRating->user ? $editingRating->user->name : 'Guest User' }}" readonly>
+                                    value="{{ $editingRating->user ? $editingRating->user->name : 'Guest User' }}"
+                                    readonly>
                             </div>
 
                             <div class="row mb-3">
@@ -189,7 +203,8 @@
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <button type="button" class="btn btn-secondary" wire:click="cancelEdit">Cancel</button>
+                                <button type="button" class="btn btn-secondary"
+                                    wire:click="cancelEdit">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Update Rating</button>
                             </div>
                         </form>
@@ -207,16 +222,20 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close" wire:click="$set('showDeleteModal', false)"></button>
+                        <button type="button" class="btn-close"
+                            wire:click="$set('showDeleteModal', false)"></button>
                     </div>
                     <div class="modal-body">
                         <p>Are you sure you want to delete this rating?</p>
-                        <p class="text-danger">This action cannot be undone and will permanently remove the rating from your store.
+                        <p class="text-danger">This action cannot be undone and will permanently remove the rating from
+                            your store.
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="$set('showDeleteModal', false)">Cancel</button>
-                        <button type="button" class="btn btn-danger" wire:click="deleteRating('{{ $deleteId }}')">
+                        <button type="button" class="btn btn-secondary"
+                            wire:click="$set('showDeleteModal', false)">Cancel</button>
+                        <button type="button" class="btn btn-danger"
+                            wire:click="deleteRating('{{ $deleteId }}')">
                             <i class="fas fa-trash me-1"></i> Delete
                         </button>
                     </div>

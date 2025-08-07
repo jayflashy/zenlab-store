@@ -72,9 +72,7 @@ class Register extends Component
             'status' => 'active',
             'email_verify' => 1,
         ]);
-
-        // welcome email??
-
+        $user->sendEmailVerification();
         Auth::login($user);
         $this->successAlert('Registration Successful');
 

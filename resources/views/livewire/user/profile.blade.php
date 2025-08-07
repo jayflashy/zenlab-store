@@ -17,12 +17,14 @@
                         <div class="profile-info__inner mb-40 text-center">
                             <div class="avatar-upload mb-24">
                                 <div class="avatar-edit">
-                                    <input type="file" id="imageUpload" wire:model="image" accept=".png, .jpg, .jpeg">
+                                    <input type="file" id="imageUpload" wire:model="image"
+                                        accept=".png, .jpg, .jpeg">
                                     <label for="imageUpload">
                                         <img src="{{ static_asset('images/icons/camera.svg') }}" alt="Upload Image">
                                     </label>
                                 </div>
-                                <div class="avatar-preview prof-img" style="background-image: url({{ $imageUrl }});">
+                                <div class="avatar-preview prof-img"
+                                    style="background-image: url({{ $imageUrl }});">
                                     <div id="imagePreview">
                                     </div>
                                 </div>
@@ -35,45 +37,52 @@
                         <ul class="profile-info-list">
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="{{ static_asset('images/icons/profile-info-icon1.svg') }}" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon1.svg') }}" alt=""
+                                        class="icon">
                                     <span class="text text-heading fw-500">Username</span>
                                 </span>
                                 <span class="profile-info-list__info">{{ $username }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="{{ static_asset('images/icons/profile-info-icon2.svg') }}" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon2.svg') }}" alt=""
+                                        class="icon">
                                     <span class="text text-heading fw-500">Email</span>
                                 </span>
                                 <span class="profile-info-list__info">{{ $email }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="{{ static_asset('images/icons/profile-info-icon3.svg') }}" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon3.svg') }}" alt=""
+                                        class="icon">
                                     <span class="text text-heading fw-500">Phone</span>
                                 </span>
                                 <span class="profile-info-list__info">{{ $phone }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="{{ static_asset('images/icons/profile-info-icon4.svg') }}" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon4.svg') }}" alt=""
+                                        class="icon">
                                     <span class="text text-heading fw-500">Country</span>
                                 </span>
                                 <span class="profile-info-list__info">{{ $country }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="{{ static_asset('images/icons/profile-info-icon6.svg') }}" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon6.svg') }}" alt=""
+                                        class="icon">
                                     <span class="text text-heading fw-500">Member Since</span>
                                 </span>
-                                <span class="profile-info-list__info">{{ show_date($user->created_at, 'M d, Y') }}</span>
+                                <span
+                                    class="profile-info-list__info">{{ show_date($user->created_at, 'M d, Y') }}</span>
                             </li>
                             <li class="profile-info-list__item">
                                 <span class="profile-info-list__content flx-align flex-nowrap gap-2">
-                                    <img src="{{ static_asset('images/icons/profile-info-icon7.svg') }}" alt="" class="icon">
+                                    <img src="{{ static_asset('images/icons/profile-info-icon7.svg') }}" alt=""
+                                        class="icon">
                                     <span class="text text-heading fw-500">Purchased</span>
                                 </span>
-                                <span class="profile-info-list__info">{{ $user->purchases_count ?? 0 }} items</span>
+                                <span class="profile-info-list__info">{{ $user->purchasesCount() ?? 0 }} items</span>
                             </li>
                         </ul>
 
@@ -84,19 +93,25 @@
                         <div class="dashboard-card__header pb-0">
                             <ul class="nav tab-bordered nav-pills" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-18 font-heading {{ $tab == 'personalInfo' ? 'active' : '' }}"
-                                        wire:click="setTab('personalInfo')" id="pills-personalInfo-tab" type="button" role="tab"
-                                        aria-controls="pills-personalInfo" aria-selected="true">Personal Info</button>
+                                    <button
+                                        class="nav-link font-18 font-heading {{ $tab == 'personalInfo' ? 'active' : '' }}"
+                                        wire:click="setTab('personalInfo')" id="pills-personalInfo-tab" type="button"
+                                        role="tab" aria-controls="pills-personalInfo" aria-selected="true">Personal
+                                        Info</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-18 font-heading {{ $tab == 'notifications' ? 'active' : '' }}"
-                                        wire:click="setTab('notifications')" id="pills-notifications-tab" type="button" role="tab"
-                                        aria-controls="pills-notifications" aria-selected="false" tabindex="-1">Notifications</button>
+                                    <button
+                                        class="nav-link font-18 font-heading {{ $tab == 'notifications' ? 'active' : '' }}"
+                                        wire:click="setTab('notifications')" id="pills-notifications-tab" type="button"
+                                        role="tab" aria-controls="pills-notifications" aria-selected="false"
+                                        tabindex="-1">Notifications</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-18 font-heading {{ $tab == 'changePassword' ? 'active' : '' }}"
-                                        wire:click="setTab('changePassword')" id="pills-changePassword-tab" type="button" role="tab"
-                                        aria-controls="pills-changePassword" aria-selected="false" tabindex="-1">Change
+                                    <button
+                                        class="nav-link font-18 font-heading {{ $tab == 'changePassword' ? 'active' : '' }}"
+                                        wire:click="setTab('changePassword')" id="pills-changePassword-tab"
+                                        type="button" role="tab" aria-controls="pills-changePassword"
+                                        aria-selected="false" tabindex="-1">Change
                                         Password</button>
                                 </li>
                             </ul>
@@ -104,56 +119,64 @@
 
                         <div class="profile-info-content">
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade {{ $tab == 'personalInfo' ? 'show active' : '' }}" id="pills-personalInfo"
-                                    role="tabpanel" aria-labelledby="pills-personalInfo-tab" tabindex="0">
+                                <div class="tab-pane fade {{ $tab == 'personalInfo' ? 'show active' : '' }}"
+                                    id="pills-personalInfo" role="tabpanel" aria-labelledby="pills-personalInfo-tab"
+                                    tabindex="0">
                                     <form wire:submit.prevent="updateProfile">
                                         <div class="row gy-4">
                                             <div class="col-sm-6">
-                                                <label for="name" class="form-label mb-2 font-18 font-heading fw-600">
+                                                <label for="name"
+                                                    class="form-label mb-2 font-18 font-heading fw-600">
                                                     Full Name
                                                 </label>
-                                                <input type="text" class="common-input border" id="name" wire:model="name"
-                                                    required placeholder="Full Name">
+                                                <input type="text" class="common-input border" id="name"
+                                                    wire:model="name" required placeholder="Full Name">
                                                 @error('name')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="username" class="form-label mb-2 font-18 font-heading fw-600">
+                                                <label for="username"
+                                                    class="form-label mb-2 font-18 font-heading fw-600">
                                                     Username
                                                 </label>
-                                                <input type="text" class="common-input border" id="username" wire:model="username"
-                                                    placeholder="Username">
+                                                <input type="text" class="common-input border" id="username"
+                                                    wire:model="username" placeholder="Username">
                                                 @error('username')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Email
+                                                <label for="email"
+                                                    class="form-label mb-2 font-18 font-heading fw-600">Email
                                                     Address</label>
-                                                <input type="email" class="common-input border" id="email" wire:model="email"
-                                                    placeholder="Email Address">
+                                                <input type="email" class="common-input border" id="email"
+                                                    wire:model="email" placeholder="Email Address">
                                                 @error('email')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="phone" class="form-label mb-2 font-18 font-heading fw-600">Phone
+                                                <label for="phone"
+                                                    class="form-label mb-2 font-18 font-heading fw-600">Phone
                                                     Number</label>
-                                                <input type="tel" class="common-input border" id="phone" wire:model="phone"
-                                                    placeholder="Phone Number">
+                                                <input type="tel" class="common-input border" id="phone"
+                                                    wire:model="phone" placeholder="Phone Number">
                                                 @error('phone')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
 
                                             <div class="col-sm-6">
-                                                <label for="country" class="form-label mb-2 font-18 font-heading fw-600">Country</label>
+                                                <label for="country"
+                                                    class="form-label mb-2 font-18 font-heading fw-600">Country</label>
                                                 <div class="select-has-icon">
-                                                    <select class="common-input border" id="country" wire:model="country">
+                                                    <select class="common-input border" id="country"
+                                                        wire:model="country">
                                                         <option value="">Select Country</option>
                                                         @foreach ($countries as $key => $country)
-                                                            <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
+                                                            <option value="{{ $country['name'] }}">
+                                                                {{ $country['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -163,53 +186,62 @@
                                             </div>
 
                                             <div class="col-sm-12 text-end">
-                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Update Profile</button>
+                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Update
+                                                    Profile</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="tab-pane fade {{ $tab == 'notifications' ? 'show active' : '' }}" id="pills-notifications"
-                                    role="tabpanel" aria-labelledby="pills-notifications-tab" tabindex="0">
+                                <div class="tab-pane fade {{ $tab == 'notifications' ? 'show active' : '' }}"
+                                    id="pills-notifications" role="tabpanel"
+                                    aria-labelledby="pills-notifications-tab" tabindex="0">
                                     <form wire:submit.prevent="updateNotifications">
                                         <div class="row gy-3">
                                             <div class="col-sm-6">
                                                 <div class="common-check">
-                                                    <input class="form-check-input" type="checkbox" id="updateNotification"
-                                                        wire:model="update_notify">
-                                                    <label class="form-check-label" for="updateNotification">Item update
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="updateNotification" wire:model="update_notify">
+                                                    <label class="form-check-label" for="updateNotification">Item
+                                                        update
                                                         notification</label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="common-check">
-                                                    <input class="form-check-input" type="checkbox" id="trxNootification"
-                                                        wire:model="trx_notify">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="trxNootification" wire:model="trx_notify">
                                                     <label class="form-check-label" for="trxNootification">Transaction
                                                         notification</label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 text-end">
-                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Save Notification
+                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Save
+                                                    Notification
                                                     Settings</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="tab-pane fade {{ $tab == 'changePassword' ? 'show active' : '' }}" id="pills-changePassword"
-                                    role="tabpanel" aria-labelledby="pills-changePassword-tab" tabindex="0">
+                                <div class="tab-pane fade {{ $tab == 'changePassword' ? 'show active' : '' }}"
+                                    id="pills-changePassword" role="tabpanel"
+                                    aria-labelledby="pills-changePassword-tab" tabindex="0">
                                     <form wire:submit.prevent="updatePassword">
                                         <div class="row gy-4">
                                             <div class="col-12">
-                                                <label for="current-password" class="form-label mb-2 font-18 font-heading fw-600">Current
+                                                <label for="current-password"
+                                                    class="form-label mb-2 font-18 font-heading fw-600">Current
                                                     Password</label>
                                                 <div class="position-relative">
                                                     <input type="password"
                                                         class="common-input common-input--withIcon common-input--withLeftIcon"
-                                                        id="current-password" wire:model="current_password" placeholder="************">
+                                                        id="current-password" wire:model="current_password"
+                                                        placeholder="************">
                                                     <span class="input-icon input-icon--left">
-                                                        <img src="{{ static_asset('images/icons/key-icon.svg') }}" alt="">
+                                                        <img src="{{ static_asset('images/icons/key-icon.svg') }}"
+                                                            alt="">
                                                     </span>
-                                                    <span class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
+                                                    <span
+                                                        class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
                                                         id="#current-password"></span>
                                                 </div>
                                                 @error('current_password')
@@ -218,16 +250,20 @@
                                             </div>
 
                                             <div class="col-sm-6">
-                                                <label for="new-password" class="form-label mb-2 font-18 font-heading fw-600">New
+                                                <label for="new-password"
+                                                    class="form-label mb-2 font-18 font-heading fw-600">New
                                                     Password</label>
                                                 <div class="position-relative">
                                                     <input type="password"
                                                         class="common-input common-input--withIcon common-input--withLeftIcon"
-                                                        id="new-password" wire:model="new_password" placeholder="************">
+                                                        id="new-password" wire:model="new_password"
+                                                        placeholder="************">
                                                     <span class="input-icon input-icon--left">
-                                                        <img src="{{ static_asset('images/icons/lock-two.svg') }}" alt="">
+                                                        <img src="{{ static_asset('images/icons/lock-two.svg') }}"
+                                                            alt="">
                                                     </span>
-                                                    <span class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
+                                                    <span
+                                                        class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
                                                         id="#new-password"></span>
                                                 </div>
                                                 @error('new_password')
@@ -236,16 +272,20 @@
                                             </div>
 
                                             <div class="col-sm-6">
-                                                <label for="confirm-password" class="form-label mb-2 font-18 font-heading fw-600">Confirm
+                                                <label for="confirm-password"
+                                                    class="form-label mb-2 font-18 font-heading fw-600">Confirm
                                                     Password</label>
                                                 <div class="position-relative">
                                                     <input type="password"
                                                         class="common-input common-input--withIcon common-input--withLeftIcon"
-                                                        id="confirm-password" wire:model="confirm_password" placeholder="************">
+                                                        id="confirm-password" wire:model="confirm_password"
+                                                        placeholder="************">
                                                     <span class="input-icon input-icon--left">
-                                                        <img src="{{ static_asset('images/icons/lock-two.svg') }}" alt="">
+                                                        <img src="{{ static_asset('images/icons/lock-two.svg') }}"
+                                                            alt="">
                                                     </span>
-                                                    <span class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
+                                                    <span
+                                                        class="input-icon password-show-hide fas fa-eye la-eye-slash toggle-password-two"
                                                         id="#confirm-password"></span>
                                                 </div>
                                                 @error('confirm_password')
@@ -254,7 +294,8 @@
                                             </div>
 
                                             <div class="col-sm-12 text-end">
-                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Update Password</button>
+                                                <button type="submit" class="btn btn-main btn-lg pill mt-4">Update
+                                                    Password</button>
                                             </div>
                                         </div>
                                     </form>
@@ -278,7 +319,8 @@
                 if (input.files && input.files[0]) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        document.querySelector('.prof-img').style.backgroundImage = `url('${e.target.result}')`;
+                        document.querySelector('.prof-img').style.backgroundImage =
+                            `url('${e.target.result}')`;
                     };
                     reader.readAsDataURL(input.files[0]);
                 }

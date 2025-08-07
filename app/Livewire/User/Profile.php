@@ -78,7 +78,6 @@ class Profile extends Component
     {
         $countryJson = static_asset('countries.json');
         $this->countries = json_decode(file_get_contents($countryJson), true);
-
     }
 
     public function setTab($tab)
@@ -125,7 +124,7 @@ class Profile extends Component
     public function updatedImage()
     {
         $this->validate([
-            'image' => 'nullable|image|max:2048', // max ~2MB
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048', // max ~2MB
         ]);
 
         try {
@@ -155,7 +154,8 @@ class Profile extends Component
                 'current_password' => 'required',
                 'new_password' => [
                     'required',
-                    'different:current_password', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(),
+                    'different:current_password',
+                    Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(),
                 ],
                 'confirm_password' => 'required|same:new_password',
             ]);

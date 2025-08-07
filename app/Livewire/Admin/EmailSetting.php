@@ -2,12 +2,16 @@
 
 namespace App\Livewire\Admin;
 
+use App\Mail\SendMail;
 use App\Traits\LivewireToast;
 use App\Traits\SettingsTrait;
 use Exception;
 use Illuminate\Http\Request;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Mail;
 
+#[Layout('admin.layouts.app')]
 class EmailSetting extends Component
 {
     use LivewireToast;
@@ -63,6 +67,10 @@ class EmailSetting extends Component
         ]);
 
         try {
+            Mail::to($this->test_email)->send(new SendMail([
+                'subject' => 'Test Email',
+                'message' => 'This is a test email.',
+            ]));
 
             $this->toast('success', 'Test email sent successfully!', 'success');
         } catch (Exception $exception) {
@@ -72,7 +80,6 @@ class EmailSetting extends Component
 
     public function render()
     {
-        return view('livewire.admin.email-setting')
-            ->layout('admin.layouts.app');
+        return view('livewire.admin.email-setting');
     }
 }

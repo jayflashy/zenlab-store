@@ -25,6 +25,7 @@ class OrderItem extends Model
         'support_price',
         'total',
         'support_end_date',
+        'license_code',
     ];
 
     protected $casts = [
@@ -68,5 +69,10 @@ class OrderItem extends Model
                 $order->uid = $max + 1;
             }
         });
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('payment_status', 'completed');
     }
 }

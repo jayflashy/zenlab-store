@@ -33,9 +33,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="d-flex align-items-center">
-                            <label for="per-page" class="me-2 form-label mb-0">Show</label>
-                            <div class="select-has-icon">
-                                <select wire:model.live="perPage" id="per-page" class="common-input border">
+                            <div class="select-has-icon w-100">
+                                <select wire:model.live="perPage" id="per-page" class="common-input border w-100">
                                     @foreach ([10, 25, 50, 100] as $value)
                                         <option value="{{ $value }}">{{ $value }}</option>
                                     @endforeach
@@ -72,7 +71,7 @@
                                     @if ($coupon->discount_type->value === 'percent')
                                         {{ $coupon->discount }}%
                                     @else
-                                        {{ number_format($coupon->discount, 2) }}
+                                        {{ format_price($coupon->discount, 2) }}
                                     @endif
                                 </td>
                                 <td>

@@ -60,22 +60,21 @@
                 <div class="col-lg-7 ps-lg-5">
                     <div class="card common-card p-sm-4">
                         <div class="card-body">
-                            <form action="#" autocomplete="off">
-                                @csrf
+                            <form action="#" autocomplete="off" wire:submit.prevent="submit">
                                 <div class="row gy-4">
                                     <div class="col-sm-6 col-xs-6">
                                         <label for="name" class="form-label mb-2 font-18 font-heading fw-600">Full Name</label>
                                         <input type="text" class="common-input common-input--grayBg border" id="name"
-                                            placeholder="Your name here">
+                                            placeholder="Your name here" wire:model="name">
                                     </div>
                                     <div class="col-sm-6 col-xs-6">
                                         <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Your Mail</label>
                                         <input type="email" class="common-input common-input--grayBg border" id="email"
-                                            placeholder="Your email here ">
+                                            placeholder="Your email here " wire:model="email">
                                     </div>
                                     <div class="col-sm-12">
                                         <label for="message" class="form-label mb-2 font-18 font-heading fw-600">Your Message</label>
-                                        <textarea class="common-input common-input--grayBg border" id="message" placeholder="Write Your Message Here"></textarea>
+                                        <textarea class="common-input common-input--grayBg border" id="message" placeholder="Write Your Message Here" wire:model="message"></textarea>
                                     </div>
                                     <div class="col-sm-12">
                                         <button class="btn btn-main btn-lg pill w-100"> Submit Now </button>
