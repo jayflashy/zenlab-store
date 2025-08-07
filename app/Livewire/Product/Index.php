@@ -63,10 +63,12 @@ class Index extends Component
     {
         $this->view = $viewType;
     }
+
     public function submitSearch(): void
     {
         $this->resetPage();
     }
+
     public function toggleSidebar(): void
     {
         $this->sidebarOpen = ! $this->sidebarOpen;
