@@ -146,7 +146,7 @@
                                     </p>
                                 </div>
 
-                                <div class="more-item">
+                                <div class="more-item" wire:ignore>
                                     <div class="flx-between mb-4">
                                         <h5 class="more-item__title">Related Products</h5>
                                     </div>
