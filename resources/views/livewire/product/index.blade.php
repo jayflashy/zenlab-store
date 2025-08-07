@@ -16,7 +16,7 @@
                         </p>
 
                         <form wire:submit.prevent="updatedSearch" class="search-box">
-                            <input type="search" wire:model.live.debounce.500ms="search"
+                            <input type="search" wire:model.live.debounce.500ms="search" minlength="3"
                                 class="common-input common-input--lg pill shadow-sm" placeholder="Search theme, plugins &amp; more...">
                             <button type="submit" class="btn btn-main btn-icon icon border-0">
                                 <img src="{{ static_asset('images/icons/search.svg') }}" alt="">
